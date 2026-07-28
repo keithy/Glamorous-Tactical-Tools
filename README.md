@@ -3,8 +3,8 @@
 
 ```st
 Metacello new
-	repository: 'github://keithy/Glamorous-Tactical-Toolkit:main/src';
-	baseline: 'TacticalToolkit';
+	repository: 'github://keithy/Glamorous-Tactical-Tools:main/src';
+	baseline: 'TacticalTools';
 	load
 ```
 
@@ -13,5 +13,5 @@ Metacello new
 After installing with Metacello, you will be able to execute
 
 ```
-#BaselineOfTacticalToolkit asClass loadLepiter
+#BaselineOfTacticalTools asClass loadLepiter
 ```
