@@ -266,6 +266,14 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 ]
 
 { #category : 'environment' }
+TheHub >> current [
+
+	^ self class current 
+	
+
+]
+
+{ #category : 'environment' }
 TheHub >> cypher [
 
 	^ self class cypher 
