@@ -57,7 +57,7 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
 { #category : 'environment' }
 TheHub class >> current [
 	
-	^ CurrentHubClass ifNil: [ self ]
+	^ CurrentHubClass ifNil: [ CurrentHubClass := self ]
 ]
 
 { #category : 'environment' }
