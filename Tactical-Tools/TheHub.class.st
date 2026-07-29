@@ -141,6 +141,7 @@ TheHub class >> lookupClass: aName [
 
 { #category : 'environment' }
 TheHub class >> namedDirectories [
+	<ttSpoke>
 	
 	^ CurrentHubClass signalAuto
 ]
@@ -161,13 +162,15 @@ TheHub class >> openFileBrowser [
 
 { #category : 'environment' }
 TheHub class >> osEnvironment [
+	<ttSpoke>
 	
 	^ CurrentHubClass signalAuto
 ]
 
 { #category : 'environment' }
 TheHub class >> osPlatform [
-
+   <ttSpoke>
+   
 	^ OSPlatform current
 ]
 
@@ -199,6 +202,8 @@ TheHub class >> ramdiskTmpUseDuring: aBlock [
 { #category : 'environment' }
 TheHub class >> sessionManager [
 
+ <ttSpoke>
+ 
 	^ SessionManager default
 ]
 
@@ -207,6 +212,13 @@ TheHub class >> signalAuto [
 
 	^ self signal: thisContext sender selector withTag: thisContext sender selector
 	
+
+]
+
+{ #category : 'environment' }
+TheHub class >> spokes [
+
+ ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
 
 ]
 
@@ -233,6 +245,8 @@ TheHub class >> startUp [
 
 { #category : 'environment' }
 TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
+
+	<ttUtility>
 
 	^ (DateAndTime unixEpoch + ((millisSinceUnixEpoch ifNil: [ ^ nil ]) / 1000)) asDate
 ]
