@@ -5,6 +5,21 @@ Class {
 	#package : 'BaselineOfTacticalTools'
 }
 
+{ #category : 'as yet unclassified' }
+BaselineOfTacticalTools class >> loadLepiter [
+	IceRepository registry  
+		detect: [ :aRepository |
+			aRepository name = 'Glamorous-Tactical-Tools' ]
+		ifFound: [ :aRepository | 
+			| defaultDatabase currentProperties |
+			defaultDatabase := LeDatabasesRegistry defaultLogicalDatabase.
+			currentProperties := defaultDatabase properties.
+			currentProperties addRegisteredDirectory: aRepository repositoryDirectory / 'lepiter'.
+			defaultDatabase reload ]
+		ifNone: [
+			self inform: 'Repository not found.' ]
+]
+
 { #category : 'baseline' }
 BaselineOfTacticalTools >> baseline: spec [
 	<baseline>
