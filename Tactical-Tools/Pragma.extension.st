@@ -26,7 +26,10 @@ Pragma class >> ttItemsWithActionFor: aView context: theContext [
 						label: each method selector asString;
 							beTinySize;
 							action: [ :b | 
-								 b phlow spawnObject: (each method valueWithReceiver: each method methodClass soleInstance arguments: #()).
+							
+							(each method valueWithReceiver: each method methodClass soleInstance arguments:#())
+								   ifNotNil: [ :result | b phlow spawnObject: result ]
+								  
      ] ]]
 			width: 50;
 			

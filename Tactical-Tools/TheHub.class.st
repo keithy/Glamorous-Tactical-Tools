@@ -21,14 +21,6 @@ Class {
 	#tag : 'Hub'
 }
 
-{ #category : 'accessing' }
-TheHub class >> _openFileBrowser [
-
-  "open a file browser, but a more discoverable option would be to list the locations"
-  
-	^ '.' asFileReference
-]
-
 { #category : 'environment' }
 TheHub class >> _ramdiskFileSystem [
 	
@@ -82,7 +74,7 @@ TheHub class >> fileReferenceFrom: aString [
 
 	| namedDirectories regex dirName path |
 
-	namedDirectories := self namedDirectories. 
+	namedDirectories := self namedFileLocations. 
 	
 	regex := '\{([a-zA-Z]+)\}(.*)' asRegex.
 	
@@ -140,7 +132,7 @@ TheHub class >> lookupClass: aName [
 ]
 
 { #category : 'environment' }
-TheHub class >> namedDirectories [
+TheHub class >> namedFileLocations [
 	<ttSpoke>
 	
 	^ self signalAuto
@@ -155,9 +147,9 @@ TheHub class >> onStartUpBidToBeCurrentHubClass [
 { #category : 'accessing' }
 TheHub class >> openFileBrowser [
 
-  "open a file browser, via the current project hub"
+  "open a file browser, but a more discoverable option would be to list the locations"
   
-	^ self current _openFileBrowser
+	^ '.' asFileReference
 ]
 
 { #category : 'environment' }
@@ -165,13 +157,6 @@ TheHub class >> osEnvironment [
 	<ttSpoke>
 	
 	^ self signalAuto
-]
-
-{ #category : 'environment' }
-TheHub class >> osPlatform [
-   <ttSpoke>
-   
-	^ self osEnvironment platform
 ]
 
 { #category : 'environment' }
@@ -226,10 +211,21 @@ TheHub class >> spokes [
 { #category : 'environment' }
 TheHub class >> spokesPragmas [
 
+^ self spokesPragmasFrom: self current class
+		 
+		
+" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
+"
+]
+
+{ #category : 'environment' }
+TheHub class >> spokesPragmasFrom: aClass [
+
 ^ Pragma
 		allNamed: #ttSpoke
-		from: self current class
-		to: TheHub class
+		from: aClass
+		to: Object class
+		
 		 
 		
 " ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
@@ -288,7 +284,7 @@ TheHub >> defaultAction [
 ]
 
 { #category : 'environment' }
-TheHub >> namedDirectories [
+TheHub >> namedFileLocations [
 
 	^ (FileLocator supportedOrigins collect: [ :origin | origin -> (FileLocator origin: origin) ]) asDictionary
 	

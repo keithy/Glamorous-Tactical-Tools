@@ -19,7 +19,18 @@ TheGlamorousHub class >> gitRepositories [
 { #category : 'environment' }
 TheGlamorousHub class >> gtImage [
 
+	<ttSpoke>
+	
 	^ GtImage instance
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> homeTools [
+
+ <ttSpoke>
+ 
+ ^ self spokesPragmasFrom: GtHomeToolsSection class
+		  
 ]
 
 { #category : 'environment' }
@@ -32,6 +43,8 @@ TheGlamorousHub class >> iceCredentialsStore [
 
 { #category : 'environment' }
 TheGlamorousHub class >> iceRegistry [
+
+	<ttSpoke>
 	
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
@@ -76,16 +89,6 @@ TheGlamorousHub class >> iceRepositoryNamed: aString [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> icebergRegistry [
-
-	<ttSpoke>
-	
-	"the list of repositories registered with the git tool"
-	^ self signalAuto
-
-]
-
-{ #category : 'environment' }
 TheGlamorousHub class >> lepiter [
 	<ttSpoke>
 	^ self signalAuto
@@ -109,9 +112,112 @@ TheGlamorousHub class >> lepiterReload [
 { #category : 'environment' }
 TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 	
+	"Determine if we are based on GT or Pharo (better ways?)"
 	(self classNamed: #GtImage ifAbsent: [ ^ 0 ]).
 	
 	^ 20 
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openCoderFrom: from [
+	^ self
+		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedBrowse
+		title: 'Coder'
+		with: GtCoderStencil new
+		from: from
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openCoderWindow [
+  
+  <ttSpoke>
+  
+	self openCoderFrom: nil.
+	
+	^ nil 
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openGitManagerFrom: card [
+
+^ self
+		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
+		title: 'Git'
+		with: GtGitStencil new
+		from: card
+
+ 
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openGitManagerWindow [
+
+	<ttSpoke>
+
+	self openGitManagerFrom: nil.
+	
+	^ nil
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openMonitorFrom: card [
+
+	^ self
+		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
+		title: 'Monitor'
+		with: (GtInspector createOn: GtMonitor new) maximized
+		from: card
+		
+		
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openMonitorWindow [
+
+	<ttSpoke>
+
+	self openMonitorFrom: nil.
+	
+	^ nil
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openTranscriptFrom: aCard [
+
+  "from GtHomeToolsSection"
+ 
+	^ self
+		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
+		title: 'Transcript'
+		with: GtTranscriptStencil new
+		from: aCard.
+ 
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openTranscriptWindow [
+  
+  <ttSpoke>
+  
+	self openTranscriptFrom: nil.
+	
+	^ nil "nothing to spawn"
+]
+
+{ #category : 'as yet unclassified' }
+TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil from: anotherElement [
+
+  "Utility method for opening an new space borrowed verbatim from GtHomeToolsSection"
+
+	anotherElement ifNotNil: [ :elem | 
+		elem enqueueTask: [elem fireEvent: BrDropdownHideWish new] asBlTask ].
+	
+	^ BlSpace new
+		icon: anIcon;
+		title: aString;
+		addChild: aStencil asElement;
+		withSceneDriller;
+		showFrom: anotherElement
 ]
 
 { #category : 'environment' }

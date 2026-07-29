@@ -26,7 +26,10 @@ CompiledMethod class >> ttItemsWithActionFor: aView context: theContext [
 						label: each selector asString;
 							beTinySize;
 							action: [ :b | 
-								 b phlow spawnObject: (each valueWithReceiver: each methodClass soleInstance arguments: #()).
+									(each valueWithReceiver: each methodClass soleInstance arguments:#())
+								   ifNotNil: [ :result | b phlow spawnObject: result ]
+								  
+							
      ] ]]
 			width: 50.
 	

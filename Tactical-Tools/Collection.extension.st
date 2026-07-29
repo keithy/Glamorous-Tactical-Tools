@@ -39,8 +39,8 @@ Collection >> ttViewsInCollectionContext: aContext [
 	aContext
 		optionAt: #theCollection put: self.
 	
-	^ GtPhlowViewsCollector new
+	^ (GtPhlowViewsCollector new
 		pragmaNames: #(#ttViewInCollection);
 		fromObject: ([ self anyOne class ] ifError: [ :ex | nil ]);
-		context: aContext
+		context: aContext) collect
 ]
