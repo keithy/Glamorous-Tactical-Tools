@@ -143,7 +143,7 @@ TheHub class >> lookupClass: aName [
 TheHub class >> namedDirectories [
 	<ttSpoke>
 	
-	^ CurrentHubClass signalAuto
+	^ self signalAuto
 ]
 
 { #category : 'environment' }
@@ -157,27 +157,27 @@ TheHub class >> openFileBrowser [
 
   "open a file browser, via the current project hub"
   
-	^ CurrentHubClass _openFileBrowser
+	^ self current _openFileBrowser
 ]
 
 { #category : 'environment' }
 TheHub class >> osEnvironment [
 	<ttSpoke>
 	
-	^ CurrentHubClass signalAuto
+	^ self signalAuto
 ]
 
 { #category : 'environment' }
 TheHub class >> osPlatform [
    <ttSpoke>
    
-	^ OSPlatform current
+	^ self osEnvironment platform
 ]
 
 { #category : 'environment' }
 TheHub class >> ramdisk [
 	
-	^ CurrentHubClass signalAuto
+	^ self signalAuto
 ]
 
 { #category : 'environment' }
@@ -187,9 +187,9 @@ TheHub class >> ramdiskFileSystem [
 ]
 
 { #category : 'environment' }
-TheHub class >> ramdiskFileSystemClobber [
+TheHub class >> ramdiskReset [
 	
-	CurrentHubClass _ramdiskFileSystemClobber
+	self current _ramdiskReset
 	
 ]
 
@@ -201,10 +201,8 @@ TheHub class >> ramdiskTmpUseDuring: aBlock [
 
 { #category : 'environment' }
 TheHub class >> sessionManager [
-
- <ttSpoke>
- 
-	^ SessionManager default
+	
+	^ self signalAuto
 ]
 
 { #category : 'environment' }
@@ -218,8 +216,24 @@ TheHub class >> signalAuto [
 { #category : 'environment' }
 TheHub class >> spokes [
 
- ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
+^ self spokesPragmas collect: [ :ea | ea method ]
+		 
+		
+" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
+"
+]
 
+{ #category : 'environment' }
+TheHub class >> spokesPragmas [
+
+^ Pragma
+		allNamed: #ttSpoke
+		from: self current class
+		to: TheHub class
+		 
+		
+" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
+"
 ]
 
 { #category : 'environment' }
@@ -280,8 +294,21 @@ TheHub >> osEnvironment [
 
 { #category : 'environment' }
 TheHub >> ramdisk [
-
-	^ self class ramdiskFileSystem 
 	
+	^ self current _ramdiskFileSystem
+]
 
+{ #category : 'environment' }
+TheHub >> ramdiskReset [
+	
+	CurrentHubClass _ramdiskFileSystemClobber
+	
+]
+
+{ #category : 'environment' }
+TheHub >> sessionManager [
+
+ <ttSpoke>
+ 
+	^ SessionManager default
 ]

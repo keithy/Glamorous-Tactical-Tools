@@ -8,6 +8,8 @@ Class {
 
 { #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
+
+	<ttSpoke>
 	
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
@@ -22,8 +24,10 @@ TheGlamorousHub class >> gtImage [
 
 { #category : 'environment' }
 TheGlamorousHub class >> iceCredentialsStore [
-	
-	^ IceCredentialStore current
+
+	<ttSpoke>
+
+		^ IceCredentialStore current
 ]
 
 { #category : 'environment' }
@@ -36,6 +40,8 @@ TheGlamorousHub class >> iceRegistry [
 
 { #category : 'environment' }
 TheGlamorousHub class >> iceRepositories [
+
+	<ttSpoke>
 	
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
@@ -71,6 +77,8 @@ TheGlamorousHub class >> iceRepositoryNamed: aString [
 
 { #category : 'environment' }
 TheGlamorousHub class >> icebergRegistry [
+
+	<ttSpoke>
 	
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
@@ -79,14 +87,15 @@ TheGlamorousHub class >> icebergRegistry [
 
 { #category : 'environment' }
 TheGlamorousHub class >> lepiter [
-
+	<ttSpoke>
 	^ self signalAuto
 ]
 
 { #category : 'environment' }
 TheGlamorousHub class >> lepiterPropertiesFile [
+	<ttSpoke>
 
-	"this is where duplicates may be defined"
+		"this is where duplicates may be defined"
 	^ self lepiter properties localFile
 ]
 
@@ -107,6 +116,7 @@ TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 
 { #category : 'environment' }
 TheGlamorousHub >> gitRepositories [
+	<ttSpoke>
 	
 	"the list of repositories registered with the git tool"
 	^ IceRepository gtGitRepositories
@@ -114,6 +124,7 @@ TheGlamorousHub >> gitRepositories [
 
 { #category : 'environment' }
 TheGlamorousHub >> iceRegistry [
+	<ttSpoke>
 	
 	"the Ice Repository manager"
 	^ IceRepository 
@@ -128,6 +139,8 @@ TheGlamorousHub >> iceRepositories [
 
 { #category : 'environment' }
 TheGlamorousHub >> lepiter [
-
+ 	
+ 	<ttSpoke>
+ 	
 	^ LeDatabasesRegistry defaultLogicalDatabase
 ]
