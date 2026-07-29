@@ -57,13 +57,13 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
 { #category : 'environment' }
 TheHub class >> current [
 	
-	^ CurrentHubClass
+	^ CurrentHubClass ifNil: [ self ]
 ]
 
 { #category : 'environment' }
 TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 	
-	^ aBlock on: CurrentHubClass do: [  :ex | 
+	^ aBlock on: self current do: [  :ex | 
 	
 			ex tag == methodSelector
 				ifTrue: [ ex resume: substituteValue ] 
