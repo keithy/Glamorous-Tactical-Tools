@@ -29,7 +29,7 @@ Collection >> merge: aBlockOrSymbol [
 		]
 ]
 
-{ #category : '*Tactical-Tools' }
+{ #category : '*Tactical-Tools-GT' }
 Collection >> ttViewsInCollectionContext: aContext [
 
 	"Views delegated to the contained object class"
@@ -42,6 +42,5 @@ Collection >> ttViewsInCollectionContext: aContext [
 	^ GtPhlowViewsCollector new
 		pragmaNames: #(#ttViewInCollection);
 		fromObject: ([ self anyOne class ] ifError: [ :ex | nil ]);
-		context: aContext;
-		collect
+		context: aContext
 ]
