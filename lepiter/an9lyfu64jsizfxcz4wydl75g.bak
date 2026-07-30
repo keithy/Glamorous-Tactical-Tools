@@ -429,6 +429,43 @@
 					"uidString" : "K30wx8cGRpaTyVCsr5jTTg=="
 				},
 				"code" : "TheHub\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'Me' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (TheHub osEnvironment at: #USERNAME) equals: 'She'\r\t\t\r\t]."
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-29T04:52:44.096395+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-29T04:52:44.096395+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "L5Gww3t5STWPACxCNiofdA=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : ""
 			}
 		]
 	},

@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T17:20:21.809977+01:00"
+						"dateAndTimeString" : "2026-07-30T00:04:03.234716+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The GlamorousToolkit environment is voluminous, this is a good starting point for discovery of common tools."
+				"string" : "The GlamorousToolkit environment is voluminous, {{gtClass:TheGlamorousHub}} is designed to be the starting point for discovery."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T12:16:53.102364+01:00"
+						"dateAndTimeString" : "2026-07-30T00:04:26.797954+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "VsrTyWjKSbauxdqJOwmi8Q=="
 				},
-				"code" : "TheHub openFileBrowser"
+				"code" : "\"common tools\"\rTheHub openFileBrowser"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -100,14 +100,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T13:28:21.493506+01:00"
+						"dateAndTimeString" : "2026-07-30T00:06:43.88448+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "8v/RQrqzRwGk1S95Dy8NkA=="
 				},
-				"code" : "TheHub namedDirectories"
+				"code" : "\"not so common, but useful\"\rTheHub namedFileLocations"
 			},
 			{
 				"__type" : "textSnippet",
@@ -134,7 +134,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-29T22:21:59.664101+01:00"
+						"dateAndTimeString" : "2026-07-30T00:08:17.094534+01:00"
 					}
 				},
 				"uid" : {
@@ -144,7 +144,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system. It doubles as an *interface* defined between tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere.\n##Focal Point for Dedicated Projects\r\nThe same mechanism provides an interface for other dedicated projects built upon Pharo or GT. \n\nAt {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>current}} .  "
+				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system. It doubles as an *interface* defined between tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere.\n##Focal Point for Dedicated Projects\r\nThe same mechanism provides an interface for other dedicated projects built upon Pharo or GT.  Because at startup time \n\nAt {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>current}} .  "
 			},
 			{
 				"__type" : "textSnippet",
@@ -321,6 +321,40 @@
 					"uidString" : "hhRSXfpvTmKGMUxPKeTRww=="
 				},
 				"code" : "TheHub spokes."
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-30T02:47:25.991507+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-30T02:48:26.459314+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "/aT+ylIFTFqtAxN5Gec0IQ=="
+				},
+				"code" : "ramdisk\r\r#Object asClass"
 			}
 		]
 	},
@@ -343,12 +377,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-07-28T12:19:51.498197+01:00"
+			"dateAndTimeString" : "2026-07-30T00:01:35.440885+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Interface to Glamorous Toolkit"
+		"title" : "Discoverable Glamorous Toolkit"
 	},
 	"uid" : {
 		"__type" : "uuid",

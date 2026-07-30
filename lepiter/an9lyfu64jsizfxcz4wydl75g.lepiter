@@ -100,14 +100,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T13:48:07.793843+01:00"
+						"dateAndTimeString" : "2026-07-30T00:06:43.841732+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "s2gHj1luSS+eDxhVE0493A=="
 				},
-				"code" : "\"Re-imagining of: FileLocator supportedOrigins\"\rTheHub namedDirectories"
+				"code" : "\"Re-imagining of: FileLocator supportedOrigins\"\rTheHub namedFileLocations"
 			},
 			{
 				"__type" : "pharoSnippet",
