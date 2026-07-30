@@ -31,9 +31,16 @@ TheGlamorousHub class >> gtImage [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> homeTools [
+TheGlamorousHub class >> homeTools [ 
 
- <ttSpoke>
+  ^  GtHomeToolsSection 
+		  
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> homeToolsHub [
+
+ <ttSpoke "comment">
  
  ^ self classPragmas: #ttSpoke in: GtHomeToolsSection 
 		  
@@ -125,37 +132,6 @@ TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openCoderFrom: from [
-	^ self
-		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedBrowse
-		title: 'Coder'
-		with: GtCoderStencil new
-		from: from
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> openCoderWindow [
-  
-  <ttSpoke>
-  
-	self openCoderFrom: nil.
-	
-	^ nil 
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> openGitManagerFrom: card [
-
-^ self
-		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
-		title: 'Git'
-		with: GtGitStencil new
-		from: card
-
- 
-]
-
-{ #category : 'environment' }
 TheGlamorousHub class >> openGitManagerWindow [
 
 	<ttSpoke>
@@ -163,18 +139,6 @@ TheGlamorousHub class >> openGitManagerWindow [
 	self openGitManagerFrom: nil.
 	
 	^ nil
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> openMonitorFrom: card [
-
-	^ self
-		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
-		title: 'Monitor'
-		with: (GtInspector createOn: GtMonitor new) maximized
-		from: card
-		
-		
 ]
 
 { #category : 'environment' }
@@ -188,7 +152,7 @@ TheGlamorousHub class >> openMonitorWindow [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openTranscriptFrom: aCard [
+TheGlamorousHub class >> openTranscript: aCard [
 
   "from GtHomeToolsSection"
  
@@ -205,7 +169,7 @@ TheGlamorousHub class >> openTranscriptWindow [
   
   <ttSpoke>
   
-	self openTranscriptFrom: nil.
+	self openTranscript: nil.
 	
 	^ nil "nothing to spawn"
 ]

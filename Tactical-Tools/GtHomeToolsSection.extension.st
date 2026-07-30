@@ -73,6 +73,18 @@ GtHomeToolsSection class >> openGitManagerWindow [
 ]
 
 { #category : '*Tactical-Tools-GT' }
+GtHomeToolsSection class >> openMonitor: card [
+
+^ self
+		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
+		title: 'Monitor'
+		with: (GtInspector createOn: GtMonitor new) maximized
+		from: card
+
+
+]
+
+{ #category : '*Tactical-Tools-GT' }
 GtHomeToolsSection class >> openMonitorWindow [
 	
 	<ttSpoke>

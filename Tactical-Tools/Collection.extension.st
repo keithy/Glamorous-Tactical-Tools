@@ -1,6 +1,6 @@
 Extension { #name : 'Collection' }
 
-{ #category : '*Tactical-Tools' }
+{ #category : '*Tactical-Tools-GT' }
 Collection >> gtViewsInContext: aContext [
 	"This collects all views for the current object.
 	By default, it simply looks for the #gtView pragma.

@@ -5,7 +5,7 @@ Pragma class >> ttItemsWithActionFor: aView context: theContext [
 	<ttViewInCollection>
 	
 		^ aView columnedList
-		title: 'Executable';
+		title: '[each]';
 		priority: 5;
 		items: [ theContext optionAt: #theCollection ifAbsent: #() ] ;
 		actionUpdateButtonTooltip: 'Update item list';
@@ -15,10 +15,12 @@ Pragma class >> ttItemsWithActionFor: aView context: theContext [
 			width: 45;
 		column: 'Item'
 			text: [ :eachItem | eachItem gtDisplayText ];
+		column: 'Comment'
+			text: [ :eachItem | eachItem method comment ifNil: '' ];
 			
 		column: 'Execute' translated
 			stencil: [ :each | 
-			
+		 
 			  each method numArgs == 0 ifFalse: [ BlElement new ] ifTrue: [
 				BrButton new
 						aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + BrGlamorousButtonWithIconAptitude;
