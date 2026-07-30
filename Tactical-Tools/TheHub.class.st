@@ -187,6 +187,13 @@ TheHub class >> osEnvironment [
 ]
 
 { #category : 'environment' }
+TheHub class >> platform [
+
+	^ GRPlatform current 
+	
+]
+
+{ #category : 'environment' }
 TheHub class >> ramdisk [
 	
 	^ self signalAuto

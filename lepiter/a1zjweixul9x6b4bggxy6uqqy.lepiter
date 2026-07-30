@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T03:32:21.651493+01:00"
+						"dateAndTimeString" : "2026-07-30T06:55:18.879511+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system. It doubles as an *interface* defined between tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere"
+				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system at a macro level. It doubles as an *interface* defined between tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -66,14 +66,85 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T03:53:20.05811+01:00"
+						"dateAndTimeString" : "2026-07-30T07:00:47.843872+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "8g8Ms73kQvaEmEoYXZv0bA=="
 				},
-				"code" : "TheHub current wall"
+				"code" : "\"Higher level isolation/compatibility\"\rTheHub current wall"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-30T06:55:46.932589+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-30T06:55:46.932589+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "JgJMStQ0TnSG+c/6rTkSWA=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : ""
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-30T06:52:18.511474+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-30T06:54:45.223512+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "saVhoxCAS42uJszibZw98g=="
+				},
+				"code" : "\"Lower level - Grease\"\rTheHub platform"
 			}
 		]
 	},
