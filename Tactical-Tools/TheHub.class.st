@@ -37,13 +37,31 @@ TheHub class >> _ramdiskFileSystemClobber [
 { #category : 'accessing' }
 TheHub class >> classNamed: aName [
 
+  <ttWall>
+  
 	^ Smalltalk at: aName asSymbol
 ]
 
 { #category : 'accessing' }
 TheHub class >> classNamed: aName ifAbsent: aBlock [
 
+  <ttWall>
+
 	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
+]
+
+{ #category : 'environment' }
+TheHub class >> classPragmas: aTag in: aClass [
+
+^ Pragma
+		allNamed: aTag
+		from: aClass class
+		to: Object class
+		
+		 
+		
+" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
+"
 ]
 
 { #category : 'environment' }
@@ -66,7 +84,11 @@ TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 { #category : 'environment' }
 TheHub class >> fileReferenceFrom: aString [
 
-	"Answer a FileReference or FileLocator from the supplied string.
+ <ttWall>
+ 
+	"Copied from LeDatabaseStore>>#fileReferenceFrom:
+	
+	Answer a FileReference or FileLocator from the supplied string.
 	FileLocator origins are available as formatted strings, e.g.
 		{home}/lepiter
 	is the equivalent of
@@ -103,13 +125,17 @@ TheHub class >> for: instanceMethodSelector respondWith: substituteValue during:
 { #category : 'accessing' }
 TheHub class >> globalAt: aName ifAbsent: aBlock [
 
+  <ttWall>
+ 
 	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
 { #category : 'environment' }
 TheHub class >> httpClientMaximumEntitySize [
-
-	^ CurrentHubClass _httpClientMaximumEntitySize
+ 
+ <ttWall>
+ 
+	^ self current _httpClientMaximumEntitySize
 		
 ]
 
@@ -133,6 +159,7 @@ TheHub class >> lookupClass: aName [
 
 { #category : 'environment' }
 TheHub class >> namedFileLocations [
+
 	<ttSpoke>
 	
 	^ self signalAuto
@@ -201,31 +228,7 @@ TheHub class >> signalAuto [
 { #category : 'environment' }
 TheHub class >> spokes [
 
-^ self spokesPragmas collect: [ :ea | ea method ]
-		 
-		
-" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
-"
-]
-
-{ #category : 'environment' }
-TheHub class >> spokesPragmas [
-
-^ self spokesPragmasFrom: self current class
-		 
-		
-" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
-"
-]
-
-{ #category : 'environment' }
-TheHub class >> spokesPragmasFrom: aClass [
-
-^ Pragma
-		allNamed: #ttSpoke
-		from: aClass
-		to: Object class
-		
+^ self classPragmas: #ttSpoke in: self current 
 		 
 		
 " ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
@@ -256,9 +259,17 @@ TheHub class >> startUp [
 { #category : 'environment' }
 TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 
-	<ttUtility>
+	<ttWall>
 
 	^ (DateAndTime unixEpoch + ((millisSinceUnixEpoch ifNil: [ ^ nil ]) / 1000)) asDate
+]
+
+{ #category : 'environment' }
+TheHub class >> wall [
+
+^ self classPragmas: #ttWall in: self current 
+		 
+		 
 ]
 
 { #category : 'environment' }
@@ -266,7 +277,6 @@ TheHub >> current [
 
 	^ self class current 
 	
-
 ]
 
 { #category : 'environment' }

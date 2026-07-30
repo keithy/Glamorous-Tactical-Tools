@@ -6,6 +6,12 @@ Class {
 	#tag : 'Hub'
 }
 
+{ #category : 'as yet unclassified' }
+TheGlamorousHub class >> _httpClientMaximumEntitySize [
+	
+	^ ZnCurrentOptions at: #maximumEntitySize
+]
+
 { #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
 
@@ -29,7 +35,7 @@ TheGlamorousHub class >> homeTools [
 
  <ttSpoke>
  
- ^ self spokesPragmasFrom: GtHomeToolsSection class
+ ^ self classPragmas: #ttSpoke in: GtHomeToolsSection 
 		  
 ]
 

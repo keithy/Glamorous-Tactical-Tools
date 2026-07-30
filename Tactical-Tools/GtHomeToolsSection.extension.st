@@ -90,3 +90,13 @@ GtHomeToolsSection class >> openTranscript: card [
 		with: GtTranscriptStencil new
 		from: card
 ]
+
+{ #category : '*Tactical-Tools-GT' }
+GtHomeToolsSection class >> openTranscriptWindow [
+	
+	<ttSpoke>
+	
+	self openTranscript: nil.
+	
+	^ nil "dont spawn"
+]
