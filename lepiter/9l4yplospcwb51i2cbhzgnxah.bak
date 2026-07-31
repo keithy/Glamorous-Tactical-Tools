@@ -1,0 +1,76 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-31T07:40:23.76001+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-31T07:49:49.634334+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "5lYmKVOESLuUmh0g4RbizQ=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "##Focal Point for Dedicated Projects\r\nThe Hub is a *Top Level* oversight mechanism and so it provides an interface for other dedicated projects built upon Pharo or GT to manage their own interface at this level.\n\nFor example, the ability for {{gtClass:TheHub to provide an oversight of the system through browsing GT, can be easily adopted by any and all other projects, in any smalltalk that supports Pragma annotations.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>current}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeCurrentHubClass}} to outbid {{gtMethod:TheGlamorousHub class>>onStartUpBidToBeCurrentHubClass}}  if they wish to be in control."
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-07-31T07:40:34.534781+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-07-31T07:40:34.534781+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "Dedicated Project Support"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "4954c0ec-a3ae-495f-8088-f4c17d4ff0a1"
+	}
+}

@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-29T05:01:15.102309+01:00"
+						"dateAndTimeString" : "2026-07-31T08:07:55.941472+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "General capability for items to provide views for when they appear in generic collections. The views are implemented as class methods, pragma << ttViewInCollection >> [why are <> parsed into a path?]"
+				"string" : "General capability for items to provide views for when they appear in generic collections. The views are implemented as class methods, pragma << ttViewInCollection >"
 			},
 			{
 				"__type" : "textSnippet",
@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-29T05:08:04.010467+01:00"
+						"dateAndTimeString" : "2026-07-29T05:08:29.862948+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Implemented by\n\t•  {{gtMethod:Collection>>#gtViewsInContext:}}\n\t•  {{gtMethod:Collection>>ttViewsInCollectionContext:}}\n\t\n\tNot working yet:\n\t"
+				"string" : "Implemented by\n\t•  {{gtMethod:Collection>>#gtViewsInContext:}}\n\t•  {{gtMethod:Collection>>ttViewsInCollectionContext:}}\n\t\n\tNot working yet, actions click goes to the wrong place:\n{{gtMethod:GtPhlowViewsCollector>>#collect}}"
 			}
 		]
 	},

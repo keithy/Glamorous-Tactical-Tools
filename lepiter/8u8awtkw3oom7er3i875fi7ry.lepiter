@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-29T05:01:15.102309+01:00"
+						"dateAndTimeString" : "2026-07-31T08:08:01.763165+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "General capability for items to provide views for when they appear in generic collections. The views are implemented as class methods, pragma << ttViewInCollection >> [why are <> parsed into a path?]"
+				"string" : "General capability for items to provide views for when they appear in generic collections. The views are implemented as class methods, pragma < ttViewInCollection \\>"
 			},
 			{
 				"__type" : "textSnippet",

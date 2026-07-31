@@ -18,6 +18,43 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-31T07:53:18.282687+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-31T08:05:48.923089+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "kzmjBtUSRMqbC3sIWRTQQw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "###Spokes\nAccessible directly from the Hub, are methods providing direct access to useful tools or registries lurking around the system, that are useful, insightful even essential.\n### Hubs\nAre other Classes in the system that have been annotated to provide their own browsable Hub/Spoke/Utility/Wall features.\n#### Utilities\nAre simply useful class methods given exposure and made visible.\n###Wall\nAnd finally wall methods are specifically marked to define useful points of isolation.\n"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2024-07-09T13:39:22.449+01:00"
 					}
 				},
@@ -123,43 +160,6 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2024-06-19T12:44:47.074+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T00:08:17.094534+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "0CpRdp7XDQCiEZDIBYPAkQ=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system. It doubles as an *interface* defined between tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere.\n##Focal Point for Dedicated Projects\r\nThe same mechanism provides an interface for other dedicated projects built upon Pharo or GT.  Because at startup time \n\nAt {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>current}} .  "
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2026-07-29T23:58:59.093363+01:00"
 					}
 				},
@@ -171,7 +171,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T00:00:45.068433+01:00"
+						"dateAndTimeString" : "2026-07-31T07:50:56.752736+01:00"
 					}
 				},
 				"uid" : {
@@ -276,7 +276,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-29T23:58:59.098916+01:00"
+						"dateAndTimeString" : "2026-07-31T07:52:41.302579+01:00"
 					}
 				},
 				"uid" : {
@@ -286,7 +286,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Now you can discover the most useful tools and registries from a logical central place. Note the \"Executable - Tool\""
+				"string" : "The handy browser makes this a point and click exploration. Now you can discover the most useful tools and registries from a logical central place. "
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -321,40 +321,6 @@
 					"uidString" : "hhRSXfpvTmKGMUxPKeTRww=="
 				},
 				"code" : "TheHub browse"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T02:47:25.991507+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T06:36:13.48527+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "/aT+ylIFTFqtAxN5Gec0IQ=="
-				},
-				"code" : ""
 			}
 		]
 	},

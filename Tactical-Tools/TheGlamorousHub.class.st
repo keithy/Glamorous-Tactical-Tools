@@ -44,7 +44,7 @@ TheGlamorousHub class >> iceCredentialsStore [
 { #category : 'environment' }
 TheGlamorousHub class >> iceRegistry [
 
-	<ttSpoke>
+	<ttHub>
 	
 	"the list of repositories registered with the git tool"
 	^ self signalAuto

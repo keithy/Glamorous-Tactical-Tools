@@ -384,7 +384,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:26:23.461434+01:00"
+						"dateAndTimeString" : "2026-07-31T07:37:02.847761+01:00"
 					}
 				},
 				"uid" : {
@@ -394,7 +394,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "This allows tests to be wrapped in an inner scope, temporarily overiding the environment. For example testing environment USERNAME would depend upon the host system, making tests difficult. "
+				"string" : "For example, testing environment variable USERNAME would depend upon the host system, making tests difficult. {{gtClass:TheHub}} allows tests to be wrapped in an inner scope, temporarily overiding the environment. \n"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -421,14 +421,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:31:05.873968+01:00"
+						"dateAndTimeString" : "2026-07-31T07:35:45.327786+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "K30wx8cGRpaTyVCsr5jTTg=="
 				},
-				"code" : "TheHub current\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'She' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (TheHub  osEnvironment at: #USERNAME) equals: 'She'\r\t\t\r\t]."
+				"code" : "TheHub\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'She' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (TheHub  osEnvironment at: #USERNAME) equals: 'She'.\r\t\t\r\t\ttrue.\r\t]."
 			},
 			{
 				"__type" : "textSnippet",
