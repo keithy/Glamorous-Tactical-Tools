@@ -1,6 +1,6 @@
 Extension { #name : 'CompiledMethod' }
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 CompiledMethod class >> ttItemsWithActionFor: aView context: theContext [
 	<ttViewInCollection>
 	

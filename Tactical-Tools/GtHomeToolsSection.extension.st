@@ -1,6 +1,6 @@
 Extension { #name : 'GtHomeToolsSection' }
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection >> newCoderButtonStencil [
 	<gtToolButton>
 	^ GtToolButtonStencil new
@@ -12,7 +12,7 @@ GtHomeToolsSection >> newCoderButtonStencil [
 		elementId: GtHomeCoderButtonId
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection >> newGitButtonStencil [
 	<gtToolButton>
 	^ GtToolButtonStencil new
@@ -23,7 +23,7 @@ GtHomeToolsSection >> newGitButtonStencil [
 		description: 'Manage git repositories.'
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection >> newMonitorButtonStencil [
 	<gtToolButton>
 	^ GtToolButtonStencil new
@@ -34,7 +34,7 @@ GtHomeToolsSection >> newMonitorButtonStencil [
 		description: 'Monitor processes and high level tasks.'
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openCoder: from [
 	^ self
 		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedBrowse
@@ -43,7 +43,7 @@ GtHomeToolsSection class >> openCoder: from [
 		from: from
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openCoderWindow [
 	
 	<ttSpoke>
@@ -53,7 +53,7 @@ GtHomeToolsSection class >> openCoderWindow [
 	^ nil "dont spawn"
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openGitManager: card [
 	^ self
 		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
@@ -62,7 +62,7 @@ GtHomeToolsSection class >> openGitManager: card [
 		from: card
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openGitManagerWindow [
 	
 	<ttSpoke>
@@ -72,7 +72,7 @@ GtHomeToolsSection class >> openGitManagerWindow [
 	^ nil "dont spawn"
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openMonitor: card [
 
 ^ self
@@ -84,7 +84,7 @@ GtHomeToolsSection class >> openMonitor: card [
 
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openMonitorWindow [
 	
 	<ttSpoke>
@@ -94,7 +94,7 @@ GtHomeToolsSection class >> openMonitorWindow [
 	^ nil "dont spawn"
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openTranscript: card [
 	^ self
 		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
@@ -103,7 +103,7 @@ GtHomeToolsSection class >> openTranscript: card [
 		from: card
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openTranscriptWindow [
 	
 	<ttSpoke>

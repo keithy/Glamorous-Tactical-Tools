@@ -1,6 +1,6 @@
 Extension { #name : 'Collection' }
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 Collection >> gtViewsInContext: aContext [
 	"This collects all views for the current object.
 	By default, it simply looks for the #gtView pragma.
@@ -29,7 +29,7 @@ Collection >> merge: aBlockOrSymbol [
 		]
 ]
 
-{ #category : '*Tactical-Tools-GT' }
+{ #category : '*Tactical-Tools' }
 Collection >> ttViewsInCollectionContext: aContext [
 
 	"Views delegated to the contained object class"
