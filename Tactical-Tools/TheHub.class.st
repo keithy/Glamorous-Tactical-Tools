@@ -137,8 +137,18 @@ TheHub class >> globalAt: aName ifAbsent: aBlock [
 { #category : 'environment' }
 TheHub class >> httpClientMaximumEntitySize [
 
-	^ CurrentHubClass _httpClientMaximumEntitySize
+	<ttWall>
+	
+	^ self signalAuto
 		
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> hubs [
+
+	^ self current classPragmasNamed: #ttHubs.
+	
+
 ]
 
 { #category : 'environment' }
@@ -161,6 +171,7 @@ TheHub class >> lookupClass: aName [
 
 { #category : 'environment' }
 TheHub class >> namedFileLocations [
+
 	<ttSpoke>
 	
 	^ self signalAuto
@@ -200,12 +211,16 @@ TheHub class >> osEnvironment [
 { #category : 'environment' }
 TheHub class >> platform [
 
+	<ttWall>
+	
 	^ GRPlatform current 
 	
 ]
 
 { #category : 'environment' }
 TheHub class >> ramdisk [
+	
+	<ttWall>
 	
 	^ self signalAuto
 ]
@@ -238,7 +253,15 @@ TheHub class >> sessionManager [
 { #category : 'environment' }
 TheHub class >> signalAuto [	
 
-	^ self signal: thisContext sender selector withTag: thisContext sender selector
+	^ self current signal: thisContext sender selector withTag: thisContext sender selector
+	
+
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> spokes [
+
+	^ self current classPragmasNamed: #ttSpoke.
 	
 
 ]
@@ -293,6 +316,22 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 	<ttUtility>
 
 	^ (DateAndTime unixEpoch + ((millisSinceUnixEpoch ifNil: [ ^ nil ]) / 1000)) asDate
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> utils [
+
+	^ self current classPragmasNamed: #ttUtility.
+	
+
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> wall [
+
+	^ self current classPragmasNamed: #ttWall.
+	
+
 ]
 
 { #category : 'environment' }
@@ -378,11 +417,6 @@ TheHub >> gtHubsFor: aView [
 { #category : 'environment' }
 TheHub >> gtInspectorTitleString [ 
     ^ 'Hub Browser (' ,(browsing gtDisplayString) , ')' 
-]
-
-{ #category : 'environment' }
-TheHub >> gtInspectorTitleStringOn: stream [ 
-  stream << 'Hub Browser (' << (browsing gtDisplayString) << ')' 
 ]
 
 { #category : 'environment' }
@@ -561,6 +595,12 @@ TheHub >> gtWallsFor: aView [
 						hostElement: anElement ] ]
 	
 
+]
+
+{ #category : 'as yet unclassified' }
+TheHub >> httpClientMaximumEntitySize [
+	
+	^ ZnCurrentOptions at: #maximumEntitySize
 ]
 
 { #category : 'environment' }

@@ -103,7 +103,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T01:41:18.506382+01:00"
+						"dateAndTimeString" : "2026-07-31T07:10:47.339753+01:00"
 					}
 				},
 				"uid" : {
@@ -114,6 +114,43 @@
 					"__type" : "textStyle"
 				},
 				"string" : "RPI: Is #lookupClass instVar used in Pragma anywhere?"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-31T07:10:49.766417+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-07-31T07:19:33.137049+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "/cb60iA3Qyi5kygd4ZyKCQ=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "### Regular Review:\nOnce the Agent understands the concept of isolation requested by Tactical-Tools from the host environment. An audit can review methods that ought to be implemented in {{gtMethod:\nTheHub class>>\n#wall}} to provide a defined interface. In particular the core functionality of  API tools and clients ought not to be dependent upon GT. Moldable features and ubititous introspection are an orthogonal view on to the code, and runtime state.  Useful for development, but not essential."
 			}
 		]
 	},

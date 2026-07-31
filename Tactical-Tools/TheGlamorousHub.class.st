@@ -6,12 +6,6 @@ Class {
 	#tag : 'Hub'
 }
 
-{ #category : 'as yet unclassified' }
-TheGlamorousHub class >> _httpClientMaximumEntitySize [
-	
-	^ ZnCurrentOptions at: #maximumEntitySize
-]
-
 { #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
 

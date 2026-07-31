@@ -100,14 +100,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T13:48:07.793843+01:00"
+						"dateAndTimeString" : "2026-07-30T00:06:43.841732+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "s2gHj1luSS+eDxhVE0493A=="
 				},
-				"code" : "\"Re-imagining of: FileLocator supportedOrigins\"\rTheHub namedDirectories"
+				"code" : "\"Re-imagining of: FileLocator supportedOrigins\"\rTheHub namedFileLocations"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -134,14 +134,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T13:35:50.099397+01:00"
+						"dateAndTimeString" : "2026-07-31T07:22:17.568607+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "mJeGCUctQ5+9f3JxeicKkA=="
 				},
-				"code" : "\"Persisted in image filesystem\"\rTheHub ramdisk"
+				"code" : "\"Interface on to the filesystem persisted in the image\"\rTheHub ramdisk"
 			},
 			{
 				"__type" : "textSnippet",
@@ -384,7 +384,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T14:00:09.511013+01:00"
+						"dateAndTimeString" : "2026-07-31T07:26:23.461434+01:00"
 					}
 				},
 				"uid" : {
@@ -394,7 +394,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "This allows tests to be wrapped in an inner scope, temporarily overiding the environment."
+				"string" : "This allows tests to be wrapped in an inner scope, temporarily overiding the environment. For example testing environment USERNAME would depend upon the host system, making tests difficult. "
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -421,14 +421,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T15:24:27.23924+01:00"
+						"dateAndTimeString" : "2026-07-31T07:31:05.873968+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "K30wx8cGRpaTyVCsr5jTTg=="
 				},
-				"code" : "TheHub\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'Me' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (TheHub osEnvironment at: #USERNAME) equals: 'She'\r\t\t\r\t]."
+				"code" : "TheHub current\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'She' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (TheHub  osEnvironment at: #USERNAME) equals: 'She'\r\t\t\r\t]."
 			},
 			{
 				"__type" : "textSnippet",
