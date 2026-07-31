@@ -228,21 +228,25 @@ TheHub class >> pragmaClassSideUnaryMethods [
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAllFixes [
+TheHub class >> pragmasAllExamples [
 
-	<ttSpoke>
+	"all examples (needs an examples browser)"
+
+		<ttSpoke>
 	
-	^ Pragma allNamed: #ttFix
+	^ Pragma allNamed: #gtExample
 	
 
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAllViews [
+TheHub class >> pragmasAllFixes [
 
+	"fixes pending"
+	
 	<ttSpoke>
 	
-	^ Pragma allNamed: #gtView
+	^ Pragma allNamed: #ttFix
 	
 
 ]
@@ -308,6 +312,12 @@ TheHub class >> signalAuto [
 	^ self current signal: thisContext sender selector withTag: thisContext sender selector
 	
 
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> smalltalkImage [
+	
+ ^ self signalAuto
 ]
 
 { #category : 'browsing' }
@@ -666,7 +676,7 @@ TheHub >> namedFileLocations [
 { #category : 'environment' }
 TheHub >> osEnvironment [
 
-	"Host Environment"
+	"host environment"
 	
 	<ttSpoke>
 	
@@ -697,6 +707,8 @@ TheHub >> readFrom: aHubClass [
 { #category : 'environment' }
 TheHub >> sessionManager [
  
+  "session manager - startUp/shutdown lists"
+  
   <ttSpoke>
   
 	^ SessionManager default

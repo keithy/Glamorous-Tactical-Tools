@@ -95,6 +95,19 @@ GtHomeToolsSection class >> openMonitorWindow [
 ]
 
 { #category : '*Tactical-Tools' }
+GtHomeToolsSection class >> openPlayground: card [
+	^ 
+	self
+				showSpaceWithIcon: GtPlaygroundStencil playgroundClass defaultIcon
+				title: 'Playground'
+				with: (GtPlaygroundStencil new
+					knowledgeBase: self knowledgeBase)
+				from: card
+	
+	 
+]
+
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openTranscript: card [
 	^ self
 		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect

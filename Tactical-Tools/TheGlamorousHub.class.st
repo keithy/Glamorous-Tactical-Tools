@@ -48,16 +48,6 @@ TheGlamorousHub class >> iceCredentialsStore [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> iceRegistry [
-
-	<ttHub>
-	
-	"the list of repositories registered with the git tool"
-	^ self signalAuto
-
-]
-
-{ #category : 'environment' }
 TheGlamorousHub class >> iceRepositories [
 
 	^ self signalAuto
@@ -124,11 +114,32 @@ TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 ]
 
 { #category : 'environment' }
+TheGlamorousHub class >> openGettingStartedSection [
+
+	<ttSpoke>
+
+	^ GtHomeMultiCardGetStartedSection new
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> openMonitor: aCard [
+
+  "from GtHomeToolsSection"
+ 
+	^ self
+		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedInspect
+		title: 'Monitor'
+		with: GtMonitorStencil new
+		from: aCard.
+ 
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> openMonitorWindow [
 
 	<ttSpoke>
 
-	self openMonitorFrom: nil.
+	self openMonitor: nil.
 	
 	^ nil
 ]
@@ -156,6 +167,26 @@ TheGlamorousHub class >> openTranscriptWindow [
 	^ nil "nothing to spawn"
 ]
 
+{ #category : 'spokes' }
+TheGlamorousHub class >> pragmasAllToolButtonStencils [
+
+	<ttSpoke>
+	
+	^ Pragma allNamed: #gtToolButton
+	
+
+]
+
+{ #category : 'spokes' }
+TheGlamorousHub class >> pragmasAllViews [
+
+	<ttSpoke>
+	
+	^ Pragma allNamed: #gtView
+	
+
+]
+
 { #category : 'as yet unclassified' }
 TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil from: anotherElement [
 
@@ -170,6 +201,15 @@ TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil
 		addChild: aStencil asElement;
 		withSceneDriller;
 		showFrom: anotherElement
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> whatIsHome [
+
+	<ttSpoke>
+	<ttHub>
+
+	^ GtHome
 ]
 
 { #category : 'environment' }
@@ -190,14 +230,6 @@ TheGlamorousHub >> httpClientOptions [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> iceRegistry [
-	<ttSpoke>
-	
-	"the Ice Repository manager"
-	^ IceRepository 
-]
-
-{ #category : 'environment' }
 TheGlamorousHub >> iceRepositories [
 	
 	<ttSpoke>
@@ -208,6 +240,7 @@ TheGlamorousHub >> iceRepositories [
 
 { #category : 'environment' }
 TheGlamorousHub >> lepiter [
+ 	"current loaded default logical database"
  	
  	<ttSpoke>
  	
