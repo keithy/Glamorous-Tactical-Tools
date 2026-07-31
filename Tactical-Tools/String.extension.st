@@ -1,6 +1,6 @@
 Extension { #name : 'String' }
 
-{ #category : '*Tactical-Tools-Fixes' }
+{ #category : '*Tactical-Tools' }
 String >> gtCloneGithubRepository [
 	| remote |
 	remote := IceGitRemote url: self.

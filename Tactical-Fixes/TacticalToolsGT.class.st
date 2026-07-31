@@ -8,8 +8,8 @@ It currently provides:
 Class {
 	#name : 'TacticalToolsGT',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-GT',
-	#package : 'Tactical-Tools',
+	#category : 'Tactical-Fixes-GT',
+	#package : 'Tactical-Fixes',
 	#tag : 'GT'
 }
 

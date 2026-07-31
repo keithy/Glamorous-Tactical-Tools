@@ -1,6 +1,6 @@
 Extension { #name : 'BlElement' }
 
-{ #category : '*Tactical-Tools-Extensions' }
+{ #category : '*Tactical-Fixes' }
 BlElement class >> newEmpty [
 	"Create a new element that is invisible and does not participate in layout,
 	taking effectively no space. Useful as a null/placeholder element in

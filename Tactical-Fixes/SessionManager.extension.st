@@ -1,6 +1,6 @@
 Extension { #name : 'SessionManager' }
 
-{ #category : '*Tactical-Tools-Fixes' }
+{ #category : '*Tactical-Fixes' }
 SessionManager >> gtViewShutdownListFor: aView [
 	<gtView>
 	

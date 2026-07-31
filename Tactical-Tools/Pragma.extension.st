@@ -20,19 +20,25 @@ Pragma class >> ttItemsWithActionFor: aView context: theContext [
 			
 		column: 'Execute' translated
 			stencil: [ :each | 
-		 
-			  each method numArgs == 0 ifFalse: [ BlElement new ] ifTrue: [
-				BrButton new
-						aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + BrGlamorousButtonWithIconAptitude;
-						icon: BrGlamorousVectorIcons playinspect;
-						label: each method selector asString;
-							beTinySize;
-							action: [ :b | 
-							
-							(each method valueWithReceiver: each method methodClass soleInstance arguments:#())
-								   ifNotNil: [ :result | b phlow spawnObject: result ]
+		 	
+		 	 each method in: [ :m |
+		 	 
+			  	(m isClassSide and: [ m numArgs == 0 ]) 
+			  		ifFalse: [ BlElement newEmpty ] 
+			  		ifTrue: [
+								BrButton new
+									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
+															BrGlamorousButtonWithIconAptitude;
+									icon: BrGlamorousVectorIcons playinspect;
+									label: m selector asString;
+									beTinySize;
+											
+											action: [ :button | 
+										
+										(m valueWithReceiver: m methodClass soleInstance arguments:#())
+											   ifNotNil: [ :result | button phlow spawnObject: result ]
 								  
-     ] ]]
+     ] ]]]
 			width: 50;
 			
 		 
