@@ -9,8 +9,6 @@ Class {
 { #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
 
-	<ttSpoke>
-	
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
 
@@ -35,8 +33,6 @@ TheGlamorousHub class >> homeTools [
 
 { #category : 'environment' }
 TheGlamorousHub class >> httpClientOptions [
-
-	<ttSpoke>
 	
 	^ self signalAuto
 ]
@@ -44,6 +40,8 @@ TheGlamorousHub class >> httpClientOptions [
 { #category : 'environment' }
 TheGlamorousHub class >> iceCredentialsStore [
 
+	"Iceberg registry of github credentials"
+	
 	<ttSpoke>
 
 		^ IceCredentialStore current
@@ -62,9 +60,6 @@ TheGlamorousHub class >> iceRegistry [
 { #category : 'environment' }
 TheGlamorousHub class >> iceRepositories [
 
-	<ttSpoke>
-	
-	"the list of repositories registered with the git tool"
 	^ self signalAuto
 
 ]
@@ -98,15 +93,17 @@ TheGlamorousHub class >> iceRepositoryNamed: aString [
 
 { #category : 'environment' }
 TheGlamorousHub class >> lepiter [
-	<ttSpoke>
+
 	^ self signalAuto
 ]
 
 { #category : 'environment' }
 TheGlamorousHub class >> lepiterPropertiesFile [
+
+	"(fix this if duplicate databases are defined)"
+	
 	<ttSpoke>
 
-		"this is where duplicates may be defined"
 	^ self lepiter properties localFile
 ]
 
@@ -202,6 +199,8 @@ TheGlamorousHub >> iceRegistry [
 
 { #category : 'environment' }
 TheGlamorousHub >> iceRepositories [
+	
+	<ttSpoke>
 	
 	 "the list of repositories registered with the git tool"
 	^ IceRepository repositories

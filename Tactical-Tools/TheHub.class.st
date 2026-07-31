@@ -61,16 +61,6 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
    	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
-{ #category : 'environment' }
-TheHub class >> classSideUnaryMethods [
-
- <ttSpoke>
- 
- "potential spokes"
-
-^ Pragma all select: [ :ea | ea method isClassSide and: [ ea method numArgs == 0 ] ]
-]
-
 { #category : 'instance creation' }
 TheHub class >> current [
 	
@@ -124,16 +114,6 @@ TheHub class >> fileReferenceFrom: aString [
 					ifPresent: [ :locator | path ifEmpty: [ locator resolve ] ifNotEmpty: [ locator resolve resolve: path allButFirst ] ]
 					ifAbsent: [ self error: 'Unknown directory: ', dirName printString ] ]
 	
-]
-
-{ #category : 'spokes' }
-TheHub class >> fixesPragmas [
-
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttFix
-	
-
 ]
 
 { #category : 'testing' }
@@ -192,8 +172,6 @@ TheHub class >> lookupClass: aName [
 
 { #category : 'environment' }
 TheHub class >> namedFileLocations [
-
-	<ttSpoke>
 	
 	^ self signalAuto
 ]
@@ -226,7 +204,6 @@ TheHub class >> openFileBrowser [
 
 { #category : 'environment' }
 TheHub class >> osEnvironment [
-	<ttSpoke>
 	
 	^ self signalAuto
 ]
@@ -238,6 +215,16 @@ TheHub class >> platform [
 	
 	^ GRPlatform current 
 	
+]
+
+{ #category : 'environment' }
+TheHub class >> pragmaClassSideUnaryMethods [
+
+ "potential spokes"
+
+ <ttSpoke>
+ 
+^ Pragma all select: [ :ea | ea method isClassSide and: [ ea method numArgs == 0 ] ]
 ]
 
 { #category : 'spokes' }
@@ -278,7 +265,7 @@ TheHub class >> pragmasNamed: aSymbol in: aClass [
  
  ^ Pragma 
 		allNamed: aSymbol
-		from: self
+		from: aClass
 		toButExcluding: Object  
 ]
 
@@ -312,8 +299,6 @@ TheHub class >> ramdiskTmpUseDuring: aBlock [
 { #category : 'environment' }
 TheHub class >> sessionManager [
 
-	<ttSpoke>
-	
 	^ self signalAuto
 ]
 
@@ -392,6 +377,37 @@ TheHub >> defaultAction [
 ]
 
 { #category : 'browsing' }
+TheHub >> getSpokeFromPragma: aPragma [
+
+	| aMethod aClass | 
+	
+	aMethod := aPragma method.
+	aClass := aMethod methodClass.
+	
+	aMethod isClassSide ifTrue: [ aClass := aClass  soleInstance ].
+	
+	(aClass respondsTo: aMethod selector)
+		ifFalse: [ 
+			^ self error: 'Methods marked as instance spokes need a class side instanciation method with the same selector' ].
+
+	^ aClass perform: aMethod selector
+  
+]
+
+{ #category : 'browsing' }
+TheHub >> getSpokeFromPragma: p _: button [
+	^ p methodClass soleInstance
+		
+		in: [ :c | 
+			(c respondsTo: p selector)
+				ifFalse: [ ^ self
+						error: 'Methods marked as instance spokes need a class side instanciation method with the same selector' ].
+
+			(c perform: p selector)
+    ]
+]
+
+{ #category : 'browsing' }
 TheHub >> gtHubsFor: aView [  
 	<gtView>
 	
@@ -463,50 +479,38 @@ TheHub >> gtMessageTextFor: aView [
 
 { #category : 'browsing' }
 TheHub >> gtSpokesFor: aView [
-
 	<gtView>
-
 	self spokes ifEmpty: [ ^ aView empty ].
-		
-		^ aView columnedList
+
+	^ aView columnedList
 		title: 'Spokes';
 		priority: 5;
-		items: [ self spokes   ] ;
-		"actionUpdateButtonTooltip: 'Update item list';"
-		column: '#' 
-			text: [ :eachItem :eachIndex | 
-				eachIndex asRopedText foreground: Color gray ]
+		items: [ self spokes ];
+		column: '#'
+			text: [ :eachItem :eachIndex | eachIndex asRopedText foreground: Color gray ]
 			width: 45;
-		column: 'Item'
-			text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Comment'
-			text: [ :eachItem | eachItem method comment ifNil: '' ];
-			
+		column: 'Item' text: [ :eachItem | eachItem gtDisplayText ];
+		column: 'Comment' text: [ :eachItem | eachItem method comment ifNil: '' ];
 		column: 'Open' translated
 			stencil: [ :each | 
-		 	
-		 	 each method in: [ :m |
-		 	 
-			  	(m isClassSide and: [ m numArgs == 0 ]) 
-			  		ifFalse: [ BlElement newEmpty ] 
-			  		ifTrue: [
-								BrButton new
-									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
-															BrGlamorousButtonWithIconAptitude;
+				
+						each method numArgs == 0
+							ifFalse: [ BlElement newEmpty ]
+							ifTrue: [ BrButton new
+									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + BrGlamorousButtonWithIconAptitude;
 									icon: BrGlamorousVectorIcons playinspect;
-									label: m selector asString;
+									label: each selector asString;
 									beTinySize;
-											
-											action: [ :button | 
-										
-										(m valueWithReceiver: m methodClass soleInstance arguments:#())
-											   ifNotNil: [ :result | button phlow spawnObject: result ]
-								  
-     ] ]]]
+									action: [ :button | 
+									
+										(self getSpokeFromPragma: each ) 
+											ifNotNil: [ :result | 
+													button phlow spawnObject: result ] ] 
+									
+									] 
+			]
 			width: 50;
-			
-		 
-"
+		yourself	"actionUpdateButtonTooltip: 'Update item list';"	"
 		dynamicContextItems: [ :anElement :aCollection | 
 			aCollection size = 1
 				ifTrue: [ GtPhlowObjectContextMenuTarget
@@ -516,8 +520,6 @@ TheHub >> gtSpokesFor: aView [
 						menuItemsForObject: aCollection
 						hostElement: anElement ] ]
 	"
-	yourself
-
 ]
 
 { #category : 'browsing' }
@@ -650,14 +652,24 @@ TheHub >> hubs [
 
 { #category : 'environment' }
 TheHub >> namedFileLocations [
+ 
+   "named file locations"
 
-	^ (FileLocator supportedOrigins collect: [ :origin | origin -> (FileLocator origin: origin) ]) asDictionary
+   <ttSpoke>
+ 	
+	^ (FileLocator supportedOrigins 
+			collect: [ :origin | 
+				origin -> (FileLocator origin: origin) ]) asDictionary
 	
 ]
 
 { #category : 'environment' }
 TheHub >> osEnvironment [
 
+	"Host Environment"
+	
+	<ttSpoke>
+	
 	^ OSEnvironment current
 ]
 
@@ -685,6 +697,8 @@ TheHub >> readFrom: aHubClass [
 { #category : 'environment' }
 TheHub >> sessionManager [
  
+  <ttSpoke>
+  
 	^ SessionManager default
 ]
 
