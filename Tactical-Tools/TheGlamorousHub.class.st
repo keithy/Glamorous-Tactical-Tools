@@ -33,16 +33,9 @@ TheGlamorousHub class >> gtImage [
 { #category : 'environment' }
 TheGlamorousHub class >> homeTools [ 
 
+	<ttHub>
+		
   ^  GtHomeToolsSection 
-		  
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> homeToolsHub [
-
- <ttSpoke "comment">
- 
- ^ self classPragmas: #ttSpoke in: GtHomeToolsSection 
 		  
 ]
 
@@ -129,16 +122,6 @@ TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 	(self classNamed: #GtImage ifAbsent: [ ^ 0 ]).
 	
 	^ 20 
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> openGitManagerWindow [
-
-	<ttSpoke>
-
-	self openGitManagerFrom: nil.
-	
-	^ nil
 ]
 
 { #category : 'environment' }

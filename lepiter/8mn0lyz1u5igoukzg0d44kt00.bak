@@ -313,14 +313,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T02:49:35.23651+01:00"
+						"dateAndTimeString" : "2026-07-31T05:58:25.75462+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "hhRSXfpvTmKGMUxPKeTRww=="
 				},
-				"code" : "TheHub current spokes"
+				"code" : "TheHub current browse"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -347,14 +347,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T02:50:28.334149+01:00"
+						"dateAndTimeString" : "2026-07-31T05:06:24.191253+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "/aT+ylIFTFqtAxN5Gec0IQ=="
 				},
-				"code" : "TheHub current spokesRawEveryPotentialSpoke.\rtt\r(TheHub class methodNamed: #spokes) asPragma\rBehavior\rttSpokes:\r"
+				"code" : "TheHub current spokesRawEveryPotentialSpoke.\rtt\r(TheHub class methodNamed: #spokes) asPragma\rBehavior\rttSpokes\r\rTheHub new\r"
 			}
 		]
 	},

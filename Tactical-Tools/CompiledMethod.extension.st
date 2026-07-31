@@ -5,7 +5,7 @@ CompiledMethod class >> ttItemsWithActionFor: aView context: theContext [
 	<ttViewInCollection>
 	
 		^ aView columnedList
-		title: 'Executable';
+		title: '[each]';
 		priority: 5;
 		items: [ theContext optionAt: #theCollection ifAbsent: #() ] ;
 		actionUpdateButtonTooltip: 'Update item list';
@@ -15,23 +15,40 @@ CompiledMethod class >> ttItemsWithActionFor: aView context: theContext [
 			width: 45;
 		column: 'Item'
 			text: [ :eachItem | eachItem gtDisplayText ];
+		column: 'Comment'
+			text: [ :eachItem | eachItem method comment ifNil: '' ];
 			
 		column: 'Execute' translated
-			stencil: [ :each | 
-			
-			  each numArgs == 0 ifFalse: [ BlElement new ] ifTrue: [
-				BrButton new
-						aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + BrGlamorousButtonWithIconAptitude;
-						icon: BrGlamorousVectorIcons playinspect;
-						label: each selector asString;
-							beTinySize;
-							action: [ :b | 
-									(each valueWithReceiver: each methodClass soleInstance arguments:#())
-								   ifNotNil: [ :result | b phlow spawnObject: result ]
+			stencil: [ :m | 
+		 	 
+			  	(m isClassSide and: [ m numArgs == 0 ]) 
+			  		ifFalse: [ BlElement newEmpty ] 
+			  		ifTrue: [
+								BrButton new
+									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
+															BrGlamorousButtonWithIconAptitude;
+									icon: BrGlamorousVectorIcons playinspect;
+									label: m selector asString;
+									beTinySize;
+											
+											action: [ :button | 
+										
+										(m valueWithReceiver: m methodClass soleInstance arguments:#())
+											   ifNotNil: [ :result | button phlow spawnObject: result ]
 								  
-							
      ] ]]
-			width: 50.
+			width: 50;
+			
+		 
+
+		dynamicContextItems: [ :anElement :aCollection | 
+			aCollection size = 1
+				ifTrue: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection first
+						hostElement: anElement ]
+				ifFalse: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection
+						hostElement: anElement ] ]
 	
 
 ]
