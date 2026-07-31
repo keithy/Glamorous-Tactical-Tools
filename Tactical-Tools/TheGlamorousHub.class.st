@@ -34,6 +34,14 @@ TheGlamorousHub class >> homeTools [
 ]
 
 { #category : 'environment' }
+TheGlamorousHub class >> httpClientOptions [
+
+	<ttSpoke>
+	
+	^ self signalAuto
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> iceCredentialsStore [
 
 	<ttSpoke>
@@ -173,6 +181,15 @@ TheGlamorousHub >> gitRepositories [
 	
 	"the list of repositories registered with the git tool"
 	^ IceRepository gtGitRepositories
+]
+
+{ #category : 'environment' }
+TheGlamorousHub >> httpClientOptions [ 
+
+	<ttSpoke>
+		
+  ^  ZnOptions globalDefault clone allBindings 
+		  
 ]
 
 { #category : 'environment' }

@@ -11,9 +11,6 @@ Class {
 	#name : 'TheHub',
 	#superclass : 'Notification',
 	#instVars : [
-		'spokes',
-		'hubs',
-		'utils',
 		'browsing'
 	],
 	#classVars : [
@@ -40,47 +37,57 @@ TheHub class >> _ramdiskFileSystemClobber [
 	ramdiskFileSystem := nil
 ]
 
-{ #category : 'environment' }
+{ #category : 'instance creation' }
 TheHub class >> browse [
 
-^ self newBrowsing: self current
+^ self newBrowsing: self currentOrSelf
 	 
 		  
 ]
 
-{ #category : 'accessing' }
+{ #category : 'wall' }
 TheHub class >> classNamed: aName [
 
-	^ Smalltalk at: aName asSymbol
+   <ttWall>
+
+   ^ Smalltalk at: aName asSymbol
 ]
 
 { #category : 'accessing' }
 TheHub class >> classNamed: aName ifAbsent: aBlock [
 
-	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
+   <ttWall>
+
+   	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
 { #category : 'environment' }
-TheHub class >> classPragmas: aTag in: aClass [
+TheHub class >> classSideUnaryMethods [
 
-^ Pragma
-		allNamed: aTag
-		from: aClass class
-		to: Object class
-		
-		 
-		
-" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
-"
+ <ttSpoke>
+ 
+ "potential spokes"
+
+^ Pragma all select: [ :ea | ea method isClassSide and: [ ea method numArgs == 0 ] ]
 ]
 
-{ #category : 'environment' }
+{ #category : 'instance creation' }
 TheHub class >> current [
 	
 	^ CurrentHubClass ifNil: [ CurrentHubClass := self ]
 ]
 
-{ #category : 'environment' }
+{ #category : 'instance creation' }
+TheHub class >> currentOrSelf [
+
+	^ self == TheHub
+		 ifTrue: [ self current ]
+ 		ifFalse: [ self ]
+	 
+		  
+]
+
+{ #category : 'testing' }
 TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 	
 	^ aBlock on: self current do: [  :ex | 
@@ -91,8 +98,10 @@ TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 		]
 ]
 
-{ #category : 'environment' }
+{ #category : 'wall' }
 TheHub class >> fileReferenceFrom: aString [
+
+  <ttWall>
 
 	"Answer a FileReference or FileLocator from the supplied string.
 	FileLocator origins are available as formatted strings, e.g.
@@ -117,7 +126,17 @@ TheHub class >> fileReferenceFrom: aString [
 	
 ]
 
-{ #category : 'environment' }
+{ #category : 'spokes' }
+TheHub class >> fixesPragmas [
+
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttFix
+	
+
+]
+
+{ #category : 'testing' }
 TheHub class >> for: instanceMethodSelector respondWith: substituteValue during: aBlock [
 	
 	^ aBlock on: CurrentHubClass do: [  :ex | 
@@ -128,13 +147,15 @@ TheHub class >> for: instanceMethodSelector respondWith: substituteValue during:
 		]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'wall' }
 TheHub class >> globalAt: aName ifAbsent: aBlock [
 
+	<ttWall>
+	
 	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
-{ #category : 'environment' }
+{ #category : 'wall' }
 TheHub class >> httpClientMaximumEntitySize [
 
 	<ttWall>
@@ -143,10 +164,10 @@ TheHub class >> httpClientMaximumEntitySize [
 		
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'browsing' }
 TheHub class >> hubs [
 
-	^ self current classPragmasNamed: #ttHubs.
+	^ self browse hubs
 	
 
 ]
@@ -177,7 +198,7 @@ TheHub class >> namedFileLocations [
 	^ self signalAuto
 ]
 
-{ #category : 'environment' }
+{ #category : 'instance creation' }
 TheHub class >> newBrowsing: aClass [ 
 
 ^ self basicNew
@@ -196,7 +217,9 @@ TheHub class >> onStartUpBidToBeCurrentHubClass [
 { #category : 'accessing' }
 TheHub class >> openFileBrowser [
 
-  "open a file browser, but a more discoverable option would be to list the locations"
+   <ttSpoke>
+
+   "open a file browser, but a more discoverable option would be to list the locations"
   
 	^ '.' asFileReference
 ]
@@ -215,6 +238,48 @@ TheHub class >> platform [
 	
 	^ GRPlatform current 
 	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAllFixes [
+
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttFix
+	
+
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAllViews [
+
+	<ttSpoke>
+	
+	^ Pragma allNamed: #gtView
+	
+
+]
+
+{ #category : 'wall' }
+TheHub class >> pragmasClassSideNamed: aSymbol in: aClass [
+ 
+  <ttWall>
+ 
+ ^ Pragma 
+		allNamed: aSymbol
+		from: aClass class
+		toButExcluding: Object class  
+]
+
+{ #category : 'wall' }
+TheHub class >> pragmasNamed: aSymbol in: aClass [
+ 
+  <ttWall>
+ 
+ ^ Pragma 
+		allNamed: aSymbol
+		from: self
+		toButExcluding: Object  
 ]
 
 { #category : 'environment' }
@@ -246,6 +311,8 @@ TheHub class >> ramdiskTmpUseDuring: aBlock [
 
 { #category : 'environment' }
 TheHub class >> sessionManager [
+
+	<ttSpoke>
 	
 	^ self signalAuto
 ]
@@ -258,35 +325,19 @@ TheHub class >> signalAuto [
 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'browsing' }
 TheHub class >> spokes [
 
-	^ self current classPragmasNamed: #ttSpoke.
-	
-
-]
-
-{ #category : 'environment' }
-TheHub class >> spokesCM [
-
-^ self spokesPragmas collect: [ :ea | ea method ]
+^  self browse spokes
 		 
+ 
 ]
 
 { #category : 'environment' }
-TheHub class >> spokesPragmas [
+TheHub class >> spokesMethods [
 
-^  self current classPragmasNamed: #ttSpoke
+^ self spokes collect: [ :ea | ea method ]
 		 
-		
-" ^ self class allMethods select: [ :ea | ea hasPragmaNamed: #ttSpoke ]
-"
-]
-
-{ #category : 'environment' }
-TheHub class >> spokesRawAll [
-
-^ Pragma all select: [ :ea | ea method isClassSide and: [ ea method numArgs == 0 ] ]
 ]
 
 { #category : 'environment' }
@@ -321,15 +372,7 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 { #category : 'as yet unclassified' }
 TheHub class >> utils [
 
-	^ self current classPragmasNamed: #ttUtility.
-	
-
-]
-
-{ #category : 'as yet unclassified' }
-TheHub class >> wall [
-
-	^ self current classPragmasNamed: #ttWall.
+	^ self browse utils
 	
 
 ]
@@ -342,21 +385,13 @@ TheHub >> current [
 
 ]
 
-{ #category : 'environment' }
-TheHub >> cypher [
-
-	^ self class cypher 
-	
-
-]
-
-{ #category : 'environment' }
+{ #category : 'handling' }
 TheHub >> defaultAction [
 
 	^ self perform: tag
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> gtHubsFor: aView [  
 	<gtView>
 	
@@ -414,22 +449,24 @@ TheHub >> gtHubsFor: aView [
 
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> gtInspectorTitleString [ 
     ^ 'Hub Browser (' ,(browsing gtDisplayString) , ')' 
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> gtMessageTextFor: aView [
 	<gtView>
 	^ (super gtMessageTextFor: aView) priority: 90
 		
 ]
 
-{ #category : 'environment' }
-TheHub >> gtSpokesFor: aView [  
+{ #category : 'browsing' }
+TheHub >> gtSpokesFor: aView [
+
 	<gtView>
-		self spokes ifEmpty: [ ^ aView empty ].
+
+	self spokes ifEmpty: [ ^ aView empty ].
 		
 		^ aView columnedList
 		title: 'Spokes';
@@ -483,7 +520,7 @@ TheHub >> gtSpokesFor: aView [
 
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> gtUtilsFor: aView [  
 
 	<gtView>
@@ -541,7 +578,7 @@ TheHub >> gtUtilsFor: aView [
 
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> gtWallsFor: aView [  
 	<gtView>
 	self wall ifEmpty: [ ^ aView empty ].
@@ -603,10 +640,10 @@ TheHub >> httpClientMaximumEntitySize [
 	^ ZnCurrentOptions at: #maximumEntitySize
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> hubs [
 
-	^ browsing classPragmasNamed: #ttHub
+	^ self class pragmasClassSideNamed: #ttHub in: browsing  
 	
 
 ]
@@ -624,17 +661,11 @@ TheHub >> osEnvironment [
 	^ OSEnvironment current
 ]
 
-{ #category : 'environment' }
+{ #category : 'wall' }
 TheHub >> platform [
 
 	^ GRPlatform current 
 	
-]
-
-{ #category : 'environment' }
-TheHub >> ramdisk [
-	
-	^ self current _ramdiskFileSystem
 ]
 
 { #category : 'environment' }
@@ -644,44 +675,39 @@ TheHub >> ramdiskReset [
 	
 ]
 
-{ #category : 'environment' }
+{ #category : 'initializing' }
 TheHub >> readFrom: aHubClass [
  
   browsing := aHubClass.
-	spokes := aHubClass classPragmasNamed: #ttSpoke.
-	hubs := aHubClass classPragmasNamed: #ttHub.
-	utils := aHubClass classPragmasNamed: #ttUtility.
 
 ]
 
 { #category : 'environment' }
 TheHub >> sessionManager [
-
- <ttSpoke>
  
 	^ SessionManager default
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> spokes [
 
-	^ browsing classPragmasNamed: #ttSpoke.
+	^ (self class pragmasClassSideNamed: #ttSpoke in: browsing), (self class pragmasNamed: #ttSpoke in: browsing)
 	
 
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> utils [
 
-	^ browsing classPragmasNamed: #ttUtility
+	^ self class pragmasClassSideNamed: #ttUtility in: browsing
+	
 	
 
 ]
 
-{ #category : 'environment' }
+{ #category : 'browsing' }
 TheHub >> wall [
 
-	^ browsing classPragmasNamed: #ttWall
-	
-
+	^ self class pragmasClassSideNamed: #ttWall in: browsing
+ 
 ]
