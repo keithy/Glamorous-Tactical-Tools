@@ -2,8 +2,11 @@ Extension { #name : 'GtHomeToolsSection' }
 
 { #category : '*Tactical-Tools' }
 GtHomeToolsSection >> newCoderButtonStencil [
+
+  <ttExtension>
 	<gtToolButton>
-	^ GtToolButtonStencil new
+
+		^ GtToolButtonStencil new
 		title: 'Coder';
 		priority: 25;
 		icon: BrGlamorousVectorIcons largeBook;
@@ -14,7 +17,10 @@ GtHomeToolsSection >> newCoderButtonStencil [
 
 { #category : '*Tactical-Tools' }
 GtHomeToolsSection >> newGitButtonStencil [
+
+	<ttExtension>
 	<gtToolButton>
+	
 	^ GtToolButtonStencil new
 		title: 'Git';
 		priority: 30;
@@ -24,8 +30,31 @@ GtHomeToolsSection >> newGitButtonStencil [
 ]
 
 { #category : '*Tactical-Tools' }
-GtHomeToolsSection >> newMonitorButtonStencil [
+GtHomeToolsSection >> newLepiterButtonStencil [
+
+	<ttToDo>
 	<gtToolButton>
+
+	^ GtToolButtonStencil new 
+		title: 'Knowledge bases';
+		priority: 20;
+		icon: LeIcons lepiterDatabase;
+		action: [ :card | 
+			self
+				showSpaceWithIcon: LeIcons lepiterDatabase
+				title: 'Knowledge bases'
+				with: (LeLepiterToolStencil new
+					knowledgeBase: self knowledgeBase)
+				from: card ];
+		description: 'Knowledge bases'
+]
+
+{ #category : '*Tactical-Tools' }
+GtHomeToolsSection >> newMonitorButtonStencil [
+
+	<ttExtension>
+	<gtToolButton>
+	
 	^ GtToolButtonStencil new
 		title: 'Monitor';
 		priority: 40;
@@ -35,7 +64,26 @@ GtHomeToolsSection >> newMonitorButtonStencil [
 ]
 
 { #category : '*Tactical-Tools' }
+GtHomeToolsSection >> newTranscriptButtonStencil [
+
+	<ttExtension>
+	<gtToolButton>
+	^ GtToolButtonStencil new
+		title: 'Transcript';
+		priority: 50;
+		elementId: GtWorldMenuTranscriptElementId;
+		icon: BrGlamorousVectorIcons largeTranscript;
+		action: [ :card | 
+			self class openTranscript: card
+    ];
+		description: 'Transcript is the place to see logs.'
+]
+
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openCoder: from [
+
+	<ttFix>
+	
 	^ self
 		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedBrowse
 		title: 'Coder'

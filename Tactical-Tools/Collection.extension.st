@@ -2,6 +2,7 @@ Extension { #name : 'Collection' }
 
 { #category : '*Tactical-Tools' }
 Collection >> gtViewsInContext: aContext [
+
 	"This collects all views for the current object.
 	By default, it simply looks for the #gtView pragma.
 	The inspector can decide whether or not a presentation should be displayed.
@@ -12,7 +13,10 @@ Collection >> gtViewsInContext: aContext [
 ]
 
 { #category : '*Tactical-Tools' }
-Collection >> merge: aBlockOrSymbol [ 
+Collection >> merge: aBlockOrSymbol [
+
+	<ttExtension>
+	
 	"
 		result := server users.
 		results := servers merge: #users.

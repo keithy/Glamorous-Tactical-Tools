@@ -230,18 +230,6 @@ TheHub class >> pragmasAllExamples [
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAllFixes [
-
-	"Fixes pending"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttFix
-	
-
-]
-
-{ #category : 'spokes' }
 TheHub class >> pragmasAllUtility [
 
 	"Tactical-Tools utility methods"
@@ -249,18 +237,6 @@ TheHub class >> pragmasAllUtility [
 	<ttSpoke>
 	
 	^ Pragma allNamed: #ttUtility
-	
-
-]
-
-{ #category : 'spokes' }
-TheHub class >> pragmasAllWall [
-
-	"Tactical-Tools wall methods"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttWall
 	
 
 ]
