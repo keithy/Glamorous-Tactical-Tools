@@ -1,9 +1,8 @@
 Extension { #name : 'FileLocator' }
 
-{ #category : '*Tactical-Tools-Hub' }
+{ #category : '*Tactical-Tools' }
 FileLocator class >> ramdisk [
 
-	<ttToDo>
 	<origin>
 	
 	^ self origin: #ramdisk

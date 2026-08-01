@@ -1,6 +1,6 @@
 Extension { #name : 'GtGitRemoteRepositoryForm' }
 
-{ #category : '*Tactical-Tools' }
+{ #category : '*Tactical-Fixes' }
 GtGitRemoteRepositoryForm >> projectLocation [
 
 	<ttFix>

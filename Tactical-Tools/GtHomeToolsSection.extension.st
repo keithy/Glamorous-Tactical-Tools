@@ -64,6 +64,20 @@ GtHomeToolsSection >> newMonitorButtonStencil [
 ]
 
 { #category : '*Tactical-Tools' }
+GtHomeToolsSection >> newPlaygroundButtonStencil [
+
+	<ttExtension>
+	"<gtToolButton>"
+
+	^ GtToolButtonStencil new 
+		title: 'Playground';
+		priority: 10;
+		icon: (GtPlaygroundStencil playgroundClass defaultIcon);
+		action: [ :card | self class openPlayground: card on: self knowledgeBase];
+		description: 'Play with code. Live.'
+]
+
+{ #category : '*Tactical-Tools' }
 GtHomeToolsSection >> newTranscriptButtonStencil [
 
 	<ttExtension>
@@ -143,13 +157,16 @@ GtHomeToolsSection class >> openMonitorWindow [
 ]
 
 { #category : '*Tactical-Tools' }
-GtHomeToolsSection class >> openPlayground: card [
+GtHomeToolsSection class >> openPlayground: card on: knowledgeBase [
+
+	<ttExtension>
+	
 	^ 
 	self
 				showSpaceWithIcon: GtPlaygroundStencil playgroundClass defaultIcon
 				title: 'Playground'
 				with: (GtPlaygroundStencil new
-					knowledgeBase: self knowledgeBase)
+					knowledgeBase: knowledgeBase)
 				from: card
 	
 	 

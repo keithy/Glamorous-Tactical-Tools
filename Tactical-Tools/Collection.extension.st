@@ -16,6 +16,7 @@ Collection >> gtViewsInContext: aContext [
 Collection >> merge: aBlockOrSymbol [
 
 	<ttExtension>
+	"results := servers merge: #users"
 	
 	"
 		result := server users.

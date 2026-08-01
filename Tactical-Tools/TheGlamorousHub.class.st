@@ -108,7 +108,7 @@ TheGlamorousHub class >> iceRepositoryNamed: aString [
 { #category : 'environment' }
 TheGlamorousHub class >> lepiter [
 
-	^ self signalAuto
+	^ self current signalAuto
 ]
 
 { #category : 'environment' }

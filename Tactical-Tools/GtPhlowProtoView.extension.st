@@ -4,6 +4,9 @@ Extension { #name : 'GtPhlowProtoView' }
 GtPhlowProtoView >> gtSoon: aBlock ifPending: initial ifError: errBlock [
 
 	<ttExtension>
+	<ttToDo> 
+	
+	"Is there an equivalent implementation elsewhere now?"
 	
 	^ [ :ea |  
 	

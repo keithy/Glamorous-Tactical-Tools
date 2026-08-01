@@ -2,6 +2,7 @@ Extension { #name : 'Pragma' }
 
 { #category : '*Tactical-Tools' }
 Pragma class >> ttItemsWithActionFor: aView context: theContext [
+
 	<ttViewInCollection>
 	
 		^ aView columnedList

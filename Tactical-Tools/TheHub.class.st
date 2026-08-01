@@ -28,7 +28,15 @@ Class {
 TheHub class >> _ramdiskFileSystem [
 	
 	"class instance variable provides inherant image persistence, but use public method"
-	^ ramdiskFileSystem ifNil: [  ramdiskFileSystem := FileSystem memory ]
+	^ ramdiskFileSystem
+]
+
+{ #category : 'environment' }
+TheHub class >> _ramdiskFileSystem: anObject [ 
+
+	ramdiskFileSystem := anObject.
+	
+	^ ramdiskFileSystem
 ]
 
 { #category : 'environment' }
@@ -37,10 +45,22 @@ TheHub class >> _ramdiskFileSystemClobber [
 	ramdiskFileSystem := nil
 ]
 
+{ #category : 'environment' }
+TheHub class >> _ramdiskFileSystemReset: beBrutal [
+	
+	ramdiskFileSystem ifNil: [ ^ self ].
+	
+	(beBrutal or: [ ramdiskFileSystem root entries isEmpty ]) 
+		
+		ifTrue: [ ramdiskFileSystem := nil ]
+
+
+]
+
 { #category : 'instance creation' }
 TheHub class >> browse [
 
-^ self newBrowsing: self currentOrSelf
+^ self newBrowsing: self currentOrSubclass
 	 
 		  
 ]
@@ -68,7 +88,7 @@ TheHub class >> current [
 ]
 
 { #category : 'instance creation' }
-TheHub class >> currentOrSelf [
+TheHub class >> currentOrSubclass [
 
 	^ self == TheHub
 		 ifTrue: [ self current ]
@@ -173,7 +193,7 @@ TheHub class >> lookupClass: aName [
 { #category : 'environment' }
 TheHub class >> namedFileLocations [
 	
-	^ self signalAuto
+	^ self current signalAuto
 ]
 
 { #category : 'instance creation' }
@@ -205,7 +225,7 @@ TheHub class >> openFileBrowser [
 { #category : 'environment' }
 TheHub class >> osEnvironment [
 	
-	^ self signalAuto
+	^ self current signalAuto
 ]
 
 { #category : 'environment' }
@@ -264,7 +284,7 @@ TheHub class >> pragmasNamed: aSymbol in: aClass [
 ]
 
 { #category : 'environment' }
-TheHub class >> ramdisk [
+TheHub class >> ramdiskFileSystem [
 	
 	<ttWall>
 	
@@ -272,22 +292,21 @@ TheHub class >> ramdisk [
 ]
 
 { #category : 'environment' }
-TheHub class >> ramdiskFileSystem [
+TheHub class >> ramdiskFileSystemsAll [
 	
-	^ CurrentHubClass _ramdiskFileSystem 
+	"Filesystems persisted in-image (all)"
+	
+	<ttSpoke>
+
+	^ (self withAllSubclasses collect: [ :c |
+		(c name, ' ramdiskFileSystem') -> c _ramdiskFileSystem
+	]) asDictionary
 ]
 
 { #category : 'environment' }
-TheHub class >> ramdiskReset [
+TheHub class >> ramdiskTempUseDuring: aBlock [
 	
-	self current _ramdiskReset
-	
-]
-
-{ #category : 'environment' }
-TheHub class >> ramdiskTmpUseDuring: aBlock [
-	
-	^ self for: #ramdisk respondWith: FileSystem memory during: aBlock
+	^ self for: #ramdiskFileSystem respondWith: FileSystem memory during: aBlock
 ]
 
 { #category : 'environment' }
@@ -297,9 +316,16 @@ TheHub class >> sessionManager [
 ]
 
 { #category : 'environment' }
+TheHub class >> shutDown [
+		
+		self withAllSubclassesDo: [ :hub | hub _ramdiskFileSystemReset: false ]. 
+ 	
+]
+
+{ #category : 'environment' }
 TheHub class >> signalAuto [	
 
-	^ self current signal: thisContext sender selector withTag: thisContext sender selector
+	^ self signal: thisContext sender selector withTag: thisContext sender selector
 	
 
 ]
@@ -392,19 +418,6 @@ TheHub >> getSpokeFromPragma: aPragma [
 
 	^ aClass perform: aMethod selector
   
-]
-
-{ #category : 'browsing' }
-TheHub >> getSpokeFromPragma: p _: button [
-	^ p methodClass soleInstance
-		
-		in: [ :c | 
-			(c respondsTo: p selector)
-				ifFalse: [ ^ self
-						error: 'Methods marked as instance spokes need a class side instanciation method with the same selector' ].
-
-			(c perform: p selector)
-    ]
 ]
 
 { #category : 'browsing' }
@@ -677,6 +690,30 @@ TheHub >> platform [
 
 	^ GRPlatform current 
 	
+]
+
+{ #category : 'environment' }
+TheHub >> ramdiskFileSystem [
+	
+	"Filesystems persisted in-image"
+	
+	<ttWall>
+	
+	"Usage:
+	
+	TheHub ramdiskFileSystem
+	
+	Files are persisted in a class slot of the given Hub class,
+	without honouring TheHub>>current since (this might change following
+	the bidding war).
+	
+	This allows for multiple filesystems, if the base
+	image were to ship with files embedded, a projects own TheHub 
+	subclass, can refer safely to its own ramdisk.
+	
+	MyProjectHub ramdiskFileSystem."
+	
+	^ self class _ramdiskFileSystem ifNil: [ self class _ramdiskFileSystem: FileSystem memory ] 
 ]
 
 { #category : 'environment' }
