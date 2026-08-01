@@ -18,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T07:40:05.490695+01:00"
+						"dateAndTimeString" : "2026-08-01T18:34:42.851624+01:00"
 					}
 				},
 				"editEmail" : {
@@ -29,12 +29,49 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T07:40:05.490695+01:00"
+						"dateAndTimeString" : "2026-08-01T18:35:15.911604+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "157RsrvrQymrvN54V8w9lw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "New class {{gtClass:ImageStore}} simply extends Memory"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-01T07:41:36.165964+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-01T07:41:36.165964+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "yhma2/w4Ts+tfjvUe67T3Q=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"

@@ -3,9 +3,10 @@ Extension { #name : 'SystemResolver' }
 { #category : '*Tactical-Tools' }
 SystemResolver >> ramdisk [
 	
+	<ttFix>
 	<origin>
 	
-	^ TheHub ramdiskFileSystem workingDirectory 
+	^ MemoryStore currentFileSystem root
 ]
 
 { #category : '*Tactical-Tools' }

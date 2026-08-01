@@ -16,46 +16,10 @@ Class {
 	#classVars : [
 		'CurrentHubClass'
 	],
-	#classInstVars : [
-		'ramdiskFileSystem'
-	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
-
-{ #category : 'environment' }
-TheHub class >> _ramdiskFileSystem [
-	
-	"class instance variable provides inherant image persistence, but use public method"
-	^ ramdiskFileSystem
-]
-
-{ #category : 'environment' }
-TheHub class >> _ramdiskFileSystem: anObject [ 
-
-	ramdiskFileSystem := anObject.
-	
-	^ ramdiskFileSystem
-]
-
-{ #category : 'environment' }
-TheHub class >> _ramdiskFileSystemClobber [
-	
-	ramdiskFileSystem := nil
-]
-
-{ #category : 'environment' }
-TheHub class >> _ramdiskFileSystemReset: beBrutal [
-	
-	ramdiskFileSystem ifNil: [ ^ self ].
-	
-	(beBrutal or: [ ramdiskFileSystem root entries isEmpty ]) 
-		
-		ifTrue: [ ramdiskFileSystem := nil ]
-
-
-]
 
 { #category : 'instance creation' }
 TheHub class >> browse [
@@ -170,6 +134,16 @@ TheHub class >> hubs [
 	^ self browse hubs
 	
 
+]
+
+{ #category : 'environment' }
+TheHub class >> imageFileSystemsInfo [
+	
+	"Filesystems persisted in-image (all)"
+	
+	<ttSpoke>
+
+	^ ImageStore imageFileSystemsInfo
 ]
 
 { #category : 'environment' }
@@ -292,15 +266,11 @@ TheHub class >> ramdiskFileSystem [
 ]
 
 { #category : 'environment' }
-TheHub class >> ramdiskFileSystemsAll [
+TheHub class >> ramdiskReset [
 	
-	"Filesystems persisted in-image (all)"
+	<ttWall>
 	
-	<ttSpoke>
-
-	^ (self withAllSubclasses collect: [ :c |
-		(c name, ' ramdiskFileSystem') -> c _ramdiskFileSystem
-	]) asDictionary
+	^ self signalAuto
 ]
 
 { #category : 'environment' }
@@ -719,7 +689,7 @@ TheHub >> ramdiskFileSystem [
 { #category : 'environment' }
 TheHub >> ramdiskReset [
 	
-	CurrentHubClass _ramdiskFileSystemClobber
+	CurrentHubClass _ramdiskFileSystemReset: true
 	
 ]
 

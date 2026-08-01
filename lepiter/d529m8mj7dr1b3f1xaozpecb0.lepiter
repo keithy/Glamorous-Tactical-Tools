@@ -18,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T07:41:16.394455+01:00"
+						"dateAndTimeString" : "2026-08-01T18:34:42.851624+01:00"
 					}
 				},
 				"editEmail" : {
@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T07:41:28.413192+01:00"
+						"dateAndTimeString" : "2026-08-01T18:35:31.312068+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The port has not been fully tested yet"
+				"string" : "New class {{gtClass:ImageStore}} simply extends MemoryStore and does not remove the store contents on shutdown. "
 			},
 			{
 				"__type" : "textSnippet",
