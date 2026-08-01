@@ -114,6 +114,10 @@ GtHomeToolsSection class >> openTranscript: card [
 		title: 'Transcript'
 		with: GtTranscriptStencil new
 		from: card
+		
+		
+		
+	 
 ]
 
 { #category : '*Tactical-Tools' }

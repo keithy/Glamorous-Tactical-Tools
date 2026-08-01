@@ -195,10 +195,10 @@ TheHub class >> onStartUpBidToBeCurrentHubClass [
 { #category : 'accessing' }
 TheHub class >> openFileBrowser [
 
+   "Open a file browser"
+  
    <ttSpoke>
 
-   "open a file browser"
-  
 	^ '.' asFileReference
 ]
 
@@ -217,20 +217,10 @@ TheHub class >> platform [
 	
 ]
 
-{ #category : 'environment' }
-TheHub class >> pragmaClassSideUnaryMethods [
-
- "potential spokes"
-
- <ttSpoke>
- 
-^ Pragma all select: [ :ea | ea method isClassSide and: [ ea method numArgs == 0 ] ]
-]
-
 { #category : 'spokes' }
 TheHub class >> pragmasAllExamples [
 
-	"all examples (needs an examples browser)"
+	"All examples (needs an examples browser)"
 
 		<ttSpoke>
 	
@@ -242,7 +232,7 @@ TheHub class >> pragmasAllExamples [
 { #category : 'spokes' }
 TheHub class >> pragmasAllFixes [
 
-	"fixes pending"
+	"Fixes pending"
 	
 	<ttSpoke>
 	
@@ -254,7 +244,7 @@ TheHub class >> pragmasAllFixes [
 { #category : 'spokes' }
 TheHub class >> pragmasAllUtility [
 
-	"tactical-tools utility methods"
+	"Tactical-Tools utility methods"
 	
 	<ttSpoke>
 	
@@ -266,7 +256,7 @@ TheHub class >> pragmasAllUtility [
 { #category : 'spokes' }
 TheHub class >> pragmasAllWall [
 
-	"tactical-tools wall methods"
+	"Tactical-Tools wall methods"
 	
 	<ttSpoke>
 	
@@ -452,15 +442,14 @@ TheHub >> gtHubsFor: aView [
 		priority: 10;
 		items: [ self hubs] ;
 		"actionUpdateButtonTooltip: 'Update item list';"
-		column: '#' 
+		"column: '#' 
 			text: [ :eachItem :eachIndex | 
 				eachIndex asRopedText foreground: Color gray ]
-			width: 45;
-		column: 'Item'
-			text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Comment'
+			width: 45;"
+		column: 'More'
 			text: [ :eachItem | eachItem method comment ifNil: '' ];
-			
+		column: 'Pragma'
+			text: [ :eachItem | eachItem gtDisplayText ];
 		column: 'Open' translated
 			stencil: [ :each | 
 		 	
@@ -687,7 +676,7 @@ TheHub >> hubs [
 { #category : 'environment' }
 TheHub >> namedFileLocations [
  
-   "named file locations"
+   "Named file locations"
 
    <ttSpoke>
  	
@@ -700,7 +689,7 @@ TheHub >> namedFileLocations [
 { #category : 'environment' }
 TheHub >> osEnvironment [
 
-	"host environment"
+	"Host environment"
 	
 	<ttSpoke>
 	
@@ -731,7 +720,7 @@ TheHub >> readFrom: aHubClass [
 { #category : 'environment' }
 TheHub >> sessionManager [
  
-  "session manager - startUp/shutdown lists"
+  "Session manager - startUp/shutdown lists"
   
   <ttSpoke>
   

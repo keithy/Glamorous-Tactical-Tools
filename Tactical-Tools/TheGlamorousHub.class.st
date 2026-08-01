@@ -17,7 +17,7 @@ TheGlamorousHub class >> gitRepositories [
 { #category : 'environment' }
 TheGlamorousHub class >> gtImage [
 
-	"image information"
+	"Image information"
 	
 	<ttSpoke>
 	
@@ -27,7 +27,7 @@ TheGlamorousHub class >> gtImage [
 { #category : 'environment' }
 TheGlamorousHub class >> gtImageInfo [
 
-	"image information"
+	"Image information"
 	
 	<ttSpoke>
 	
@@ -37,7 +37,7 @@ TheGlamorousHub class >> gtImageInfo [
 { #category : 'environment' }
 TheGlamorousHub class >> gtImageStats [
 
-	"image stats"
+	"Live image stats"
 	
 	<ttSpoke>
 	
@@ -47,6 +47,8 @@ TheGlamorousHub class >> gtImageStats [
 { #category : 'environment' }
 TheGlamorousHub class >> homeTools [ 
 
+	"Home Tools"
+	
 	<ttHub>
 		
   ^  GtHomeToolsSection 
@@ -62,7 +64,7 @@ TheGlamorousHub class >> httpClientOptions [
 { #category : 'environment' }
 TheGlamorousHub class >> iceCredentialsStore [
 
-	"git credentials"
+	"Credentials (iceberg/git)"
 	
 	<ttSpoke>
 
@@ -112,7 +114,7 @@ TheGlamorousHub class >> lepiter [
 { #category : 'environment' }
 TheGlamorousHub class >> lepiterPropertiesFile [
 
-	"lepiter properties file (fix this if duplicate databases are defined)"
+	"Lepiter properties file (fix this if duplicate databases are defined)"
 	
 	<ttSpoke>
 
@@ -138,7 +140,7 @@ TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 { #category : 'environment' }
 TheGlamorousHub class >> openGettingStartedSection [
 
-	"open getting started section"
+	"Open getting started section"
 	
 	<ttSpoke>
 
@@ -161,7 +163,7 @@ TheGlamorousHub class >> openMonitor: aCard [
 { #category : 'environment' }
 TheGlamorousHub class >> openMonitorWindow [
 
-	"open monitor window"
+	"Open monitor window"
 	
 	<ttSpoke>
 
@@ -186,7 +188,7 @@ TheGlamorousHub class >> openTranscript: aCard [
 { #category : 'environment' }
 TheGlamorousHub class >> openTranscriptWindow [
   
-  "open transcript window"
+  "Open transcript window"
   
   <ttSpoke>
   
@@ -198,7 +200,7 @@ TheGlamorousHub class >> openTranscriptWindow [
 { #category : 'spokes' }
 TheGlamorousHub class >> pragmasAllToolButtonStencils [
 
-	"tool button stencils"
+	"Tool button stencils"
 	
 	<ttSpoke>
 	
@@ -210,7 +212,7 @@ TheGlamorousHub class >> pragmasAllToolButtonStencils [
 { #category : 'spokes' }
 TheGlamorousHub class >> pragmasAllViews [
 
-	"all of the views... in the world"
+	"All of the views... in the world"
 	
 	<ttSpoke>
 	
@@ -236,12 +238,22 @@ TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil
 ]
 
 { #category : 'environment' }
+TheGlamorousHub class >> theCuriousity [
+
+	"Curious Things in Glamorous Toolkit"
+	
+	<ttHub>
+		
+  ^  TheCuriousity 
+		  
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> whatIsHome [
 
-	"the main GT screen layout"
+	"Main screen layout"
 	
 	<ttSpoke>
-	<ttHub>
 
 	^ GtHome
 ]
@@ -249,7 +261,7 @@ TheGlamorousHub class >> whatIsHome [
 { #category : 'environment' }
 TheGlamorousHub >> gitRepositories [
 
-	"git repository browsers"
+	"Repository browsers (iceberg/git)"
 
 	<ttSpoke>
 	
@@ -259,7 +271,7 @@ TheGlamorousHub >> gitRepositories [
 { #category : 'environment' }
 TheGlamorousHub >> httpClientOptions [ 
 
-	"zinc client default options"
+	"Http client default options (zinc)"
 	
 	<ttSpoke>
 		
@@ -270,7 +282,7 @@ TheGlamorousHub >> httpClientOptions [
 { #category : 'environment' }
 TheGlamorousHub >> iceRepositories [
 	
-	"git repositories registration"
+	"Repositories registration (git)"
 	 
 	<ttSpoke>
 
@@ -279,7 +291,8 @@ TheGlamorousHub >> iceRepositories [
 
 { #category : 'environment' }
 TheGlamorousHub >> lepiter [
- 	"current loaded default logical database"
+
+ 	"Lepiter - current loaded default logical database"
  	
  	<ttSpoke>
  	
