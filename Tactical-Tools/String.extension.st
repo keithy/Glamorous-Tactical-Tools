@@ -2,6 +2,9 @@ Extension { #name : 'String' }
 
 { #category : '*Tactical-Tools' }
 String >> gtCloneGithubRepository [
+
+	<ttFix>
+	
 	| remote |
 	remote := IceGitRemote url: self.
 	^ GtGitRepository fromIcebergRepository: (IceRepository repositoryClass creatorClass new

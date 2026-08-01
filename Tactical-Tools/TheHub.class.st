@@ -197,7 +197,7 @@ TheHub class >> openFileBrowser [
 
    <ttSpoke>
 
-   "open a file browser, but a more discoverable option would be to list the locations"
+   "open a file browser"
   
 	^ '.' asFileReference
 ]
@@ -247,6 +247,30 @@ TheHub class >> pragmasAllFixes [
 	<ttSpoke>
 	
 	^ Pragma allNamed: #ttFix
+	
+
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAllUtility [
+
+	"tactical-tools utility methods"
+	
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttUtility
+	
+
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAllWall [
+
+	"tactical-tools wall methods"
+	
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttWall
 	
 
 ]
@@ -398,7 +422,7 @@ TheHub >> getSpokeFromPragma: aPragma [
 	
 	(aClass respondsTo: aMethod selector)
 		ifFalse: [ 
-			^ self error: 'Methods marked as instance spokes need a class side instanciation method with the same selector' ].
+			^ self error: 'Instance methods marked as spokes need a class side instanciation method with the same selector' ].
 
 	^ aClass perform: aMethod selector
   
@@ -496,11 +520,11 @@ TheHub >> gtSpokesFor: aView [
 		title: 'Spokes';
 		priority: 5;
 		items: [ self spokes ];
-		column: '#'
+		"column: '#'
 			text: [ :eachItem :eachIndex | eachIndex asRopedText foreground: Color gray ]
-			width: 45;
-		column: 'Item' text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Comment' text: [ :eachItem | eachItem method comment ifNil: '' ];
+			width: 45;"
+		column: 'Use' text: [ :eachItem | eachItem method comment ifNil: '' ];
+		column: 'Pragma' text: [ :eachItem | eachItem gtDisplayText ];
 		column: 'Open' translated
 			stencil: [ :each | 
 				

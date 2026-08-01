@@ -17,9 +17,31 @@ TheGlamorousHub class >> gitRepositories [
 { #category : 'environment' }
 TheGlamorousHub class >> gtImage [
 
+	"image information"
+	
 	<ttSpoke>
 	
 	^ GtImage instance
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> gtImageInfo [
+
+	"image information"
+	
+	<ttSpoke>
+	
+	^ GtImage instance
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> gtImageStats [
+
+	"image stats"
+	
+	<ttSpoke>
+	
+	^ GtImage stats
 ]
 
 { #category : 'environment' }
@@ -40,7 +62,7 @@ TheGlamorousHub class >> httpClientOptions [
 { #category : 'environment' }
 TheGlamorousHub class >> iceCredentialsStore [
 
-	"Iceberg registry of github credentials"
+	"git credentials"
 	
 	<ttSpoke>
 
@@ -90,7 +112,7 @@ TheGlamorousHub class >> lepiter [
 { #category : 'environment' }
 TheGlamorousHub class >> lepiterPropertiesFile [
 
-	"(fix this if duplicate databases are defined)"
+	"lepiter properties file (fix this if duplicate databases are defined)"
 	
 	<ttSpoke>
 
@@ -116,6 +138,8 @@ TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
 { #category : 'environment' }
 TheGlamorousHub class >> openGettingStartedSection [
 
+	"open getting started section"
+	
 	<ttSpoke>
 
 	^ GtHomeMultiCardGetStartedSection new
@@ -137,6 +161,8 @@ TheGlamorousHub class >> openMonitor: aCard [
 { #category : 'environment' }
 TheGlamorousHub class >> openMonitorWindow [
 
+	"open monitor window"
+	
 	<ttSpoke>
 
 	self openMonitor: nil.
@@ -160,6 +186,8 @@ TheGlamorousHub class >> openTranscript: aCard [
 { #category : 'environment' }
 TheGlamorousHub class >> openTranscriptWindow [
   
+  "open transcript window"
+  
   <ttSpoke>
   
 	self openTranscript: nil.
@@ -170,6 +198,8 @@ TheGlamorousHub class >> openTranscriptWindow [
 { #category : 'spokes' }
 TheGlamorousHub class >> pragmasAllToolButtonStencils [
 
+	"tool button stencils"
+	
 	<ttSpoke>
 	
 	^ Pragma allNamed: #gtToolButton
@@ -180,6 +210,8 @@ TheGlamorousHub class >> pragmasAllToolButtonStencils [
 { #category : 'spokes' }
 TheGlamorousHub class >> pragmasAllViews [
 
+	"all of the views... in the world"
+	
 	<ttSpoke>
 	
 	^ Pragma allNamed: #gtView
@@ -206,6 +238,8 @@ TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil
 { #category : 'environment' }
 TheGlamorousHub class >> whatIsHome [
 
+	"the main GT screen layout"
+	
 	<ttSpoke>
 	<ttHub>
 
@@ -214,15 +248,19 @@ TheGlamorousHub class >> whatIsHome [
 
 { #category : 'environment' }
 TheGlamorousHub >> gitRepositories [
+
+	"git repository browsers"
+
 	<ttSpoke>
 	
-	"the list of repositories registered with the git tool"
 	^ IceRepository gtGitRepositories
 ]
 
 { #category : 'environment' }
 TheGlamorousHub >> httpClientOptions [ 
 
+	"zinc client default options"
+	
 	<ttSpoke>
 		
   ^  ZnOptions globalDefault clone allBindings 
@@ -232,9 +270,10 @@ TheGlamorousHub >> httpClientOptions [
 { #category : 'environment' }
 TheGlamorousHub >> iceRepositories [
 	
+	"git repositories registration"
+	 
 	<ttSpoke>
-	
-	 "the list of repositories registered with the git tool"
+
 	^ IceRepository repositories
 ]
 
