@@ -286,13 +286,6 @@ TheHub class >> sessionManager [
 ]
 
 { #category : 'environment' }
-TheHub class >> shutDown [
-		
-		self withAllSubclassesDo: [ :hub | hub _ramdiskFileSystemReset: false ]. 
- 	
-]
-
-{ #category : 'environment' }
 TheHub class >> signalAuto [	
 
 	^ self signal: thisContext sender selector withTag: thisContext sender selector
