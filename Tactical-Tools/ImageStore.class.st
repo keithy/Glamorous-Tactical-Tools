@@ -4,9 +4,9 @@ Class {
 	#classInstVars : [
 		'imageStoreFS'
 	],
-	#category : 'Tactical-Tools-Store',
+	#category : 'Tactical-Tools-Image-Store',
 	#package : 'Tactical-Tools',
-	#tag : 'Store'
+	#tag : 'Image-Store'
 }
 
 { #category : 'as yet unclassified' }
@@ -34,7 +34,7 @@ ImageStore class >> imageStoreFS [
 
 { #category : 'as yet unclassified' }
 ImageStore class >> reset [
-	CurrentFS := nil
+	imageStoreFS := nil
 ]
 
 { #category : 'as yet unclassified' }

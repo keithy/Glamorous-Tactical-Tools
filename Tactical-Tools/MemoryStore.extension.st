@@ -7,11 +7,3 @@ MemoryStore class >> _currentFileSystem [
 	
 	^ CurrentFS 
 ]
-
-{ #category : '*Tactical-Tools' }
-MemoryStore class >> shutDown [
-
-	<ttFix>
-	
-	self reset
-]
