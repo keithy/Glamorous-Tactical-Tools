@@ -7,11 +7,40 @@ Class {
 }
 
 { #category : 'resolving' }
+ImageStoreResolver class >> initialize [
+	"FileLocator is needed to initialize SystemSettingsPersistence (call to FileLocator>>#preferences),
+	and could be useful for other classes.
+	Let initialize FileLocator before other standard system classes."
+	SessionManager default
+		registerSystemClassNamed: self name atPriority: 91.
+	self startUp: true
+]
+
+{ #category : 'resolving' }
+ImageStoreResolver class >> startUp: resuming [
+	resuming
+		ifFalse: [ ^ self ].
+ 
+	FileLocator addResolver: self new.
+]
+
+{ #category : 'resolving' }
+ImageStoreResolver >> addResolver: aResolver [
+
+	"We only need ImageStoreResolver once"
+	aResolver class == self class ifTrue: [ ^ self ].
+	
+  super addResolver: aResolver.
+	
+	
+]
+
+{ #category : 'resolving' }
 ImageStoreResolver >> resolve: aSymbol [
 	
-	self class withAllSubclassesDo: [ :c | 
+	ImageStore withAllSubclassesDo: [ :c | 
 	
-					c name == aSymbol ifTrue: [ ^ c currentFileSystem ]
+					c name == aSymbol ifTrue: [ ^ c currentFileSystem root ]
 					
 	].
 					
@@ -21,6 +50,6 @@ ImageStoreResolver >> resolve: aSymbol [
 
 { #category : 'resolving' }
 ImageStoreResolver >> supportedOrigins [
-	^ self class withAllSubclasses collect: [ :c | c name ]
+	^ ImageStore withAllSubclasses collect: [ :c | c name ]
 	 
 ]
