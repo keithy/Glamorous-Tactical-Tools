@@ -261,6 +261,7 @@ TheHub class >> pragmasNamed: aSymbol in: aClass [
 TheHub class >> ramdiskFileSystem [
 	
 	<ttWall>
+	<ttSpoke>
 	
 	^ self signalAuto
 ]
@@ -271,12 +272,6 @@ TheHub class >> ramdiskReset [
 	<ttWall>
 	
 	^ self signalAuto
-]
-
-{ #category : 'environment' }
-TheHub class >> ramdiskTempUseDuring: aBlock [
-	
-	^ self for: #ramdiskFileSystem respondWith: FileSystem memory during: aBlock
 ]
 
 { #category : 'environment' }
@@ -658,25 +653,9 @@ TheHub >> platform [
 { #category : 'environment' }
 TheHub >> ramdiskFileSystem [
 	
-	"Filesystems persisted in-image"
-	
 	<ttWall>
-	
-	"Usage:
-	
-	TheHub ramdiskFileSystem
-	
-	Files are persisted in a class slot of the given Hub class,
-	without honouring TheHub>>current since (this might change following
-	the bidding war).
-	
-	This allows for multiple filesystems, if the base
-	image were to ship with files embedded, a projects own TheHub 
-	subclass, can refer safely to its own ramdisk.
-	
-	MyProjectHub ramdiskFileSystem."
-	
-	^ self class _ramdiskFileSystem ifNil: [ self class _ramdiskFileSystem: FileSystem memory ] 
+	 
+	 ^ MemoryStore currentFileSystem
 ]
 
 { #category : 'environment' }

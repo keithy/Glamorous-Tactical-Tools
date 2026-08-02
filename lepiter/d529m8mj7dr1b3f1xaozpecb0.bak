@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T18:35:15.911604+01:00"
+						"dateAndTimeString" : "2026-08-02T15:42:16.339808+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "New class {{gtClass:ImageStore}} simply extends Memory"
+				"string" : "New class {{gtClass:ImageStore}} simply extends MemoryStore and does not remove the store contents on shutdown.  Create a subclass of ImageStore for additional persisted file systems"
 			},
 			{
 				"__type" : "textSnippet",

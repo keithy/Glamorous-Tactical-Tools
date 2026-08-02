@@ -53,11 +53,6 @@ ImageStore class >> shutDown [
 ]
 
 { #category : 'as yet unclassified' }
-ImageStore >> currentFileSystem [
-	^ CurrentFS ifNil: [ CurrentFS := FileSystem store: MemoryStore new ]
-]
-
-{ #category : 'as yet unclassified' }
 ImageStore >> origin [
 
 	^ self name 
