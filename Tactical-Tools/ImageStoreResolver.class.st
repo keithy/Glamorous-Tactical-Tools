@@ -6,7 +6,7 @@ Class {
 	#tag : 'Image-Store'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'resolving' }
 ImageStoreResolver >> resolve: aSymbol [
 	
 	self class withAllSubclassesDo: [ :c | 
