@@ -1,9 +1,9 @@
 Class {
 	#name : 'TheCuriousity',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-Curious',
+	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
-	#tag : 'Curious'
+	#tag : 'Hub'
 }
 
 { #category : 'as yet unclassified' }
