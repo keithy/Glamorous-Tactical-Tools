@@ -1,0 +1,76 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-03T06:19:19.160962+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-03T06:55:45.574214+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "GsS/mtaNReeq7SImEdalow=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "We have a tiered dictionary datastructure, were a key lookup can be passed simply to the next tier if not found.\n\nTiers are subclasses of dictionary, and they are named. No changes are made to the normal dictionary interface for reading/writing. The read only public interface bottleneck methods \n• {{gtMethod:DictionaryTiered>>deepAt:ifPresent:}} \n• {{gtMethod:DictionaryTiered>>#deepAssociationAt:ifPresent:}}\n\nExample Tiers:\n1. Normal Dictionary (can be serialised and deserialised to a file)\n2. Normal Dictionary whose values are read and cached from a file (env/toml etc. format)\n3. Normal Dictionary whose keys are read from a file, but whose values are re-read (on demand)\n4. Normal Dictionary whose keys are read from an API, and whose values are read from an API.\n5. Nickel configuration language interface (rust)\n6. Normal Dictionary whose keys are populated form a file find, and whose values are read on demand (ssh keys)\n7. Potential integrations with mise, vault, age, janus, sops\n\nPreviously we have had a dictionary that was \"kept\" in a class var to provide items persisted with the image, and we did a lot of re-reading of env files every time we re-initialised a set of clients.\n\nThis time we will look at keeping a permanent vault in the image, per-environment or shared. Dictionaries my be nominated as #beCache and will be zapped on shutdown."
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-03T06:19:10.434989+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-03T06:19:10.434989+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "TheVault Notes"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "9b0baa42-9b30-4a21-ac40-5afff30f6d87"
+	}
+}
