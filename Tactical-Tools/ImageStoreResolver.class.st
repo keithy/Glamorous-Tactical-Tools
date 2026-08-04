@@ -38,10 +38,10 @@ ImageStoreResolver >> addResolver: aResolver [
 { #category : 'resolving' }
 ImageStoreResolver >> resolve: aSymbol [
 	
-	ImageStore withAllSubclassesDo: [ :c | 
+	self supportedOriginsDo: [ :storeClass :selector |
+			
+			selector == aSymbol ifTrue: [ ^ storeClass perform: selector ]
 	
-					c name == aSymbol ifTrue: [ ^ c currentFileSystem root ]
-					
 	].
 					
 	^ self unknownOrigin: aSymbol

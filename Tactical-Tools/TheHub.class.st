@@ -314,6 +314,40 @@ TheHub class >> startUp [
 ]
 
 { #category : 'environment' }
+TheHub class >> supportedOriginResolvers [
+ 
+   "Named file origin resolvers"
+
+   <ttSpoke>
+ 	
+ 	| origins |
+ 	
+ 	origins := OrderedCollection new.
+ 	
+	FileLocator supportedOriginsDo: [ :aResolver :selector |
+			origins add:  aResolver printString , ' >> ', selector
+	].
+	^ origins
+]
+
+{ #category : 'environment' }
+TheHub class >> supportedOriginsResolved [
+ 
+   "Named file origins RESOLVED"
+
+   <ttSpoke>
+ 	
+ 	| origins |
+ 	
+ 	origins := OrderedCollection new.
+ 	
+	FileLocator supportedOriginsDo: [ :aResolver :selector |
+			origins add: (FileLocator origin: selector) resolve
+	].
+	^ origins
+]
+
+{ #category : 'environment' }
 TheHub class >> theVault [
 	
 	^ self signalAuto
@@ -616,9 +650,16 @@ TheHub >> namedFileLocations [
 
    <ttSpoke>
  	
-	^ (FileLocator supportedOrigins 
-			collect: [ :origin | 
-				origin -> (FileLocator origin: origin) ]) asDictionary
+ 	| origins | 
+ 	
+ 	origins := IdentityDictionary new.
+ 	
+	 FileLocator supportedOriginsDo: [ :resolver :selector | 
+		 	
+		 		origins at: selector put: (FileLocator origin: selector) 
+	 ].
+	 
+	 ^ origins
 	
 ]
 

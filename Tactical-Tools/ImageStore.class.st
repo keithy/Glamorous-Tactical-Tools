@@ -27,6 +27,14 @@ ImageStore class >> imageFileSystemsInfo [
 ]
 
 { #category : 'as yet unclassified' }
+ImageStore class >> imageStore [
+	
+	<origin>
+	
+	^ self currentFileSystem root
+]
+
+{ #category : 'as yet unclassified' }
 ImageStore class >> imageStoreFS [
 
 	^ imageStoreFS
@@ -53,12 +61,12 @@ ImageStore class >> shutDown [
 ]
 
 { #category : 'as yet unclassified' }
-ImageStore >> origin [
-
-	^ self name 
+ImageStore class >> startUp [
+	"dont self reset"
 ]
 
 { #category : 'as yet unclassified' }
-ImageStore >> startUp [
-	"dont self reset"
+ImageStore >> origin [
+
+	^ self name 
 ]
