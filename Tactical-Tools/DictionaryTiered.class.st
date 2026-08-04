@@ -4,12 +4,22 @@ Class {
 	#instVars : [
 		'next',
 		'tierName',
-		'bePreserved'
+		'beCache'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
+
+{ #category : 'as yet unclassified' }
+DictionaryTiered class >> newNamed: aName [
+	
+		^ self new 
+				tierName: aName;
+				yourself
+				
+				 
+]
 
 { #category : 'accessing' }
 DictionaryTiered class >> shutDown [
@@ -20,7 +30,7 @@ DictionaryTiered class >> shutDown [
 { #category : 'accessing' }
 DictionaryTiered class >> shutDownZapCache [
 
-	self allInstancesDo: [ :ea | ea isCache ifTrue: [ ea removeAll ]]
+	self allInstancesDo: [ :ea | ea isCache ifTrue: [ ea reset ]]
 ]
 
 { #category : 'accessing' }
@@ -36,7 +46,7 @@ DictionaryTiered >> appendTier: tier named: name [
 { #category : 'accessing' }
 DictionaryTiered >> beCache [
 
-	bePreserved := false
+	beCache := true
 ]
 
 { #category : 'as yet unclassified' }
@@ -56,7 +66,7 @@ DictionaryTiered >> deepAssociationAt: key ifPresent: presentBlock [
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc ].
+	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: tierName ].
 	
 	next ifNil: [ ^ nil ].
 	
@@ -80,7 +90,7 @@ DictionaryTiered >> deepAt: key ifPresent: presentBlock [
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc value].
+	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc value cull: tierName ].
 	
 	next ifNil: [ ^ nil ].
 	
@@ -88,9 +98,16 @@ DictionaryTiered >> deepAt: key ifPresent: presentBlock [
 ]
 
 { #category : 'accessing' }
+DictionaryTiered >> initialize: n [
+
+	super initialize: n.
+  beCache ifNil: [ beCache := false ].
+]
+
+{ #category : 'accessing' }
 DictionaryTiered >> isCache [
 
-	^ bePreserved == false
+	^ beCache
 ]
 
 { #category : 'accessing' }
@@ -99,8 +116,9 @@ DictionaryTiered >> next [
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> next: anObject [
-	next := anObject
+DictionaryTiered >> reset [
+
+	^ self removeAll
 ]
 
 { #category : 'accessing' }

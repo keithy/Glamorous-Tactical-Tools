@@ -139,7 +139,7 @@ TheHub class >> hubs [
 { #category : 'environment' }
 TheHub class >> imageFileSystemsInfo [
 	
-	"Filesystems persisted in-image (all)"
+	"Filesystems in-image"
 	
 	<ttSpoke>
 
@@ -258,23 +258,6 @@ TheHub class >> pragmasNamed: aSymbol in: aClass [
 ]
 
 { #category : 'environment' }
-TheHub class >> ramdiskFileSystem [
-	
-	<ttWall>
-	<ttSpoke>
-	
-	^ self signalAuto
-]
-
-{ #category : 'environment' }
-TheHub class >> ramdiskReset [
-	
-	<ttWall>
-	
-	^ self signalAuto
-]
-
-{ #category : 'environment' }
 TheHub class >> sessionManager [
 
 	^ self signalAuto
@@ -328,6 +311,12 @@ TheHub class >> startUp [
 				
 		]
 	].
+]
+
+{ #category : 'environment' }
+TheHub class >> theVault [
+	
+	^ self signalAuto
 ]
 
 { #category : 'environment' }
@@ -650,21 +639,6 @@ TheHub >> platform [
 	
 ]
 
-{ #category : 'environment' }
-TheHub >> ramdiskFileSystem [
-	
-	<ttWall>
-	 
-	 ^ MemoryStore currentFileSystem
-]
-
-{ #category : 'environment' }
-TheHub >> ramdiskReset [
-	
-	CurrentHubClass _ramdiskFileSystemReset: true
-	
-]
-
 { #category : 'initializing' }
 TheHub >> readFrom: aHubClass [
  
@@ -688,6 +662,16 @@ TheHub >> spokes [
 	^ (self class pragmasClassSideNamed: #ttSpoke in: browsing), (self class pragmasNamed: #ttSpoke in: browsing)
 	
 
+]
+
+{ #category : 'as yet unclassified' }
+TheHub >> theVault [
+
+	"Vicarious Vault"
+	
+	<ttSpoke>
+	
+	^ TtVault currentVault
 ]
 
 { #category : 'browsing' }
