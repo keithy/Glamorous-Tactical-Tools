@@ -45,17 +45,6 @@ TTDictionaryTiered class >> shutDownZapCache [
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> appendAs: aSymbol tier: store [ 
-
-	next ifNotNil: [ ^ next appendAs: aSymbol tier: store  ].
-	
-	next := store.
-	store tierKey: aSymbol.
-	
-	^ next
-]
-
-{ #category : 'accessing' }
 TTDictionaryTiered >> appendTier: store [ 
 
 	"double dispatch so that new tier has control 
@@ -182,11 +171,11 @@ TTDictionaryTiered >> gtKeysFor: aView [
 		items: [ self tierKeys ]
 ]
 
-{ #category : 'accessing' }
-TTDictionaryTiered >> initialize: n [
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered >> initialize: size [
 
-	super initialize: n.
-  beCache ifNil: [ beCache := false ].
+	super initialize: size.
+	self initialize.
 ]
 
 { #category : 'accessing' }
@@ -250,6 +239,8 @@ TTDictionaryTiered >> tierKeys [
 { #category : 'as yet unclassified' }
 TTDictionaryTiered >> tiers [
 
+	"as a flat collection of associations"
+	
 	| tiers store |
 	
 	tiers := OrderedCollection new.

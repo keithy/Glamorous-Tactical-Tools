@@ -19,28 +19,6 @@ TTVault class >> currentVault [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newDemoRead [
-	
-	<gtExample>
-	<return: #String>
-	
-	| vault |
-	
-	vault := self newTest.
-	
-	vault store in: [ :store |
-	
-		(store tierAt: #cache) addAll: TheHub osEnvironment.
-		
-		(store tierAt: #dotEnv) readSource: 'HELLO_PASS="WORLD"'.
-		"'.env' asFileReference"
-		
-	].
-	
-	^ vault
-]
-
-{ #category : 'instance creation' }
 TTVault class >> newStore [
 	
 	"our test show it all"
@@ -52,10 +30,10 @@ TTVault class >> newStore [
 	
 	store  := TTDictionaryTiered newCache. "top tier"
  
-		(TTDictionaryTiered newWithTierKey: #os)
-				addAll: (TheHub osEnvironment);
-				beCache;
-				appendTierTo: store.
+	(TTDictionaryTiered newWithTierKey: #os)
+			addAll: (TheHub osEnvironment);
+			beCache;
+			appendTierTo: store.
 	
 	user := store 
 		deepAt: #USER 

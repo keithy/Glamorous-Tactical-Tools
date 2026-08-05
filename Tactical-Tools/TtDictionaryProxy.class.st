@@ -9,6 +9,35 @@ Class {
 	#tag : 'Vault'
 }
 
+{ #category : 'as yet unclassified' }
+TTDictionaryProxy class >> valueAsCyphered: aString [
+
+	self notYetImplemented.
+	
+	^ (TTStringEncoded newFrom: aString) beBase64
+ 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryProxy class >> valueAsEncoded: aString [
+
+	^ (TTStringEncoded newFrom: aString) beBase64
+ 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryProxy class >> valueAsObfuscated: aString [
+
+	^ TTStringObfuscated newFrom: aString
+ 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryProxy class >> valueAsString: aString [
+
+	^ aString
+]
+
 { #category : 'accessing' }
 TTDictionaryProxy >> readSource [
 

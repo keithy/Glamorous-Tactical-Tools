@@ -10,20 +10,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTDictionaryDotEnv class >> newStringEncoded: aString [
-
-	^ (TTStringEncoded newFrom: aString) beBase64
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryDotEnv class >> newStringObfuscated: aString [
-
-	^ TTStringObfuscated newFrom: aString
- 
-]
-
-{ #category : 'as yet unclassified' }
 TTDictionaryDotEnv class >> newTest [
 
 	<gtExample>
@@ -47,12 +33,12 @@ TTDictionaryDotEnv class >> suffixMapsBuild [
 
 	suffixReaderMap := (OrderedCollection new)
  
-			add: ('_CYPHER'   -> #newStringCyphered:  ) ;
-			add: ('_ENCODED'  -> #newStringEncoded:   ) ;
-			add: ('_API_KEY'  -> #newStringObfuscated:) ;
-			add: ('_APIKEY'   -> #newStringObfuscated:) ;
-	  	add: ('_PASS'     -> #newStringObfuscated:) ;
-	  	add: ('_PASSWORD' -> #newStringObfuscated:) ;
+			add: ('_CYPHER'   -> #valueAsCyphered:  ) ;
+			add: ('_ENCODED'  -> #valueAsEncoded:   ) ;
+			add: ('_API_KEY'  -> #valueAsObfuscated:) ;
+			add: ('_APIKEY'   -> #valueAsObfuscated:) ;
+	  	add: ('_PASS'     -> #valueAsObfuscated:) ;
+	  	add: ('_PASSWORD' -> #valueAsObfuscated:) ;
 			yourself
 		
 ]
@@ -60,6 +46,8 @@ TTDictionaryDotEnv class >> suffixMapsBuild [
 { #category : 'as yet unclassified' }
 TTDictionaryDotEnv class >> suffixReaderMap [
 
+	<gtExample>
+	
 	suffixReaderMap ifNil: [ self suffixMapsBuild ].
 	
 	^ suffixReaderMap
