@@ -9,12 +9,18 @@ Class {
 	#tag : 'Vault'
 }
 
-{ #category : 'as yet unclassified' }
-TTDictionaryProxy class >> newNamed: aName fromSource: aSource [
-	
-		^ (self newNamed: aName)
-			  source: aSource;
-			  readSource
+{ #category : 'accessing' }
+TTDictionaryProxy >> readSource [
+
+	^ self subclassResponsibility
+
+]
+
+{ #category : 'accessing' }
+TTDictionaryProxy >> readSource: aSource [
+
+	self source: aSource.
+	self readSource. 
 ]
 
 { #category : 'accessing' }

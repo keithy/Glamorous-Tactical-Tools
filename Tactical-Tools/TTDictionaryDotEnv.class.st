@@ -10,15 +10,10 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTDictionaryDotEnv class >> newNamed: aName fromFile: aStreamable [
-	
-	"The important thing for testing is that the file
-	 reference provided can respond to #readStream.
-	 
-	 Therefore a string can be used to mock file contents, 
-	 but cant be used as a path here"
-	
-		^ self newNamed: aName fromSource: aStreamable 
+TTDictionaryDotEnv class >> newStringEncoded: aString [
+
+	^ (TTStringEncoded newFrom: aString) beBase64
+ 
 ]
 
 { #category : 'as yet unclassified' }
@@ -26,6 +21,25 @@ TTDictionaryDotEnv class >> newStringObfuscated: aString [
 
 	^ TTStringObfuscated newFrom: aString
  
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryDotEnv class >> newTest [
+
+	<gtExample>
+	<return: #TTDictionaryDotEnv>
+	| store |
+	
+	store := self newWithTierKey: #test.
+	store readSource: 
+
+	'HELLO=WORLD
+	HELLO1=WORLD1
+	HELLO2_PASS="WORLD2" 
+	HELLO3_ENCODED="V09STEQz"'.
+	
+	^ store
+	 
 ]
 
 { #category : 'as yet unclassified' }

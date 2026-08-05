@@ -472,7 +472,7 @@ TheHub >> namedFileLocations [
  	
  	| origins | 
  	
- 	origins := IdentityDictionary new.
+ 	origins := Dictionary new.
  	
 	 FileLocator supportedOriginsDo: [ :resolver :selector | 
 		 	

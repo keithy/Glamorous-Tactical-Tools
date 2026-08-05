@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'next',
 		'beCache',
-		'storeKey'
+		'tierKey'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -15,7 +15,7 @@ Class {
 TTDictionaryTiered class >> newCache [
 	
 		^ self new 
-				storeKey: #cache;
+				tierKey: #cache;
 				beCache;
 				yourself
 				
@@ -23,20 +23,10 @@ TTDictionaryTiered class >> newCache [
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryTiered class >> newNamed: aName [
+TTDictionaryTiered class >> newWithTierKey: aSymbol [
 	
 		^ self new 
-				tierName: aName;
-				yourself
-				
-				 
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryTiered class >> newWithStoreKey: aSymbol [
-	
-		^ self new 
-				storeKey: aSymbol;
+				tierKey: aSymbol;
 				yourself
 				
 				 
@@ -55,24 +45,37 @@ TTDictionaryTiered class >> shutDownZapCache [
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> appendTier: store [
+TTDictionaryTiered >> appendAs: aSymbol tier: store [ 
 
-	next ifNotNil: [ ^ next appendTier: store ].
+	next ifNotNil: [ ^ next appendAs: aSymbol tier: store  ].
 	
 	next := store.
+	store tierKey: aSymbol.
 	
 	^ next
-	
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> appendTier: tier named: name [
+TTDictionaryTiered >> appendTier: store [ 
 
-	next ifNotNil: [ ^ self appendTier: tier named: name
- ].
+	"double dispatch so that new tier has control 
+	 or can opt out if empty"
+	 
+	^ store appendTierTo: self.
 	
-	next := tier.
-	tierName := name.
+	 
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> appendTierTo: stack [
+
+	tierKey  ifNil: [ ^ self error: 'tierKey not set' ].
+	
+	stack next ifNotNil: [ ^ self appendTierTo: stack next ].
+	
+  stack next: self.
+	
+	^ self
 ]
 
 { #category : 'accessing' }
@@ -99,7 +102,7 @@ TTDictionaryTiered >> deepAssociationAt: key ifPresent: presentBlock [
 	Otherwise, answer nil."
 
 	(array at: (self findElementOrNil: key)) 
-	    ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: storeKey ].
+	    ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: tierKey ].
 	
 	next ifNil: [ ^ nil ].
 	
@@ -117,13 +120,23 @@ TTDictionaryTiered >> deepAt: key ifAbsent: absentBlock [
 ]
 
 { #category : 'as yet unclassified' }
+TTDictionaryTiered >> deepAt: key ifAbsentPut: absentBlock [
+	"Answer the value associated with the key or, if key isn't found,
+	put the result of evaluating aBlock."
+
+	self deepAt: key ifPresent: [ :val | ^ val ].
+
+	^ self at: key ifAbsentPut:absentBlock
+]
+
+{ #category : 'as yet unclassified' }
 TTDictionaryTiered >> deepAt: key ifPresent: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc value cull: storeKey ].
+	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc value cull: tierKey ].
 	
 	next ifNil: [ ^ nil ].
 	
@@ -149,6 +162,11 @@ TTDictionaryTiered >> next [
 ]
 
 { #category : 'accessing' }
+TTDictionaryTiered >> next: anObject [
+	next := anObject
+]
+
+{ #category : 'accessing' }
 TTDictionaryTiered >> reset [
 
 	^ self removeAll
@@ -157,7 +175,7 @@ TTDictionaryTiered >> reset [
 { #category : 'accessing' }
 TTDictionaryTiered >> storeAt: name [
 
-	name = storeKey ifTrue: [ ^ self ].
+	name = tierKey ifTrue: [ ^ self ].
 	
 	next ifNotNil: [ ^ next storeAt: name ].
 	
@@ -165,31 +183,21 @@ TTDictionaryTiered >> storeAt: name [
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> storeKey [
-	^ storeKey
-]
-
-{ #category : 'accessing' }
-TTDictionaryTiered >> storeKey: anObject [
-	storeKey := anObject
-]
-
-{ #category : 'accessing' }
 TTDictionaryTiered >> tierAt: name [
 
-	name = tierName ifTrue: [ ^ self ].
+	name = tierKey ifTrue: [ ^ self ].
 	
-	next ifNil: [ ^ nil ].
+	next ifNotNil: [ ^ next tierAt: name ].
 	
-	next tierAt: name.
+	^ nil
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> tierName [
-	^ tierName
+TTDictionaryTiered >> tierKey [
+	^ tierKey
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> tierName: anObject [
-	tierName := anObject
+TTDictionaryTiered >> tierKey: anObject [
+	tierKey := anObject
 ]
