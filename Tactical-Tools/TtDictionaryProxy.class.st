@@ -4,38 +4,18 @@ Class {
 	#instVars : [
 		'source'
 	],
+	#classInstVars : [
+		'suffixReaderMap'
+	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
 
-{ #category : 'as yet unclassified' }
-TTDictionaryProxy class >> valueAsCyphered: aString [
+{ #category : 'accessing' }
+TTDictionaryProxy >> at: key putReading: value [
 
-	self notYetImplemented.
-	
-	^ (TTStringEncoded newFrom: aString) beBase64
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryProxy class >> valueAsEncoded: aString [
-
-	^ (TTStringEncoded newFrom: aString) beBase64
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryProxy class >> valueAsObfuscated: aString [
-
-	^ TTStringObfuscated newFrom: aString
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryProxy class >> valueAsString: aString [
-
-	^ aString
+	^ valueWriter fromProxyAt: key put: value
 ]
 
 { #category : 'accessing' }

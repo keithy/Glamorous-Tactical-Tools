@@ -1,9 +1,6 @@
 Class {
 	#name : 'TTDictionaryDotEnv',
 	#superclass : 'TTDictionaryProxy',
-	#classInstVars : [
-		'suffixReaderMap'
-	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
@@ -16,7 +13,9 @@ TTDictionaryDotEnv class >> newTest [
 	<return: #TTDictionaryDotEnv>
 	| store |
 	
-	store := self newWithTierKey: #test.
+	store := self new.
+	store tierKey: #test.
+	store reader: TTVault new.
 	store readSource: 
 
 	'HELLO=WORLD
@@ -28,54 +27,10 @@ TTDictionaryDotEnv class >> newTest [
 	 
 ]
 
-{ #category : 'as yet unclassified' }
-TTDictionaryDotEnv class >> suffixMapsBuild [
-
-	suffixReaderMap := (OrderedCollection new)
- 
-			add: ('_CYPHER'   -> #valueAsCyphered:  ) ;
-			add: ('_ENCODED'  -> #valueAsEncoded:   ) ;
-			add: ('_API_KEY'  -> #valueAsObfuscated:) ;
-			add: ('_APIKEY'   -> #valueAsObfuscated:) ;
-	  	add: ('_PASS'     -> #valueAsObfuscated:) ;
-	  	add: ('_PASSWORD' -> #valueAsObfuscated:) ;
-			yourself
-		
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryDotEnv class >> suffixReaderMap [
-
-	<gtExample>
-	
-	suffixReaderMap ifNil: [ self suffixMapsBuild ].
-	
-	^ suffixReaderMap
- 
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryDotEnv >> at: key putReading: value [
 
-	self class suffixReaderMap do: [ :assoc |
-	
-		| suffix selector |
-		
-		suffix := assoc key.
-		selector  := assoc value.
-		
-		(key endsWith: suffix) ifTrue: [ 
-		
-				"first match wins"
-				^ self at: key put: (self class perform: selector with: value)
-				
-		]
-	].
-	
-	"straight forward fall through"
-	self at: key put: value
-	
- 
+	^ valueWriter fromDotEnvAt: key put: value
 ]
 
 { #category : 'as yet unclassified' }
@@ -88,24 +43,15 @@ TTDictionaryDotEnv >> readSource [
 
 { #category : 'as yet unclassified' }
 TTDictionaryDotEnv >> readingFromStream: aStream [
-	
-	[ 
-	[ aStream atEnd ] whileFalse: [ 
-	
-		| line key value |	
-		
-		line := aStream nextLine readStream.
-				
-		key := line upTo: $=.
-		value := line upToEnd.
-		
-		(key beginsWith: '#') 
-			  ifFalse: [		
-  			    value isEmpty ifFalse: [ self at: key putReading: (value trimRight withoutQuoting) ].	
-		    ]
-	].
 
-	] ensure: [ aStream close ]
-			
- 
+	[ [ aStream atEnd ]
+		whileFalse: [ | line key value |
+			line := aStream nextLine readStream.
+			key := line upTo: $=.
+			value := line upToEnd.
+			(key beginsWith: '#')
+				ifFalse: [ value isEmpty
+						ifFalse: [ self at: key putReading: value trimRight withoutQuoting ] ] ] ]
+						
+		ensure: [ aStream close ]
 ]

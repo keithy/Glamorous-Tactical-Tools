@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'next',
 		'beCache',
-		'tierKey'
+		'tierKey',
+		'valueWriter'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -16,17 +17,8 @@ TTDictionaryTiered class >> newCache [
 	
 		^ self new 
 				tierKey: #cache;
+				valueWriter: TTVaultValueWriter new;
 				beCache;
-				yourself
-				
-				 
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryTiered class >> newWithTierKey: aSymbol [
-	
-		^ self new 
-				tierKey: aSymbol;
 				yourself
 				
 				 
@@ -65,6 +57,12 @@ TTDictionaryTiered >> appendTierTo: stack [
   stack next: self.
 	
 	^ self
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> at: key putReading: value [
+
+	^ valueWriter fromAnyAt: key put: value
 ]
 
 { #category : 'accessing' }
@@ -252,4 +250,12 @@ TTDictionaryTiered >> tiers [
 	         	store := store next ].
 	
 	^ tiers 
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> valueWriter: aValueWriter [
+	
+	aValueWriter dict: self.
+	valueWriter := aValueWriter.
+	next ifNotNil: [ next valueWriter: aValueWriter ]
 ]

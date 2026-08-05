@@ -30,7 +30,8 @@ TTVault class >> newStore [
 	
 	store  := TTDictionaryTiered newCache. "top tier"
  
-	(TTDictionaryTiered newWithTierKey: #os)
+	TTDictionaryTiered new
+			tierKey: #os;
 			addAll: (TheHub osEnvironment);
 			beCache;
 			appendTierTo: store.
@@ -47,8 +48,11 @@ TTVault class >> newStore [
 	files keysAndValuesDo: [ :key :file |
  
  		file exists ifTrue: [
-	 		store appendTier:
-					((TTDictionaryDotEnv newWithTierKey: #key) readSource: file).
+					TTDictionaryDotEnv new 
+						tierKey: #key;
+						readSource: file;
+						appendTierTo: store;
+						yourself.
 		 ]
 	].
 							
@@ -63,7 +67,7 @@ TTVault class >> newTestEmpty [
 	
 	| dotEnv cache|
 	
-	dotEnv := TTDictionaryDotEnv newWithTierKey: #dotEnv.
+	dotEnv := TTDictionaryDotEnv new tierKey: #dotEnv; yourself.
 	cache  := TTDictionaryTiered newCache.
 							
 	cache appendTier: dotEnv.
@@ -71,6 +75,12 @@ TTVault class >> newTestEmpty [
 	^ self basicNew
 		store: cache
 		initialize
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newValueWriter [
+
+	^ TTVaultValueWriter new
 ]
 
 { #category : 'instance creation' }
@@ -112,6 +122,8 @@ TTVault >> store [
 ]
 
 { #category : 'accessing' }
-TTVault >> store: anObject [
-	store := anObject
+TTVault >> store: aTieredDict [
+
+	aTieredDict valueWriter: self class newValueWriter.
+	store := aTieredDict
 ]

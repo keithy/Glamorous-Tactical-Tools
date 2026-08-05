@@ -11,7 +11,16 @@ TTDictionaryMiseEnv class >> newHomeDir [
 
 <gtExample>
 
-^ self new readSource: '~'; yourself
+^ (self new)
+		tierKey: #miseHome;
+		valueWriter: (TTVault newValueWriter);
+		readSource: '~'; yourself
+]
+
+{ #category : 'accessing' }
+TTDictionaryMiseEnv >> at: key putReading: value [
+
+	^ valueWriter fromMiseAt: key put: value
 ]
 
 { #category : 'as yet unclassified' }
@@ -48,7 +57,7 @@ TTDictionaryMiseEnv >> readingFromStream: aStreamable [
 		
 	keysAndValuesDo: [ :key :data |
 	
-		self add: (key -> (data at: #value)). 
+		self at: key putReading: data
 	
 	].
 	 
