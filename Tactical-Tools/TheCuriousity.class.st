@@ -47,48 +47,6 @@ TheCuriousity class >> pragmasAllFixes [
 ]
 
 { #category : 'as yet unclassified' }
-TheCuriousity class >> pragmasAllToDo [
-
-	"To do flags <ttToDo>"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttToDo
-]
-
-{ #category : 'as yet unclassified' }
-TheCuriousity class >> pragmasAllUtility [
-
-	"Tactical-Tools utility methods <ttUtility>"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttUtility
-]
-
-{ #category : 'as yet unclassified' }
-TheCuriousity class >> pragmasAllWall [
-
-	"Tactical-Tools wall methods <ttWall>"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttWall
-	
-
-]
-
-{ #category : 'as yet unclassified' }
-TheCuriousity class >> pragmasExtensions [
-
-	"Worthy extensions <ttExtension>"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttExtension
-]
-
-{ #category : 'as yet unclassified' }
 TheCuriousity class >> stencils [
 
   "Stencils"

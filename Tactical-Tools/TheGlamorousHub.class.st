@@ -7,21 +7,22 @@ Class {
 }
 
 { #category : 'environment' }
+TheGlamorousHub class >> TacticalHub [ 
+
+	"Tactical Tools"
+	
+	<ttHub>
+		
+  ^  #TacticalToolsHub asClass 
+		  
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
 
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
 
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> gtImage [
-
-	"Image information"
-	
-	<ttSpoke>
-	
-	^ GtImage instance
 ]
 
 { #category : 'environment' }
@@ -256,6 +257,17 @@ TheGlamorousHub class >> whatIsHome [
 	<ttSpoke>
 
 	^ GtHome
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> wipHub [ 
+
+	"Work In Progress"
+	
+	<ttHub>
+		
+  ^  #WipHub asClass 
+		  
 ]
 
 { #category : 'environment' }

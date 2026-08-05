@@ -137,16 +137,6 @@ TheHub class >> hubs [
 ]
 
 { #category : 'environment' }
-TheHub class >> imageFileSystemsInfo [
-	
-	"Filesystems in-image"
-	
-	<ttSpoke>
-
-	^ ImageStore imageFileSystemsInfo
-]
-
-{ #category : 'environment' }
 TheHub class >> initialize [
 	
 	self sessionManager
@@ -186,16 +176,6 @@ TheHub class >> onStartUpBidToBeCurrentHubClass [
 	^ 1
 ]
 
-{ #category : 'accessing' }
-TheHub class >> openFileBrowser [
-
-   "Open a file browser"
-  
-   <ttSpoke>
-
-	^ '.' asFileReference
-]
-
 { #category : 'environment' }
 TheHub class >> osEnvironment [
 	
@@ -223,18 +203,6 @@ TheHub class >> pragmasAllExamples [
 
 ]
 
-{ #category : 'spokes' }
-TheHub class >> pragmasAllUtility [
-
-	"Tactical-Tools utility methods"
-	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttUtility
-	
-
-]
-
 { #category : 'wall' }
 TheHub class >> pragmasClassSideNamed: aSymbol in: aClass [
  
@@ -243,7 +211,7 @@ TheHub class >> pragmasClassSideNamed: aSymbol in: aClass [
  ^ Pragma 
 		allNamed: aSymbol
 		from: aClass class
-		toButExcluding: Object class  
+		toButExcluding: Object class
 ]
 
 { #category : 'wall' }
@@ -311,40 +279,6 @@ TheHub class >> startUp [
 				
 		]
 	].
-]
-
-{ #category : 'environment' }
-TheHub class >> supportedOriginResolvers [
- 
-   "Named file origin resolvers"
-
-   <ttSpoke>
- 	
- 	| origins |
- 	
- 	origins := OrderedCollection new.
- 	
-	FileLocator supportedOriginsDo: [ :aResolver :selector |
-			origins add:  aResolver printString , ' >> ', selector
-	].
-	^ origins
-]
-
-{ #category : 'environment' }
-TheHub class >> supportedOriginsResolved [
- 
-   "Named file origins RESOLVED"
-
-   <ttSpoke>
- 	
- 	| origins |
- 	
- 	origins := OrderedCollection new.
- 	
-	FileLocator supportedOriginsDo: [ :aResolver :selector |
-			origins add: (FileLocator origin: selector) resolve
-	].
-	^ origins
 ]
 
 { #category : 'environment' }
@@ -515,120 +449,6 @@ TheHub >> gtSpokesFor: aView [
 	"
 ]
 
-{ #category : 'browsing' }
-TheHub >> gtUtilsFor: aView [  
-
-	<gtView>
-	
-	self utils ifEmpty: [ ^ aView empty ].
-		
-		^ aView columnedList
-		title: 'Utils';
-		priority: 15;
-		items: [ self utils  ] ;
-		actionUpdateButtonTooltip: 'Update item list';
-		column: '#' 
-			text: [ :eachItem :eachIndex | 
-				eachIndex asRopedText foreground: Color gray ]
-			width: 45;
-		column: 'Item'
-			text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Comment'
-			text: [ :eachItem | eachItem method comment ifNil: '' ];
-			
-		column: 'Execute' translated
-			stencil: [ :each | 
-		 	
-		 	 each method in: [ :m |
-		 	 
-			  	(m isClassSide and: [ m numArgs == 0 ]) 
-			  		ifFalse: [ BlElement newEmpty ] 
-			  		ifTrue: [
-								BrButton new
-									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
-															BrGlamorousButtonWithIconAptitude;
-									icon: BrGlamorousVectorIcons playinspect;
-									label: m selector asString;
-									beTinySize;
-											
-											action: [ :button | 
-										
-										(m valueWithReceiver: m methodClass soleInstance arguments:#())
-											   ifNotNil: [ :result | button phlow spawnObject: result ]
-								  
-     ] ]]]
-			width: 50;
-			
-		 
-
-		dynamicContextItems: [ :anElement :aCollection | 
-			aCollection size = 1
-				ifTrue: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection first
-						hostElement: anElement ]
-				ifFalse: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection
-						hostElement: anElement ] ]
-	
-
-]
-
-{ #category : 'browsing' }
-TheHub >> gtWallsFor: aView [  
-	<gtView>
-	self wall ifEmpty: [ ^ aView empty ].
-		
-		^ aView columnedList
-		title: 'Wall';
-		priority: 15;
-		items: [ self wall  ] ;
-		actionUpdateButtonTooltip: 'Update item list';
-		column: '#' 
-			text: [ :eachItem :eachIndex | 
-				eachIndex asRopedText foreground: Color gray ]
-			width: 45;
-		column: 'Item'
-			text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Comment'
-			text: [ :eachItem | eachItem method comment ifNil: '' ];
-			
-		column: 'Execute' translated
-			stencil: [ :each | 
-		 	
-		 	 each method in: [ :m |
-		 	 
-			  	(m isClassSide and: [ m numArgs == 0 ]) 
-			  		ifFalse: [ BlElement newEmpty ] 
-			  		ifTrue: [
-								BrButton new
-									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
-															BrGlamorousButtonWithIconAptitude;
-									icon: BrGlamorousVectorIcons playinspect;
-									label: m selector asString;
-									beTinySize;
-											
-											action: [ :button | 
-										
-										(m valueWithReceiver: m methodClass soleInstance arguments:#())
-											   ifNotNil: [ :result | button phlow spawnObject: result ]
-								  
-     ] ]]]
-			width: 50;
-			
-		 
-
-		dynamicContextItems: [ :anElement :aCollection | 
-			aCollection size = 1
-				ifTrue: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection first
-						hostElement: anElement ]
-				ifFalse: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection
-						hostElement: anElement ] ]
-	
-
-]
-
 { #category : 'as yet unclassified' }
 TheHub >> httpClientMaximumEntitySize [
 	
@@ -638,7 +458,7 @@ TheHub >> httpClientMaximumEntitySize [
 { #category : 'browsing' }
 TheHub >> hubs [
 
-	^ self class pragmasClassSideNamed: #ttHub in: browsing  
+	^ self sortByComment: (self class pragmasClassSideNamed: #ttHub in: browsing)
 	
 
 ]
@@ -697,10 +517,18 @@ TheHub >> sessionManager [
 	^ SessionManager default
 ]
 
+{ #category : 'environment' }
+TheHub >> sortByComment: pragmas [
+
+	^ pragmas asSortedCollection: [ :a :b | a method comment <= (b method comment) ] 
+	
+
+]
+
 { #category : 'browsing' }
 TheHub >> spokes [
 
-	^ (self class pragmasClassSideNamed: #ttSpoke in: browsing), (self class pragmasNamed: #ttSpoke in: browsing)
+	^ self sortByComment: ((self class pragmasClassSideNamed: #ttSpoke in: browsing), (self class pragmasNamed: #ttSpoke in: browsing))
 	
 
 ]

@@ -1,0 +1,93 @@
+Class {
+	#name : 'WipHub',
+	#superclass : 'Object',
+	#category : 'Tactical-Tools-Demo',
+	#package : 'Tactical-Tools',
+	#tag : 'Demo'
+}
+
+{ #category : 'as yet unclassified' }
+WipHub class >> TacticalHub [ 
+
+	"Tactical Tools"
+	
+	<ttHub>
+		
+  ^  #TacticalToolsHub asClass 
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> fileLocatorSupportedOriginsResolved [
+ 
+   "FileLocator Named file origins RESOLVED"
+
+   <ttSpoke>
+ 	
+ 	| origins |
+ 	
+ 	origins := OrderedCollection new.
+ 	
+	FileLocator supportedOriginsDo: [ :aResolver :selector |
+			origins add: (FileLocator origin: selector) resolve
+	].
+	
+	^ origins
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> imageFileSystemsInfo [
+	
+	"Filesystems in-image"
+	
+	<ttSpoke>
+
+	^ ImageStore imageFileSystemsInfo
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> pragmasAllUtility [
+
+	"To Dos"
+	
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttToDo
+	
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> supportedOriginResolvers [
+ 
+   "Named file origin resolvers"
+
+   <ttSpoke>
+ 	
+ 	| origins |
+ 	
+ 	origins := OrderedCollection new.
+ 	
+	FileLocator supportedOriginsDo: [ :aResolver :selector |
+			origins add:  aResolver printString , ' >> ', selector
+	].
+	^ origins
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> theHub [
+	
+	<ttHub>
+	
+	"The Current Hub"
+
+	^ TheHub current
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> theVault [
+
+	"Vicarious Vault"
+	
+	<ttSpoke>
+	
+	^ TtVault currentVault
+]
