@@ -143,6 +143,45 @@ TTDictionaryTiered >> deepAt: key ifPresent: presentBlock [
 	^ next deepAt: key ifPresent: presentBlock
 ]
 
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered >> gtItemsFor: aView [
+	<gtView>
+	^ aView columnedTree
+		title: 'Items';
+		priority: 1;
+		items: [ self tiers];
+		children: [ :each | 
+			each value isDictionary
+				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
+				ifFalse: [ 
+					(each value isArray and: [ each value allSatisfy: #isDictionary ])
+						ifTrue: [ each value collectWithIndex: [ :x :i | i -> x ] ]
+						ifFalse: [ #() ] ] ];
+		column: 'Key' text: [ :assoc | assoc key ];
+		column: 'Value' text: [ :assoc | assoc value ] weight: 3;
+		contextItemLabel: 'Inspect key' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc key ];
+		contextItemLabel: 'Inspect value' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc value ];
+		contextItemLabel: 'Inspect association' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc ];
+		contextItemLabel: 'Remove key and value' action: [ :anElement :anAssoc | 
+			self removeKey: anAssoc key ifAbsent: [ "ignore" ].
+			anElement phlow contextMenuUpdateViewContent ];
+		send: [ :assoc | assoc value ].
+		
+	"Implementation note: association sorting uses #collatedBy: to avoid a 'Symbol DNU value: value: error'"
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered >> gtKeysFor: aView [
+	<gtView>
+	^ aView list
+		title: 'Tiers';
+		priority: 5;
+		items: [ self tierKeys ]
+]
+
 { #category : 'accessing' }
 TTDictionaryTiered >> initialize: n [
 
@@ -200,4 +239,26 @@ TTDictionaryTiered >> tierKey [
 { #category : 'accessing' }
 TTDictionaryTiered >> tierKey: anObject [
 	tierKey := anObject
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered >> tierKeys [
+
+	^ self tiers collect: [ :ea | ea key ]
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered >> tiers [
+
+	| tiers store |
+	
+	tiers := OrderedCollection new.
+	store := self.
+	
+	[ store isNotNil ] 
+	         whileTrue: 
+	         [ tiers add: (store tierKey -> store). 
+	         	store := store next ].
+	
+	^ tiers 
 ]

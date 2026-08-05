@@ -41,12 +41,12 @@ TTVault class >> newDemoRead [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newTest [
+TTVault class >> newStore [
 	
 	"our test show it all"
 	
 	<gtExample>
-	<return: #String>
+	 
 	
 	| files store user project |
 	
@@ -72,9 +72,9 @@ TTVault class >> newTest [
 	 		store appendTier:
 					((TTDictionaryDotEnv newWithTierKey: #key) readSource: file).
 		 ]
-	]
+	].
 							
-	 
+	^ store
 ]
 
 { #category : 'instance creation' }
