@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTDictionaryTiered',
-	#superclass : 'IdentityDictionary',
+	#superclass : 'Dictionary',
 	#instVars : [
 		'next',
 		'beCache',
