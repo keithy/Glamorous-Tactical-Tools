@@ -35,6 +35,16 @@ FileLocator class >> gtLocationsNew [
 ]
 
 { #category : '*Tactical-Fixes' }
+FileLocator class >> gtLocationsOld [
+
+ "supported origins derived from pragmas may have cached stale results"
+
+ 	^ (self supportedOrigins 
+		select: [ :aSelector | (self respondsTo: aSelector) ifTrue: true ifFalse: [ Transcript crShow: ('FileLocator ', aSelector). Transcript crShow: thisContext shortDebugStack.
+		 false ] ] thenCollect: [ :aSelector | self perform: aSelector ]) asArray
+]
+
+{ #category : '*Tactical-Fixes' }
 FileLocator class >> supportedOriginsDo: aBlock [
 	
 	"Improved mechanism than supportedOrigins"

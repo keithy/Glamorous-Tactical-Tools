@@ -1,5 +1,5 @@
 Class {
-	#name : 'TtStringObfuscated',
+	#name : 'TTStringObfuscated',
 	#superclass : 'ByteString',
 	#type : 'bytes',
 	#category : 'Tactical-Tools-Vault',
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : 'printing' }
-TtStringObfuscated >> asHint [
+TTStringObfuscated >> asHint [
 
 	| n |
 	
@@ -23,25 +23,25 @@ TtStringObfuscated >> asHint [
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> asRopedText [
+TTStringObfuscated >> asRopedText [
 
  ^ BlRunRopedText string: self value
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> displayStringOn: aStream [
+TTStringObfuscated >> displayStringOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> explain [
+TTStringObfuscated >> explain [
 
 	'Obfuscated'
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> gtActionCopy: anAction [
+TTStringObfuscated >> gtActionCopy: anAction [
 	<gtAction>
 	^ anAction button
 		priority: 105;
@@ -52,7 +52,7 @@ TtStringObfuscated >> gtActionCopy: anAction [
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> gtDisplayOn: aStream [
+TTStringObfuscated >> gtDisplayOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
 	
@@ -60,7 +60,7 @@ TtStringObfuscated >> gtDisplayOn: aStream [
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> gtDisplayString [
+TTStringObfuscated >> gtDisplayString [
 	
 	^ self value
 	
@@ -68,7 +68,7 @@ TtStringObfuscated >> gtDisplayString [
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> gtViewHintFor: aView [
+TTStringObfuscated >> gtViewHintFor: aView [
 	<gtView>
 	^ aView explicit
 		title: 'Hint';
@@ -86,13 +86,13 @@ TtStringObfuscated >> gtViewHintFor: aView [
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> printOn: aStream [
+TTStringObfuscated >> printOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
 ]
 
 { #category : 'printing' }
-TtStringObfuscated >> value [
+TTStringObfuscated >> value [
 	
 	^ '******'
 	

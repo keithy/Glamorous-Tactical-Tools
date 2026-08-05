@@ -540,7 +540,7 @@ TheHub >> theVault [
 	
 	<ttSpoke>
 	
-	^ TtVault currentVault
+	^ TTVault currentVault
 ]
 
 { #category : 'browsing' }

@@ -1,8 +1,8 @@
 Class {
-	#name : 'TtVault',
+	#name : 'TTVault',
 	#superclass : 'Object',
 	#instVars : [
-		'kvStore'
+		'store'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -13,7 +13,30 @@ Class {
 }
 
 { #category : 'instance creation' }
-TtVault class >> currentVault [
+TTVault class >> currentVault [
 
 ^ currentVault ifNil: [ currentVault := self new ]
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newTest [
+	
+	<gtExample>
+	<return: #String>
+	
+	| dotEnv cache|
+	
+	dotEnv := TTDictionaryDotEnv newWithStoreKey: #dotEnv.
+	cache  := TTDictionaryTiered newCache.
+							
+	cache appendTier: dotEnv.
+							
+	^ self basicNew
+		store: cache
+		initialize
+]
+
+{ #category : 'accessing' }
+TTVault >> store: anObject [
+	store := anObject
 ]

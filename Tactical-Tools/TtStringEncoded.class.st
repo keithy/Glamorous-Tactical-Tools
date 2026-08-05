@@ -1,5 +1,5 @@
 Class {
-	#name : 'TtStringEncoded',
+	#name : 'TTStringEncoded',
 	#superclass : 'Object',
 	#instVars : [
 		'encoded',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TtStringEncoded class >> newFrom: aString [
+TTStringEncoded class >> newFrom: aString [
 
 	^ (self new)
 	     encoded: aString
@@ -19,14 +19,14 @@ TtStringEncoded class >> newFrom: aString [
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> allRangesOfRegexMatches: match [
+TTStringEncoded >> allRangesOfRegexMatches: match [
 
 	"stringish behavior"
 	^ #()
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> asHint [
+TTStringEncoded >> asHint [
 
 	| n |
 	
@@ -41,83 +41,83 @@ TtStringEncoded >> asHint [
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> asRopedText [
+TTStringEncoded >> asRopedText [
 
  ^ BlRunRopedText string: self value
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> asString [
+TTStringEncoded >> asString [
 
 	^ self decode
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> beBase64 [
+TTStringEncoded >> beBase64 [
 
 	decodeSelector := #decodeBase64
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> beCyphered [
+TTStringEncoded >> beCyphered [
 
 	decodeSelector := #decodeCyphered
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> bePlain [
+TTStringEncoded >> bePlain [
 
 	decodeSelector := #decodePlain
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> decode [
+TTStringEncoded >> decode [
 
 	^ self perform: decodeSelector
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> decodeBase64 [
+TTStringEncoded >> decodeBase64 [
 
 	^ encoded base64Decoded asString
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> decodeCyphered [
+TTStringEncoded >> decodeCyphered [
 
 	^ self base64Decoded asString trimRight
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> decodePlain [
+TTStringEncoded >> decodePlain [
 
 	^ encoded 
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> displayStringOn: aStream [
+TTStringEncoded >> displayStringOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> encoded [
+TTStringEncoded >> encoded [
 	^ encoded
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> encoded: anObject [
+TTStringEncoded >> encoded: anObject [
 	encoded := anObject
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> explain [
+TTStringEncoded >> explain [
 
 	^ decodeSelector withoutPrefix: 'decode'
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> gtActionCopy: anAction [
+TTStringEncoded >> gtActionCopy: anAction [
 	<gtAction>
 	^ anAction button
 		priority: 105;
@@ -128,7 +128,7 @@ TtStringEncoded >> gtActionCopy: anAction [
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> gtDisplayOn: aStream [
+TTStringEncoded >> gtDisplayOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
 	
@@ -136,7 +136,7 @@ TtStringEncoded >> gtDisplayOn: aStream [
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> gtDisplayString [
+TTStringEncoded >> gtDisplayString [
 	
 	^ self value
 	
@@ -144,7 +144,7 @@ TtStringEncoded >> gtDisplayString [
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> gtViewHintFor: aView [
+TTStringEncoded >> gtViewHintFor: aView [
 	<gtView>
 	^ aView explicit
 		title: 'Hint';
@@ -162,13 +162,13 @@ TtStringEncoded >> gtViewHintFor: aView [
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> printOn: aStream [
+TTStringEncoded >> printOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
 ]
 
 { #category : 'accessing' }
-TtStringEncoded >> value [
+TTStringEncoded >> value [
 
 	^ '**', self explain, '**'
 ]

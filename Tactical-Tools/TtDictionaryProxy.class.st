@@ -1,6 +1,6 @@
 Class {
-	#name : 'TtDictionaryProxy',
-	#superclass : 'DictionaryTiered',
+	#name : 'TTDictionaryProxy',
+	#superclass : 'TTDictionaryTiered',
 	#instVars : [
 		'source'
 	],
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TtDictionaryProxy class >> newNamed: aName fromSource: aSource [
+TTDictionaryProxy class >> newNamed: aName fromSource: aSource [
 	
 		^ (self newNamed: aName)
 			  source: aSource;
@@ -18,11 +18,11 @@ TtDictionaryProxy class >> newNamed: aName fromSource: aSource [
 ]
 
 { #category : 'accessing' }
-TtDictionaryProxy >> source [
+TTDictionaryProxy >> source [
 	^ source
 ]
 
 { #category : 'accessing' }
-TtDictionaryProxy >> source: anObject [
+TTDictionaryProxy >> source: anObject [
 	source := anObject
 ]

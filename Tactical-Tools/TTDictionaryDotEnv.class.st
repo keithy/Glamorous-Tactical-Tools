@@ -1,6 +1,6 @@
 Class {
-	#name : 'TtDotEnv',
-	#superclass : 'TtDictionaryProxy',
+	#name : 'TTDictionaryDotEnv',
+	#superclass : 'TTDictionaryProxy',
 	#classInstVars : [
 		'suffixReaderMap'
 	],
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TtDotEnv class >> newNamed: aName fromFile: aStreamable [
+TTDictionaryDotEnv class >> newNamed: aName fromFile: aStreamable [
 	
 	"The important thing for testing is that the file
 	 reference provided can respond to #readStream.
@@ -22,14 +22,14 @@ TtDotEnv class >> newNamed: aName fromFile: aStreamable [
 ]
 
 { #category : 'as yet unclassified' }
-TtDotEnv class >> newStringObfuscated: aString [
+TTDictionaryDotEnv class >> newStringObfuscated: aString [
 
-	^ TtStringObfuscated newFrom: aString
+	^ TTStringObfuscated newFrom: aString
  
 ]
 
 { #category : 'as yet unclassified' }
-TtDotEnv class >> suffixMapsBuild [
+TTDictionaryDotEnv class >> suffixMapsBuild [
 
 	suffixReaderMap := (OrderedCollection new)
  
@@ -44,7 +44,7 @@ TtDotEnv class >> suffixMapsBuild [
 ]
 
 { #category : 'as yet unclassified' }
-TtDotEnv class >> suffixReaderMap [
+TTDictionaryDotEnv class >> suffixReaderMap [
 
 	suffixReaderMap ifNil: [ self suffixMapsBuild ].
 	
@@ -53,7 +53,7 @@ TtDotEnv class >> suffixReaderMap [
 ]
 
 { #category : 'as yet unclassified' }
-TtDotEnv >> at: key putReading: value [
+TTDictionaryDotEnv >> at: key putReading: value [
 
 	self class suffixReaderMap do: [ :assoc |
 	
@@ -77,7 +77,7 @@ TtDotEnv >> at: key putReading: value [
 ]
 
 { #category : 'as yet unclassified' }
-TtDotEnv >> readSource [
+TTDictionaryDotEnv >> readSource [
 	
 	self reset.
 	self readingFromStream: self source readStream.
@@ -85,7 +85,7 @@ TtDotEnv >> readSource [
 ]
 
 { #category : 'as yet unclassified' }
-TtDotEnv >> readingFromStream: aStream [
+TTDictionaryDotEnv >> readingFromStream: aStream [
 	
 	[ 
 	[ aStream atEnd ] whileFalse: [ 

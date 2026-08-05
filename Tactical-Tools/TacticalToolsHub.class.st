@@ -36,5 +36,5 @@ TacticalToolsHub class >> theVault [
 	
 	<ttSpoke>
 	
-	^ TtVault currentVault
+	^ TTVault currentVault
 ]

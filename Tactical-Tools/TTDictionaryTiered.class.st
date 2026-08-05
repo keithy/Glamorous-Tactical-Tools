@@ -1,10 +1,10 @@
 Class {
-	#name : 'DictionaryTiered',
+	#name : 'TTDictionaryTiered',
 	#superclass : 'IdentityDictionary',
 	#instVars : [
 		'next',
-		'tierName',
-		'beCache'
+		'beCache',
+		'storeKey'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -12,7 +12,18 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-DictionaryTiered class >> newNamed: aName [
+TTDictionaryTiered class >> newCache [
+	
+		^ self new 
+				storeKey: #cache;
+				beCache;
+				yourself
+				
+				 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered class >> newNamed: aName [
 	
 		^ self new 
 				tierName: aName;
@@ -21,20 +32,41 @@ DictionaryTiered class >> newNamed: aName [
 				 
 ]
 
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered class >> newWithStoreKey: aSymbol [
+	
+		^ self new 
+				storeKey: aSymbol;
+				yourself
+				
+				 
+]
+
 { #category : 'accessing' }
-DictionaryTiered class >> shutDown [
+TTDictionaryTiered class >> shutDown [
 
 	self shutDownZapCache
 ]
 
 { #category : 'accessing' }
-DictionaryTiered class >> shutDownZapCache [
+TTDictionaryTiered class >> shutDownZapCache [
 
 	self allInstancesDo: [ :ea | ea isCache ifTrue: [ ea reset ]]
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> appendTier: tier named: name [
+TTDictionaryTiered >> appendTier: store [
+
+	next ifNotNil: [ ^ next appendTier: store ].
+	
+	next := store.
+	
+	^ next
+	
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> appendTier: tier named: name [
 
 	next ifNotNil: [ ^ self appendTier: tier named: name
  ].
@@ -44,13 +76,13 @@ DictionaryTiered >> appendTier: tier named: name [
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> beCache [
+TTDictionaryTiered >> beCache [
 
 	beCache := true
 ]
 
 { #category : 'as yet unclassified' }
-DictionaryTiered >> deepAssociationAt: key ifAbsent: absentBlock [
+TTDictionaryTiered >> deepAssociationAt: key ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
 
@@ -60,13 +92,14 @@ DictionaryTiered >> deepAssociationAt: key ifAbsent: absentBlock [
 ]
 
 { #category : 'as yet unclassified' }
-DictionaryTiered >> deepAssociationAt: key ifPresent: presentBlock [
+TTDictionaryTiered >> deepAssociationAt: key ifPresent: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: tierName ].
+	(array at: (self findElementOrNil: key)) 
+	    ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: storeKey ].
 	
 	next ifNil: [ ^ nil ].
 	
@@ -74,7 +107,7 @@ DictionaryTiered >> deepAssociationAt: key ifPresent: presentBlock [
 ]
 
 { #category : 'as yet unclassified' }
-DictionaryTiered >> deepAt: key ifAbsent: absentBlock [
+TTDictionaryTiered >> deepAt: key ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
 
@@ -84,13 +117,13 @@ DictionaryTiered >> deepAt: key ifAbsent: absentBlock [
 ]
 
 { #category : 'as yet unclassified' }
-DictionaryTiered >> deepAt: key ifPresent: presentBlock [
+TTDictionaryTiered >> deepAt: key ifPresent: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc value cull: tierName ].
+	(array at: (self findElementOrNil: key)) ifNotNil: [:assoc | ^ presentBlock cull: assoc value cull: storeKey ].
 	
 	next ifNil: [ ^ nil ].
 	
@@ -98,31 +131,51 @@ DictionaryTiered >> deepAt: key ifPresent: presentBlock [
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> initialize: n [
+TTDictionaryTiered >> initialize: n [
 
 	super initialize: n.
   beCache ifNil: [ beCache := false ].
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> isCache [
+TTDictionaryTiered >> isCache [
 
 	^ beCache
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> next [
+TTDictionaryTiered >> next [
 	^ next
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> reset [
+TTDictionaryTiered >> reset [
 
 	^ self removeAll
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> tierAt: name [
+TTDictionaryTiered >> storeAt: name [
+
+	name = storeKey ifTrue: [ ^ self ].
+	
+	next ifNotNil: [ ^ next storeAt: name ].
+	
+	^ nil
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> storeKey [
+	^ storeKey
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> storeKey: anObject [
+	storeKey := anObject
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> tierAt: name [
 
 	name = tierName ifTrue: [ ^ self ].
 	
@@ -132,11 +185,11 @@ DictionaryTiered >> tierAt: name [
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> tierName [
+TTDictionaryTiered >> tierName [
 	^ tierName
 ]
 
 { #category : 'accessing' }
-DictionaryTiered >> tierName: anObject [
+TTDictionaryTiered >> tierName: anObject [
 	tierName := anObject
 ]
