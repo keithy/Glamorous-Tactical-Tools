@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:10:38.022647+01:00"
+						"dateAndTimeString" : "2026-08-06T04:04:36.073486+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system at a macro level. It doubles as an *interface* defined between these tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere. We call this isolation \"TheWall\"."
+				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system at a macro level. It doubles as a *meta interface* defined between these tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere. We call this interface \"TheWall\"."
 			},
 			{
 				"__type" : "textSnippet",
@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T06:57:26.865778+01:00"
+						"dateAndTimeString" : "2026-08-06T04:08:56.866783+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragmas <:ttWall\\>"
+				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma <<ttWall>>. Notice how any method in the system can be marked, implying that this will be available in all Smalltalks in which Tactical-Tools loads."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -103,14 +103,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:09:52.245315+01:00"
+						"dateAndTimeString" : "2026-08-06T04:04:09.499005+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "8g8Ms73kQvaEmEoYXZv0bA=="
 				},
-				"code" : "TheHub wall "
+				"code" : "TacticalToolsHub pragmasAllWall "
 			},
 			{
 				"__type" : "textSnippet",
@@ -137,7 +137,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T06:59:00.25118+01:00"
+						"dateAndTimeString" : "2026-08-06T04:06:36.302559+01:00"
 					}
 				},
 				"uid" : {
@@ -147,7 +147,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "## Lower level compatability\nThe experts have put a fair bit of effort into leveling the playing field, for the time being this is the best way to cop with varying target platforms. "
+				"string" : "## Lower level compatability\nThe experts have put a fair bit of effort into leveling the playing field, for the time being this is the best way to cope with varying target platforms. "
 			},
 			{
 				"__type" : "pharoSnippet",

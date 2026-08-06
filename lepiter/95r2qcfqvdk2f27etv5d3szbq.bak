@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:10:24.07522+01:00"
+						"dateAndTimeString" : "2026-08-06T03:58:30.436024+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "txoCP1QbRkaNsEEPziHmIg=="
 				},
-				"code" : "\"Notice the Browser is TheGlamorousHub, the winner of the auction\"\rTheHub browse \r\"The Browsee is TheHub - a minimal presentation, but with 'Hubs' and 'All' tab\""
+				"code" : "\"Notice the Browser is TheGlamorousHub, the winner of the auction\"\rTheHub browse \r\"The Browsee is TheHub - a minimal presentation, but with 'Hubs' tab\""
 			},
 			{
 				"__type" : "pharoSnippet",

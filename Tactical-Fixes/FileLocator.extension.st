@@ -39,9 +39,9 @@ FileLocator >> storeOn: aStream [
 	aStream
 		nextPut: $(;
 		nextPutAll: self class name;
-		nextPutAll: ' origin: ''';
+		nextPutAll: ' origin: #';
 		nextPutAll: origin;
-		nextPutAll: ''')'.
+		nextPut: $).
 		
 	path
 		do: [ :item | 

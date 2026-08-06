@@ -199,7 +199,7 @@ TheHub class >> newBrowsing: aClass [
 ]
 
 { #category : 'environment' }
-TheHub class >> onStartUpBidToBeCurrentHubClass [
+TheHub class >> onStartUpBidToBeBrowser [
 
 	^ 1
 ]
@@ -329,7 +329,7 @@ TheHub class >> startUp [
 	max := 0.
 	self allSubclassesDo: [ :hubClass | 
 	
-		bid := hubClass onStartUpBidToBeCurrentHubClass.
+		bid := hubClass onStartUpBidToBeBrowser.
 		
 		bid > max ifTrue: [
 				

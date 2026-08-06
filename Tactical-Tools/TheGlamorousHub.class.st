@@ -119,7 +119,7 @@ TheGlamorousHub class >> lepiterReload [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> onStartUpBidToBeCurrentHubClass [
+TheGlamorousHub class >> onStartUpBidToBeBrowser [
 	
 	"Determine if we are based on GT or Pharo (better ways?)"
 	(self classNamed: #GtImage ifAbsent: [ ^ 0 ]).
