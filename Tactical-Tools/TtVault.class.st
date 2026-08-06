@@ -2,7 +2,8 @@ Class {
 	#name : 'TTVault',
 	#superclass : 'Object',
 	#instVars : [
-		'store'
+		'store',
+		'projectDirectory'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -114,6 +115,16 @@ TTVault class >> searchPathName: aName project: aProject [
 TTVault class >> vaultId [
 
 	^ self name asLowercase
+]
+
+{ #category : 'accessing' }
+TTVault >> projectDirectory [
+	^ projectDirectory ifNil: [ '.' asFileReference ]
+]
+
+{ #category : 'accessing' }
+TTVault >> projectDirectory: anObject [
+	projectDirectory := anObject
 ]
 
 { #category : 'accessing' }

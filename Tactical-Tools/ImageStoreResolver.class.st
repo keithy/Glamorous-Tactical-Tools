@@ -50,6 +50,34 @@ ImageStoreResolver >> resolve: aSymbol [
 
 { #category : 'resolving' }
 ImageStoreResolver >> supportedOrigins [
-	^ ImageStore withAllSubclasses collect: [ :c | c name ]
+
+	| origins |
+	
+	origins := OrderedCollection new.
+	
+	ImageStore withAllSubclassesDo: [ :c | 
+	
+				(Pragma allNamed: #origin in: c class) do: [:pragma | 
+		
+					"class pragma"
+					origins add: pragma methodSelector
+				]
+  	].
+
+  ^ origins asArray
 	 
+]
+
+{ #category : 'resolving' }
+ImageStoreResolver >> supportedOriginsDo: aBlock [
+
+		ImageStore withAllSubclassesDo: [ :c | 
+	
+				(Pragma allNamed: #origin in: c class) do: [:pragma | 
+		
+				"class pragma"
+				aBlock value: c value: pragma methodSelector ]
+  	].
+
+
 ]

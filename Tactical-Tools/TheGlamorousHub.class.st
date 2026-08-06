@@ -7,17 +7,6 @@ Class {
 }
 
 { #category : 'environment' }
-TheGlamorousHub class >> TacticalHub [ 
-
-	"Tactical Tools"
-	
-	<ttHub>
-		
-  ^  #TacticalToolsHub asClass 
-		  
-]
-
-{ #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
 
 	"the list of repositories registered with the git tool"
@@ -239,13 +228,13 @@ TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> theCuriousity [
+TheGlamorousHub class >> tt [
 
-	"Curious Things in Glamorous Toolkit"
+	"Tactical Tools"
 	
 	<ttHub>
 		
-  ^  TheCuriousity 
+  ^  #TacticalToolsHub asClass 
 		  
 ]
 
@@ -260,7 +249,7 @@ TheGlamorousHub class >> whatIsHome [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> wipHub [ 
+TheGlamorousHub class >> wip [
 
 	"Work In Progress"
 	

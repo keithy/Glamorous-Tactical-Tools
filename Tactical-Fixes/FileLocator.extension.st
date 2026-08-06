@@ -2,19 +2,9 @@ Extension { #name : 'FileLocator' }
 
 { #category : '*Tactical-Fixes' }
 FileLocator class >> gtLocations [
-
-	| origins |
-	
-		origins := OrderedCollection new.
-		
- 	FileLocator supportedOriginsDo: [ :resolver :selector | 
-		 	(resolver respondsTo: selector) 
-		 		ifTrue: [ origins add: (resolver perform: selector) ]
-		 		ifFalse: [  Transcript crShow: thisContext shortDebugStack ]
-	 ].
-	 
-	^ origins
-
+	^ self supportedOrigins 
+		collect: [ :aSelector | self origin: aSelector ]
+		as: Array
 ]
 
 { #category : '*Tactical-Fixes' }

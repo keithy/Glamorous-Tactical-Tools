@@ -14,7 +14,7 @@ Class {
 		'browsing'
 	],
 	#classVars : [
-		'CurrentHubClass'
+		'WinningBrowserHubClass'
 	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
@@ -24,9 +24,15 @@ Class {
 { #category : 'instance creation' }
 TheHub class >> browse [
 
-^ self newBrowsing: self currentOrSubclass
+^ self winningBrowserHubClass newBrowsing: self
 	 
 		  
+]
+
+{ #category : 'instance creation' }
+TheHub class >> browser [
+	
+	^ self winningBrowserHubClass 
 ]
 
 { #category : 'wall' }
@@ -48,7 +54,7 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
 { #category : 'instance creation' }
 TheHub class >> current [
 	
-	^ CurrentHubClass ifNil: [ CurrentHubClass := self ]
+	^ self winningBrowserHubClass
 ]
 
 { #category : 'instance creation' }
@@ -103,7 +109,7 @@ TheHub class >> fileReferenceFrom: aString [
 { #category : 'testing' }
 TheHub class >> for: instanceMethodSelector respondWith: substituteValue during: aBlock [
 	
-	^ aBlock on: CurrentHubClass do: [  :ex | 
+	^ aBlock on: WinningBrowserHubClass do: [  :ex | 
 	
 			ex tag == instanceMethodSelector
 				ifTrue: [ ex resume: substituteValue ] 
@@ -117,6 +123,17 @@ TheHub class >> globalAt: aName ifAbsent: aBlock [
 	<ttWall>
 	
 	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
+]
+
+{ #category : 'environment' }
+TheHub class >> gt [
+
+	"The Glamorous Toolkit"
+	
+	<ttHub>
+		
+  ^  TheGlamorousHub 
+		  
 ]
 
 { #category : 'wall' }
@@ -177,6 +194,16 @@ TheHub class >> onStartUpBidToBeCurrentHubClass [
 ]
 
 { #category : 'environment' }
+TheHub class >> openFileBrowser [
+
+	"Current Working Directory"
+	
+	<ttSpoke>
+	
+	^ '.' asFileReference
+]
+
+{ #category : 'environment' }
 TheHub class >> osEnvironment [
 	
 	^ self current signalAuto
@@ -201,6 +228,15 @@ TheHub class >> pragmasAllExamples [
 	^ Pragma allNamed: #gtExample
 	
 
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAllHubs [
+
+	"All of the hubs... in the world"
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttHub)
+	
 ]
 
 { #category : 'wall' }
@@ -245,6 +281,18 @@ TheHub class >> smalltalkImage [
  ^ self signalAuto
 ]
 
+{ #category : 'environment' }
+TheHub class >> sortByComment: pragmas [
+ 
+ 	"Sort Pragmas by method comment"
+ 	
+ 	<ttUtil>
+ 	
+	^ pragmas asSortedCollection: [ :a :b | a method comment <= (b method comment) ] 
+	
+
+]
+
 { #category : 'browsing' }
 TheHub class >> spokes [
 
@@ -265,7 +313,7 @@ TheHub class >> startUp [
 	
 	| max bid |
 	
-	CurrentHubClass := self. 
+	WinningBrowserHubClass := self. 
 	
 	max := 0.
 	self allSubclassesDo: [ :hubClass | 
@@ -274,11 +322,22 @@ TheHub class >> startUp [
 		
 		bid > max ifTrue: [
 				
-				CurrentHubClass := hubClass. 
+				WinningBrowserHubClass := hubClass. 
 				max := bid.
 				
 		]
 	].
+]
+
+{ #category : 'environment' }
+TheHub class >> theCuriousity [
+
+	"Curious Things"
+	
+	<ttHub>
+		
+  ^  TheCuriousity 
+		  
 ]
 
 { #category : 'environment' }
@@ -299,6 +358,20 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 TheHub class >> utils [
 
 	^ self browse utils
+	
+
+]
+
+{ #category : 'accessing' }
+TheHub class >> winningBrowserHubClass [
+	
+	^ WinningBrowserHubClass ifNil: [ WinningBrowserHubClass := self ]
+]
+
+{ #category : 'environment' }
+TheHub >> browser [
+
+	^ self class browser
 	
 
 ]
@@ -336,15 +409,13 @@ TheHub >> getSpokeFromPragma: aPragma [
 ]
 
 { #category : 'browsing' }
-TheHub >> gtHubsFor: aView [  
+TheHub >> gtAllHubsFor: aView [  
 	<gtView>
 	
-	self hubs ifEmpty: [ ^ aView empty ].
-		
 		^ aView columnedList
-		title: 'Hubs';
-		priority: 10;
-		items: [ self hubs] ;
+		title: 'All';
+		priority: 15;
+		items: [ self class pragmasAllHubs] ;
 		"actionUpdateButtonTooltip: 'Update item list';"
 		"column: '#' 
 			text: [ :eachItem :eachIndex | 
@@ -393,8 +464,76 @@ TheHub >> gtHubsFor: aView [
 ]
 
 { #category : 'browsing' }
+TheHub >> gtHubsFor: aView [  
+	<gtView>
+	
+	self hubs ifEmpty: [ ^ aView empty ].
+		
+		^ aView columnedList
+		title: 'Hubs';
+		priority: 10;
+		items: [ self hubs] ;
+		"actionUpdateButtonTooltip: 'Update item list';"
+		"column: '#' 
+			text: [ :eachItem :eachIndex | 
+				eachIndex asRopedText foreground: Color gray ]
+			width: 45;"
+		column: 'More'
+			text: [ :eachItem | eachItem method comment ifNil: '' ];
+		column: 'Pragma'
+			text: [ :eachItem | eachItem gtDisplayText ];
+		column: 'edit' translated
+			stencil: [ :pragma | 
+		 	
+		 	 pragma method in: [ :m |
+		 	 
+								BrButton new
+									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
+															BrGlamorousButtonWithIconAptitude;
+									icon: BrGlamorousVectorIcons edit ;
+									label: m selector asString;
+									beTinySize;
+											
+											action: [ :button | 
+									
+									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
+									 in: [:hub |
+									 
+											  hub ifNotNil: [ :result | button phlow spawnObject: pragma ] 
+									 ]
+							]
+     ] ]
+			width: 50;
+			
+		send: [ :each | 
+		
+		  each method in: [ :m |
+		 	 
+			  	(m isClassSide and: [ m numArgs == 0 ]) 
+			  		ifFalse: [ nil ] 
+			  		ifTrue: [
+								 
+									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
+									 in: [:hub |
+									 
+											  hub ifNotNil: [ :result | (self class newBrowsing: hub) ]]]].];
+											  
+
+		dynamicContextItems: [ :anElement :aCollection | 
+			aCollection size = 1
+				ifTrue: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection first
+						hostElement: anElement ]
+				ifFalse: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection
+						hostElement: anElement ] ]
+	
+
+]
+
+{ #category : 'browsing' }
 TheHub >> gtInspectorTitleString [ 
-    ^ 'Hub Browser (' ,(browsing gtDisplayString) , ')' 
+    ^ self class name,' Browser (' ,(browsing gtDisplayString) , ')' 
 ]
 
 { #category : 'browsing' }
@@ -458,8 +597,9 @@ TheHub >> httpClientMaximumEntitySize [
 { #category : 'browsing' }
 TheHub >> hubs [
 
-	^ self sortByComment: (self class pragmasClassSideNamed: #ttHub in: browsing)
-	
+	^ TheHub sortByComment: 
+		((self class pragmasClassSideNamed: #ttHub in: browsing) 
+				select:[ :p | p method numArgs == 0 ])
 
 ]
 
@@ -517,18 +657,12 @@ TheHub >> sessionManager [
 	^ SessionManager default
 ]
 
-{ #category : 'environment' }
-TheHub >> sortByComment: pragmas [
-
-	^ pragmas asSortedCollection: [ :a :b | a method comment <= (b method comment) ] 
-	
-
-]
-
 { #category : 'browsing' }
 TheHub >> spokes [
 
-	^ self sortByComment: ((self class pragmasClassSideNamed: #ttSpoke in: browsing), (self class pragmasNamed: #ttSpoke in: browsing))
+	^ TheHub sortByComment: (
+		(self class pragmasClassSideNamed: #ttSpoke in: browsing), 
+		(self class pragmasNamed: #ttSpoke in: browsing))
 	
 
 ]
