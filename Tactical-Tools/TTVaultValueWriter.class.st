@@ -90,8 +90,8 @@ TTVaultValueWriter >> fromAnyAt: key put: value [
 ]
 
 { #category : 'accessing' }
-TTVaultValueWriter >> fromDotEnvAt: key put: data [
-	^ self fromAnyAt: key put: (data at: #value)
+TTVaultValueWriter >> fromDotEnvAt: key put: value [
+	^ self fromAnyAt: key put: value
 ]
 
 { #category : 'accessing' }

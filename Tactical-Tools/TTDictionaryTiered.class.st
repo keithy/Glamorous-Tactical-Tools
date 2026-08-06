@@ -42,21 +42,9 @@ TTDictionaryTiered >> appendTier: store [
 	"double dispatch so that new tier has control 
 	 or can opt out if empty"
 	 
-	^ store appendTierTo: self.
+	^ store tierAppendTo: self.
 	
 	 
-]
-
-{ #category : 'accessing' }
-TTDictionaryTiered >> appendTierTo: stack [
-
-	tierKey  ifNil: [ ^ self error: 'tierKey not set' ].
-	
-	stack next ifNotNil: [ ^ self appendTierTo: stack next ].
-	
-  stack next: self.
-	
-	^ self
 ]
 
 { #category : 'accessing' }
@@ -199,6 +187,16 @@ TTDictionaryTiered >> reset [
 ]
 
 { #category : 'accessing' }
+TTDictionaryTiered >> reverseTiers [ 
+
+"I stay the same but my nexts are inverted"
+
+
+
+	 
+]
+
+{ #category : 'accessing' }
 TTDictionaryTiered >> storeAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
@@ -209,6 +207,19 @@ TTDictionaryTiered >> storeAt: name [
 ]
 
 { #category : 'accessing' }
+TTDictionaryTiered >> tierAppendTo: stack [
+
+	tierKey  ifNil: [ ^ self error: 'tierKey not set' ].
+	
+	stack next ifNotNil: [ ^ self tierAppendTo: stack next ].
+	
+	self valueWriter: stack valueWriter copy.
+  stack next: self.
+	
+	^ self
+]
+
+{ #category : 'accessing' }
 TTDictionaryTiered >> tierAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
@@ -216,6 +227,25 @@ TTDictionaryTiered >> tierAt: name [
 	next ifNotNil: [ ^ next tierAt: name ].
 	
 	^ nil
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> tierInsertIn: stack after: key [
+
+	tierKey ifNil: [ ^ self error: 'tierKey not set' ].
+	
+	stack ifNil: [ ^ nil ]. "failed"
+	
+	"search"
+	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].
+	
+	"found"
+	self valueWriter: stack valueWriter copy.
+  self next: stack next.
+  stack next: self.
+	
+	"success"
+	^ self
 ]
 
 { #category : 'accessing' }
@@ -253,9 +283,16 @@ TTDictionaryTiered >> tiers [
 ]
 
 { #category : 'accessing' }
+TTDictionaryTiered >> valueWriter [ 
+
+^ valueWriter.
+
+]
+
+{ #category : 'accessing' }
 TTDictionaryTiered >> valueWriter: aValueWriter [
 	
 	aValueWriter dict: self.
 	valueWriter := aValueWriter.
-	next ifNotNil: [ next valueWriter: aValueWriter ]
+
 ]

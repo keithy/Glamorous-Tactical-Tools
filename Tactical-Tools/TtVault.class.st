@@ -20,39 +20,42 @@ TTVault class >> currentVault [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newStore [
+TTVault class >> makeStoreCache [
+	
+	<gtExample>
+	
+	^ TTDictionaryTiered newCache. "top tier"
+ 
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeStoreCacheConfigEnv [
 	
 	"our test show it all"
 	
 	<gtExample>
 	 
 	
-	| files store user project |
+	| files store user projectId project |
 	
-	store  := TTDictionaryTiered newCache. "top tier"
- 
-	TTDictionaryTiered new
-			tierKey: #os;
-			addAll: (TheHub osEnvironment);
-			beCache;
-			appendTierTo: store.
+	store  := self makeStoreCacheEnv.
 	
-	user := store 
-		deepAt: #USER 
-		ifAbsentPut: [ store deepAt: #USERNAME 
-											ifAbsent: [ self error: 'no USERNAME found' ]].
-	
-	project := store deepAt: #GT_PROJECT ifAbsentPut: [ 'com.gtoolkit' ].
+	project := store deepAt: #GT_ID ifAbsentPut: [ self projectId].
 		
-	files := self searchPathName: self vaultId project: self projectId.
+	files := self searchPathName: (self vaultId) project: project.
 
-	files keysAndValuesDo: [ :key :file |
+	files reverseDo: [ :assoc |
  
+ 		| file |
+ 		file := assoc value.
+ 		
  		file exists ifTrue: [
 					TTDictionaryDotEnv new 
-						tierKey: #key;
+						tierKey: assoc key;
+						tierInsertIn: store after: #cache;
 						readSource: file;
-						appendTierTo: store;
+						
+						
 						yourself.
 		 ]
 	].
@@ -61,7 +64,58 @@ TTVault class >> newStore [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newTestEmpty [
+TTVault class >> makeStoreCacheEnv [
+	
+	"our test show it all"
+	
+	<gtExample>
+	 
+	
+	| store user project |
+	
+	store  := self makeStoreCache.
+ 
+	TTDictionaryTiered new
+			tierKey: #os;
+			addAll: (TheHub osEnvironment);
+			beCache;
+			tierAppendTo: store.
+	
+	user := store 
+		deepAt: #USER 
+		ifAbsentPut: [ store deepAt: #USERNAME 
+											ifAbsent: [ self error: 'no USERNAME found' ]].
+
+	^ store
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeStoreCacheMiseConfigEnv [
+	
+	"our test show it all"
+	
+	<gtExample>
+	 
+	
+	| files store user projectId project |
+	
+	store  := self makeStoreCacheConfigEnv.
+	
+	project := store deepAt: 'PROJECT' ifAbsent: [ ^ store ].
+
+  project asFileReference exists ifTrue: [
+					
+			TTDictionaryMiseEnv new 
+				tierKey: #mise;
+				tierInsertIn: store after: #cache;
+				readSource: project
+	].
+				
+	^ store
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeStoreEmpty [
 	
 	<gtExample>
 	<return: #String>
@@ -86,8 +140,8 @@ TTVault class >> newValueWriter [
 
 { #category : 'instance creation' }
 TTVault class >> projectId [
-
-^ 'com.gtoolkit'
+  "use default"
+^ TheHub osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'instance creation' }
@@ -108,7 +162,7 @@ TTVault class >> searchPathName: aName project: aProject [
 		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / aProject / (aName , '.env')) resolve.
 	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (aProject,'.', aName , '.env') ) resolve.
 	
-	} asDictionary
+	}
 ]
 
 { #category : 'instance creation' }
