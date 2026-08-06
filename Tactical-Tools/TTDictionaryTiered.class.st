@@ -213,7 +213,7 @@ TTDictionaryTiered >> tierAppendTo: stack [
 	
 	stack next ifNotNil: [ ^ self tierAppendTo: stack next ].
 	
-	self valueWriter: stack valueWriter copy.
+	valueWriter ifNil: [ self valueWriter: stack valueWriter copy ].
   stack next: self.
 	
 	^ self
@@ -240,7 +240,7 @@ TTDictionaryTiered >> tierInsertIn: stack after: key [
 	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].
 	
 	"found"
-	self valueWriter: stack valueWriter copy.
+	valueWriter ifNil: [ self valueWriter: stack valueWriter copy ].
   self next: stack next.
   stack next: self.
 	
