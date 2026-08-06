@@ -40,7 +40,7 @@ ImageStoreResolver >> resolve: aSymbol [
 	
 	self supportedOriginsDo: [ :storeClass :selector |
 			
-			selector == aSymbol ifTrue: [ ^ storeClass perform: selector ]
+			selector = aSymbol ifTrue: [ ^ storeClass perform: selector ]
 	
 	].
 					

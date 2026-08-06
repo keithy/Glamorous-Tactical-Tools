@@ -35,6 +35,23 @@ FileLocator class >> gtLocationsOld [
 ]
 
 { #category : '*Tactical-Fixes' }
+FileLocator >> storeOn: aStream [
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' origin: ''';
+		nextPutAll: origin;
+		nextPutAll: ''')'.
+		
+	path
+		do: [ :item | 
+			aStream
+				nextPutAll: ' / ''';
+				nextPutAll: item;
+				nextPut: $' ]
+]
+
+{ #category : '*Tactical-Fixes' }
 FileLocator class >> supportedOriginsDo: aBlock [
 	
 	"Improved mechanism than supportedOrigins"

@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-02T15:44:00.270985+01:00"
+						"dateAndTimeString" : "2026-08-06T03:04:59.341535+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,41 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "New class {{gtClass:ImageStore}} simply extends MemoryStore and does not remove the store contents on shutdown. "
+				"string" : "New class {{gtClass:ImageStore}} simply extends MemoryStore and does not remove its stored contents on shutdown. This is available via '{imageStore'}"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-06T03:05:04.030383+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-06T03:16:41.034975+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "yzpTcRvkQvW5+gESj9PbIw=="
+				},
+				"code" : "(TheHub fileLocatorFrom: '{imageStore}/help')  "
 			},
 			{
 				"__type" : "textSnippet",
@@ -55,7 +89,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T07:41:36.165964+01:00"
+						"dateAndTimeString" : "2026-08-06T03:19:41.926659+01:00"
 					}
 				},
 				"editEmail" : {
@@ -66,7 +100,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T07:41:36.165964+01:00"
+						"dateAndTimeString" : "2026-08-06T03:20:27.223415+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +110,75 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : ""
+				"string" : "###Ramdisk\nThere is also named path for a non-persisted Filesystem"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-06T03:20:34.546765+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-06T03:20:44.27357+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "bXmibUesSBSpZGBs9zhMJg=="
+				},
+				"code" : "(TheHub fileLocatorFrom: '{ramdisk}/help')  "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-06T03:30:20.221124+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-06T03:30:30.82967+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "IdztJ08xStuzkEgYtHUsjw=="
+				},
+				"code" : "TheHub gt browse"
 			}
 		]
 	},
@@ -99,12 +201,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-01T07:40:32.426047+01:00"
+			"dateAndTimeString" : "2026-08-06T03:19:23.280787+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Ramdisk FileSystem Persisted In-Image "
+		"title" : "Memory FileSystem Persisted In-Image "
 	},
 	"uid" : {
 		"__type" : "uuid",

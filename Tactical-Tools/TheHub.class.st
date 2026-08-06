@@ -79,6 +79,17 @@ TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 ]
 
 { #category : 'wall' }
+TheHub class >> fileLocatorFrom: aString [
+
+  <ttWall>
+
+	"Answer a  FileLocator from the supplied string"
+
+	^ FileLocator fromPath: (self fileReferenceFrom: aString) path ifNone: [ self error: '?' ]
+	
+]
+
+{ #category : 'wall' }
 TheHub class >> fileReferenceFrom: aString [
 
   <ttWall>
