@@ -3,7 +3,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'tool',
-		'workingDirectory',
 		'stdout',
 		'output',
 		'stderr',
@@ -14,174 +13,15 @@ Class {
 		'mappers',
 		'mapped'
 	],
-	#classInstVars : [
-		'exe'
-	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
 { #category : 'as yet unclassified' }
-TTResult class >> @ workingDirectory [
+TTResult >> apply: aFixer [
 
-	^ self new 
-			workingDirectory: workingDirectory;
-			yourself
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> findExecutable [
-	^ (self findExecutable: self toolName) output stdout
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> findExecutable: tool [
-
-	"^ GtOsSystemInfo current findExecutable: tool"
-	
-	^ (self makeShell:'/usr/bin/which ', tool) output stdout
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> initialize [
-	
-	self sessionManager
-		registerSystemClassNamed: self name
-		atPriority: 50.
-	
-	self startUp: true.
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> makeRawShell: script [
-
-^ GtExternalProcessBuilder new
-			command: self osSHELL;
-			args: {
-				'-c'.
-			  script asString }.
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> makeShell: script [
-
-	"Others add the -l flag we load the non-interative startup file"
-	
-^ (self makeRawShell: script) in: [ :exec |
-			
-			(exec command endsWith:'bash')
-				ifTrue: [ exec env: 'BASH_ENV' value: '~/.bashrc' ].
-  
-  ]; yourself
-		  
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> osHOME [
-
-	^ Smalltalk os environment at: 'HOME' ifAbsent: '/bin/sh'.
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> osPATH [
-
-	^ Smalltalk os environment at: 'PATH' ifAbsent: '/bin/sh'.
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> osSHELL [
-
-	^ Smalltalk os environment at: 'SHELL' ifAbsent: '/bin/sh'.
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> path [
-
-^ '~/.local/bin:~/.bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin' 
-			copyReplaceAll: '~' with: self osHOME.
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> reset [
-
-	exe := nil.
-	
-^ self
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> startUp: restarting [
-
-	self withAllSubclassesDo: [ :toolClass | toolClass reset ]
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> testForNoisyBashProfile [
-
-	<gtExample>
-	<ttHealthy>
-	 
-	| path |
-	path := GtOsSystemInfo current findExecutable: 'ls'.
-	
-	self assert: (path  exists) description: 'Files sourced by shell -l must not write any output (add guard clause)'
-
-	
-
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> testPing [
-
-	<gtExample>
-	
-	self assert: ((self makeShell: 'echo pong') output stdout = 'pong') description: 'Shell is not starting cleanly. Check ~/.bashrc etc.'
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> toolDescription [
-
-^ self class comment
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> toolExe [
-	^ exe ifNil: [ exe := self findExecutable ]
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> toolName [
-
-^ self subclassResponsibility
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTResult class >> toolShortDescription [
-
-^ self class comment lines first
-	
-]
-
-{ #category : 'accessing' }
-TTResult >> buildShell [
- 
-" ^ GtExternalProcessBuilder new
-			command: self osSHELL;
-			args: {
-				'-c'.
-			  script asString }.
-^ (self makeRawShell: script) in: [ :exec |
-			
-			(exec command endsWith:'bash')
-				ifTrue: [ exec env: 'BASH_ENV' value: '~/.bashrc' ].
-  
-  ]; yourself"
+	aFixer applyTo: self
 ]
 
 { #category : 'as yet unclassified' }
@@ -266,6 +106,68 @@ TTResult >> inject: batch into: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> mapEachIntoCollection: aCollection [
+
+	"for paged data this can be called several times to fll up a results array"
+	aCollection ifNil: [ ^ self ].
+	"
+	self client adopt: aCollection.
+	"
+	aCollection isArray ifTrue: [  
+
+		self mapping: [ :paylArray | aCollection copyWithAll: paylArray ]. 
+			
+	] ifFalse: [  
+	
+		self mapping: [ :paylArray | aCollection copy addAll: paylArray; yourself ]. 
+	].
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> mapEachToModel: aModelPrototype [
+	
+	"the accepting method is rawData: for Models"
+	"(could it be more generic #wrapping:/#wrap)"
+	
+	self mapping: [ :paylArray | paylArray collect: [ :each | aModelPrototype copy rawData: each; yourself ] ]
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> mapTo: aCollection [
+
+	aCollection ifNil: [ ^ self ].
+	"
+	self client adopt: aCollection.
+	"
+	
+	aCollection isArray ifTrue: [  
+
+		self mapping: [ :payl | aCollection copyWithAll: payl ]	.
+			
+	] ifFalse: [  
+	
+		self mapping: [ :payl | aCollection copy addAll: payl; yourself ]
+	].
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> mapTo: aModelCollectionPrototype as: aCollection of: aModelPrototype [
+
+  "adoptedBy: is the reversal of #adopt"
+	self mapEachToModel: (aModelPrototype adoptedBy: aModelCollectionPrototype   ).
+	self mapEachIntoCollection: aCollection.
+	self mapEachIntoCollection: aModelCollectionPrototype.
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> mapTo: aModelCollectionPrototype of: aModelPrototype [
+
+	self mapTo: aModelCollectionPrototype as: nil "no change" of: aModelPrototype
+
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> mapping: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
@@ -279,6 +181,55 @@ TTResult >> payload: actionBlockSymbolArrayOrNil [
  		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       payloadReducers ifNil: [ payloadReducers := OrderedCollection with: #getPayloadStart ].
       payloadReducers add: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payloadAssociationsSelect: selectBlock andModify: modifyBlock [
+	self
+		payloadDo: [ :record | 
+			record
+				associationsDo: [ :assoc | 
+					(selectBlock value: assoc)
+						ifTrue: [ record at: assoc key put: (modifyBlock value: assoc value) ] 		.
+				].
+		]
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payloadDo: aBlock [
+		
+	"scan through record, or array of dicionaries of associations"
+	
+	self payload: [ :payl | 
+			
+		(payl isDictionary 
+				ifTrue: [ Array with: payl ] 
+				ifFalse: [ payl ]) do: aBlock.
+		
+		payl
+	]
+		
+		
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payloadFixDateFields: keys [
+	
+	self payloadAssociationsSelect: [ :assoc | keys includes: assoc key ] andModify: [ :v | v asDate ]
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payloadFixDateFieldsAuto [
+		
+	self payloadAssociationsSelect: [ :assoc  | (#(name) includes: assoc key) not ] andModify: [ :v | [ v asDate  ] ifErrorDo: [ v ] ]
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payloadFixUnixEpochFieldsSelect: aBlock [
+
+	self payloadAssociationsSelect: [ :assoc |  aBlock value: assoc key ] andModify: [  :v | TheHub unixMillisToDate: v ] 
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -297,30 +248,4 @@ TTResult >> request [
 { #category : 'accessing' }
 TTResult >> request: anObject [
 	request := anObject
-]
-
-{ #category : 'accessing' }
-TTResult >> tool [
-	^ tool
-]
-
-{ #category : 'accessing' }
-TTResult >> tool: anObject [
-	tool := anObject
-]
-
-{ #category : 'accessing' }
-TTResult >> toolExe [
-
-	 ^ self class toolExe 
-]
-
-{ #category : 'accessing' }
-TTResult >> workingDirectory [
-	^ workingDirectory
-]
-
-{ #category : 'accessing' }
-TTResult >> workingDirectory: anObject [
-	workingDirectory := anObject
 ]
