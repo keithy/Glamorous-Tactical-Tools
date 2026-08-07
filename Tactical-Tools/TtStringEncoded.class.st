@@ -170,5 +170,5 @@ TTStringEncoded >> printOn: aStream [
 { #category : 'accessing' }
 TTStringEncoded >> value [
 
-	^ '**', self explain, '**'
+	^ '[**', self explain, '**]'
 ]

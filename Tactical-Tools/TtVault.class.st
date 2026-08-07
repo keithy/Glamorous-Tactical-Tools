@@ -2,8 +2,7 @@ Class {
 	#name : 'TTVault',
 	#superclass : 'Object',
 	#instVars : [
-		'store',
-		'projectDirectory'
+		'store'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -16,15 +15,19 @@ Class {
 { #category : 'instance creation' }
 TTVault class >> currentVault [
 
-^ currentVault ifNil: [ currentVault := self new ]
+^ currentVault ifNil: [ currentVault := self newWithCacheMiseConfigEnv ]
 ]
 
 { #category : 'instance creation' }
 TTVault class >> makeStoreCache [
 	
-	<gtExample>
+	"top tier"
+
+		<gtExample>
 	
-	^ TTDictionaryTiered newCache. "top tier"
+	^ TTDictionaryTiered newCache
+				valueWriter: self makeValueWriter;
+				yourself 
  
 ]
 
@@ -81,10 +84,11 @@ TTVault class >> makeStoreCacheEnv [
 			beCache;
 			tierAppendTo: store.
 	
-	user := store 
+	"see #assocLocalUser"
+	"user := store 
 		deepAt: #USER 
 		ifAbsentPut: [ store deepAt: #USERNAME 
-											ifAbsent: [ self error: 'no USERNAME found' ]].
+											ifAbsent: [ self error: 'no USERNAME found' ]]."
 
 	^ store
 ]
@@ -133,9 +137,36 @@ TTVault class >> makeStoreEmpty [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newValueWriter [
+TTVault class >> makeValueWriter [
 
 	^ TTVaultValueWriter new
+]
+
+{ #category : 'instance creation' }
+TTVault class >> new [
+
+^ self newWithCache
+		
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newWithCache [
+
+^ self basicNew
+		store: self makeStoreCache
+		yourself
+		
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newWithCacheMiseConfigEnv [
+
+ <gtExample>
+
+ ^ self basicNew
+		store: self makeStoreCacheMiseConfigEnv
+		yourself
+		
 ]
 
 { #category : 'instance creation' }
@@ -166,14 +197,50 @@ TTVault class >> searchPathName: aName project: aProject [
 ]
 
 { #category : 'instance creation' }
+TTVault class >> test [
+
+	<gtExample>
+	
+	| vault |
+	
+	vault := self newWithCacheMiseConfigEnv 
+	
+	assocLocalUser
+		
+]
+
+{ #category : 'instance creation' }
 TTVault class >> vaultId [
 
 	^ self name asLowercase
 ]
 
-{ #category : 'accessing' }
-TTVault >> projectDirectory [
-	^ projectDirectory ifNil: [ '.' asFileReference ]
+{ #category : 'as yet unclassified' }
+TTVault >> assocForApp: anApp user: aUserAssoc field: field ifAbsent: aBlock [
+	| user keys app |
+	
+	app := anApp asString. "?"
+	
+	user :=  aUserAssoc value.
+	
+	self logStartApp: app field: field user: aUserAssoc.
+
+	keys := { (user, '__', app , '_' , field). (user asLowercase, '__', app , '_' , field). }. 
+
+	store deepAssociationAt: keys ifPresent: [ :a | ^ a ].
+
+	keys := app , '_' , field.
+	
+	store deepAssociationAt: keys ifPresent: [ :a  | ^ a  ].
+
+	^ aBlock value
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTVault >> assocLocalUser [
+
+	^ store deepAt: #('USER' 'USERNAME') ifPresent: [ :v :k :t | t -> v copyReplaceAll: '-' with: '_' ]
 ]
 
 { #category : 'accessing' }
@@ -189,6 +256,6 @@ TTVault >> store [
 { #category : 'accessing' }
 TTVault >> store: aTieredDict [
 
-	aTieredDict valueWriter: self class newValueWriter.
+	aTieredDict valueWriter: self class makeValueWriter.
 	store := aTieredDict
 ]

@@ -19,6 +19,7 @@ TTVaultValueWriter class >> suffixMapsBuild [
  
 			add: ('_CYPHER'   -> #valueAsCyphered:  ) ;
 			add: ('_ENCODED'  -> #valueAsEncoded:   ) ;
+			add: ('_BASE64'   -> #valueAsEncoded:   ) ;
 			add: ('_API_KEY'  -> #valueAsObfuscated:) ;
 			add: ('_APIKEY'   -> #valueAsObfuscated:) ;
 	  	add: ('_PASS'     -> #valueAsObfuscated:) ;
@@ -41,7 +42,7 @@ TTVaultValueWriter class >> suffixReaderMap [
 { #category : 'as yet unclassified' }
 TTVaultValueWriter class >> suffixesToRemove [
 
-	^ #('_CYPHER' '_ENCODED') 
+	^ #('_CYPHER' '_ENCODED' '_BASE64') 
 			yourself
 		
 ]

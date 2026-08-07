@@ -188,6 +188,18 @@ TheGlamorousHub class >> openTranscriptWindow [
 ]
 
 { #category : 'spokes' }
+TheGlamorousHub class >> pragmasAllExamples [
+
+	"All examples (needs an examples browser)"
+
+		<ttSpoke>
+	
+	^ Pragma allNamed: #gtExample
+	
+
+]
+
+{ #category : 'spokes' }
 TheGlamorousHub class >> pragmasAllToolButtonStencils [
 
 	"Tool button stencils"

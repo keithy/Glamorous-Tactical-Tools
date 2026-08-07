@@ -13,7 +13,7 @@ TTDictionaryMiseEnv class >> newHomeDir [
 
 ^ (self new)
 		tierKey: #miseHome;
-		valueWriter: (TTVault newValueWriter);
+		valueWriter: (TTVault makeValueWriter);
 		readSource: '~'; yourself
 ]
 

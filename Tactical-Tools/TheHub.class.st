@@ -78,6 +78,36 @@ TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 		]
 ]
 
+{ #category : 'environment' }
+TheHub class >> execBash: script [
+ 
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. script};
+			yourself
+]
+
+{ #category : 'environment' }
+TheHub class >> execMiseEnvironmentIn: source [
+
+	"Mise environment"
+	
+	| cd |
+	
+	cd := source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
+	
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. (cd, '~/.local/bin/mise env --json-extended').};
+			yourself
+]
+
+{ #category : 'environment' }
+TheHub class >> executeExternalProcess: processBuilder [
+	
+	^ self current signalAuto
+]
+
 { #category : 'wall' }
 TheHub class >> fileLocatorFrom: aString [
 
@@ -122,7 +152,7 @@ TheHub class >> for: instanceMethodSelector respondWith: substituteValue during:
 	
 	^ aBlock on: WinningBrowserHubClass do: [  :ex | 
 	
-			ex tag == instanceMethodSelector
+			ex messageText == instanceMethodSelector
 				ifTrue: [ ex resume: substituteValue ] 
 				ifFalse: [ ex pass ]
 		]
@@ -230,13 +260,13 @@ TheHub class >> platform [
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAllExamples [
+TheHub class >> pragmasAllHealthChecks [
 
-	"All examples (needs an examples browser)"
-
-		<ttSpoke>
+	"Environment health checks"
 	
-	^ Pragma allNamed: #gtExample
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttHealthy
 	
 
 ]
@@ -279,9 +309,22 @@ TheHub class >> sessionManager [
 ]
 
 { #category : 'environment' }
+TheHub class >> shortCutRegistry [
+ 
+   "Shortcut Registry"
+
+   <ttSpoke>
+ 	
+ 	^ BlShortcutKeymapRegistry default
+	 
+	 
+	
+]
+
+{ #category : 'environment' }
 TheHub class >> signalAuto [	
 
-	^ self signal: thisContext sender selector withTag: thisContext sender selector
+	^ self signal: thisContext sender selector withTag: thisContext sender arguments
 	
 
 ]
@@ -398,7 +441,28 @@ TheHub >> current [
 { #category : 'handling' }
 TheHub >> defaultAction [
 
-	^ self perform: tag
+	^ self perform: messageText withArguments: tag
+]
+
+{ #category : 'environment' }
+TheHub >> execMiseEnvironmentIn: source [
+
+	"Mise environment"
+	
+	| cd |
+	
+	cd := source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
+	
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. (cd, '~/.local/bin/mise env --json-extended').};
+			yourself
+]
+
+{ #category : 'environment' }
+TheHub >> executeExternalProcess: processBuilder [
+ 
+	^ processBuilder output stdout
 ]
 
 { #category : 'browsing' }
