@@ -11,7 +11,11 @@ Class {
 		'payloadReducers',
 		'payloadTailReducers',
 		'mappers',
-		'mapped'
+		'mapped',
+		'formatted',
+		'formatters',
+		'parsed',
+		'parsers'
 	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
@@ -19,9 +23,33 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTResult >> apply: aFixer [
+TTResult >> apply: aBoltOn [
 
-	aFixer applyTo: self
+	aBoltOn applyTo: self
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> format: actionBlockSymbolArrayOrNil [
+ 
+ 		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
+      formatters ifNil: [ formatters := OrderedCollection with: #getFormatStart ].
+      formatters add: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> getFormatStart [
+ 
+   "do not be tempted to refactor this method away, may be customized by subclasses"
+	 ^ self getMapped
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> getFormatted [
+
+  ^ formatted ifNil: [ 
+  
+			formatted := self inject: nil into: (formatters ifNil: #getFormatStart).
+		] 
 ]
 
 { #category : 'as yet unclassified' }
@@ -51,6 +79,13 @@ TTResult >> getOutput [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> getParsingInput [
+ 
+   "do not be tempted to refactor this method away, may be customized by subclasses"
+	 ^ self getStdout
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> getPayload [
 
   ^ thePayload ifNil: [ 
@@ -72,7 +107,7 @@ TTResult >> getPayloadStart [
 { #category : 'as yet unclassified' }
 TTResult >> getStderr [
 
-	stderr ifNil: [ stderr := output stderr ].
+	stderr ifNil: [ stderr := self getOutput stderr ].
 	
 	^ stderr 
 ]
@@ -106,58 +141,10 @@ TTResult >> inject: batch into: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> mapEachIntoCollection: aCollection [
+TTResult >> map: actionBlockSymbolArrayOrNil [
 
-	"for paged data this can be called several times to fll up a results array"
-	aCollection ifNil: [ ^ self ].
-	"
-	self client adopt: aCollection.
-	"
-	aCollection isArray ifTrue: [  
-
-		self mapping: [ :paylArray | aCollection copyWithAll: paylArray ]. 
-			
-	] ifFalse: [  
-	
-		self mapping: [ :paylArray | aCollection copy addAll: paylArray; yourself ]. 
-	].
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> mapEachToModel: aModelPrototype [
-	
-	"the accepting method is rawData: for Models"
-	"(could it be more generic #wrapping:/#wrap)"
-	
-	self mapping: [ :paylArray | paylArray collect: [ :each | aModelPrototype copy rawData: each; yourself ] ]
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> mapTo: aCollection [
-
-	aCollection ifNil: [ ^ self ].
-	"
-	self client adopt: aCollection.
-	"
-	
-	aCollection isArray ifTrue: [  
-
-		self mapping: [ :payl | aCollection copyWithAll: payl ]	.
-			
-	] ifFalse: [  
-	
-		self mapping: [ :payl | aCollection copy addAll: payl; yourself ]
-	].
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> mapTo: aModelCollectionPrototype as: aCollection of: aModelPrototype [
-
-  "adoptedBy: is the reversal of #adopt"
-	self mapEachToModel: (aModelPrototype adoptedBy: aModelCollectionPrototype   ).
-	self mapEachIntoCollection: aCollection.
-	self mapEachIntoCollection: aModelCollectionPrototype.
-	
+	"synonym"
+	self mapping: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
@@ -173,6 +160,14 @@ TTResult >> mapping: actionBlockSymbolArrayOrNil [
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       mappers ifNil: [ mappers := OrderedCollection with: #getMappingStart ].
       mappers add: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> parser: actionBlockSymbolArrayOrNil [
+
+			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
+      parsers ifNil: [ parsers := OrderedCollection with: #getParsingInput ].
+      parsers add: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
@@ -210,26 +205,6 @@ TTResult >> payloadDo: aBlock [
 	]
 		
 		
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> payloadFixDateFields: keys [
-	
-	self payloadAssociationsSelect: [ :assoc | keys includes: assoc key ] andModify: [ :v | v asDate ]
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> payloadFixDateFieldsAuto [
-		
-	self payloadAssociationsSelect: [ :assoc  | (#(name) includes: assoc key) not ] andModify: [ :v | [ v asDate  ] ifErrorDo: [ v ] ]
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> payloadFixUnixEpochFieldsSelect: aBlock [
-
-	self payloadAssociationsSelect: [ :assoc |  aBlock value: assoc key ] andModify: [  :v | TheHub unixMillisToDate: v ] 
-	
 ]
 
 { #category : 'as yet unclassified' }
