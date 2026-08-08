@@ -10,17 +10,11 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTAbstractFactory class >> factoryId [
+
+^ self name withoutSuffix: 'TT'
+]
+
+{ #category : 'as yet unclassified' }
 TTAbstractFactory class >> makeVault [
-]
-
-{ #category : 'as yet unclassified' }
-TTAbstractFactory >> configName [
-
-^ self name
-]
-
-{ #category : 'as yet unclassified' }
-TTAbstractFactory >> name [
-
-^ self subclassResponsibility
 ]

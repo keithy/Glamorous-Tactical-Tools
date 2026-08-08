@@ -15,7 +15,7 @@ Class {
 { #category : 'instance creation' }
 TTVault class >> currentVault [
 
-^ currentVault ifNil: [ currentVault := self newWithCacheMiseConfigEnv ]
+^ currentVault ifNil: [ currentVault := self newWithLocalMiseConfigOSEnv ]
 ]
 
 { #category : 'instance creation' }
@@ -52,7 +52,7 @@ TTVault class >> makeStoreLocalConfigOSEnv [
 	<gtExample>
 	 
 	
-	| files store user projectId project |
+	| files store project |
 	
 	store  := self makeStoreLocalOSEnv.
 	
@@ -63,17 +63,20 @@ TTVault class >> makeStoreLocalConfigOSEnv [
 	files reverseDo: [ :assoc |
  
  		| file |
+ 		
  		file := assoc value.
+ 		Notification signal: file fullPath.
  		
  		file exists ifTrue: [
-					TTDictionaryDotEnv new 
-						tierKey: assoc key;
-						tierInsertIn: store after: #cache;
-						readSource: file;
-						
-						
-						yourself.
-		 ]
+			
+			    (store tierKeys includes: (assoc key)) ifFalse: [
+			    
+						TTDictionaryDotEnv new 
+							tierKey: assoc key;
+							tierInsertIn: store after: #cache;
+							readSource: file;
+				 		 yourself.
+		 ]]
 	].
 							
 	^ store
@@ -105,7 +108,7 @@ TTVault class >> makeStoreLocalMiseConfigOSEnv [
 	<gtExample>
 	 
 	
-	| files store user projectId project |
+	| store project |
 	
 	store  := self makeStoreLocalConfigOSEnv.
 	
@@ -172,7 +175,7 @@ TTVault class >> newWithCache [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newWithCacheMiseConfigEnv [
+TTVault class >> newWithLocalMiseConfigOSEnv [
 
  <gtExample>
 
@@ -216,7 +219,7 @@ TTVault class >> test [
 	
 	| vault |
 	
-	vault := self newWithCacheMiseConfigEnv 
+	vault := self newWithLocalMiseConfigOSEnv 
 	
 	assocLocalUser
 		
@@ -225,7 +228,7 @@ TTVault class >> test [
 { #category : 'instance creation' }
 TTVault class >> vaultId [
 
-	^ self name asLowercase
+	^ (self name withoutSuffix: 'TT') asLowercase
 ]
 
 { #category : 'as yet unclassified' }
