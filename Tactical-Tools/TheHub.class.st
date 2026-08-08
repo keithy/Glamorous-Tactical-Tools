@@ -51,6 +51,20 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
    	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
+{ #category : 'wall' }
+TheHub class >> collectNotificationsOfClass: aNotificationClass during: aBlock [
+
+  <ttWall>
+ 
+	| list |
+	
+	list := OrderedCollection new.
+	
+	aBlock on: aNotificationClass do: [ :ex | list add: ex. ex pass ].
+
+	^ list
+]
+
 { #category : 'instance creation' }
 TheHub class >> current [
 	
@@ -186,6 +200,12 @@ TheHub class >> httpClientMaximumEntitySize [
 		
 ]
 
+{ #category : 'environment' }
+TheHub class >> hubId [
+
+	^ self className asLowecase
+]
+
 { #category : 'browsing' }
 TheHub class >> hubs [
 
@@ -210,6 +230,16 @@ TheHub class >> lookupClass: aName [
 	"testable equivalent of #MyClass asClass"
 	
 	
+]
+
+{ #category : 'environment' }
+TheHub class >> mustBeClassSide: pragma [
+	
+	^ pragma method isClassSide ifFalse: [
+			Warning signal: pragma displayString , 'Needs to be set Class Side'.
+			false.
+		]
+			
 ]
 
 { #category : 'environment' }
@@ -260,7 +290,7 @@ TheHub class >> platform [
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAllHealthChecks [
+TheHub class >> pragmasAll_ttHealthy [
 
 	"Environment health checks"
 	
@@ -272,12 +302,22 @@ TheHub class >> pragmasAllHealthChecks [
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAllHubs [
+TheHub class >> pragmasAll_ttHub [
 
 	"All of the hubs... in the world"
 	
 	^ TheHub sortByComment: (Pragma allNamed: #ttHub)
 	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttStartUp [
+
+	"Tactical-Tools startUp methods <ttStartUp>"
+	
+	"<ttSpoke>"
+	
+	^ Pragma allNamed: #ttStartUp
 ]
 
 { #category : 'wall' }
@@ -363,7 +403,7 @@ TheHub class >> spokesMethods [
 ]
 
 { #category : 'environment' }
-TheHub class >> startUp [
+TheHub class >> startUp: resuming [
 	
 	| max bid |
 	
@@ -381,6 +421,27 @@ TheHub class >> startUp [
 				
 		]
 	].
+	
+	self startUpTT: resuming.
+	
+	^ super startUp: resuming
+]
+
+{ #category : 'environment' }
+TheHub class >> startUpTT: resuming [
+
+	self pragmasAll_ttStartUp
+		do: [ :pragma | 
+		
+			(self mustBeClassSide: pragma) ifTrue:[ 
+			
+					pragma method methodClass soleInstance 
+						perform: pragma method selector 
+						withArguments: thisContext arguments
+						
+				] 
+		].
+		
 ]
 
 { #category : 'environment' }
@@ -490,7 +551,7 @@ TheHub >> gtAllHubsFor: aView [
 		^ aView columnedList
 		title: 'All';
 		priority: 15;
-		items: [ self class pragmasAllHubs] ;
+		items: [ self class pragmasAll_ttHub] ;
 		"actionUpdateButtonTooltip: 'Update item list';"
 		"column: '#' 
 			text: [ :eachItem :eachIndex | 

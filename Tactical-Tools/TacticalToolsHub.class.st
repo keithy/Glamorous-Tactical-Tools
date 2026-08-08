@@ -7,9 +7,21 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TacticalToolsHub class >> pragmasAllUtility [
+TacticalToolsHub class >> pragmasAll_ttStartUp [
 
-	"Tactical-Tools utility methods"
+	"Tactical-Tools startUp methods <ttStartUp>"
+	
+	<ttSpoke>
+	
+	^ TheHub pragmasAll_ttStartUp
+	  
+	
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> pragmasAll_ttUtility [
+
+	"Tactical-Tools utility methods <ttUtility>"
 	
 	<ttSpoke>
 	
@@ -18,7 +30,7 @@ TacticalToolsHub class >> pragmasAllUtility [
 ]
 
 { #category : 'as yet unclassified' }
-TacticalToolsHub class >> pragmasAllWall [
+TacticalToolsHub class >> pragmasAll_ttWall [
 
 	"Tactical-Tools wall methods <ttWall>"
 	
@@ -37,4 +49,14 @@ TacticalToolsHub class >> theVault [
 	<ttSpoke>
 	
 	^ TTVault currentVault
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> theVaultSearchPath [
+
+	"Vicarious Vault - Search Path"
+	
+	<ttSpoke>
+	
+	^ TheHub collectNotificationsOfClass: FileLookedForNotification during: [ TTVault newWithLocalMiseConfigOSEnv ]
 ]

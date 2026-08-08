@@ -52,6 +52,12 @@ TheGlamorousHub class >> httpClientOptions [
 ]
 
 { #category : 'environment' }
+TheGlamorousHub class >> hubId [
+
+	^ 'gt'
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> iceCredentialsStore [
 
 	"Credentials (iceberg/git)"
@@ -188,7 +194,7 @@ TheGlamorousHub class >> openTranscriptWindow [
 ]
 
 { #category : 'spokes' }
-TheGlamorousHub class >> pragmasAllExamples [
+TheGlamorousHub class >> pragmasAll_gtExamples [
 
 	"All examples (needs an examples browser)"
 
@@ -200,7 +206,7 @@ TheGlamorousHub class >> pragmasAllExamples [
 ]
 
 { #category : 'spokes' }
-TheGlamorousHub class >> pragmasAllToolButtonStencils [
+TheGlamorousHub class >> pragmasAll_gtToolButton [
 
 	"Tool button stencils"
 	
@@ -212,13 +218,25 @@ TheGlamorousHub class >> pragmasAllToolButtonStencils [
 ]
 
 { #category : 'spokes' }
-TheGlamorousHub class >> pragmasAllViews [
+TheGlamorousHub class >> pragmasAll_gtViews [
 
 	"All of the views... in the world"
 	
 	<ttSpoke>
 	
 	^ Pragma allNamed: #gtView
+	
+
+]
+
+{ #category : 'spokes' }
+TheGlamorousHub class >> pragmasAll_ttStartUp [
+
+	"All of the views... in the world"
+	
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttStartUp
 	
 
 ]

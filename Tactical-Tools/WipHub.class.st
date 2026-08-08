@@ -45,7 +45,7 @@ WipHub class >> imageFileSystemsInfo [
 ]
 
 { #category : 'as yet unclassified' }
-WipHub class >> pragmasAllUtility [
+WipHub class >> pragmasAll_ttUtility [
 
 	"To Dos"
 	

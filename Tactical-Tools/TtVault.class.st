@@ -13,6 +13,12 @@ Class {
 }
 
 { #category : 'instance creation' }
+TTVault class >> bundleId [
+  "use default"
+^ TheHub osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
+]
+
+{ #category : 'instance creation' }
 TTVault class >> currentVault [
 
 ^ currentVault ifNil: [ currentVault := self newWithLocalMiseConfigOSEnv ]
@@ -48,24 +54,25 @@ TTVault class >> makeStoreLocal [
 TTVault class >> makeStoreLocalConfigOSEnv [
 	
 	"our test show it all"
-	
+
 	<gtExample>
 	 
 	
-	| files store project |
+	| files store gt_id |
 	
 	store  := self makeStoreLocalOSEnv.
 	
-	project := store deepAt: #GT_ID ifAbsentPut: [ self projectId].
+	gt_id := store deepAt: #GT_ID ifAbsentPut: [ self bundleId].
 		
-	files := self searchPathName: (self vaultId) project: project.
+	"Subclassing TheGlamorousHub gives you a different env file"
+	files := self searchPathName: (TheHub current hubId) project: gt_id.
 
 	files reverseDo: [ :assoc |
  
  		| file |
  		
  		file := assoc value.
- 		Notification signal: file fullPath.
+ 		FileLookedForNotification signal: file fullName.
  		
  		file exists ifTrue: [
 			
@@ -80,24 +87,6 @@ TTVault class >> makeStoreLocalConfigOSEnv [
 	].
 							
 	^ store
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeStoreLocalEnvEmpty [
-	
-	<gtExample>
-	<return: #String>
-	
-	| dotEnv local|
-	
-	dotEnv := TTDictionaryDotEnv new tierKey: #dotEnv; yourself.
-	local  := TTDictionaryTiered newLocal.
-							
-	local appendTier: dotEnv.
-							
-	^ self basicNew
-			store: local
-			initialize
 ]
 
 { #category : 'instance creation' }
@@ -186,17 +175,11 @@ TTVault class >> newWithLocalMiseConfigOSEnv [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> projectId [
-  "use default"
-^ TheHub osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
-]
-
-{ #category : 'instance creation' }
 TTVault class >> searchPath [
  	
   <gtExample>
  	
-	^ self searchPathName: self vaultId project: self projectId.
+	^ self searchPathName: self vaultId project: self bundleId.
 ]
 
 { #category : 'instance creation' }
@@ -213,16 +196,27 @@ TTVault class >> searchPathName: aName project: aProject [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> test [
-
+TTVault class >> showMeTheSearchPath [
+	
 	<gtExample>
 	
-	| vault |
+	^ self showMeTheSearchPathDuring: [ self newWithLocalMiseConfigOSEnv ]
+
+
 	
-	vault := self newWithLocalMiseConfigOSEnv 
+
+]
+
+{ #category : 'instance creation' }
+TTVault class >> showMeTheSearchPathDuring: aBlock [
+
+	| places |
 	
-	assocLocalUser
-		
+	places := OrderedCollection new.
+	
+	aBlock on: FileLookedForNotification do: [ :ex | places add: ex messageText. ex pass ].
+
+	^ places
 ]
 
 { #category : 'instance creation' }
@@ -257,6 +251,17 @@ TTVault >> assocForApp: anApp user: aUserAssoc field: field ifAbsent: aBlock [
 TTVault >> assocLocalUser [
 
 	^ store deepAt: #('USER' 'USERNAME') ifPresent: [ :v :k :t | t -> v copyReplaceAll: '-' with: '_' ]
+]
+
+{ #category : 'instance creation' }
+TTVault >> gtItemsFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Items';
+		priority: 10;
+		object: [ store ];
+		view: #gtItemsFor:
 ]
 
 { #category : 'accessing' }

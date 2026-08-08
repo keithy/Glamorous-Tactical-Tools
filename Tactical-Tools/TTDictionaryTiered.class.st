@@ -276,7 +276,7 @@ TTDictionaryTiered >> next [
 { #category : 'accessing' }
 TTDictionaryTiered >> next: aTieredDictionary [
 	 
-	(next askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
+	(aTieredDictionary askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
 	
 	next := aTieredDictionary
 ]
@@ -301,16 +301,6 @@ TTDictionaryTiered >> postCopy [
 TTDictionaryTiered >> reset [
 
 	^ self removeAll
-]
-
-{ #category : 'accessing' }
-TTDictionaryTiered >> reverseTiers [ 
-
-"I stay the same but my nexts are inverted"
-
-
-
-	 
 ]
 
 { #category : 'accessing' }

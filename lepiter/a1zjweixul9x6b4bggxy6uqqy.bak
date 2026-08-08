@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:06:19.982731+01:00"
+						"dateAndTimeString" : "2026-08-06T04:08:56.866783+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma <<ttWall>>. Notice how any method in the system can be marked, implying that this will be available in all Smalltalk in which Tactical-Tools loads."
+				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma <<ttWall>>. Notice how any method in the system can be marked, implying that this will be available in all Smalltalks in which Tactical-Tools loads."
 			},
 			{
 				"__type" : "pharoSnippet",

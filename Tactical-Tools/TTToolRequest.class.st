@@ -44,7 +44,7 @@ TTToolRequest class >> findExecutable: tool [
 { #category : 'as yet unclassified' }
 TTToolRequest class >> initialize [
 	
-	self sessionManager
+	SessionManager default
 		registerSystemClassNamed: self name
 		atPriority: 50.
 	
