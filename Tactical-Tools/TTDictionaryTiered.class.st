@@ -3,9 +3,9 @@ Class {
 	#superclass : 'Dictionary',
 	#instVars : [
 		'next',
-		'beCache',
 		'tierKey',
-		'valueWriter'
+		'valueWriter',
+		'mode'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -17,6 +17,17 @@ TTDictionaryTiered class >> newCache [
 	
 		^ self new 
 				tierKey: #cache;
+				beCache;
+				yourself
+				
+				 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered class >> newLocal [
+	
+		^ self new 
+				tierKey: #local;
 				beCache;
 				yourself
 				
@@ -36,6 +47,15 @@ TTDictionaryTiered class >> shutDownZapCache [
 ]
 
 { #category : 'accessing' }
+TTDictionaryTiered >> add: assoc [
+
+	self isReadOnly ifTrue: [ self error: 'designated read only' ].
+	
+	^ super add: assoc
+
+]
+
+{ #category : 'accessing' }
 TTDictionaryTiered >> appendTier: store [ 
 
 	"double dispatch so that new tier has control 
@@ -47,15 +67,39 @@ TTDictionaryTiered >> appendTier: store [
 ]
 
 { #category : 'accessing' }
+TTDictionaryTiered >> at: key put: inputValue [
+
+	self isReadOnly ifTrue: [ self error: 'designated read only' ].
+	
+	^ super at: key put: inputValue
+
+]
+
+{ #category : 'accessing' }
 TTDictionaryTiered >> at: key putReading: inputValue [
 
-	^ valueWriter fromAnyAt: key put: inputValue
+	"bypass readonly block for initial reading"
+	
+	^ super at: key put: inputValue
+	
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> at: key write: inputValue [
+
+	^ self valueWriter fromAnyAt: key put: inputValue
 ]
 
 { #category : 'accessing' }
 TTDictionaryTiered >> beCache [
 
-	beCache := true
+	mode := #cache
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> beReadOnly [
+
+	mode := #readOnly
 ]
 
 { #category : 'as yet unclassified' }
@@ -68,9 +112,9 @@ TTDictionaryTiered >> deepAssociationAt: oneOrMoreKeys ifPresent: presentBlock [
 	(array at: (self findElementOrNil: oneOrMoreKeys)) 
 	    ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: tierKey ].
 	
-	next ifNil: [ ^ nil ].
+	self next ifNil: [ ^ nil ].
 	
-	^ next deepAssociationAt: oneOrMoreKeys ifPresent: presentBlock
+	^ self next deepAssociationAt: oneOrMoreKeys ifPresent: presentBlock
 ]
 
 { #category : 'as yet unclassified' }
@@ -78,9 +122,9 @@ TTDictionaryTiered >> deepAssociationsDo: aBlock [
  
   self associationsDo: aBlock.
 	
-	next ifNil: [ ^ self ].
+	self next ifNil: [ ^ self ].
 	
-	^ next deepAssociationsDo: aBlock
+	^ self next deepAssociationsDo: aBlock
 	
 ]
 
@@ -141,15 +185,21 @@ TTDictionaryTiered >> deepAt: key ifPresent: presentBlock ifAbsentPut: absentBlo
 	^ self at: key put: absentBlock value
 ]
 
+{ #category : 'accessing' }
+TTDictionaryTiered >> deepCopy [
+
+	^ super deepCopy
+]
+
 { #category : 'as yet unclassified' }
 TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
  
   aCollection add: (#tierKey -> tierKey).
   aCollection addAll: (self associationsSelect: aBlock).
 	
-	next ifNil: [ ^ aCollection ].
+	self next ifNil: [ ^ aCollection ].
 	
-	^ next deepOn: aCollection associationsSelect: aBlock
+	^ self next deepOn: aCollection associationsSelect: aBlock
 	
 ]
 
@@ -202,17 +252,49 @@ TTDictionaryTiered >> initialize: size [
 { #category : 'accessing' }
 TTDictionaryTiered >> isCache [
 
-	^ beCache
+	^ mode == #cache
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> isReadOnly [
+
+	^ mode == #readOnly
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryTiered >> isTieredDictionary [
+
+	^ true
 ]
 
 { #category : 'accessing' }
 TTDictionaryTiered >> next [
-	^ next
+	
+	^ next value
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> next: anObject [
-	next := anObject
+TTDictionaryTiered >> next: aTieredDictionary [
+	 
+	(next askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
+	
+	next := aTieredDictionary
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> postCopy [
+
+	"Must copy the associations, or later store will affect both the
+	original and the copy .... which is desireable for a read only copy"
+	
+	self isReadOnly ifTrue: [
+	
+	  array := array collect: [ :association |
+			association ifNotNil: [ association copy ] ]
+	].
+	
+  next := next copy.
+  
 ]
 
 { #category : 'accessing' }
@@ -233,6 +315,9 @@ TTDictionaryTiered >> reverseTiers [
 
 { #category : 'accessing' }
 TTDictionaryTiered >> scanFor: oneOrMoreKeys [
+
+  "modified to support multiple key matching"
+
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or zero if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
 	| element start finish keys |
 	
@@ -261,7 +346,7 @@ TTDictionaryTiered >> storeAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
 	
-	next ifNotNil: [ ^ next storeAt: name ].
+	self next ifNotNil: [ :n | ^ n storeAt: name ].
 	
 	^ nil
 ]
@@ -284,7 +369,7 @@ TTDictionaryTiered >> tierAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
 	
-	next ifNotNil: [ ^ next tierAt: name ].
+	self next ifNotNil: [ :n | ^ n tierAt: name ].
 	
 	^ nil
 ]
@@ -322,6 +407,13 @@ TTDictionaryTiered >> tierKey: anObject [
 TTDictionaryTiered >> tierKeys [
 
 	^ self tiers collect: [ :ea | ea key ]
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> tieredCopy [
+
+	^ self copy
+ 
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,9 +1,6 @@
 Class {
 	#name : 'TTMapToModel',
 	#superclass : 'TTResultBoltOn',
-	#instVars : [
-		'selector'
-	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'

@@ -1,11 +1,6 @@
 Class {
-	#name : 'TTResultBoltOn',
+	#name : 'TTRequest',
 	#superclass : 'Object',
-	#instVars : [
-		'actionSelector',
-		'arguments',
-		'selfish'
-	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'

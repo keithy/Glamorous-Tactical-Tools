@@ -32,7 +32,20 @@ TTVault class >> makeStoreCache [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeStoreCacheConfigEnv [
+TTVault class >> makeStoreLocal [
+	
+	"top tier"
+
+		<gtExample>
+	
+	^ TTDictionaryTiered newLocal
+				valueWriter: self makeValueWriter;
+				yourself 
+ 
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeStoreLocalConfigOSEnv [
 	
 	"our test show it all"
 	
@@ -41,7 +54,7 @@ TTVault class >> makeStoreCacheConfigEnv [
 	
 	| files store user projectId project |
 	
-	store  := self makeStoreCacheEnv.
+	store  := self makeStoreLocalOSEnv.
 	
 	project := store deepAt: #GT_ID ifAbsentPut: [ self projectId].
 		
@@ -67,34 +80,25 @@ TTVault class >> makeStoreCacheConfigEnv [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeStoreCacheEnv [
-	
-	"our test show it all"
+TTVault class >> makeStoreLocalEnvEmpty [
 	
 	<gtExample>
-	 
+	<return: #String>
 	
-	| store user project |
+	| dotEnv local|
 	
-	store  := self makeStoreCache.
- 
-	TTDictionaryTiered new
-			tierKey: #os;
-			addAll: (TheHub osEnvironment);
-			beCache;
-			tierAppendTo: store.
-	
-	"see #assocLocalUser"
-	"user := store 
-		deepAt: #USER 
-		ifAbsentPut: [ store deepAt: #USERNAME 
-											ifAbsent: [ self error: 'no USERNAME found' ]]."
-
-	^ store
+	dotEnv := TTDictionaryDotEnv new tierKey: #dotEnv; yourself.
+	local  := TTDictionaryTiered newLocal.
+							
+	local appendTier: dotEnv.
+							
+	^ self basicNew
+			store: local
+			initialize
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeStoreCacheMiseConfigEnv [
+TTVault class >> makeStoreLocalMiseConfigOSEnv [
 	
 	"our test show it all"
 	
@@ -103,7 +107,7 @@ TTVault class >> makeStoreCacheMiseConfigEnv [
 	
 	| files store user projectId project |
 	
-	store  := self makeStoreCacheConfigEnv.
+	store  := self makeStoreLocalConfigOSEnv.
 	
 	project := store deepAt: 'PROJECT' ifAbsent: [ ^ store ].
 
@@ -119,21 +123,30 @@ TTVault class >> makeStoreCacheMiseConfigEnv [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeStoreEmpty [
+TTVault class >> makeStoreLocalOSEnv [
+	
+	"our test show it all"
 	
 	<gtExample>
-	<return: #String>
+	 
 	
-	| dotEnv cache|
+	| store |
 	
-	dotEnv := TTDictionaryDotEnv new tierKey: #dotEnv; yourself.
-	cache  := TTDictionaryTiered newCache.
-							
-	cache appendTier: dotEnv.
-							
-	^ self basicNew
-		store: cache
-		initialize
+	store  := self makeStoreLocal.
+ 
+	TTDictionaryTiered new
+			tierKey: #os;
+			addAll: (TheHub osEnvironment);
+			beCache;
+			tierAppendTo: store.
+	
+	"see #assocLocalUser"
+	"user := store 
+		deepAt: #USER 
+		ifAbsentPut: [ store deepAt: #USERNAME 
+											ifAbsent: [ self error: 'no USERNAME found' ]]."
+
+	^ store
 ]
 
 { #category : 'instance creation' }
@@ -164,7 +177,7 @@ TTVault class >> newWithCacheMiseConfigEnv [
  <gtExample>
 
  ^ self basicNew
-		store: self makeStoreCacheMiseConfigEnv
+		store: self makeStoreLocalMiseConfigOSEnv
 		yourself
 		
 ]

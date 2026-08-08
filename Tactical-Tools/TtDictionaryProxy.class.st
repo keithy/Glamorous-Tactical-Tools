@@ -13,9 +13,15 @@ Class {
 }
 
 { #category : 'accessing' }
-TTDictionaryProxy >> at: key putReading: value [
+TTDictionaryProxy >> at: key write: value [
 
 	^ valueWriter fromProxyAt: key put: value
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryProxy >> isReadOnly [
+
+	^ true
 ]
 
 { #category : 'accessing' }

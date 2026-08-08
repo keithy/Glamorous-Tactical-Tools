@@ -3,19 +3,16 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'tool',
+		'workingDirectory',
 		'stdout',
 		'output',
 		'stderr',
 		'request',
 		'thePayload',
-		'payloadReducers',
-		'payloadTailReducers',
-		'mappers',
-		'mapped',
-		'formatted',
-		'formatters',
-		'parsed',
-		'parsers'
+		'readPayloadUsing'
+	],
+	#classInstVars : [
+		'exe'
 	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
@@ -30,6 +27,13 @@ TTResult >> apply: aBoltOn [
 
 { #category : 'as yet unclassified' }
 TTResult >> format: actionBlockSymbolArrayOrNil [
+
+	"synonym"
+	self formatting: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> formatting: actionBlockSymbolArrayOrNil [
  
  		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       formatters ifNil: [ formatters := OrderedCollection with: #getFormatStart ].
@@ -57,12 +61,12 @@ TTResult >> getMapped [
 
   ^ mapped ifNil: [ 
   
-			mapped := self inject: nil into: (mappers ifNil: #getMappingStart).
+			mapped := self inject: nil into: (mappers ifNil: #getMappingInput).
 		] 
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> getMappingStart [
+TTResult >> getMappingInput [
  
    "do not be tempted to refactor this method away, may be customized by subclasses"
 	 ^ self getPayload
@@ -117,7 +121,7 @@ TTResult >> getStdout [
 
 	stdout ifNil: [ stdout := self getOutput stdout ].
 	
-	^ output 
+	^ stdout 
 ]
 
 { #category : 'accessing' }
@@ -158,12 +162,19 @@ TTResult >> mapTo: aModelCollectionPrototype of: aModelPrototype [
 TTResult >> mapping: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      mappers ifNil: [ mappers := OrderedCollection with: #getMappingStart ].
+      mappers ifNil: [ mappers := OrderedCollection with: #getMappingInput ].
       mappers add: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> parser: actionBlockSymbolArrayOrNil [
+TTResult >> parse: actionBlockSymbolArrayOrNil [
+
+	"synonym"
+	self parsing: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> parsing: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       parsers ifNil: [ parsers := OrderedCollection with: #getParsingInput ].
@@ -208,7 +219,7 @@ TTResult >> payloadDo: aBlock [
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> payloadTail: actionBlockSymbolArrayOrNil [
+TTResult >> payloadFinalize: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       payloadTailReducers ifNil: [ payloadTailReducers := OrderedCollection new ].

@@ -28,7 +28,7 @@ TTDictionaryDotEnv class >> newTest [
 ]
 
 { #category : 'accessing' }
-TTDictionaryDotEnv >> at: key putReading: value [
+TTDictionaryDotEnv >> at: key write: value [
 
 	^ valueWriter fromDotEnvAt: key put: value
 ]
@@ -51,7 +51,7 @@ TTDictionaryDotEnv >> readingFromStream: aStream [
 			value := line upToEnd.
 			(key beginsWith: '#')
 				ifFalse: [ value isEmpty
-						ifFalse: [ self at: key putReading: value trimRight withoutQuoting ] ] ] ]
+						ifFalse: [ self at: key write: value trimRight withoutQuoting ] ] ] ]
 						
 		ensure: [ aStream close ]
 ]
