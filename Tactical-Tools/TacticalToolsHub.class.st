@@ -7,6 +7,17 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TacticalToolsHub class >> healthCheckExamples [
+
+	"Tactical-Tools health check methods <ttHealthCheck>"
+	
+	<ttSpoke>
+	
+	^ #ttHealthCheck gtPragmas in: [ :p | p gtExamples runAll. p ]
+	
+]
+
+{ #category : 'as yet unclassified' }
 TacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
 
 	"Tactical-Tools <ttShutDown>/<ttStartUp>"

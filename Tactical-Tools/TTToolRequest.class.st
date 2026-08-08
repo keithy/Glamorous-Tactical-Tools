@@ -122,7 +122,7 @@ TTToolRequest class >> startUp: restarting [
 TTToolRequest class >> testForNoisyBashProfile [
 
 	<gtExample>
-	<ttHealthy>
+	<ttHealthCheck>
 	 
 	| path |
 	path := GtOsSystemInfo current findExecutable: 'ls'.

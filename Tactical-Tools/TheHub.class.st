@@ -318,7 +318,7 @@ TheHub class >> pragmasAll_ttHealthy [
 	
 	<ttSpoke>
 	
-	^ Pragma allNamed: #ttHealthy
+	^ #ttHealthCheck gtPragmas
 	
 
 ]
