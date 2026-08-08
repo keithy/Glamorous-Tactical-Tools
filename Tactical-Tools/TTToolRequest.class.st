@@ -113,6 +113,8 @@ TTToolRequest class >> reset [
 { #category : 'as yet unclassified' }
 TTToolRequest class >> startUp: restarting [
 
+	<ttStartUp>
+	
 	self withAllSubclassesDo: [ :toolClass | toolClass reset ]
 ]
 

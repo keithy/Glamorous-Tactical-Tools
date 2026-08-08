@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTFixerUpper',
-	#superclass : 'TTResultBoltOn',
-	#category : 'Tactical-Tools-Hub',
+	#superclass : 'TTResultTalent',
+	#category : 'Tactical-Tools-Result',
 	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#tag : 'Result'
 }
 
 { #category : 'as yet unclassified' }

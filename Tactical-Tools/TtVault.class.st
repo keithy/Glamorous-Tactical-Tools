@@ -15,13 +15,23 @@ Class {
 { #category : 'instance creation' }
 TTVault class >> bundleId [
   "use default"
-^ TheHub osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
+	^ TheHub bundleId
+]
+
+{ #category : 'instance creation' }
+TTVault class >> configBasenames [
+	^ {TheHub current hubId.
+		TheHub current userId}
 ]
 
 { #category : 'instance creation' }
 TTVault class >> currentVault [
+	^ currentVault ifNil: [ currentVault := self getCurrentVault ]
+]
 
-^ currentVault ifNil: [ currentVault := self newWithLocalMiseConfigOSEnv ]
+{ #category : 'instance creation' }
+TTVault class >> getCurrentVault [
+	^ self newWithLocalMiseConfigOSEnv
 ]
 
 { #category : 'instance creation' }
@@ -52,40 +62,18 @@ TTVault class >> makeStoreLocal [
 
 { #category : 'instance creation' }
 TTVault class >> makeStoreLocalConfigOSEnv [
-	
 	"our test show it all"
 
 	<gtExample>
-	 
-	
 	| files store gt_id |
+	store := self makeStoreLocalOSEnv.	"Subclassing TheGlamorousHub gives you a different env file"
+	gt_id := store deepAt: #GT_ID ifAbsentPut: [ self bundleId ].
 	
-	store  := self makeStoreLocalOSEnv.
-	
-	gt_id := store deepAt: #GT_ID ifAbsentPut: [ self bundleId].
-		
-	"Subclassing TheGlamorousHub gives you a different env file"
-	files := self searchPathName: (TheHub current hubId) project: gt_id.
+	self configBasenames
+		do: [ :basename | 
+			files := self searchPathName: basename project: gt_id.
+			files reverseDo: [ :assoc | self store: store addConfigFile: assoc ] ].
 
-	files reverseDo: [ :assoc |
- 
- 		| file |
- 		
- 		file := assoc value.
- 		FileLookedForNotification signal: file fullName.
- 		
- 		file exists ifTrue: [
-			
-			    (store tierKeys includes: (assoc key)) ifFalse: [
-			    
-						TTDictionaryDotEnv new 
-							tierKey: assoc key;
-							tierInsertIn: store after: #cache;
-							readSource: file;
-				 		 yourself.
-		 ]]
-	].
-							
 	^ store
 ]
 
@@ -183,12 +171,16 @@ TTVault class >> searchPath [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> searchPathName: aName project: aProject [ 
-
+TTVault class >> searchPathName: aName project: aProject [
 	"Prefer / (a,'.env) over / a , 'env' " 
 
 	^ {
+	  #hidden -> ('.env' asFileReference).
 		#cwd    -> ((aName , '.env') asFileReference).
+		
+		#uconfig -> ((TheHub fileReferenceFrom: '{home}/.config') / aProject / (aName , '.env')) resolve.
+	  #uprefs -> ((TheHub fileReferenceFrom: '{preferences}') / (aProject,'.', aName , '.env') ) resolve.
+
 		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / aProject / (aName , '.env')) resolve.
 	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (aProject,'.', aName , '.env') ) resolve.
 	
@@ -200,7 +192,7 @@ TTVault class >> showMeTheSearchPath [
 	
 	<gtExample>
 	
-	^ self showMeTheSearchPathDuring: [ self newWithLocalMiseConfigOSEnv ]
+	^ self showMeTheSearchPathDuring: [ self getCurrentVault ]
 
 
 	
@@ -210,13 +202,22 @@ TTVault class >> showMeTheSearchPath [
 { #category : 'instance creation' }
 TTVault class >> showMeTheSearchPathDuring: aBlock [
 
-	| places |
-	
-	places := OrderedCollection new.
-	
-	aBlock on: FileLookedForNotification do: [ :ex | places add: ex messageText. ex pass ].
+	^ TheHub collectNotificationsOfClass: FileLookedForNotification during: aBlock
+]
 
-	^ places
+{ #category : 'instance creation' }
+TTVault class >> store: store addConfigFile: assoc [
+	| file |
+	file := assoc value.
+	FileLookedForNotification signal: file fullName.
+
+	^ file exists
+		ifTrue: [ (store tierKeys includes: assoc key)
+				ifFalse: [ TTDictionaryDotEnv new
+						tierKey: assoc key;
+						tierInsertIn: store after: #cache;
+						readSource: file;
+						yourself ] ]
 ]
 
 { #category : 'instance creation' }

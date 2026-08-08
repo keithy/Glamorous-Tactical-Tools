@@ -35,6 +35,12 @@ TheHub class >> browser [
 	^ self winningBrowserHubClass 
 ]
 
+{ #category : 'environment' }
+TheHub class >> bundleId [
+	
+	^ self signalAuto
+]
+
 { #category : 'wall' }
 TheHub class >> classNamed: aName [
 
@@ -62,7 +68,7 @@ TheHub class >> collectNotificationsOfClass: aNotificationClass during: aBlock [
 	
 	aBlock on: aNotificationClass do: [ :ex | list add: ex. ex pass ].
 
-	^ list
+	^ list asArray
 ]
 
 { #category : 'instance creation' }
@@ -203,7 +209,7 @@ TheHub class >> httpClientMaximumEntitySize [
 { #category : 'environment' }
 TheHub class >> hubId [
 
-	^ self className asLowecase
+	^ self className asLowercase
 ]
 
 { #category : 'browsing' }
@@ -238,7 +244,7 @@ TheHub class >> mustBeClassSide: pragma [
 	^ pragma method isClassSide ifFalse: [
 			Warning signal: pragma displayString , 'Needs to be set Class Side'.
 			false.
-		]
+		] ifTrue: [ true ]
 			
 ]
 
@@ -430,18 +436,32 @@ TheHub class >> startUp: resuming [
 { #category : 'environment' }
 TheHub class >> startUpTT: resuming [
 
-	self pragmasAll_ttStartUp
-		do: [ :pragma | 
+	^ self collectNotificationsOfClass: TTStartUpNotification during: [ 
 		
-			(self mustBeClassSide: pragma) ifTrue:[ 
+		self pragmasAll_ttStartUp
+			do: [ :pragma | 
 			
-					pragma method methodClass soleInstance 
-						perform: pragma method selector 
-						withArguments: thisContext arguments
-						
-				] 
-		].
-		
+				(self mustBeClassSide: pragma) ifTrue:[ 
+				
+						TTStartUpNotification signal:pragma displayString withTag: pragma method.
+						pragma method methodClass soleInstance 
+							perform: pragma method selector 
+							withArguments: thisContext arguments
+							
+						] 
+				].
+		]
+]
+
+{ #category : 'environment' }
+TheHub class >> startUpTTDryRun [
+
+	"The idea is to sanity test startUp methods without the risk of breaking the image"
+	
+	^ self startUpTT: true
+
+
+
 ]
 
 { #category : 'environment' }
@@ -469,6 +489,12 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 	^ (DateAndTime unixEpoch + ((millisSinceUnixEpoch ifNil: [ ^ nil ]) / 1000)) asDate
 ]
 
+{ #category : 'environment' }
+TheHub class >> userId [
+
+	^ self className asLowecase
+]
+
 { #category : 'as yet unclassified' }
 TheHub class >> utils [
 
@@ -489,6 +515,12 @@ TheHub >> browser [
 	^ self class browser
 	
 
+]
+
+{ #category : 'browsing' }
+TheHub >> bundleId [
+
+	^ self class osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'environment' }

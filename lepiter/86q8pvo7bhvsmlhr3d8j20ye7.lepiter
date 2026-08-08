@@ -1,0 +1,150 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T06:16:48.286603+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T06:16:48.286603+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Otg7oUv8TlScP+iI0ZUdOA=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : ""
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T06:16:00.621064+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T06:37:24.133596+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "gbHvBLV0TPeox8+uZRvnnw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "Two Use Cases\n###1) Glamorous Toolkit Users\nThose who develop within Glamorous Toolkit using it as the runtime, loading resources as required.\n###2) Dedicated Projects\nIf your deployment is distinct from GT"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T06:19:27.707744+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T06:46:31.904583+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "f9rAdMxCQ+605TSWnQv6BQ=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "##Dedicated Projects\nDedicated Projects may subclass {{gtClass:TheGlamorousHub}} and provide their own custom Hub Browsing experience. \n\nIn particular they may wish to customise the Hub 'Spokes' tool items click through mode, so as not to show spoke code. This is demonstrated in The Hub 'Hubs' tool click through mode.\n\nThe DedicatedHub will bid to be `TheHub current`.\n\nThe DedicatedHub will provide its own {{gtMethod:TheHub class>>hubId}} and {{gtMethod:TheHub>>bundleId}} so the search path for vault config/prefs files will include {preferences}/com.mydomain.myown.env\n\n`TheHub theVault` will return `TheVault current` but this may be overriden if the default vault configuration does not inspire.\n\nFactories provide a list of all available clients, those clients whose credentials are satisfied by `TheHub theVault` will be usable.\n\nDedicatedHub can present a filtered view of potential clients, or can defer to a custom TTFactory subclass offering bespoke clients. "
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-08T06:15:49.153339+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-08T06:15:49.153339+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "How To Use Tactical Tools"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "1fdcce97-2a80-473d-9525-05a6f76d498a"
+	}
+}

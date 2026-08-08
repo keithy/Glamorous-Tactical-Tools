@@ -42,6 +42,18 @@ TacticalToolsHub class >> pragmasAll_ttWall [
 ]
 
 { #category : 'as yet unclassified' }
+TacticalToolsHub class >> startUpTTDryRun [
+
+	"Tactical Tools startUp methods - Dry Run"
+	
+	"The idea is to sanity test startUp methods without the risk of breaking the image"
+		
+	<ttSpoke>
+	
+	^ TheHub startUpTTDryRun
+]
+
+{ #category : 'as yet unclassified' }
 TacticalToolsHub class >> theVault [
 
 	"Vicarious Vault"
