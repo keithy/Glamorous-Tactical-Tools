@@ -6,9 +6,9 @@ Class {
 		'arguments',
 		'result'
 	],
-	#category : 'Tactical-Tools-Result',
+	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
-	#tag : 'Result'
+	#tag : 'Clients'
 }
 
 { #category : 'accessing' }

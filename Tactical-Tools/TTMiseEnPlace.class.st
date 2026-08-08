@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTMiseEnPlace',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-Hub',
+	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#tag : 'Clients'
 }
 
 { #category : 'as yet unclassified' }

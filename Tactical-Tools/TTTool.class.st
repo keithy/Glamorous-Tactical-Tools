@@ -1,7 +1,7 @@
 Class {
 	#name : 'TTTool',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-Result',
+	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
-	#tag : 'Result'
+	#tag : 'Clients'
 }

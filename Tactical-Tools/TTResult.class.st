@@ -14,9 +14,9 @@ Class {
 	#classInstVars : [
 		'exe'
 	],
-	#category : 'Tactical-Tools-Hub',
+	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#tag : 'Clients'
 }
 
 { #category : 'as yet unclassified' }

@@ -492,7 +492,7 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 { #category : 'environment' }
 TheHub class >> userId [
 
-	^ self className asLowecase
+	^ self className asLowercase
 ]
 
 { #category : 'as yet unclassified' }

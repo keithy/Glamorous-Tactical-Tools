@@ -162,6 +162,12 @@ TTVault class >> newWithLocalMiseConfigOSEnv [
 		
 ]
 
+{ #category : 'accessing' }
+TTVault class >> reset [
+
+currentVault := nil
+]
+
 { #category : 'instance creation' }
 TTVault class >> searchPath [
  	
@@ -268,6 +274,10 @@ TTVault >> gtItemsFor: aView [
 { #category : 'accessing' }
 TTVault >> projectDirectory: anObject [
 	projectDirectory := anObject
+]
+
+{ #category : 'accessing' }
+TTVault >> reset [
 ]
 
 { #category : 'accessing' }

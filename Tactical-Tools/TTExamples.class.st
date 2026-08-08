@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTExamples',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-Result',
+	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
-	#tag : 'Result'
+	#tag : 'Clients'
 }
 
 { #category : 'as yet unclassified' }
