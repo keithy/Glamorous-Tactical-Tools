@@ -369,7 +369,7 @@ TTDictionaryTiered >> tierInsertIn: stack after: key [
 
 	tierKey ifNil: [ ^ self error: 'tierKey not set' ].
 	
-	stack ifNil: [ ^ nil ]. "failed"
+	stack ifNil: [ ^ KeyNotFound signalFor: key in: self ]. "failed"
 	
 	"search"
 	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].

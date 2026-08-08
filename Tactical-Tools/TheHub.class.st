@@ -60,6 +60,8 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
 { #category : 'wall' }
 TheHub class >> collectNotificationsOfClass: aNotificationClass during: aBlock [
 
+	"Debugging pattern"
+
   <ttWall>
  
 	| list |
@@ -181,6 +183,8 @@ TheHub class >> for: instanceMethodSelector respondWith: substituteValue during:
 { #category : 'wall' }
 TheHub class >> globalAt: aName ifAbsent: aBlock [
 
+	"Globals motherload"
+	
 	<ttWall>
 	
 	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
@@ -228,6 +232,16 @@ TheHub class >> initialize [
 		atPriority: 50.
 	
 	self startUp: true.
+]
+
+{ #category : 'handling' }
+TheHub class >> isWhoAmI [
+
+	<ttWhoAmI>
+
+	"Can provide identity"
+
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -289,6 +303,8 @@ TheHub class >> osEnvironment [
 { #category : 'environment' }
 TheHub class >> platform [
 
+  "Grease Platform"
+  
 	<ttWall>
 	
 	^ GRPlatform current 
@@ -317,6 +333,16 @@ TheHub class >> pragmasAll_ttHub [
 ]
 
 { #category : 'spokes' }
+TheHub class >> pragmasAll_ttShutDown [
+
+	"Tactical-Tools startUp methods <ttShutDown>"
+	
+	"<ttSpoke>"
+	
+	^ Pragma allNamed: #ttShutDown
+]
+
+{ #category : 'spokes' }
 TheHub class >> pragmasAll_ttStartUp [
 
 	"Tactical-Tools startUp methods <ttStartUp>"
@@ -329,6 +355,8 @@ TheHub class >> pragmasAll_ttStartUp [
 { #category : 'wall' }
 TheHub class >> pragmasClassSideNamed: aSymbol in: aClass [
  
+  "Pragma queries (class side)"
+  
   <ttWall>
  
  ^ Pragma 
@@ -340,6 +368,8 @@ TheHub class >> pragmasClassSideNamed: aSymbol in: aClass [
 { #category : 'wall' }
 TheHub class >> pragmasNamed: aSymbol in: aClass [
  
+  "Pragma queries"
+  
   <ttWall>
  
  ^ Pragma 
@@ -365,6 +395,48 @@ TheHub class >> shortCutRegistry [
 	 
 	 
 	
+]
+
+{ #category : 'environment' }
+TheHub class >> shutDown: quitting [
+	
+	self shutDownTT: quitting.
+	
+	^ super shutDown: quitting
+]
+
+{ #category : 'environment' }
+TheHub class >> shutDownTT: quitting [
+
+	^ self pragmasAll_ttShutDown
+			do: [ :pragma | 
+			
+				(self mustBeClassSide: pragma) ifTrue:[ 
+				
+						(pragma method selector beginsWith: 'shutDown') ifFalse: [ self error ].
+						
+						TTStartUpNotification signal:pragma displayString withTag: pragma method.
+						pragma method methodClass soleInstance 
+							perform: pragma method selector 
+							with: quitting
+							
+						] 
+				].
+		
+]
+
+{ #category : 'environment' }
+TheHub class >> shutDownTTDryRun [
+
+	"Sanity test startUp methods without the risk of breaking the image"
+	
+	^ self collectNotificationsOfClass: TTStartUpNotification during: [ 
+		
+		   self shutDownTT: true
+		]
+
+
+
 ]
 
 { #category : 'environment' }
@@ -409,7 +481,7 @@ TheHub class >> spokesMethods [
 ]
 
 { #category : 'environment' }
-TheHub class >> startUp: resuming [
+TheHub class >> startUp: isImageStarting [
 	
 	| max bid |
 	
@@ -428,37 +500,42 @@ TheHub class >> startUp: resuming [
 		]
 	].
 	
-	self startUpTT: resuming.
+	self startUpTT: isImageStarting.
 	
-	^ super startUp: resuming
+	^ super startUp: isImageStarting
 ]
 
 { #category : 'environment' }
-TheHub class >> startUpTT: resuming [
+TheHub class >> startUpTT: isImageStarting [
 
-	^ self collectNotificationsOfClass: TTStartUpNotification during: [ 
-		
-		self pragmasAll_ttStartUp
+	^ self pragmasAll_ttStartUp
 			do: [ :pragma | 
 			
 				(self mustBeClassSide: pragma) ifTrue:[ 
 				
+				
+						(pragma method selector beginsWith: 'startUp') ifFalse: [ self error ].
+
 						TTStartUpNotification signal:pragma displayString withTag: pragma method.
 						pragma method methodClass soleInstance 
 							perform: pragma method selector 
-							withArguments: thisContext arguments
+							with: isImageStarting
 							
 						] 
 				].
-		]
+		
 ]
 
 { #category : 'environment' }
 TheHub class >> startUpTTDryRun [
 
-	"The idea is to sanity test startUp methods without the risk of breaking the image"
+	"Sanity test startUp methods without the risk of breaking the image"
 	
-	^ self startUpTT: true
+	^ self collectNotificationsOfClass: TTStartUpNotification during: [ 
+		 
+		 self startUpTT: true
+		 
+	  ]
 
 
 
@@ -492,7 +569,7 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 { #category : 'environment' }
 TheHub class >> userId [
 
-	^ self className asLowercase
+	^ self osEnvironment in: [ :os | os at: 'USER' ifAbsent: [ os at: 'USERNAME' ifAbsent: [ 'bob' ]] ] 
 ]
 
 { #category : 'as yet unclassified' }

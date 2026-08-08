@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:08:56.866783+01:00"
+						"dateAndTimeString" : "2026-08-08T15:39:25.052156+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma <<ttWall>>. Notice how any method in the system can be marked, implying that this will be available in all Smalltalks in which Tactical-Tools loads."
+				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma {{gtPragma:ttWall>>. Notice how any method in the system can be marked, implying that this will be available in all Smalltalks in which Tactical-Tools loads."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -103,14 +103,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:04:09.499005+01:00"
+						"dateAndTimeString" : "2026-08-08T04:54:17.180248+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "8g8Ms73kQvaEmEoYXZv0bA=="
 				},
-				"code" : "TacticalToolsHub pragmasAllWall "
+				"code" : "TacticalToolsHub pragmasAll_ttWall "
 			},
 			{
 				"__type" : "textSnippet",
@@ -137,7 +137,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:06:36.302559+01:00"
+						"dateAndTimeString" : "2026-08-08T15:17:08.892545+01:00"
 					}
 				},
 				"uid" : {
@@ -147,7 +147,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "## Lower level compatability\nThe experts have put a fair bit of effort into leveling the playing field, for the time being this is the best way to cope with varying target platforms. "
+				"string" : "## Lower level compatability\nThe experts have put a fair bit of effort into leveling the playing field, for the time being this is a good way to cope with varying target platforms. "
 			},
 			{
 				"__type" : "pharoSnippet",

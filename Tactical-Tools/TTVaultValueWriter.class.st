@@ -80,13 +80,13 @@ TTVaultValueWriter >> fromAnyAt: key put: value [
 					ifTrue: [ key withoutSuffix: suffix ] ifFalse: [ key ].
 		
 				"first match wins"
-				^ self at: newKey putReading: (self perform: selector with: value)
+				^ dict at: newKey putReading: (self perform: selector with: value)
 				
 		]
 	].
 	
 	"straight forward fall through"
-	^ self at: key putReading: value.
+	^ dict at: key putReading: value.
 
 ]
 

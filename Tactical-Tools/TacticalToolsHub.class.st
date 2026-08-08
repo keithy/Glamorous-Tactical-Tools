@@ -7,13 +7,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TacticalToolsHub class >> pragmasAll_ttStartUp [
+TacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
 
-	"Tactical-Tools startUp methods <ttStartUp>"
+	"Tactical-Tools <ttShutDown>/<ttStartUp>"
 	
 	<ttSpoke>
 	
-	^ TheHub pragmasAll_ttStartUp
+	^ TheHub pragmasAll_ttShutDown, (TheHub pragmasAll_ttStartUp)
 	  
 	
 ]
@@ -42,15 +42,27 @@ TacticalToolsHub class >> pragmasAll_ttWall [
 ]
 
 { #category : 'as yet unclassified' }
-TacticalToolsHub class >> startUpTTDryRun [
+TacticalToolsHub class >> pragmasAll_ttWhoAmI [
 
-	"Tactical Tools startUp methods - Dry Run"
+	"Tactical-Tools identity providers <ttWhoAmI>"
 	
-	"The idea is to sanity test startUp methods without the risk of breaking the image"
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttWhoAmI
+	
+
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> shutDownStartUpTTDryRun [
+
+	"Tactical Tools shutDown/startUp methods - Dry Run"
+	
+	"The idea is to sanity test shutDown methods without the risk of breaking the image"
 		
 	<ttSpoke>
 	
-	^ TheHub startUpTTDryRun
+	^ (TheHub shutDownTTDryRun),(TheHub startUpTTDryRun)
 ]
 
 { #category : 'as yet unclassified' }

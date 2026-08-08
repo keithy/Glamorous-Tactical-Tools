@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T08:05:48.923089+01:00"
+						"dateAndTimeString" : "2026-08-08T15:47:13.733308+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "###Spokes\nAccessible directly from the Hub, are methods providing direct access to useful tools or registries lurking around the system, that are useful, insightful even essential.\n### Hubs\nAre other Classes in the system that have been annotated to provide their own browsable Hub/Spoke/Utility/Wall features.\n#### Utilities\nAre simply useful class methods given exposure and made visible.\n###Wall\nAnd finally wall methods are specifically marked to define useful points of isolation.\n"
+				"string" : "###Spokes\nAccessible directly from the Hub, are methods providing direct access to useful tools or registries lurking around the system, that are useful, insightful even essential. {{gtPragma:ttSpoke}} \n### Hubs\nAre other Classes in the system that have been annotated to provide their own browsable Hub/Spoke/Utility/Wall features. {{gtPragma:ttHub}}\n\n#### Utilities\nAre simply useful class methods given exposure and made visible. {{gtPragma:ttUtility}}\n###Wall\nAnd finally wall methods are specifically marked to define useful points of isolation. {{gtPragma:ttWall}}\n"
 			},
 			{
 				"__type" : "textSnippet",

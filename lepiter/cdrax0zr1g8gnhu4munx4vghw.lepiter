@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T05:17:26.023318+01:00"
+						"dateAndTimeString" : "2026-08-08T15:26:25.855305+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "We support the pragma <ttStartUp\\> as a convenience, the process of registering Classes for startup and shutDown \"officially\" is more fiddly than it need be. Once the implementation of a class has settled down it may make more sense to use the official pattern.\n\nAn example of this is {{gtMethod:ImageStoreResolver class>>initialize}} which has its own priorities\n\nNow there is a question, do we have an need for instance level #startUp\nIt can be done, perhaps Vaults want to - re-read themselves...\n"
+				"string" : "We support the pragmas {{gtPragma:ttStartUp}} and {{gtPragma:ttShutDown}} as a convenience.\n\nThe process of registering Classes for startup and shutDown \"officially\" is more fiddly than it need be. Once the implementation of a class has settled down it may make more sense to use the official pattern.\n\nAn example of this is {{gtMethod:ImageStoreResolver class>>initialize}} which has its own priorities\n\nNow there is a question, do we have an need for instance level #startUp\nIt can be done, perhaps Vaults want to - re-read themselves...\n"
 			}
 		]
 	},

@@ -67,12 +67,14 @@ TTVault class >> makeStoreLocalConfigOSEnv [
 	<gtExample>
 	| files store gt_id |
 	store := self makeStoreLocalOSEnv.	"Subclassing TheGlamorousHub gives you a different env file"
-	gt_id := store deepAt: #GT_ID ifAbsentPut: [ self bundleId ].
+	gt_id := store deepAt: #BUNDLE_ID ifAbsentPut: [ self bundleId ].
+
+ 
+	(self searchPathFor: TheHub current)
 	
-	self configBasenames
-		do: [ :basename | 
-			files := self searchPathName: basename project: gt_id.
-			files reverseDo: [ :assoc | self store: store addConfigFile: assoc ] ].
+			reverseDo: [ :assoc | 
+				self store: store addConfigFile: assoc afterTier: #local 
+			].
 
 	^ store
 ]
@@ -95,7 +97,7 @@ TTVault class >> makeStoreLocalMiseConfigOSEnv [
 					
 			TTDictionaryMiseEnv new 
 				tierKey: #mise;
-				tierInsertIn: store after: #cache;
+				tierInsertIn: store after: #local;
 				readSource: project
 	].
 				
@@ -170,25 +172,33 @@ currentVault := nil
 
 { #category : 'instance creation' }
 TTVault class >> searchPath [
- 	
-  <gtExample>
- 	
-	^ self searchPathName: self vaultId project: self bundleId.
+	<gtExample>
+ 
+	^ self
+		searchPathFor: (TheHub current)
 ]
 
 { #category : 'instance creation' }
-TTVault class >> searchPathName: aName project: aProject [
+TTVault class >> searchPathFor: whoami [
 	"Prefer / (a,'.env) over / a , 'env' " 
 
+	| bundleId hubId userId |
+	
+	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identiy' ].
+	
+	bundleId := whoami bundleId.
+	hubId := whoami hubId.
+	userId := whoami userId.
+	
 	^ {
 	  #hidden -> ('.env' asFileReference).
-		#cwd    -> ((aName , '.env') asFileReference).
+		#cwd    -> ((hubId , '.env') asFileReference).
 		
-		#uconfig -> ((TheHub fileReferenceFrom: '{home}/.config') / aProject / (aName , '.env')) resolve.
-	  #uprefs -> ((TheHub fileReferenceFrom: '{preferences}') / (aProject,'.', aName , '.env') ) resolve.
+		#uconfig -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
+	  #uprefs -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
 
-		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / aProject / (aName , '.env')) resolve.
-	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (aProject,'.', aName , '.env') ) resolve.
+		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
+	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
 	
 	}
 ]
@@ -212,7 +222,27 @@ TTVault class >> showMeTheSearchPathDuring: aBlock [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> store: store addConfigFile: assoc [
+TTVault class >> shutDown: quitting [
+
+  <ttShutDown>
+
+  quitting ifTrue: [ self reset ]
+	
+	
+]
+
+{ #category : 'instance creation' }
+TTVault class >> startUp: isImageStarting [
+
+	<ttStartUp>
+	
+	isImageStarting ifFalse: [ self reset ]
+	
+	
+]
+
+{ #category : 'instance creation' }
+TTVault class >> store: store addConfigFile: assoc afterTier: tierKey [
 	| file |
 	file := assoc value.
 	FileLookedForNotification signal: file fullName.
@@ -221,7 +251,7 @@ TTVault class >> store: store addConfigFile: assoc [
 		ifTrue: [ (store tierKeys includes: assoc key)
 				ifFalse: [ TTDictionaryDotEnv new
 						tierKey: assoc key;
-						tierInsertIn: store after: #cache;
+						tierInsertIn: store after: tierKey;
 						readSource: file;
 						yourself ] ]
 ]
@@ -260,7 +290,7 @@ TTVault >> assocLocalUser [
 	^ store deepAt: #('USER' 'USERNAME') ifPresent: [ :v :k :t | t -> v copyReplaceAll: '-' with: '_' ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'as yet unclassified' }
 TTVault >> gtItemsFor: aView [
 	<gtView>
 	
@@ -269,6 +299,16 @@ TTVault >> gtItemsFor: aView [
 		priority: 10;
 		object: [ store ];
 		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
+TTVault >> isWhoAmI [
+
+	<ttWhoAmI>
+	
+	"Can provide identity"
+
+	^ true
 ]
 
 { #category : 'accessing' }

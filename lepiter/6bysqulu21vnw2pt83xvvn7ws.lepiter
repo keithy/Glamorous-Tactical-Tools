@@ -18,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-07T18:07:04.250854+01:00"
+						"dateAndTimeString" : "2026-08-08T14:51:04.745902+01:00"
 					}
 				},
 				"editEmail" : {
@@ -29,17 +29,17 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T05:03:31.628863+01:00"
+						"dateAndTimeString" : "2026-08-08T15:30:03.22303+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "bdz2XjmVRsOXgY/m93XKcw=="
+					"uidString" : "FTuWtAYqT/mWlHJa2hOaow=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "I added a valueHolder to next in Tiered Dictionary on a whim is it useful? Take it out add it back when I know what I am doing. - removed it."
+				"string" : "At one point we created a WhoAmI class to represent the user, their project etc, as a single method object for handling those parameters into a search path.\n\nTo cut a long story short, just pass the whole vault, it is more than representative of the user and their context {{gtPragma:ttWhoAmI}}. There can be several vaults if dealing with multiple users or contexts. Copies of vaults are relatively efficient."
 			}
 		]
 	},
@@ -51,7 +51,7 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-07T18:07:02.853063+01:00"
+			"dateAndTimeString" : "2026-08-08T14:50:57.408113+01:00"
 		}
 	},
 	"editEmail" : {
@@ -62,15 +62,15 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-07T18:07:02.853063+01:00"
+			"dateAndTimeString" : "2026-08-08T14:50:57.408113+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Ponderings"
+		"title" : "TheVault - Who Am I"
 	},
 	"uid" : {
 		"__type" : "uuid",
-		"uuid" : "af336046-8979-4f85-9851-e8d2976997cb"
+		"uuid" : "ccb24ca3-1e98-4a46-b8ef-39644842f66a"
 	}
 }

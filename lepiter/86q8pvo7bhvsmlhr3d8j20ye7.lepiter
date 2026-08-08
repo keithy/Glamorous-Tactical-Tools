@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T06:37:24.133596+01:00"
+						"dateAndTimeString" : "2026-08-08T15:19:32.158955+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Two Use Cases\n###1) Glamorous Toolkit Users\nThose who develop within Glamorous Toolkit using it as the runtime, loading resources as required.\n###2) Dedicated Projects\nIf your deployment is distinct from GT"
+				"string" : "Two Use Cases\n###1) Dedicated Projects\nWhen the deployed product is based upon but distinct from GT\n###2) Glamorous Toolkit Users\nThose who develop within Glamorous Toolkit using it as the runtime, loading resources as required."
 			},
 			{
 				"__type" : "textSnippet",
@@ -103,7 +103,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T06:46:31.904583+01:00"
+						"dateAndTimeString" : "2026-08-08T15:22:51.33599+01:00"
 					}
 				},
 				"uid" : {
@@ -113,7 +113,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "##Dedicated Projects\nDedicated Projects may subclass {{gtClass:TheGlamorousHub}} and provide their own custom Hub Browsing experience. \n\nIn particular they may wish to customise the Hub 'Spokes' tool items click through mode, so as not to show spoke code. This is demonstrated in The Hub 'Hubs' tool click through mode.\n\nThe DedicatedHub will bid to be `TheHub current`.\n\nThe DedicatedHub will provide its own {{gtMethod:TheHub class>>hubId}} and {{gtMethod:TheHub>>bundleId}} so the search path for vault config/prefs files will include {preferences}/com.mydomain.myown.env\n\n`TheHub theVault` will return `TheVault current` but this may be overriden if the default vault configuration does not inspire.\n\nFactories provide a list of all available clients, those clients whose credentials are satisfied by `TheHub theVault` will be usable.\n\nDedicatedHub can present a filtered view of potential clients, or can defer to a custom TTFactory subclass offering bespoke clients. "
+				"string" : "##Dedicated Projects\nDedicated Projects may subclass {{gtClass:TheGlamorousHub}} and provide their own custom Hub Browsing experience. \n\nIn particular they may wish to customise the Hub 'Spokes' tool items click through mode, to be more \"user friendly\" so as not to show spoke code. This is demonstrated in The Hub 'Hubs' tool click through mode.\n\nThe bespoke DedicatedHub will bid to be `TheHub current`.\n\nThe DedicatedHub will participate as a top level identity provider {{gtPragma:ttWhoAmI}} providing its own {{gtMethod:TheHub class>>hubId}} and {{gtMethod:TheHub>>bundleId}} so the search path for vault config/prefs files will include {preferences}/com.mydomain.myown.env {{gtMethod:TTVault class>>searchPath}} \n\n`TheHub theVault` will return `TheVault current` but this may be overriden if the default vault configuration does not inspire.\n\nFactories provide a list of all available clients, those clients whose credentials are satisfied by `TheHub theVault` will be usable.\n\nDedicatedHub can present a filtered view of potential clients, or can defer to a custom TTFactory subclass offering bespoke clients. "
 			}
 		]
 	},

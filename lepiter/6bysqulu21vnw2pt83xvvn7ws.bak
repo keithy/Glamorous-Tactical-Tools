@@ -5,40 +5,6 @@
 		"__type" : "snippets",
 		"items" : [
 			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T05:51:27.266851+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T15:34:53.876094+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "eAn6AR2MTAqj8kKso8p+kA=="
-				},
-				"code" : "TheHub browse"
-			},
-			{
 				"__type" : "textSnippet",
 				"children" : {
 					"__type" : "snippets",
@@ -52,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T09:27:45.384894+01:00"
+						"dateAndTimeString" : "2026-08-08T14:51:04.745902+01:00"
 					}
 				},
 				"editEmail" : {
@@ -63,17 +29,51 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T09:27:45.384894+01:00"
+						"dateAndTimeString" : "2026-08-08T15:14:09.640427+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "OtteLyYrQX6TBs9MuD+MNA=="
+					"uidString" : "FTuWtAYqT/mWlHJa2hOaow=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : ""
+				"string" : "At one point we created a WhoAmI class to represent the user, their project etc, as a single method object for handling those parameters into a search path.\n\nTo cut a long story short, just pass the whole vault, it is more than representative of the user and their context. There can be several vaults if dealing with multiple users or contexts. Copies of vaults are relatively efficient."
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T15:14:20.685357+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-08T15:15:41.508305+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "7DjBWdefQXq4HWpzdU/0FA=="
+				},
+				"code" : "TacticalToolsHub pragmasAll_ttWhoAmI"
 			}
 		]
 	},
@@ -85,7 +85,7 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-01T05:51:21.901604+01:00"
+			"dateAndTimeString" : "2026-08-08T14:50:57.408113+01:00"
 		}
 	},
 	"editEmail" : {
@@ -96,15 +96,15 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-01T05:51:21.901604+01:00"
+			"dateAndTimeString" : "2026-08-08T14:50:57.408113+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Demo"
+		"title" : "TheVault - Who Am I"
 	},
 	"uid" : {
 		"__type" : "uuid",
-		"uuid" : "fdbcbefd-7ab9-44e1-882b-36701092f46e"
+		"uuid" : "ccb24ca3-1e98-4a46-b8ef-39644842f66a"
 	}
 }

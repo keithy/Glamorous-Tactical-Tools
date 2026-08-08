@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-02T19:30:41.270236+01:00"
+						"dateAndTimeString" : "2026-08-08T15:34:05.544085+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Not so Terse guide - <https://gist.github.com/jdevoo/8e8866cd6087e05790841d0f20b2e377>\n"
+				"string" : "Not so Terse guide to Pharo - <https://gist.github.com/jdevoo/8e8866cd6087e05790841d0f20b2e377>\n"
 			}
 		]
 	},

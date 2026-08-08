@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-01T04:29:45.036775+01:00"
+						"dateAndTimeString" : "2026-08-08T15:43:53.381787+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "##TheHub\nMark up wall methods\nInclude session manager [done]\nOpen Hub browser stencil \nFixes browser [done] <ttFix>\nExamples Browser\nExtending FileLocations mechanism\nAdd ramdisk\nInstance side show code not signalAuto [done]"
+				"string" : "##TheHub\nMark up wall methods\nInclude session manager [done]\nOpen Hub browser stencil \nFixes browser [done] {{gtPragma:ttFix}}\nExamples Browser\nExtending FileLocations mechanism\nAdd ramdisk\nInstance side show code not signalAuto [done]"
 			}
 		]
 	},
