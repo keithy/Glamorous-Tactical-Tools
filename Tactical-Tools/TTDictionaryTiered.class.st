@@ -67,9 +67,23 @@ TTDictionaryTiered >> appendTier: store [
 ]
 
 { #category : 'private - delegation' }
+TTDictionaryTiered >> associationAt: oneOrMoreKeys ifPresent: pBlock [
+
+	oneOrMoreKeys isArray
+		ifTrue: [ 
+		
+				oneOrMoreKeys do: [ :key | 
+							dict associationAt: key ifPresent: [ :v | ^ pBlock value: v ] ]
+		]
+    ifFalse: [ 
+    		dict associationAt: oneOrMoreKeys ifPresent: [ :v | ^ pBlock value: v ]
+    ]
+]
+
+{ #category : 'private - delegation' }
 TTDictionaryTiered >> at: key [
-	 
-	 ^ dict at: key
+	"Answer the value associated with the key."
+	^ self at: key ifAbsent: [ dict errorKeyNotFound: key ]
 	 
 ]
 
@@ -86,9 +100,16 @@ TTDictionaryTiered >> at: key forcePut: inputValue [
 
 { #category : 'private - delegation' }
 TTDictionaryTiered >> at: key ifAbsent: aBlock [
-	 
-	 ^ dict at: key ifAbsent: aBlock
-	 
+	 	
+	"delegation bottleneck method"
+	
+	| keyToStore |
+	
+	keyToStore := self isCaseSensitive 
+				ifTrue: [ key ]
+				ifFalse: [ key asUppercase ].
+	
+	^ dict at: keyToStore ifAbsent: [ self at: key put: aBlock value ]
 ]
 
 { #category : 'private - delegation' }
@@ -97,13 +118,13 @@ TTDictionaryTiered >> at: key ifAbsentPut: aBlock [
 	If the key is not included in the receiver store and return the result
 	of evaluating aBlock as the new value."
 
-	| k |
+	| keyToStore |
 	
-	k := self isCaseSensitive 
+	keyToStore := self isCaseSensitive 
 				ifTrue: [ key ]
 				ifFalse: [ key asUppercase ].
 	
-	^ dict at: key ifAbsent: [self at: key put: aBlock value]
+	^ dict at: key ifAbsent: [self at: keyToStore put: aBlock value]
 ]
 
 { #category : 'private - delegation' }
@@ -145,7 +166,7 @@ TTDictionaryTiered >> beReadOnly [
 	mode := #readOnly
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
@@ -163,7 +184,7 @@ TTDictionaryTiered >> deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: 
 	^ self next deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: presentBlock
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAssociationsDo: aBlock [
  
   dict associationsDo: aBlock.
@@ -174,14 +195,14 @@ TTDictionaryTiered >> deepAssociationsDo: aBlock [
 	
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAssociationsSelect: aBlock [
  
    ^ self deepOn: OrderedCollection new associationsSelect: aBlock
 	
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -191,7 +212,7 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
 	^ absentBlock value
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAt: key ifAbsentPut: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	put the result of evaluating aBlock."
@@ -201,7 +222,7 @@ TTDictionaryTiered >> deepAt: key ifAbsentPut: absentBlock [
 	^ self at: key ifAbsentPut: absentBlock
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -211,7 +232,7 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: ab
 	^ absentBlock value
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAt: key ifPresent: presentBlock ifAbsentPut: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -222,7 +243,7 @@ TTDictionaryTiered >> deepAt: key ifPresent: presentBlock ifAbsentPut: absentBlo
 	^ self at: key put: absentBlock value
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
@@ -235,7 +256,7 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentB
 					                                           cull: tierKey ]
 ]
 
-{ #category : 'public access' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
  
   aCollection add: (#tierKey -> tierKey).
@@ -286,6 +307,13 @@ TTDictionaryTiered >> gtKeysFor: aView [
 		items: [ self tierKeys ]
 ]
 
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> includesKey: key [
+	 
+	 ^ dict includesKey
+	 
+]
+
 { #category : 'initialization' }
 TTDictionaryTiered >> initialize [
 
@@ -323,6 +351,13 @@ TTDictionaryTiered >> isTieredDictionary [
 	^ true
 ]
 
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> keys [
+	 
+	 ^ dict keys
+	 
+]
+
 { #category : 'private - accessing' }
 TTDictionaryTiered >> next [
 	
@@ -347,8 +382,12 @@ TTDictionaryTiered >> postCopy [
 	  array := array collect: [ :association |
 			association ifNotNil: [ association copy ] ]
 ]."
-
+	
+	self isReadOnly ifFalse: [ dict := dict copy ].
+	valueWriter ifNotNil: [ valueWriter dict: dict ].
   next := next copy.
+  
+
 ]
 
 { #category : 'startup - shutdown' }

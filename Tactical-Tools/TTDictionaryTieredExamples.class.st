@@ -8,12 +8,104 @@ Class {
 		'two',
 		'three',
 		'cache',
-		'readonly'
+		'readonly',
+		'tier'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> caseInsensitiveTierFoldsLookup [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	tier := TTDictionaryTiered new
+		tierKey: #ci;
+		beCaseInsensitive;
+		yourself.
+	tier at: 'PATH' put: 1.
+	self assert: (tier at: 'PATH') equals: 1.
+	self assert: (tier at: 'path') equals: 1.
+	self assert: (tier at: 'Path') equals: 1.
+	^ tier
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> caseInsensitiveTierHandlesSymbols [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	tier := TTDictionaryTiered new
+		tierKey: #ci;
+		beCaseInsensitive;
+		yourself.
+	tier at: #One put: 1.
+	self assert: (tier at: #one ifAbsent: [ #absent ]) equals: 1.
+	^ tier
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> caseInsensitiveTierIncludesAndRemove [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	tier := TTDictionaryTiered new
+		tierKey: #ci;
+		beCaseInsensitive;
+		yourself.
+	tier at: 'PATH' put: 1.
+	self assert: (tier includesKey: 'path').
+	self assert: (tier includesKey: 'Path').
+	tier removeKey: 'PaTh'.
+	self assert: (tier includesKey: 'path') equals: false.
+	self assert: tier isEmpty.
+	^ tier
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> caseInsensitiveTierOverwritesAcrossCase [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	tier := TTDictionaryTiered new
+		tierKey: #ci;
+		beCaseInsensitive;
+		yourself.
+	tier at: 'PATH' put: 1.
+	tier at: 'path' put: 2.
+	self assert: (tier at: 'PATH') equals: 2.
+	self assert: tier size equals: 1.
+	^ tier
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> caseInsensitiveTierResolvesMultiKey [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	tier := TTDictionaryTiered new
+		tierKey: #ci;
+		beCaseInsensitive;
+		yourself.
+	tier at: 'PATH' put: 1.
+	tier at: 'HOME' put: 2.
+	self assert: (tier at: #('path' 'home') ifAbsent: [ #absent ]) equals: 1.
+	self assert: (tier at: #('unknown' 'home') ifAbsent: [ #absent ]) equals: 2.
+	self assert: (tier at: #('a' 'b') ifAbsent: [ #absent ]) equals: #absent.
+	^ tier
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> caseInsensitiveTierStoresUppercased [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	| stored |
+	tier := TTDictionaryTiered new
+		tierKey: #ci;
+		beCaseInsensitive;
+		yourself.
+	tier at: 'Home' put: 1.
+	stored := tier keys anyOne.
+	self assert: stored equals: 'HOME'.
+	^ tier
+]
 
 { #category : 'examples' }
 TTDictionaryTieredExamples >> emptyDictionaryHasNoTiersExceptSelf [
