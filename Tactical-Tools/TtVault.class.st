@@ -274,11 +274,11 @@ TTVault >> assocForApp: anApp user: aUserAssoc field: field ifAbsent: aBlock [
 
 	keys := { (user, '__', app , '_' , field). (user asLowercase, '__', app , '_' , field). }. 
 
-	store deepAssociationAt: keys ifPresent: [ :a | ^ a ].
+	store deepAssociationAt: keys ifPresentAssocAndTierDo: [ :a | ^ a ].
 
 	keys := app , '_' , field.
 	
-	store deepAssociationAt: keys ifPresent: [ :a  | ^ a  ].
+	store deepAssociationAt: keys ifPresentAssocAndTierDo: [ :a  | ^ a  ].
 
 	^ aBlock value
 	
@@ -287,7 +287,7 @@ TTVault >> assocForApp: anApp user: aUserAssoc field: field ifAbsent: aBlock [
 { #category : 'as yet unclassified' }
 TTVault >> assocLocalUser [
 
-	^ store deepAt: #('USER' 'USERNAME') ifPresent: [ :v :k :t | t -> v copyReplaceAll: '-' with: '_' ]
+	^ store deepAt: #('USER' 'USERNAME') ifPresentValueKeyAndTierDo: [ :v :k :t | t -> v copyReplaceAll: '-' with: '_' ]
 ]
 
 { #category : 'as yet unclassified' }

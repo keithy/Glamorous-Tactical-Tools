@@ -1,147 +1,168 @@
 Class {
 	#name : 'TTDictionaryTieredExamples',
 	#superclass : 'Object',
+	#traits : 'TGtExampleAssertable',
+	#classTraits : 'TGtExampleAssertable classTrait',
+	#instVars : [
+		'one',
+		'two',
+		'three',
+		'cache',
+		'readonly'
+	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> cacheTierIgnoresMutations [
-	<gtExample>
-	<return: #TTDictionaryTiered>
-	| cache |
-	cache := TTDictionaryTiered new
-		tierKey: #cache;
-		beCache;
-		yourself.
-	cache at: #x put: 1.
-	self assert: (cache at: #x) equals: 1.
-	^ cache
-]
-
-{ #category : 'examples' }
 TTDictionaryTieredExamples >> emptyDictionaryHasNoTiersExceptSelf [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| dict |
-	dict := TTDictionaryTiered new tierKey: #root.
-	self assert: dict tierKeys equals: #(#root).
-	^ dict
+ 
+	 one := self emptyDictionaryHasNoValue.
+	
+ 	self assert: one tierKeys equals: #(#one).
+	
+	^ one
 ]
 
 { #category : 'examples' }
 TTDictionaryTieredExamples >> emptyDictionaryHasNoValue [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| dict |
-	dict := TTDictionaryTiered new tierKey: #root.
-	self assert: (dict at: #missing ifAbsent: [ #absent ]) equals: #absent.
-	^ dict
+ 
+  one := TTDictionaryTiered new tierKey: #one.
+	
+	self assert: (one at: #missing ifAbsent: [ #absent ]) equals: #absent.
+	
+	^ one
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> keyInTopTierShadowsLowerTier [
+TTDictionaryTieredExamples >> initialWritesAcceptedByCacheTier [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| root middle top |
-	root := TTDictionaryTiered new tierKey: #root.
-	middle := TTDictionaryTiered new tierKey: #middle.
-	top := TTDictionaryTiered new tierKey: #top.
-	root at: #shared put: #fromRoot.
-	root appendTier: middle.
-	middle at: #shared put: #fromMiddle.
-	middle appendTier: top.
-	top at: #shared put: #fromTop.
-	self assert: (top deepAt: #shared) equals: #fromTop.
-	^ top
-]
-
-{ #category : 'examples' }
-TTDictionaryTieredExamples >> lookUpFallsThroughToLowerTier [
-	<gtExample>
-	<return: #TTDictionaryTiered>
-	| root middle top |
-	root := TTDictionaryTiered new tierKey: #root.
-	middle := TTDictionaryTiered new tierKey: #middle.
-	top := TTDictionaryTiered new tierKey: #top.
-	root at: #a put: #rootA.
-	root at: #b put: #rootB.
-	root appendTier: middle.
-	middle at: #b put: #middleB.
-	middle appendTier: top.
-	top at: #c put: #topC.
-	self assert: (top deepAt: #a) equals: #rootA.
-	self assert: (top deepAt: #b) equals: #middleB.
-	self assert: (top deepAt: #c) equals: #topC.
-	^ top
-]
-
-{ #category : 'examples' }
-TTDictionaryTieredExamples >> newCacheFactoryProducesCacheModeTier [
-	<gtExample>
-	<return: #TTDictionaryTiered>
-	| cache |
-	cache := TTDictionaryTiered newCache.
-	self assert: cache tierKey equals: #cache.
-	self assert: cache isCache.
+	 
+	cache := TTDictionaryTiered new
+		tierKey: #cache;
+		beCache;
+		yourself.
+		
+	cache at: #x put: 1.
+	self assert: (cache at: #x) equals: 1.
+	
 	^ cache
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> readOnlyTierRejectsMutations [
+TTDictionaryTieredExamples >> initialWritesRejectedByReadOnlyTier [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| tier |
-	tier := TTDictionaryTiered new
-		tierKey: #ro;
+	 
+	readonly := TTDictionaryTiered new
+		tierKey: #readOnly;
 		beReadOnly;
 		yourself.
-	self assert: tier isReadOnly.
-	self should: [ tier at: #x put: 1 ] raise: Error.
-	^ tier
+		
+	self should: [ readonly at: #x put: 1 ] raise: TTReadOnlyError.
+	
+	^ readonly
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> keyInEarlierTierShadowsLaterTiers [
+
+	<gtExample>
+	<return: #TTDictionaryTiered>
+ 
+	one := self threeTierEmpty.
+  two := one tierAt: #two.
+  three := two tierAt: #three.
+  
+  one at: 'shared' put: #fromOne.
+  two at: 'shared' put: #fromTwo.
+  three at: 'shared' put: #fromThree.
+  
+	self assert: (one deepAt: #shared ifAbsent: nil) equals: #fromOne.
+	self assert: (two deepAt: #shared ifAbsent: nil) equals: #fromTwo.
+	self assert: (three deepAt: #shared ifAbsent: nil) equals: #fromThree.
+	
+	^ one
+	
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> lookUpFallsThroughToLaterTier [
+	<gtExample>
+	<return: #TTDictionaryTiered>
+	 	
+	one := self threeTierEmpty.
+  two := one next.
+  three := three next.
+	
+	one at: 'ONE' put: #fromOne.
+  one at: 'TWO' put: #fromTwo.
+  one at: 'THREE' put: #fromThree.
+  
+	self assert: (one deepAt: 'THREE' ifAbsent: nil) equals: #fromThree.
+	self assert: (one deepAt: 'TWO' ifAbsent: nil) equals: #fromTwo.
+	self assert: (one deepAt: 'ONE' ifAbsent: nil) equals: #fromOne.
+	
+	^ one
 ]
 
 { #category : 'examples' }
 TTDictionaryTieredExamples >> resetClearsEntries [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| tier |
-	tier := TTDictionaryTiered new tierKey: #cache.
-	tier at: #x put: 1.
-	tier at: #y put: 2.
-	tier reset.
-	self assert: tier isEmpty.
-	^ tier
+	
+	cache := TTDictionaryTiered new tierKey: #cache.
+	cache at: #x put: 1.
+	cache at: #y put: 2.
+	cache reset.
+	self assert: cache isEmpty.
+	^ cache
+]
+
+{ #category : 'examples' }
+TTDictionaryTieredExamples >> threeTierEmpty [
+
+	<gtExample>
+	<return: #TTDictionaryTiered>
+ 
+	one := TTDictionaryTiered new tierKey: #one.
+	two := TTDictionaryTiered new tierKey: #two.
+	three := TTDictionaryTiered new tierKey: #three.
+
+	one appendTier: two.
+	one appendTier: three.
+	
+	^ one
+	
 ]
 
 { #category : 'examples' }
 TTDictionaryTieredExamples >> tierKeysReportsAllLinkedTiers [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| root middle top |
-	root := TTDictionaryTiered new tierKey: #root.
-	middle := TTDictionaryTiered new tierKey: #middle.
-	top := TTDictionaryTiered new tierKey: #top.
-	root appendTier: middle.
-	middle appendTier: top.
-	self assert: top tierKeys equals: #(#top #middle #root).
-	^ top
+	
+	one := self threeTierEmpty.
+  two := one next.
+  three := two next.
+  
+	self assert: one tierKeys equals: #(#one #two #three).
+	
+	^ one
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> tieredChainIsBuiltByAppendTier [
+TTDictionaryTieredExamples >> verifyFactoryNewCache [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	| root middle top tiers |
-	root := TTDictionaryTiered new tierKey: #root.
-	middle := TTDictionaryTiered new tierKey: #middle.
-	top := TTDictionaryTiered new tierKey: #top.
-	root appendTier: middle.
-	middle appendTier: top.
-	tiers := top tiers collect: [ :ea | ea key ].
-	self assert: tiers equals: #(#top #middle #root).
-	self assert: top next tierKey equals: #middle.
-	self assert: top next next tierKey equals: #root.
-	^ top
+ 
+	cache := TTDictionaryTiered newCache.
+	self assert: cache tierKey equals: #cache.
+	self assert: cache isCache.
+	^ cache
 ]
