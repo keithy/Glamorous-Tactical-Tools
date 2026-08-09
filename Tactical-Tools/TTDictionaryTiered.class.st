@@ -14,7 +14,7 @@ Class {
 	#tag : 'Vault'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 TTDictionaryTiered class >> newCache [
 	
 		^ self new 
@@ -25,7 +25,7 @@ TTDictionaryTiered class >> newCache [
 				 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 TTDictionaryTiered class >> newLocal [
 	
 		^ self new 
@@ -35,19 +35,19 @@ TTDictionaryTiered class >> newLocal [
 				 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'startup - shutdown' }
 TTDictionaryTiered class >> shutDown [
 
 	self shutDownZapCache
 ]
 
-{ #category : 'accessing' }
+{ #category : 'startup - shutdown' }
 TTDictionaryTiered class >> shutDownZapCache [
 
 	self allInstancesDo: [ :ea | ea isCache ifTrue: [ ea reset ]]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - delegation' }
 TTDictionaryTiered >> add: assoc [
 
 	self isReadOnly ifTrue: [ self error: 'designated read only' ].
@@ -56,7 +56,7 @@ TTDictionaryTiered >> add: assoc [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> appendTier: store [
   "tiers are built from the top downwards, in a list view"
   
@@ -66,7 +66,14 @@ TTDictionaryTiered >> appendTier: store [
 	^ store tierAppendTo: self.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> at: key [
+	 
+	 ^ dict at: key
+	 
+]
+
+{ #category : 'private - delegation' }
 TTDictionaryTiered >> at: key forcePut: inputValue [
 
 	"bypass readonly block for initial data loading"
@@ -77,7 +84,29 @@ TTDictionaryTiered >> at: key forcePut: inputValue [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> at: key ifAbsent: aBlock [
+	 
+	 ^ dict at: key ifAbsent: aBlock
+	 
+]
+
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> at: key ifAbsentPut: aBlock [
+	"Return the value at the given key.
+	If the key is not included in the receiver store and return the result
+	of evaluating aBlock as the new value."
+
+	| k |
+	
+	k := self isCaseSensitive 
+				ifTrue: [ key ]
+				ifFalse: [ key asUppercase ].
+	
+	^ dict at: key ifAbsent: [self at: key put: aBlock value]
+]
+
+{ #category : 'private - delegation' }
 TTDictionaryTiered >> at: key put: inputValue [
 
 	self isReadOnly ifTrue: [ TTReadOnlyError signal: tierKey  ].
@@ -86,55 +115,58 @@ TTDictionaryTiered >> at: key put: inputValue [
 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - delegation' }
 TTDictionaryTiered >> at: key write: inputValue [
 
 	^ self valueWriter fromAnyAt: key put: inputValue
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> beCache [
 
 	mode := #cache
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> beCaseInsensitive [
 
 	isCaseSensitive := false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> beCaseSensitive [
 
 	isCaseSensitive := true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> beReadOnly [
 
 	mode := #readOnly
 ]
 
-{ #category : 'accessing' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: oneOrMoreKeys))
-	    ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: tierKey ].
+	dict associationAt: oneOrMoreKeys ifPresent: [ :assoc |
+	
+		^ presentBlock cull: assoc cull: tierKey
+	
+	].
 
 	self next ifNil: [ ^ nil ].
 
 	^ self next deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: presentBlock
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAssociationsDo: aBlock [
  
-  self associationsDo: aBlock.
+  dict associationsDo: aBlock.
 	
 	self next ifNil: [ ^ self ].
 	
@@ -142,14 +174,14 @@ TTDictionaryTiered >> deepAssociationsDo: aBlock [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAssociationsSelect: aBlock [
  
    ^ self deepOn: OrderedCollection new associationsSelect: aBlock
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -159,17 +191,17 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
 	^ absentBlock value
 ]
 
-{ #category : 'accessing' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAt: key ifAbsentPut: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	put the result of evaluating aBlock."
 
 	self deepAt: key ifPresentValueKeyAndTierDo: [ :val | ^ val ].
 
-	^ self at: key ifAbsentPut:absentBlock
+	^ self at: key ifAbsentPut: absentBlock
 ]
 
-{ #category : 'accessing' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -179,17 +211,18 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: ab
 	^ absentBlock value
 ]
 
-{ #category : 'accessing' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAt: key ifPresent: presentBlock ifAbsentPut: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
 
 	self deepAt: key ifPresentValueKeyAndTierDo: presentBlock.
 
+		
 	^ self at: key put: absentBlock value
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
@@ -202,11 +235,11 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentB
 					                                           cull: tierKey ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'public access' }
 TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
  
   aCollection add: (#tierKey -> tierKey).
-  aCollection addAll: (self associationsSelect: aBlock).
+  aCollection addAll: (dict associationsSelect: aBlock).
 	
 	self next ifNil: [ ^ aCollection ].
 	
@@ -214,7 +247,7 @@ TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'views' }
 TTDictionaryTiered >> gtItemsFor: aView [
 	<gtView>
 	^ aView columnedTree
@@ -244,7 +277,7 @@ TTDictionaryTiered >> gtItemsFor: aView [
 	"Implementation note: association sorting uses #collatedBy: to avoid a 'Symbol DNU value: value: error'"
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'views' }
 TTDictionaryTiered >> gtKeysFor: aView [
 	<gtView>
 	^ aView list
@@ -253,44 +286,50 @@ TTDictionaryTiered >> gtKeysFor: aView [
 		items: [ self tierKeys ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> initialize [
 
 	dict := Dictionary new.
 	isCaseSensitive := true.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 TTDictionaryTiered >> isCache [
 
 	^ mode == #cache
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 TTDictionaryTiered >> isCaseSensitive [
 
 	^ isCaseSensitive
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
+TTDictionaryTiered >> isEmpty [
+
+	^ dict isEmpty
+]
+
+{ #category : 'testing' }
 TTDictionaryTiered >> isReadOnly [
 
 	^ mode == #readOnly
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 TTDictionaryTiered >> isTieredDictionary [
 
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - accessing' }
 TTDictionaryTiered >> next [
 	
 	^ next value
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - accessing' }
 TTDictionaryTiered >> next: aTieredDictionary [
 	 
 	(aTieredDictionary askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
@@ -312,23 +351,13 @@ TTDictionaryTiered >> postCopy [
   next := next copy.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'startup - shutdown' }
 TTDictionaryTiered >> reset [
 
 	^ dict removeAll
 ]
 
-{ #category : 'accessing' }
-TTDictionaryTiered >> storeAt: name [
-
-	name = tierKey ifTrue: [ ^ self ].
-	
-	self next ifNotNil: [ :n | ^ n storeAt: name ].
-	
-	^ nil
-]
-
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierAppendTo: stack [
 
 	tierKey  ifNil: [ ^ self error: 'tierKey not set' ].
@@ -343,7 +372,7 @@ TTDictionaryTiered >> tierAppendTo: stack [
 	^ self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
@@ -353,7 +382,7 @@ TTDictionaryTiered >> tierAt: name [
 	^ nil
 ]
 
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierInsertIn: stack after: key [
 
 	tierKey ifNil: [ ^ self error: 'tierKey not set' ].
@@ -372,23 +401,23 @@ TTDictionaryTiered >> tierInsertIn: stack after: key [
 	^ self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierKey [
 	^ tierKey
 ]
 
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierKey: anObject [
 	tierKey := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierKeys [
 
 	^ self tiers collect: [ :ea | ea key ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'tier management' }
 TTDictionaryTiered >> tiers [
 
 	"as a flat collection of associations"
@@ -406,14 +435,14 @@ TTDictionaryTiered >> tiers [
 	^ tiers asArray
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - accessing' }
 TTDictionaryTiered >> valueWriter [ 
 
 ^ valueWriter.
 
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> valueWriter: aValueWriter [
 	
 	aValueWriter dict: self.
