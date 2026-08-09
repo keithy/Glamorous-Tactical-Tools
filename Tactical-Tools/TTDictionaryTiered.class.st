@@ -56,14 +56,12 @@ TTDictionaryTiered >> add: assoc [
 ]
 
 { #category : 'accessing' }
-TTDictionaryTiered >> appendTier: store [ 
+TTDictionaryTiered >> appendTier: store [
 
-	"double dispatch so that new tier has control 
+	"double dispatch so that new tier has control
 	 or can opt out if empty"
-	 
+
 	^ store tierAppendTo: self.
-	
-	 
 ]
 
 { #category : 'accessing' }
@@ -79,9 +77,8 @@ TTDictionaryTiered >> at: key put: inputValue [
 TTDictionaryTiered >> at: key putReading: inputValue [
 
 	"bypass readonly block for initial reading"
-	
+
 	^ super at: key put: inputValue
-	
 ]
 
 { #category : 'accessing' }
@@ -102,18 +99,18 @@ TTDictionaryTiered >> beReadOnly [
 	mode := #readOnly
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryTiered >> deepAssociationAt: oneOrMoreKeys ifPresent: presentBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
 	with the key.
 	Otherwise, answer nil."
 
-	(array at: (self findElementOrNil: oneOrMoreKeys)) 
+	(array at: (self findElementOrNil: oneOrMoreKeys))
 	    ifNotNil: [:assoc | ^ presentBlock cull: assoc cull: tierKey ].
-	
+
 	self next ifNil: [ ^ nil ].
-	
+
 	^ self next deepAssociationAt: oneOrMoreKeys ifPresent: presentBlock
 ]
 
@@ -135,7 +132,7 @@ TTDictionaryTiered >> deepAssociationsSelect: aBlock [
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -145,7 +142,7 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
 	^ absentBlock value
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryTiered >> deepAt: key ifAbsentPut: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	put the result of evaluating aBlock."
@@ -165,7 +162,7 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock [
 	^ self deepAssociationAt: oneOrMoreKeys ifPresent: [ :assoc :tier | presentBlock cull: (assoc value) cull: (assoc key) cull: tierKey ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -175,7 +172,7 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: ab
 	^ absentBlock value
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryTiered >> deepAt: key ifPresent: presentBlock ifAbsentPut: absentBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock. Bump not found to the next tier"
@@ -281,20 +278,18 @@ TTDictionaryTiered >> next: aTieredDictionary [
 	next := aTieredDictionary
 ]
 
-{ #category : 'accessing' }
+{ #category : 'copying' }
 TTDictionaryTiered >> postCopy [
 
 	"Must copy the associations, or later store will affect both the
 	original and the copy .... which is desireable for a read only copy"
-	
+
 	self isReadOnly ifTrue: [
-	
 	  array := array collect: [ :association |
 			association ifNotNil: [ association copy ] ]
-	].
-	
+].
+
   next := next copy.
-  
 ]
 
 { #category : 'accessing' }
@@ -310,8 +305,8 @@ TTDictionaryTiered >> scanFor: oneOrMoreKeys [
 
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or zero if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
 	| element start finish keys |
-	
-	keys:= oneOrMoreKeys isArray ifFalse: [ Array with: oneOrMoreKeys ] ifTrue: [ oneOrMoreKeys ]. 
+
+	keys:= oneOrMoreKeys isArray ifFalse: [ Array with: oneOrMoreKeys ] ifTrue: [ oneOrMoreKeys ].
 
 	finish := array size.
 	start := (keys first hash \\ finish) + 1.
@@ -327,8 +322,6 @@ TTDictionaryTiered >> scanFor: oneOrMoreKeys [
 			ifTrue: [^ index ]].
 
 	^ 0  "No match AND no empty slot"
-	
-	 
 ]
 
 { #category : 'accessing' }
@@ -368,17 +361,17 @@ TTDictionaryTiered >> tierAt: name [
 TTDictionaryTiered >> tierInsertIn: stack after: key [
 
 	tierKey ifNil: [ ^ self error: 'tierKey not set' ].
-	
+
 	stack ifNil: [ ^ KeyNotFound signalFor: key in: self ]. "failed"
-	
+
 	"search"
 	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].
-	
+
 	"found"
 	valueWriter ifNil: [ self valueWriter: stack valueWriter copy ].
   self next: stack next.
   stack next: self.
-	
+
 	"success"
 	^ self
 ]
@@ -406,22 +399,22 @@ TTDictionaryTiered >> tieredCopy [
  
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 TTDictionaryTiered >> tiers [
 
 	"as a flat collection of associations"
-	
+
 	| tiers store |
-	
+
 	tiers := OrderedCollection new.
 	store := self.
-	
-	[ store isNotNil ] 
-	         whileTrue: 
-	         [ tiers add: (store tierKey -> store). 
-	         	store := store next ].
-	
-	^ tiers 
+
+	[ store isNotNil ]
+	         whileTrue:
+	         [ tiers add: (store tierKey -> store).
+         	store := store next ].
+
+	^ tiers
 ]
 
 { #category : 'accessing' }
