@@ -388,7 +388,7 @@ TheHub class >> sortByComment: pragmas [
  	
  	<ttUtil>
  	
-	^ pragmas asSortedCollection: [ :a :b | a method comment <= (b method comment) ] 
+	^ pragmas asSortedCollection: [ :a :b | (a method comment ifNil: '') <= (b method comment ifNil: '') ] 
 	
 
 ]
@@ -751,17 +751,8 @@ TheHub >> namedFileLocations [
    "Named file locations"
 
    <ttSpoke>
- 	
- 	| origins | 
- 	
- 	origins := Dictionary new.
- 	
-	 FileLocator supportedOriginsDo: [ :resolver :selector | 
-		 	
-		 		origins at: selector put: (FileLocator origin: selector) 
-	 ].
-	 
-	 ^ origins
+
+ 	^ FileLocator  namedFileLocations
 	
 ]
 

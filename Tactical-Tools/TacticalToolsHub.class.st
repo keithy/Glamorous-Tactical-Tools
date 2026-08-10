@@ -1,6 +1,6 @@
 Class {
 	#name : 'TacticalToolsHub',
-	#superclass : 'Object',
+	#superclass : 'TTBareHub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
@@ -15,6 +15,33 @@ TacticalToolsHub class >> healthCheckExamples [
 	
 	^ #ttHealthCheck gtPragmas in: [ :p | p gtExamples runAll. p ]
 	
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> newGtChatWithProvider: aProviderOrNil [
+	| chat |
+	chat := GtLChat new.
+	chat withDefaultSummarizers.
+	aProviderOrNil ifNotNil: [ chat provider: aProviderOrNil ].
+	chat
+		tools: GtLTools gt;
+		markdownResponse;
+		pageObjectExplanation: (self ttPageExplanation: 'Tactical LLM Instructions');
+		gtPageExplanation: 'Rules for Moldable Development for Glamorous Toolkit';
+		gtPageExplanation: 'Examples by example'.	";
+		gtPageExplanation: 'Inspector phlow views by example'"
+	^ GtLChatRegistry current  registerChat: chat
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> newTTChat [ 
+
+	"Let Us Chat"
+	
+  <ttSpoke>
+
+	^ self newGtChatWithProvider: nil
+	 
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,4 +121,19 @@ TacticalToolsHub class >> theVaultSearchPath [
 	<ttSpoke>
 	
 	^ FileLookedForNotification collectDuring: [ TTVault newWithLocalConfigOSEnv ]
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> ttLeDatabase [
+	
+	"Lepiter - Tactical Tools "
+	
+	<ttSpoke>
+	
+	^ LeDatabase databaseNamed: 'keithy/Glamorous-Tactical-Tools/lepiter'
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> ttPageExplanation: aPageName [ 
+	^ self ttLeDatabase pageNamed: aPageName
 ]

@@ -345,6 +345,12 @@ TTDictionaryTieredOld >> isCaseSensitive [
 ]
 
 { #category : 'testing' }
+TTDictionaryTieredOld >> isDictionaryTiered [
+
+	^ true
+]
+
+{ #category : 'testing' }
 TTDictionaryTieredOld >> isEmpty [
 
 	^ dict isEmpty
@@ -354,12 +360,6 @@ TTDictionaryTieredOld >> isEmpty [
 TTDictionaryTieredOld >> isReadOnly [
 
 	^ mode == #readOnly
-]
-
-{ #category : 'testing' }
-TTDictionaryTieredOld >> isTieredDictionary [
-
-	^ true
 ]
 
 { #category : 'private - delegation' }
@@ -378,7 +378,7 @@ TTDictionaryTieredOld >> next [
 { #category : 'private - accessing' }
 TTDictionaryTieredOld >> next: aTieredDictionary [
 	 
-	(aTieredDictionary askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
+	(aTieredDictionary askFor: #isDictionaryTiered) ifFalse: [ self error: 'expected a ', self class name ].
 	
 	next := aTieredDictionary
 ]

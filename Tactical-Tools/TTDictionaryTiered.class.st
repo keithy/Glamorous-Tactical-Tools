@@ -101,16 +101,21 @@ TTDictionaryTiered >> gtItemsFor: aView [
 						ifTrue: [ each value collectWithIndex: [ :x :i | i -> x ] ]
 						ifFalse: [ #() ] ] ];
 		column: 'Key' text: [ :assoc | 
-		
-			assoc key in: [ :tier |
-		
-				tier isEnabled 
-					ifTrue: [ tier tierKey asRopedText bold ]
-				  ifFalse: [ tier tierKey asRopedText
-    										attribute: (BlTextDecorationAttribute lineThrough);
-    										attribute: (BlTextForegroundAttribute paint: Color gray);
-    										yourself ]
-    	]
+		 
+		 			(assoc key askFor: #isDictionaryTiered) ifTrue: [
+							
+							assoc key in: [ :tier  |
+					
+								tier isEnabled 
+									ifTrue: [ tier tierKey asRopedText bold ]
+								  ifFalse: [ tier tierKey asRopedText
+				    										attribute: (BlTextDecorationAttribute new lineThrough);
+				    										attribute: (BlTextForegroundAttribute new paint: Color gray);
+				    										yourself ]
+			    	]]
+			    	ifFalse: [
+			    			assoc key
+			    	].
 		];
 		column: 'Value' text: [ :assoc | assoc value ] weight: 3;
 		contextItemLabel: 'Inspect Tier' action: [ :anElement :anAssoc | 
@@ -135,16 +140,16 @@ TTDictionaryTiered >> initialize [
 	isEnabled := true.
 ]
 
+{ #category : 'testing' }
+TTDictionaryTiered >> isDictionaryTiered [
+
+	^ true
+]
+
 { #category : 'initialization' }
 TTDictionaryTiered >> isEnabled [
 
 	^ isEnabled
-]
-
-{ #category : 'testing' }
-TTDictionaryTiered >> isTieredDictionary [
-
-	^ true
 ]
 
 { #category : 'private - accessing' }
@@ -158,7 +163,7 @@ TTDictionaryTiered >> next: aTieredDictionary [
 	 
 	 aTieredDictionary ifNil: [ ^ self ].
 	 
-	(aTieredDictionary askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
+	(aTieredDictionary askFor: #isDictionaryTiered) ifFalse: [ self error: 'expected a ', self class name ].
 	
 	next := aTieredDictionary
 ]

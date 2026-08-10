@@ -1,5 +1,5 @@
 Class {
-	#name : 'TTDictionaryTieredExamples',
+	#name : 'TTDictionaryTieredExamplesOld',
 	#superclass : 'Object',
 	#traits : 'TGtExampleAssertable',
 	#classTraits : 'TGtExampleAssertable classTrait',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> caseInsensitiveTierFoldsLookup [
+TTDictionaryTieredExamplesOld >> caseInsensitiveTierFoldsLookup [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	tier := TTDictionaryTieredOld new
@@ -32,7 +32,7 @@ TTDictionaryTieredExamples >> caseInsensitiveTierFoldsLookup [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> caseInsensitiveTierHandlesSymbols [
+TTDictionaryTieredExamplesOld >> caseInsensitiveTierHandlesSymbols [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	tier := TTDictionaryTieredOld new
@@ -45,7 +45,7 @@ TTDictionaryTieredExamples >> caseInsensitiveTierHandlesSymbols [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> caseInsensitiveTierIncludesAndRemove [
+TTDictionaryTieredExamplesOld >> caseInsensitiveTierIncludesAndRemove [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	one := TTDictionaryTieredOld new
@@ -62,7 +62,7 @@ TTDictionaryTieredExamples >> caseInsensitiveTierIncludesAndRemove [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> caseInsensitiveTierOverwritesAcrossCase [
+TTDictionaryTieredExamplesOld >> caseInsensitiveTierOverwritesAcrossCase [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	tier := TTDictionaryTieredOld new
@@ -77,7 +77,7 @@ TTDictionaryTieredExamples >> caseInsensitiveTierOverwritesAcrossCase [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> caseInsensitiveTierResolvesMultiKey [
+TTDictionaryTieredExamplesOld >> caseInsensitiveTierResolvesMultiKey [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	tier := TTDictionaryTieredOld new
@@ -93,7 +93,7 @@ TTDictionaryTieredExamples >> caseInsensitiveTierResolvesMultiKey [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> caseInsensitiveTierStoresUppercased [
+TTDictionaryTieredExamplesOld >> caseInsensitiveTierStoresUppercased [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	| stored |
@@ -108,7 +108,7 @@ TTDictionaryTieredExamples >> caseInsensitiveTierStoresUppercased [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> emptyDictionaryHasNoTiersExceptSelf [
+TTDictionaryTieredExamplesOld >> emptyDictionaryHasNoTiersExceptSelf [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
  
@@ -120,7 +120,7 @@ TTDictionaryTieredExamples >> emptyDictionaryHasNoTiersExceptSelf [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> emptyDictionaryHasNoValue [
+TTDictionaryTieredExamplesOld >> emptyDictionaryHasNoValue [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
  
@@ -132,7 +132,7 @@ TTDictionaryTieredExamples >> emptyDictionaryHasNoValue [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> initialWritesAcceptedByCacheTier [
+TTDictionaryTieredExamplesOld >> initialWritesAcceptedByCacheTier [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	 
@@ -148,7 +148,7 @@ TTDictionaryTieredExamples >> initialWritesAcceptedByCacheTier [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> initialWritesRejectedByReadOnlyTier [
+TTDictionaryTieredExamplesOld >> initialWritesRejectedByReadOnlyTier [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	 
@@ -163,7 +163,7 @@ TTDictionaryTieredExamples >> initialWritesRejectedByReadOnlyTier [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> keyInEarlierTierShadowsLaterTiers [
+TTDictionaryTieredExamplesOld >> keyInEarlierTierShadowsLaterTiers [
 
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
@@ -185,7 +185,7 @@ TTDictionaryTieredExamples >> keyInEarlierTierShadowsLaterTiers [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> lookUpFallsThroughToLaterTier [
+TTDictionaryTieredExamplesOld >> lookUpFallsThroughToLaterTier [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	 	
@@ -205,7 +205,7 @@ TTDictionaryTieredExamples >> lookUpFallsThroughToLaterTier [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> resetClearsEntries [
+TTDictionaryTieredExamplesOld >> resetClearsEntries [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	
@@ -218,7 +218,7 @@ TTDictionaryTieredExamples >> resetClearsEntries [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> threeTierEmpty [
+TTDictionaryTieredExamplesOld >> threeTierEmpty [
 
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
@@ -235,7 +235,7 @@ TTDictionaryTieredExamples >> threeTierEmpty [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> tierKeysReportsAllLinkedTiers [
+TTDictionaryTieredExamplesOld >> tierKeysReportsAllLinkedTiers [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
 	
@@ -249,7 +249,7 @@ TTDictionaryTieredExamples >> tierKeysReportsAllLinkedTiers [
 ]
 
 { #category : 'examples' }
-TTDictionaryTieredExamples >> verifyFactoryNewCache [
+TTDictionaryTieredExamplesOld >> verifyFactoryNewCache [
 	<gtExample>
 	<return: #TTDictionaryTieredOld>
  
