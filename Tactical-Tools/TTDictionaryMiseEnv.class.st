@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTDictionaryMiseEnv',
-	#superclass : 'TTDictionaryProxy',
+	#superclass : 'TTDictionaryBacked',
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
@@ -15,12 +15,6 @@ TTDictionaryMiseEnv class >> newHomeDir [
 		tierKey: #miseHome;
 		valueWriter: (TTVault makeValueWriter);
 		readSource: '~'; yourself
-]
-
-{ #category : 'accessing' }
-TTDictionaryMiseEnv >> at: key write: value [
-
-	^ valueWriter fromMiseAt: key put: value
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTDictionaryDotEnv',
-	#superclass : 'TTDictionaryProxy',
+	#superclass : 'TTDictionaryBacked',
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
@@ -10,33 +10,26 @@ Class {
 TTDictionaryDotEnv class >> newTest [
 
 	<gtExample>
-	<return: #TTDictionaryDotEnv>
+	 
 	| store |
 	
-	store := self new.
-	store tierKey: #test.
-	store reader: TTVault new.
-	store readSource: 
+	^ (self new)
+			valueWriter: TTVaultValueWriter new;
+	 		readSource: 
 
 	'HELLO=WORLD
 	HELLO1=WORLD1
 	HELLO2_PASS="WORLD2" 
 	HELLO3_ENCODED="V09STEQz"'.
 	
-	^ store
+ 
 	 
-]
-
-{ #category : 'accessing' }
-TTDictionaryDotEnv >> at: key write: value [
-
-	^ valueWriter fromDotEnvAt: key put: value
 ]
 
 { #category : 'as yet unclassified' }
 TTDictionaryDotEnv >> readSource [
 	
-	self reset.
+	self removeAll.
 	self readingFromStream: self source readStream.
 	
 ]

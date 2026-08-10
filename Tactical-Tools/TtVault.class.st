@@ -26,7 +26,17 @@ TTVault class >> currentVault [
 
 { #category : 'instance creation' }
 TTVault class >> getCurrentVault [
-	^ self newWithLocalMiseConfigOSEnv
+	^ self newWithLocalConfigOSEnv
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeDictionaryDotEnvFile: file [
+
+	^ TTDictionaryDotEnv new
+				valueWriter: TTVaultValueWriter new;
+				source: file;
+				readSource;
+				yourself
 ]
 
 { #category : 'instance creation' }
@@ -36,67 +46,27 @@ TTVault class >> makeDictionaryFrom: streamable [
 ]
 
 { #category : 'instance creation' }
+TTVault class >> makeDictionaryMiseFor: projectDirectory [
+
+	^ TTDictionaryMiseEnv new
+				valueWriter: TTVaultValueWriter new;
+				source: projectDirectory;
+				yourself
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeDictionaryOSEnv [
+
+	^ TTDictionaryOSEnv new
+				source: TheHub;
+				valueWriter: TTVaultValueWriter new;
+				readSource;
+				yourself
+]
+
+{ #category : 'instance creation' }
 TTVault class >> makeDictionaryWithAll: collection [
 	^ collection asDictionary
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeStoreLocalMiseConfigOSEnv [
-	
-	"our test show it all"
-	
-	<gtExample>
-	 
-	
-	| store project |
-	
-	store  := self makeStoreLocalConfigOSEnv.
-	
-	project := store deepAt: 'PROJECT' ifAbsent: [ ^ store ].
-
-  project asFileReference exists ifTrue: [
-					
-			store appendNew 
-				tierKey: #mise;
-				tierInsertIn: store after: #local;
-				readSource: project
-	].
-				
-	^ store
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeStoreLocalOSEnv [
-
-	<gtExample>
-
-	^ (self makeStoreLocal)
-				tierAdd: self makeTierOSEnv;
-			  yourself
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeStoreLocalOSEnvConfig [
-	"our test show it all"
-
-	<gtExample>
-	| store bundleId |
-	
-	store := self makeStoreLocalOSEnv.
-	
-	bundleId := store asDictionary 
-								at: 'BUNDLE_ID' 
-								ifAbsent: [ store writableDictionary at: 'BUNDLE_ID' put: TheHub bundleId].
- 
-	(self searchPathFor: TheHub current)
-	
-			reverseDo: [ :assoc | 
-			
-				self readFrom: (assoc value) into: (store tierNewAppendWithKey: assoc key) writableDictionary
-			
-			].
-
-	^ store
 ]
 
 { #category : 'instance creation' }
@@ -107,15 +77,16 @@ TTVault class >> makeTierConfig [
 	
 	| lastTier firstTier newTier|
 	
-	(self searchPathFor: TheHub current)
+	((self searchPathFor: TheHub current) select: [ :keyAndFileReference | keyAndFileReference value exists ])
 	
 			reverseDo: [ :assoc | 
-			  
-			  newTier := (self makeTierWithKey: assoc key) 
-													in: [ :nt | nt writableDictionary addAll: (self makeDictionaryFrom: assoc value) ].
+	
+			  newTier := self makeTierWithKey: assoc key. 
+				
+				newTier setDictionary: (self makeDictionaryDotEnvFile: assoc value) .
 													
 				lastTier 
-  					ifNil: [ firstTier := newTier. lastTier := newTier ]
+	  				ifNil: [ firstTier := newTier. lastTier := newTier ]
 	  				ifNotNil: [ lastTier := lastTier tierInsert: newTier ].
 			].
 
@@ -137,7 +108,7 @@ TTVault class >> makeTierMiseFor: project [
 	<gtExample>
 	  
   ^ (self makeTierWithKey:#mise) 
-			in: [ :newTier | newTier writableDictionary addAll: (self makeDictionaryWithAll: (TTMiseEnPlace basicExecMiseEnvironmentIn: project) env) ];
+			in: [ :newTier | newTier setDictionary: (self makeDictionaryMiseFor: project)    ];
 			yourself
 				 
 ]
@@ -148,7 +119,7 @@ TTVault class >> makeTierOSEnv [
 	<gtExample>
 
 	^ (self makeTierWithKey:#os) 
-			in: [ :newTier | newTier writableDictionary addAll: (self makeDictionaryWithAll: TheHub osEnvironment) ];
+			in: [ :newTier | newTier setDictionary: (self makeDictionaryOSEnv) ];
 			yourself
 ]
 
@@ -196,9 +167,9 @@ TTVault class >> newWithLocalConfigOSEnv [
  						
  (store tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
   					 
- ^ self basicNew
-		store: store
-		initialze
+ ^ (self basicNew)
+		store: store;
+		initialize
 		
 ]
 
@@ -358,7 +329,6 @@ TTVault >> store [
 
 { #category : 'accessing' }
 TTVault >> store: aTieredDict [
-
-	aTieredDict valueWriter: self class makeValueWriter.
+ 
 	store := aTieredDict
 ]

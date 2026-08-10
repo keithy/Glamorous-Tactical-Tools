@@ -17,14 +17,20 @@ TTDictionaryTiered class >> newTest [
  
   <gtExample>
   
-	^ self newWithKey: #test
+	| test |
+	
+	test := self newWithKey: #test.
+	
+	self assert: test writableDictionary isDictionary.
+	self assert: test isEnabled.
+	
 ]
 
 { #category : 'instance creation' }
 TTDictionaryTiered class >> newWithKey: aKey [
 
 	^ self basicNew
-			tierKey: aKey
+			tierKey: aKey;
 			initialize
 ]
 
@@ -57,7 +63,7 @@ TTDictionaryTiered >> associations [
 
 	^ (self tiersReverseCollect: [ :tier | 
 	
-				tier isEnabled ifTrue: [ tier dict associations ] ifFalse: nil
+				tier isEnabled ifTrue: [ tier writableDictionary associations ] ifFalse: nil
 			
 			]) flatten  
 ]
@@ -125,8 +131,14 @@ TTDictionaryTiered >> gtTierKeysFor: aView [
 
 { #category : 'initialization' }
 TTDictionaryTiered >> initialize [
+ 
+	isEnabled := true.
+]
 
-	dict := Dictionary new.
+{ #category : 'initialization' }
+TTDictionaryTiered >> isEnabled [
+
+	^ isEnabled
 ]
 
 { #category : 'testing' }
@@ -144,9 +156,19 @@ TTDictionaryTiered >> next [
 { #category : 'private - accessing' }
 TTDictionaryTiered >> next: aTieredDictionary [
 	 
+	 aTieredDictionary ifNil: [ ^ self ].
+	 
 	(aTieredDictionary askFor: #isTieredDictionary) ifFalse: [ self error: 'expected a ', self class name ].
 	
 	next := aTieredDictionary
+]
+
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> setDictionary: aDictionary [
+	
+	"writable dictionary"
+	
+	dict := aDictionary
 ]
 
 { #category : 'tier management' }
@@ -199,7 +221,7 @@ TTDictionaryTiered >> tierNewInsertWithKey: aSymbol after: this [
 { #category : 'tier management' }
 TTDictionaryTiered >> tiers [
 	
-	^ self tiersCollect: [ :t | t ] on: OrderedDictionary new
+	^ self tiersCollect: [ :t | t ] on: OrderedCollection new
 ]
 
 { #category : 'tier management' }
@@ -236,5 +258,5 @@ TTDictionaryTiered >> writableDictionary [
 	
 	"writable dictionary"
 	
-	^ dict
+	^ dict ifNil: [ dict := Dictionary new ]
 ]

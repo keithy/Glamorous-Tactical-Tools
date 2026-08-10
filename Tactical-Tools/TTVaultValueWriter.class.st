@@ -1,9 +1,6 @@
 Class {
 	#name : 'TTVaultValueWriter',
 	#superclass : 'Object',
-	#instVars : [
-		'dict'
-	],
 	#classInstVars : [
 		'suffixReaderMap'
 	],
@@ -48,24 +45,7 @@ TTVaultValueWriter class >> suffixesToRemove [
 ]
 
 { #category : 'accessing' }
-TTVaultValueWriter >> at: key put: value [
- 
-	^ dict at: key put: value.
-
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> dict [
-	^ dict
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> dict: anObject [
-	dict := anObject
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> fromAnyAt: key put: value [
+TTVaultValueWriter >> dict: dictionary at: key write: value [
  
 	self class suffixReaderMap do: [ :assoc |
 	
@@ -80,29 +60,14 @@ TTVaultValueWriter >> fromAnyAt: key put: value [
 					ifTrue: [ key withoutSuffix: suffix ] ifFalse: [ key ].
 		
 				"first match wins"
-				^ dict at: newKey forcePut: (self perform: selector with: value)
+				^ dictionary at: newKey put: (self perform: selector with: value)
 				
 		]
 	].
 	
 	"straight forward fall through"
-	^ dict at: key forcePut: value.
+	^ dictionary at: key put: value.
 
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> fromDotEnvAt: key put: value [
-	^ self fromAnyAt: key put: value
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> fromMiseAt: key put: data [
-	^ self fromDotEnvAt: key put: (data at: #value)
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> fromProxyAt: key put: value [
-	^ self fromAnyAt: value put: key
 ]
 
 { #category : 'as yet unclassified' }
