@@ -256,6 +256,12 @@ TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentB
 					                                           cull: tierKey ]
 ]
 
+{ #category : 'tier management' }
+TTDictionaryTiered >> deepKeys [
+
+	^ (self tiersCollect: [ :tier | tier keys ] on: OrderedCollection) asArray
+]
+
 { #category : 'public - accessing' }
 TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
  
@@ -268,13 +274,19 @@ TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
 	
 ]
 
+{ #category : 'public - accessing' }
+TTDictionaryTiered >> deepSize [
+ 
+	^(self tiersCollect: [ :tier | tier size ] on: OrderedCollection new) sum
+]
+
 { #category : 'views' }
 TTDictionaryTiered >> gtItemsFor: aView [
 	<gtView>
 	^ aView columnedTree
 		title: 'Items';
 		priority: 1;
-		items: [ self tiers];
+		items: [ self tiersAssociations];
 		children: [ :each | 
 			each value isDictionary
 				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
@@ -299,7 +311,7 @@ TTDictionaryTiered >> gtItemsFor: aView [
 ]
 
 { #category : 'views' }
-TTDictionaryTiered >> gtKeysFor: aView [
+TTDictionaryTiered >> gtTierKeysFor: aView [
 	<gtView>
 	^ aView list
 		title: 'Tiers';
@@ -309,9 +321,8 @@ TTDictionaryTiered >> gtKeysFor: aView [
 
 { #category : 'private - delegation' }
 TTDictionaryTiered >> includesKey: key [
-	 
-	 ^ dict includesKey
-	 
+
+	^ dict includes: key
 ]
 
 { #category : 'initialization' }
@@ -358,6 +369,15 @@ TTDictionaryTiered >> keys [
 	 
 ]
 
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> keysOn: collection [
+	 
+	 collection addAll: dict keys.
+	 
+	 ^ dict keysOn: collection
+	 
+]
+
 { #category : 'private - accessing' }
 TTDictionaryTiered >> next [
 	
@@ -396,6 +416,12 @@ TTDictionaryTiered >> reset [
 	^ dict removeAll
 ]
 
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> size [ 
+
+	^ dict size
+]
+
 { #category : 'tier management' }
 TTDictionaryTiered >> tierAppendTo: stack [
 
@@ -419,6 +445,12 @@ TTDictionaryTiered >> tierAt: name [
 	self next ifNotNil: [ :n | ^ n tierAt: name ].
 	
 	^ nil
+]
+
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> tierInnerKeys [
+
+	^ (self tiersCollect: [ :tiers | tiers keys ] on: OrderedCollection new) asArray
 ]
 
 { #category : 'tier management' }
@@ -453,25 +485,32 @@ TTDictionaryTiered >> tierKey: anObject [
 { #category : 'tier management' }
 TTDictionaryTiered >> tierKeys [
 
-	^ self tiers collect: [ :ea | ea key ]
+	^ (self tiersCollect: [ :tier | tier tierKey ] on: OrderedCollection) asArray
 ]
 
 { #category : 'tier management' }
-TTDictionaryTiered >> tiers [
+TTDictionaryTiered >> tiersAssociations [
 
-	"as a flat collection of associations"
+	^ (self tiersCollect: [ :tier | tier tierKey -> tier ] on: OrderedCollection) asArray
+]
 
-	| tiers store |
+{ #category : 'tier management' }
+TTDictionaryTiered >> tiersCollect: aBlock on: aCollector [
+	
+	aCollector addAll: (aBlock value: self). 
 
-	tiers := OrderedCollection new.
-	store := self.
+	next ifNotNil: [ 
+		next tiersCollect: aBlock on: aCollector
+	].
+	
+	^ aCollector
+	
+]
 
-	[ store isNotNil ]
-	         whileTrue:
-	         [ tiers add: (store tierKey -> store).
-         	store := store next ].
+{ #category : 'tier management' }
+TTDictionaryTiered >> tiersDo: aBlock [
 
-	^ tiers asArray
+	^ self tiersCollect: aBlock on: OrderedCollection new
 ]
 
 { #category : 'private - accessing' }

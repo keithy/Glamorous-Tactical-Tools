@@ -48,17 +48,17 @@ TTDictionaryTieredExamples >> caseInsensitiveTierHandlesSymbols [
 TTDictionaryTieredExamples >> caseInsensitiveTierIncludesAndRemove [
 	<gtExample>
 	<return: #TTDictionaryTiered>
-	tier := TTDictionaryTiered new
+	one := TTDictionaryTiered new
 		tierKey: #ci;
 		beCaseInsensitive;
 		yourself.
-	tier at: 'PATH' put: 1.
-	self assert: (tier includesKey: 'path').
-	self assert: (tier includesKey: 'Path').
-	tier removeKey: 'PaTh'.
-	self assert: (tier includesKey: 'path') equals: false.
-	self assert: tier isEmpty.
-	^ tier
+	one at: 'PATH' put: 1.
+	one assert: (one includesKey: 'path').
+	one assert: (one includesKey: 'Path').
+	one removeKey: 'PaTh'.
+	self assert: (one includesKey: 'path') equals: false.
+	self assert: one isEmpty.
+	^ one
 ]
 
 { #category : 'examples' }
