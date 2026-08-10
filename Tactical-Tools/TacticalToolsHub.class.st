@@ -140,7 +140,7 @@ TacticalToolsHub class >> theVaultSearchPath [
 	
 	<ttSpoke>
 	
-	^ FileLookedForNotification collectDuring: [ TTVault newWithLocalConfigOSEnv ]
+	^ (FileLookedForNotification collectDuring: [ TTVault newWithLocalConfigOSEnv ])  
 ]
 
 { #category : 'as yet unclassified' }

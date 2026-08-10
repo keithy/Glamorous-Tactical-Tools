@@ -29,14 +29,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T08:15:20.274884+01:00"
+						"dateAndTimeString" : "2026-08-08T15:34:53.876094+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "eAn6AR2MTAqj8kKso8p+kA=="
 				},
-				"code" : "-TheHub browse"
+				"code" : "TheHub browse"
 			},
 			{
 				"__type" : "textSnippet",

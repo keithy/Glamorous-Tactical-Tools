@@ -77,17 +77,25 @@ TTVault class >> makeTierConfig [
 	
 	| lastTier firstTier newTier|
 	
-	((self searchPathFor: TheHub current) select: [ :keyAndFileReference | keyAndFileReference value exists ])
+	(self searchPathFor: TheHub current) 
 	
 			reverseDo: [ :assoc | 
-	
-			  newTier := self makeTierWithKey: assoc key. 
 				
-				newTier setDictionary: (self makeDictionaryDotEnvFile: assoc value) .
-													
-				lastTier 
-	  				ifNil: [ firstTier := newTier. lastTier := newTier ]
-	  				ifNotNil: [ lastTier := lastTier tierInsert: newTier ].
+				| tierKey file |
+				tierKey := assoc key.
+				file := assoc value.
+				
+				FileLookedForNotification signal:file.
+				
+				file exists ifTrue: [
+				  newTier := self makeTierWithKey: tierKey. 
+					
+					newTier setDictionary: (self makeDictionaryDotEnvFile: file) .
+														
+					lastTier 
+		  				ifNil: [ firstTier := newTier. lastTier := newTier ]
+		  				ifNotNil: [ lastTier := lastTier tierInsert: newTier ].
+		  	]
 			].
 
 	^ firstTier
