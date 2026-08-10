@@ -93,5 +93,5 @@ TacticalToolsHub class >> theVaultSearchPath [
 	
 	<ttSpoke>
 	
-	^ TheHub collectNotificationsOfClass: FileLookedForNotification during: [ TTVault newWithLocalMiseConfigOSEnv ]
+	^ FileLookedForNotification collectDuring: [ TTVault newWithLocalConfigOSEnv ]
 ]

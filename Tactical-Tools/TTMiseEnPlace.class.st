@@ -7,6 +7,21 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTMiseEnPlace class >> basicExecMiseEnvironmentIn: source [
+
+	"Mise environment"
+	
+	| cd |
+	
+	cd := source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
+	
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. (cd, '~/.local/bin/mise env --json-extended').};
+			yourself
+]
+
+{ #category : 'as yet unclassified' }
 TTMiseEnPlace >> buildMise [
 ]
 

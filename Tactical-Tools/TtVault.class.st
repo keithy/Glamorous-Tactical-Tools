@@ -137,7 +137,7 @@ TTVault class >> makeTierMiseFor: project [
 	<gtExample>
 	  
   ^ (self makeTierWithKey:#mise) 
-			in: [ :newTier | newTier writableDictionary addAll: (self makeDictionaryWithAll: (TTMiseEnPlace newForProject: project) env) ];
+			in: [ :newTier | newTier writableDictionary addAll: (self makeDictionaryWithAll: (TTMiseEnPlace basicExecMiseEnvironmentIn: project) env) ];
 			yourself
 				 
 ]
@@ -157,7 +157,7 @@ TTVault class >> makeTierWithKey: key [
 	
 		<gtExample>
 	
-	^ TTDictionaryTiered tierNewWithKey: key
+	^ TTDictionaryTiered newWithKey: key
 
 ]
 
@@ -170,18 +170,35 @@ TTVault class >> makeValueWriter [
 { #category : 'instance creation' }
 TTVault class >> new [
 
-^ self newWithCache
+^ self newWithLocalConfigOSEnv
 		
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newWithLocalMiseConfigOSEnv [
+TTVault class >> newWithLocal [ 
 
  <gtExample>
 
  ^ self basicNew
-		store: self makeStoreLocalMiseConfigOSEnv
-		yourself
+		store: self makeTierLocal
+		initialize
+		
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newWithLocalConfigOSEnv [
+
+ <gtExample>
+
+ | store |
+ 
+ store := self makeTierLocal.
+ 						
+ (store tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
+  					 
+ ^ self basicNew
+		store: store
+		initialze
 		
 ]
 
@@ -195,8 +212,7 @@ currentVault := nil
 TTVault class >> searchPath [
 	<gtExample>
  
-	^ self
-		searchPathFor: (TheHub current)
+	^ self searchPathFor: (TheHub current)
 ]
 
 { #category : 'instance creation' }
@@ -205,7 +221,7 @@ TTVault class >> searchPathFor: whoami [
 
 	| bundleId hubId userId |
 	
-	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identiy' ].
+	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identity' ].
 	
 	bundleId := whoami bundleId.
 	hubId := whoami hubId.
@@ -229,17 +245,11 @@ TTVault class >> showMeTheSearchPath [
 	
 	<gtExample>
 	
-	^ self showMeTheSearchPathDuring: [ self getCurrentVault ]
+	^ FileLookedForNotification collectDuring: [ self getCurrentVault ]
 
 
 	
 
-]
-
-{ #category : 'instance creation' }
-TTVault class >> showMeTheSearchPathDuring: aBlock [
-
-	^ TheHub collectNotificationsOfClass: FileLookedForNotification during: aBlock
 ]
 
 { #category : 'instance creation' }

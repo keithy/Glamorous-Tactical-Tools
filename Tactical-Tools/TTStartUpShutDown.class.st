@@ -9,11 +9,21 @@ Class {
 { #category : 'environment' }
 TTStartUpShutDown class >> initialize [
 	
-	self sessionManager
+	TheHub sessionManager
 		registerSystemClassNamed: self name
 		atPriority: 50.
 	
 	self startUp: true.
+]
+
+{ #category : 'spokes' }
+TTStartUpShutDown class >> mustBeClassSide: pragma [
+	
+	^ pragma method isClassSide ifFalse: [
+			Warning signal: pragma displayString , 'Needs to be set Class Side'.
+			false.
+		] ifTrue: [ true ]
+			
 ]
 
 { #category : 'spokes' }
@@ -63,7 +73,7 @@ TTStartUpShutDown class >> shutDownDryRun [
 
 	"Sanity test startUp methods without the risk of breaking the image"
 	
-	^ TheHub collectNotificationsOfClass: TTStartUpNotification during: [ 
+	^ TTStartUpNotification collectDuring: [ 
 		
 		   self shutDown: true
 		]
@@ -98,7 +108,7 @@ TTStartUpShutDown class >> startUpDryRun [
 
 	"Sanity test startUp methods without the risk of breaking the image"
 	
-	^ TheHub collectNotificationsOfClass: TTStartUpNotification during: [ 
+	^ TTStartUpNotification collectDuring: [ 
 		 
 		 self startUp: true
 		 

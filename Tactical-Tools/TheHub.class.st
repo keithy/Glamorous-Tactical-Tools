@@ -471,6 +471,12 @@ TheHub class >> utils [
 
 ]
 
+{ #category : 'environment' }
+TheHub class >> whoAmI [
+	
+	^ self signalAuto
+]
+
 { #category : 'accessing' }
 TheHub class >> winningBrowserHubClass [
 	
@@ -827,4 +833,14 @@ TheHub >> wall [
 
 	^ self class pragmasClassSideNamed: #ttWall in: browsing
  
+]
+
+{ #category : 'as yet unclassified' }
+TheHub >> whoAmI [
+
+	"Vicarious Vault"
+	
+	<ttSpoke>
+	
+	^ TTVault currentVault
 ]

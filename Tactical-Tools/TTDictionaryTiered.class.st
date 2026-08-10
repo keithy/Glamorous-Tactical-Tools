@@ -13,6 +13,14 @@ Class {
 }
 
 { #category : 'instance creation' }
+TTDictionaryTiered class >> newTest [
+ 
+  <gtExample>
+  
+	^ self newWithKey: #test
+]
+
+{ #category : 'instance creation' }
 TTDictionaryTiered class >> newWithKey: aKey [
 
 	^ self basicNew
