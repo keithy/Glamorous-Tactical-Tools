@@ -18,6 +18,26 @@ TacticalToolsHub class >> healthCheckExamples [
 ]
 
 { #category : 'as yet unclassified' }
+TacticalToolsHub class >> llmChatRegistry [ 
+
+	"LLM Chats"
+	
+  <ttSpoke>
+
+	^ GtLChatRegistry current
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> llmConnectionRegistry [ 
+
+	"LLM Connections"
+	
+  <ttSpoke>
+
+	^ GtLConnectionRegistry uniqueInstance updateConnections
+]
+
+{ #category : 'as yet unclassified' }
 TacticalToolsHub class >> newGtChatWithProvider: aProviderOrNil [
 	| chat |
 	chat := GtLChat new.
@@ -131,6 +151,16 @@ TacticalToolsHub class >> ttLeDatabase [
 	<ttSpoke>
 	
 	^ LeDatabase databaseNamed: 'keithy/Glamorous-Tactical-Tools/lepiter'
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> ttLlmInstructions [
+	
+	"Lepiter - LLM Instructions "
+	
+	<ttSpoke>
+	
+	^ self ttLeDatabase pageNamed: 'Tactical LLM Instructions'
 ]
 
 { #category : 'as yet unclassified' }
