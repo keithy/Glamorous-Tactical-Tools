@@ -20,12 +20,6 @@ TTVault class >> bundleId [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> configBasenames [
-	^ {TheHub current hubId.
-		TheHub current userId}
-]
-
-{ #category : 'instance creation' }
 TTVault class >> currentVault [
 	^ currentVault ifNil: [ currentVault := self getCurrentVault ]
 ]
@@ -36,48 +30,14 @@ TTVault class >> getCurrentVault [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeStoreCache [
-	
-	"top tier"
+TTVault class >> makeDictionaryFrom: streamable [
 
-		<gtExample>
-	
-	^ TTDictionaryTieredOld newCache
-				valueWriter: self makeValueWriter;
-				yourself 
- 
+
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeStoreLocal [
-	
-	"top tier"
-
-		<gtExample>
-	
-	^ TTDictionaryTieredOld newLocal
-				valueWriter: self makeValueWriter;
-				yourself 
- 
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeStoreLocalConfigOSEnv [
-	"our test show it all"
-
-	<gtExample>
-	| files store gt_id |
-	store := self makeStoreLocalOSEnv.	"Subclassing TheGlamorousHub gives you a different env file"
-	gt_id := store deepAt: #BUNDLE_ID ifAbsentPut: [ self bundleId ].
-
- 
-	(self searchPathFor: TheHub current)
-	
-			reverseDo: [ :assoc | 
-				self store: store addConfigFile: assoc afterTier: #local 
-			].
-
-	^ store
+TTVault class >> makeDictionaryWithAll: collection [
+	^ collection asDictionary
 ]
 
 { #category : 'instance creation' }
@@ -96,7 +56,7 @@ TTVault class >> makeStoreLocalMiseConfigOSEnv [
 
   project asFileReference exists ifTrue: [
 					
-			TTDictionaryMiseEnv new 
+			store appendNew 
 				tierKey: #mise;
 				tierInsertIn: store after: #local;
 				readSource: project
@@ -107,29 +67,98 @@ TTVault class >> makeStoreLocalMiseConfigOSEnv [
 
 { #category : 'instance creation' }
 TTVault class >> makeStoreLocalOSEnv [
-	
-	"our test show it all"
-	
+
 	<gtExample>
-	 
+
+	^ (self makeStoreLocal)
+				tierAdd: self makeTierOSEnv;
+			  yourself
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeStoreLocalOSEnvConfig [
+	"our test show it all"
+
+	<gtExample>
+	| store bundleId |
 	
-	| store |
+	store := self makeStoreLocalOSEnv.
 	
-	store  := self makeStoreLocal.
+	bundleId := store asDictionary 
+								at: 'BUNDLE_ID' 
+								ifAbsent: [ store writableDictionary at: 'BUNDLE_ID' put: TheHub bundleId].
  
-	TTDictionaryTieredOld new
-			tierKey: #os;
-			addAll: (TheHub osEnvironment);
-			beCache;
-			tierAppendTo: store.
+	(self searchPathFor: TheHub current)
 	
-	"see #assocLocalUser"
-	"user := store 
-		deepAt: #USER 
-		ifAbsentPut: [ store deepAt: #USERNAME 
-											ifAbsent: [ self error: 'no USERNAME found' ]]."
+			reverseDo: [ :assoc | 
+			
+				self readFrom: (assoc value) into: (store tierNewAppendWithKey: assoc key) writableDictionary
+			
+			].
 
 	^ store
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeTierConfig [
+	"our test show it all"
+
+	<gtExample>
+	
+	| lastTier firstTier newTier|
+	
+	(self searchPathFor: TheHub current)
+	
+			reverseDo: [ :assoc | 
+			  
+			  newTier := (self makeTierWithKey: assoc key) 
+													in: [ :nt | nt writableDictionary addAll: (self makeDictionaryFrom: assoc value) ].
+													
+				lastTier 
+  					ifNil: [ firstTier := newTier. lastTier := newTier ]
+	  				ifNotNil: [ lastTier := lastTier tierInsert: newTier ].
+			].
+
+	^ firstTier
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeTierLocal [
+	
+		<gtExample>
+	
+	^ self makeTierWithKey:#local
+
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeTierMiseFor: project [
+	
+	<gtExample>
+	  
+  ^ (self makeTierWithKey:#mise) 
+			in: [ :newTier | newTier writableDictionary addAll: (self makeDictionaryWithAll: (TTMiseEnPlace newForProject: project) env) ];
+			yourself
+				 
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeTierOSEnv [
+
+	<gtExample>
+
+	^ (self makeTierWithKey:#os) 
+			in: [ :newTier | newTier writableDictionary addAll: (self makeDictionaryWithAll: TheHub osEnvironment) ];
+			yourself
+]
+
+{ #category : 'instance creation' }
+TTVault class >> makeTierWithKey: key [
+	
+		<gtExample>
+	
+	^ TTDictionaryTiered tierNewWithKey: key
+
 ]
 
 { #category : 'instance creation' }
@@ -142,15 +171,6 @@ TTVault class >> makeValueWriter [
 TTVault class >> new [
 
 ^ self newWithCache
-		
-]
-
-{ #category : 'instance creation' }
-TTVault class >> newWithCache [
-
-^ self basicNew
-		store: self makeStoreCache
-		yourself
 		
 ]
 

@@ -224,16 +224,6 @@ TheHub class >> hubs [
 
 ]
 
-{ #category : 'environment' }
-TheHub class >> initialize [
-	
-	self sessionManager
-		registerSystemClassNamed: self name
-		atPriority: 50.
-	
-	self startUp: true.
-]
-
 { #category : 'handling' }
 TheHub class >> isWhoAmI [
 
@@ -332,26 +322,6 @@ TheHub class >> pragmasAll_ttHub [
 	
 ]
 
-{ #category : 'spokes' }
-TheHub class >> pragmasAll_ttShutDown [
-
-	"Tactical-Tools startUp methods <ttShutDown>"
-	
-	"<ttSpoke>"
-	
-	^ Pragma allNamed: #ttShutDown
-]
-
-{ #category : 'spokes' }
-TheHub class >> pragmasAll_ttStartUp [
-
-	"Tactical-Tools startUp methods <ttStartUp>"
-	
-	"<ttSpoke>"
-	
-	^ Pragma allNamed: #ttStartUp
-]
-
 { #category : 'wall' }
 TheHub class >> pragmasClassSideNamed: aSymbol in: aClass [
  
@@ -398,48 +368,6 @@ TheHub class >> shortCutRegistry [
 ]
 
 { #category : 'environment' }
-TheHub class >> shutDown: quitting [
-	
-	self shutDownTT: quitting.
-	
-	^ super shutDown: quitting
-]
-
-{ #category : 'environment' }
-TheHub class >> shutDownTT: quitting [
-
-	^ self pragmasAll_ttShutDown
-			do: [ :pragma | 
-			
-				(self mustBeClassSide: pragma) ifTrue:[ 
-				
-						(pragma method selector beginsWith: 'shutDown') ifFalse: [ self error ].
-						
-						TTStartUpNotification signal:pragma displayString withTag: pragma method.
-						pragma method methodClass soleInstance 
-							perform: pragma method selector 
-							with: quitting
-							
-						] 
-				].
-		
-]
-
-{ #category : 'environment' }
-TheHub class >> shutDownTTDryRun [
-
-	"Sanity test startUp methods without the risk of breaking the image"
-	
-	^ self collectNotificationsOfClass: TTStartUpNotification during: [ 
-		
-		   self shutDownTT: true
-		]
-
-
-
-]
-
-{ #category : 'environment' }
 TheHub class >> signalAuto [	
 
 	^ self signal: thisContext sender selector withTag: thisContext sender arguments
@@ -483,6 +411,8 @@ TheHub class >> spokesMethods [
 { #category : 'environment' }
 TheHub class >> startUp: isImageStarting [
 	
+	<ttStartUp>
+	
 	| max bid |
 	
 	WinningBrowserHubClass := self. 
@@ -499,46 +429,7 @@ TheHub class >> startUp: isImageStarting [
 				
 		]
 	].
-	
-	self startUpTT: isImageStarting.
-	
-	^ super startUp: isImageStarting
-]
-
-{ #category : 'environment' }
-TheHub class >> startUpTT: isImageStarting [
-
-	^ self pragmasAll_ttStartUp
-			do: [ :pragma | 
-			
-				(self mustBeClassSide: pragma) ifTrue:[ 
-				
-				
-						(pragma method selector beginsWith: 'startUp') ifFalse: [ self error ].
-
-						TTStartUpNotification signal:pragma displayString withTag: pragma method.
-						pragma method methodClass soleInstance 
-							perform: pragma method selector 
-							with: isImageStarting
-							
-						] 
-				].
-		
-]
-
-{ #category : 'environment' }
-TheHub class >> startUpTTDryRun [
-
-	"Sanity test startUp methods without the risk of breaking the image"
-	
-	^ self collectNotificationsOfClass: TTStartUpNotification during: [ 
-		 
-		 self startUpTT: true
-		 
-	  ]
-
-
-
+	 
 ]
 
 { #category : 'environment' }

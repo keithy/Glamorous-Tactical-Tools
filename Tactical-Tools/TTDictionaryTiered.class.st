@@ -12,14 +12,12 @@ Class {
 	#tag : 'Vault'
 }
 
-{ #category : 'tier management' }
-TTDictionaryTiered >> appendTier: store [
-  "tiers are built from the top downwards, in a list view"
-  
-	"double dispatch so that new tier has control
-	 or can opt out if empty"
+{ #category : 'instance creation' }
+TTDictionaryTiered class >> newWithKey: aKey [
 
-	^ store tierAppendTo: self.
+	^ self basicNew
+			tierKey: aKey
+			initialize
 ]
 
 { #category : 'private - delegation' }
@@ -71,17 +69,7 @@ TTDictionaryTiered >> beEnabled [
 { #category : 'public - accessing' }
 TTDictionaryTiered >> deepSize [
  
-	^(self tiersCollect: [ :tier | tier size ] on: OrderedCollection new) sum
-]
-
-{ #category : 'accessing' }
-TTDictionaryTiered >> dict [
-	^ dict
-]
-
-{ #category : 'accessing' }
-TTDictionaryTiered >> dict: anObject [
-	dict := anObject
+	^(self tiersCollect: [ :tier | tier writableDictionary size ] on: OrderedCollection new) sum
 ]
 
 { #category : 'views' }
@@ -90,7 +78,7 @@ TTDictionaryTiered >> gtItemsFor: aView [
 	^ aView columnedTree
 		title: 'Items';
 		priority: 1;
-		items: [ self tiers collect: [ :t | t tierKey -> t ] ];
+		items: [ self tiers collect: [ :t | t -> t writableDictionary ] ];
 		children: [ :each | 
 			each value isDictionary
 				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
@@ -98,17 +86,21 @@ TTDictionaryTiered >> gtItemsFor: aView [
 					(each value isArray and: [ each value allSatisfy: #isDictionary ])
 						ifTrue: [ each value collectWithIndex: [ :x :i | i -> x ] ]
 						ifFalse: [ #() ] ] ];
-		column: 'Key' text: [ :assoc | assoc key ];
+		column: 'Key' text: [ :assoc | 
+		
+			assoc key in: [ :tier |
+		
+				tier isEnabled 
+					ifTrue: [ tier tierKey asRopedText bold ]
+				  ifFalse: [ tier tierKey asRopedText
+    										attribute: (BlTextDecorationAttribute lineThrough);
+    										attribute: (BlTextForegroundAttribute paint: Color gray);
+    										yourself ]
+    	]
+		];
 		column: 'Value' text: [ :assoc | assoc value ] weight: 3;
-		contextItemLabel: 'Inspect key' action: [ :anElement :anAssoc | 
+		contextItemLabel: 'Inspect Tier' action: [ :anElement :anAssoc | 
 			anElement phlow spawnObject: anAssoc key ];
-		contextItemLabel: 'Inspect value' action: [ :anElement :anAssoc | 
-			anElement phlow spawnObject: anAssoc value ];
-		contextItemLabel: 'Inspect association' action: [ :anElement :anAssoc | 
-			anElement phlow spawnObject: anAssoc ];
-		contextItemLabel: 'Remove key and value' action: [ :anElement :anAssoc | 
-			self removeKey: anAssoc key ifAbsent: [ "ignore" ].
-			anElement phlow contextMenuUpdateViewContent ];
 		send: [ :assoc | assoc value ].
 		
 	"Implementation note: association sorting uses #collatedBy: to avoid a 'Symbol DNU value: value: error'"
@@ -127,18 +119,6 @@ TTDictionaryTiered >> gtTierKeysFor: aView [
 TTDictionaryTiered >> initialize [
 
 	dict := Dictionary new.
-]
-
-{ #category : 'testing' }
-TTDictionaryTiered >> isCaseSensitive [
-
-	^ isCaseSensitive
-]
-
-{ #category : 'testing' }
-TTDictionaryTiered >> isEmpty [
-
-	^ dict isEmpty
 ]
 
 { #category : 'testing' }
@@ -162,18 +142,6 @@ TTDictionaryTiered >> next: aTieredDictionary [
 ]
 
 { #category : 'tier management' }
-TTDictionaryTiered >> tierAppendTo: stack [
-
-	tierKey  ifNil: [ ^ self error: 'tierKey not set' ].
-	
-	stack next ifNotNil: [ ^ self tierAppendTo: stack next ].
-	
-  stack next: self.
-	
-	^ self
-]
-
-{ #category : 'tier management' }
 TTDictionaryTiered >> tierAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
@@ -184,20 +152,12 @@ TTDictionaryTiered >> tierAt: name [
 ]
 
 { #category : 'tier management' }
-TTDictionaryTiered >> tierInsertIn: stack after: key [
+TTDictionaryTiered >> tierInsert: newTier [
 
-	tierKey ifNil: [ ^ self error: 'tierKey not set' ].
-
-	stack ifNil: [ ^ KeyNotFound signalFor: key in: self ]. "failed"
-
-	"search"
-	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].
-
-  self next: stack next.
-  stack next: self.
-
-	"success"
-	^ self
+	newTier next: self next.
+  self next: newTier.
+  
+  ^ newTier
 ]
 
 { #category : 'tier management' }
@@ -214,6 +174,18 @@ TTDictionaryTiered >> tierKey: anObject [
 TTDictionaryTiered >> tierKeys [
 
 	^ (self tiers collect: [ :t | t tierKey ]) asArray
+]
+
+{ #category : 'tier management' }
+TTDictionaryTiered >> tierNewAppendWithKey: aSymbol [
+
+	^ self tiers last tierInsert: (self class newWithKey: aSymbol)  
+]
+
+{ #category : 'tier management' }
+TTDictionaryTiered >> tierNewInsertWithKey: aSymbol after: this [
+
+	^ (self tierAt: this) tierAdd: (self class newWithKey: aSymbol)  
 ]
 
 { #category : 'tier management' }

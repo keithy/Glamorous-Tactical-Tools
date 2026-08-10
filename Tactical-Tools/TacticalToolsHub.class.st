@@ -1,9 +1,9 @@
 Class {
 	#name : 'TacticalToolsHub',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-Demo',
+	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
-	#tag : 'Demo'
+	#tag : 'Hub'
 }
 
 { #category : 'as yet unclassified' }
@@ -24,7 +24,7 @@ TacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
 	
 	<ttSpoke>
 	
-	^ TheHub pragmasAll_ttShutDown, (TheHub pragmasAll_ttStartUp)
+	^ TTStartUpShutDown pragmasAll_ttShutDown, (TTStartUpShutDown pragmasAll_ttStartUp)
 	  
 	
 ]
@@ -73,7 +73,7 @@ TacticalToolsHub class >> shutDownStartUpTTDryRun [
 		
 	<ttSpoke>
 	
-	^ (TheHub shutDownTTDryRun),(TheHub startUpTTDryRun)
+	^ (TTStartUpShutDown shutDownDryRun),(TTStartUpShutDown startUpDryRun)
 ]
 
 { #category : 'as yet unclassified' }
