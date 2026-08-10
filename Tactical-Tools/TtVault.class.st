@@ -2,7 +2,8 @@ Class {
 	#name : 'TTVault',
 	#superclass : 'Object',
 	#instVars : [
-		'store'
+		'store',
+		'valueWriter'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -41,7 +42,7 @@ TTVault class >> makeStoreCache [
 
 		<gtExample>
 	
-	^ TTDictionaryTiered newCache
+	^ TTDictionaryTieredOld newCache
 				valueWriter: self makeValueWriter;
 				yourself 
  
@@ -54,7 +55,7 @@ TTVault class >> makeStoreLocal [
 
 		<gtExample>
 	
-	^ TTDictionaryTiered newLocal
+	^ TTDictionaryTieredOld newLocal
 				valueWriter: self makeValueWriter;
 				yourself 
  
@@ -116,7 +117,7 @@ TTVault class >> makeStoreLocalOSEnv [
 	
 	store  := self makeStoreLocal.
  
-	TTDictionaryTiered new
+	TTDictionaryTieredOld new
 			tierKey: #os;
 			addAll: (TheHub osEnvironment);
 			beCache;

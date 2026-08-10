@@ -4,57 +4,13 @@ Class {
 	#instVars : [
 		'next',
 		'tierKey',
-		'valueWriter',
-		'mode',
-		'isCaseSensitive',
-		'dict'
+		'dict',
+		'isEnabled'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
-
-{ #category : 'instance creation' }
-TTDictionaryTiered class >> newCache [
-	
-		^ self new 
-				tierKey: #cache;
-				beCache;
-				yourself
-				
-				 
-]
-
-{ #category : 'instance creation' }
-TTDictionaryTiered class >> newLocal [
-	
-		^ self new 
-				tierKey: #local;
-				yourself
-				
-				 
-]
-
-{ #category : 'startup - shutdown' }
-TTDictionaryTiered class >> shutDown [
-
-	self shutDownZapCache
-]
-
-{ #category : 'startup - shutdown' }
-TTDictionaryTiered class >> shutDownZapCache [
-
-	self allInstancesDo: [ :ea | ea isCache ifTrue: [ ea reset ]]
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> add: assoc [
-
-	self isReadOnly ifTrue: [ self error: 'designated read only' ].
-	
-	^ dict add: assoc
-
-]
 
 { #category : 'tier management' }
 TTDictionaryTiered >> appendTier: store [
@@ -67,211 +23,49 @@ TTDictionaryTiered >> appendTier: store [
 ]
 
 { #category : 'private - delegation' }
-TTDictionaryTiered >> associationAt: oneOrMoreKeys ifPresent: pBlock [
+TTDictionaryTiered >> asDictionary [
 
-	oneOrMoreKeys isArray
-		ifTrue: [ 
-		
-				oneOrMoreKeys do: [ :key | 
-							dict associationAt: key ifPresent: [ :v | ^ pBlock value: v ] ]
-		]
-    ifFalse: [ 
-    		dict associationAt: oneOrMoreKeys ifPresent: [ :v | ^ pBlock value: v ]
-    ]
+	^ self associations asDictionary
+			 
+	
 ]
 
 { #category : 'private - delegation' }
-TTDictionaryTiered >> at: key [
-	"Answer the value associated with the key."
-	^ self at: key ifAbsent: [ dict errorKeyNotFound: key ]
-	 
+TTDictionaryTiered >> asDictionaryWithLowercaseKeys [
+
+	^ (self associations collect: [ :ea | ea key: ea key asLowercase ]) asDictionary
+			 
+	
 ]
 
 { #category : 'private - delegation' }
-TTDictionaryTiered >> at: key forcePut: inputValue [
+TTDictionaryTiered >> asDictionaryWithUppercaseKeys [
 
-	"bypass readonly block for initial data loading"
-
-	^ self isCaseSensitive 
-				ifTrue: [ dict at: key put: inputValue ]
-				ifFalse: [ dict at: key asUppercase put: inputValue ]
-
+	^ (self associations collect: [ :ea | ea key: ea key asUppercase ]) asDictionary
+			 
+	
 ]
 
 { #category : 'private - delegation' }
-TTDictionaryTiered >> at: key ifAbsent: aBlock [
-	 	
-	"delegation bottleneck method"
+TTDictionaryTiered >> associations [
+
+	^ (self tiersReverseCollect: [ :tier | 
 	
-	| keyToStore |
-	
-	keyToStore := self isCaseSensitive 
-				ifTrue: [ key ]
-				ifFalse: [ key asUppercase ].
-	
-	^ dict at: keyToStore ifAbsent: [ self at: key put: aBlock value ]
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> at: key ifAbsentPut: aBlock [
-	"Return the value at the given key.
-	If the key is not included in the receiver store and return the result
-	of evaluating aBlock as the new value."
-
-	| keyToStore |
-	
-	keyToStore := self isCaseSensitive 
-				ifTrue: [ key ]
-				ifFalse: [ key asUppercase ].
-	
-	^ dict at: key ifAbsent: [self at: keyToStore put: aBlock value]
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> at: key put: inputValue [
-
-	self isReadOnly ifTrue: [ TTReadOnlyError signal: tierKey  ].
-	
-	^ self at: key forcePut: inputValue
-
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> at: key write: inputValue [
-
-	^ self valueWriter fromAnyAt: key put: inputValue
+				tier isEnabled ifTrue: [ tier dict associations ] ifFalse: nil
+			
+			]) flatten  
 ]
 
 { #category : 'initialization' }
-TTDictionaryTiered >> beCache [
+TTDictionaryTiered >> beDisabled [
 
-	mode := #cache
+	isEnabled := false
 ]
 
 { #category : 'initialization' }
-TTDictionaryTiered >> beCaseInsensitive [
+TTDictionaryTiered >> beEnabled [
 
-	isCaseSensitive := false
-]
-
-{ #category : 'initialization' }
-TTDictionaryTiered >> beCaseSensitive [
-
-	isCaseSensitive := true
-]
-
-{ #category : 'initialization' }
-TTDictionaryTiered >> beReadOnly [
-
-	mode := #readOnly
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: presentBlock [
-	"Lookup the given key in the receiver. If it is present, answer the
-	value of evaluating the given block optionally with the value associated
-	with the key.
-	Otherwise, answer nil."
-
-	dict associationAt: oneOrMoreKeys ifPresent: [ :assoc |
-	
-		^ presentBlock cull: assoc cull: tierKey
-	
-	].
-
-	self next ifNil: [ ^ nil ].
-
-	^ self next deepAssociationAt: oneOrMoreKeys ifPresentAssocAndTierDo: presentBlock
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAssociationsDo: aBlock [
- 
-  dict associationsDo: aBlock.
-	
-	self next ifNil: [ ^ self ].
-	
-	^ self next deepAssociationsDo: aBlock
-	
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAssociationsSelect: aBlock [
- 
-   ^ self deepOn: OrderedCollection new associationsSelect: aBlock
-	
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAt: oneOrMoreKeys ifAbsent: absentBlock [
-	"Answer the value associated with the key or, if key isn't found,
-	answer the result of evaluating aBlock. Bump not found to the next tier"
-
-	self deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: [ :val | ^ val ].
-
-	^ absentBlock value
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAt: key ifAbsentPut: absentBlock [
-	"Answer the value associated with the key or, if key isn't found,
-	put the result of evaluating aBlock."
-
-	self deepAt: key ifPresentValueKeyAndTierDo: [ :val | ^ val ].
-
-	^ self at: key ifAbsentPut: absentBlock
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresent: presentBlock ifAbsent: absentBlock [
-	"Answer the value associated with the key or, if key isn't found,
-	answer the result of evaluating aBlock. Bump not found to the next tier"
-
-	self deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentBlock.
-
-	^ absentBlock value
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAt: key ifPresent: presentBlock ifAbsentPut: absentBlock [
-	"Answer the value associated with the key or, if key isn't found,
-	answer the result of evaluating aBlock. Bump not found to the next tier"
-
-	self deepAt: key ifPresentValueKeyAndTierDo: presentBlock.
-
-		
-	^ self at: key put: absentBlock value
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepAt: oneOrMoreKeys ifPresentValueKeyAndTierDo: presentBlock [
-	"Lookup the given key in the receiver. If it is present, answer the
-	value of evaluating the given block optionally with the value associated
-	with the key.
-	Otherwise, answer nil."
-
-	^ self	deepAssociationAt: oneOrMoreKeys 
-					ifPresentAssocAndTierDo: [ :assoc :tier | presentBlock cull: (assoc value) 
-					                                           cull: (assoc key)
-					                                           cull: tierKey ]
-]
-
-{ #category : 'tier management' }
-TTDictionaryTiered >> deepKeys [
-
-	^ (self tiersCollect: [ :tier | tier keys ] on: OrderedCollection) asArray
-]
-
-{ #category : 'public - accessing' }
-TTDictionaryTiered >> deepOn: aCollection associationsSelect: aBlock [
- 
-  aCollection add: (#tierKey -> tierKey).
-  aCollection addAll: (dict associationsSelect: aBlock).
-	
-	self next ifNil: [ ^ aCollection ].
-	
-	^ self next deepOn: aCollection associationsSelect: aBlock
-	
+	isEnabled := true
 ]
 
 { #category : 'public - accessing' }
@@ -280,13 +74,23 @@ TTDictionaryTiered >> deepSize [
 	^(self tiersCollect: [ :tier | tier size ] on: OrderedCollection new) sum
 ]
 
+{ #category : 'accessing' }
+TTDictionaryTiered >> dict [
+	^ dict
+]
+
+{ #category : 'accessing' }
+TTDictionaryTiered >> dict: anObject [
+	dict := anObject
+]
+
 { #category : 'views' }
 TTDictionaryTiered >> gtItemsFor: aView [
 	<gtView>
 	^ aView columnedTree
 		title: 'Items';
 		priority: 1;
-		items: [ self tiersAssociations];
+		items: [ self tiers collect: [ :t | t tierKey -> t ] ];
 		children: [ :each | 
 			each value isDictionary
 				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
@@ -319,23 +123,10 @@ TTDictionaryTiered >> gtTierKeysFor: aView [
 		items: [ self tierKeys ]
 ]
 
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> includesKey: key [
-
-	^ dict includes: key
-]
-
 { #category : 'initialization' }
 TTDictionaryTiered >> initialize [
 
 	dict := Dictionary new.
-	isCaseSensitive := true.
-]
-
-{ #category : 'testing' }
-TTDictionaryTiered >> isCache [
-
-	^ mode == #cache
 ]
 
 { #category : 'testing' }
@@ -351,31 +142,9 @@ TTDictionaryTiered >> isEmpty [
 ]
 
 { #category : 'testing' }
-TTDictionaryTiered >> isReadOnly [
-
-	^ mode == #readOnly
-]
-
-{ #category : 'testing' }
 TTDictionaryTiered >> isTieredDictionary [
 
 	^ true
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> keys [
-	 
-	 ^ dict keys
-	 
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> keysOn: collection [
-	 
-	 collection addAll: dict keys.
-	 
-	 ^ dict keysOn: collection
-	 
 ]
 
 { #category : 'private - accessing' }
@@ -392,36 +161,6 @@ TTDictionaryTiered >> next: aTieredDictionary [
 	next := aTieredDictionary
 ]
 
-{ #category : 'copying' }
-TTDictionaryTiered >> postCopy [
-
-	"Must copy the associations, or later store will affect both the
-	original and the copy .... which is desireable for a read only copy"
-
-"	self isReadOnly ifTrue: [
-	  array := array collect: [ :association |
-			association ifNotNil: [ association copy ] ]
-]."
-	
-	self isReadOnly ifFalse: [ dict := dict copy ].
-	valueWriter ifNotNil: [ valueWriter dict: dict ].
-  next := next copy.
-  
-
-]
-
-{ #category : 'startup - shutdown' }
-TTDictionaryTiered >> reset [
-
-	^ dict removeAll
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> size [ 
-
-	^ dict size
-]
-
 { #category : 'tier management' }
 TTDictionaryTiered >> tierAppendTo: stack [
 
@@ -429,9 +168,6 @@ TTDictionaryTiered >> tierAppendTo: stack [
 	
 	stack next ifNotNil: [ ^ self tierAppendTo: stack next ].
 	
-	(valueWriter isNil and: [ stack valueWriter notNil ])
-		ifTrue: [ self valueWriter: stack valueWriter copy ].
-  
   stack next: self.
 	
 	^ self
@@ -447,12 +183,6 @@ TTDictionaryTiered >> tierAt: name [
 	^ nil
 ]
 
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> tierInnerKeys [
-
-	^ (self tiersCollect: [ :tiers | tiers keys ] on: OrderedCollection new) asArray
-]
-
 { #category : 'tier management' }
 TTDictionaryTiered >> tierInsertIn: stack after: key [
 
@@ -463,8 +193,6 @@ TTDictionaryTiered >> tierInsertIn: stack after: key [
 	"search"
 	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].
 
-	"found"
-	valueWriter ifNil: [ self valueWriter: stack valueWriter copy ].
   self next: stack next.
   stack next: self.
 
@@ -485,19 +213,24 @@ TTDictionaryTiered >> tierKey: anObject [
 { #category : 'tier management' }
 TTDictionaryTiered >> tierKeys [
 
-	^ (self tiersCollect: [ :tier | tier tierKey ] on: OrderedCollection) asArray
+	^ (self tiers collect: [ :t | t tierKey ]) asArray
 ]
 
 { #category : 'tier management' }
-TTDictionaryTiered >> tiersAssociations [
-
-	^ (self tiersCollect: [ :tier | tier tierKey -> tier ] on: OrderedCollection) asArray
+TTDictionaryTiered >> tiers [
+	
+	^ self tiersCollect: [ :t | t ] on: OrderedDictionary new
 ]
 
 { #category : 'tier management' }
 TTDictionaryTiered >> tiersCollect: aBlock on: aCollector [
 	
-	aCollector addAll: (aBlock value: self). 
+	"can also select or reject by returning nil"
+	
+	(aBlock value: self) in: [ :result | 
+		
+		result ifNotNil: [ aCollector add: result ]
+	].
 
 	next ifNotNil: [ 
 		next tiersCollect: aBlock on: aCollector
@@ -508,22 +241,20 @@ TTDictionaryTiered >> tiersCollect: aBlock on: aCollector [
 ]
 
 { #category : 'tier management' }
-TTDictionaryTiered >> tiersDo: aBlock [
+TTDictionaryTiered >> tiersReverseCollect: aBlock [ 
 
-	^ self tiersCollect: aBlock on: OrderedCollection new
-]
-
-{ #category : 'private - accessing' }
-TTDictionaryTiered >> valueWriter [ 
-
-^ valueWriter.
-
-]
-
-{ #category : 'initialization' }
-TTDictionaryTiered >> valueWriter: aValueWriter [
+	"can also select or reject by returning nil"
 	
-	aValueWriter dict: self.
-	valueWriter := aValueWriter.
+	^ self tiers reverse collect: aBlock thenSelect: [ :ea | ea | ea notNil ]
 
+	 
+	
+]
+
+{ #category : 'private - delegation' }
+TTDictionaryTiered >> writableDictionary [
+	
+	"writable dictionary"
+	
+	^ dict
 ]
