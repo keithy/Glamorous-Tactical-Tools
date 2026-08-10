@@ -1,0 +1,76 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-10T12:03:49.941711+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-10T14:25:29.171894+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "dckjsqb5Q5GmzVjWghBTMw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "# Moldable Development Patterns\n\nMoldable development heralds observability and transparency as the key to understanding systems. This ethos encourages the creation of objects and tools that are inspectable and explainable, even to the extent that they be self-explainable, and have tooling for observing their state as part of their implementation.\n\nState-averse alternatives such as functional programming and immutable pipeline processing inherently avoid the possibility of observable state. The object that goes into an immutable pipeline is discarded at every stage, and replaced with a similar new one, the object cannot be held\nfor inspection; only the trace of its passing remains.\n## The Examples Pattern \nTo make functional programs observable it is necessary to try them out with a range of possible inputs to observe the outputs; hence the idea of providing explanatory examples is a key part of the moldable story. \n \n\"Examples\" are one example of patterns that emerge from the moldable development paradigm; here we suggest others.\n## The Pent-up Process, Paired Request-Result Pattern\nThe pent-up process,  (aka Thunk, or the Builder pattern) is one in which an action is prepared and planned in advance, and then executed. This allows a request object to be configured, built, and refined prior to use. At this point the request object may be presented and inspected as the input to an example process. Everyday examples of this, would be a database query, or an httpRequest.\n\nFollowing a database query there is often a data-reduction phase followed by mapping raw data into objects suitable for use in the program. This process is either wrought by hand or fully automated by an ORM framework. The moldable paradigm suggests that this may also be implemented as a second thunk of preconfigured operations and mappings, which is distinctly crafted as an inspectable item prior to use.  \n\nA computer program trivially satisfies this definition, but it is usually only observable the hard way — by stepping through and watching its operations one by one — to which the market responded with an affection for prolific logging. A moldable program treats self-explanation as a first-class concern: it preserves key steps for inspection, offers bespoke views to make that explanation as clear as is useful, and provides examples for context.\n\nThe paired Request-Result pattern emerges from this staged preparation. The preparation of the request and the processing of the result into formatted output are combined into a marriage of two thunks: an object that is configured and inspected prior to execution, and which, when triggered, provides a fully illuminated step-by-step history of its entire operation.\n## The Client-Server, Paired Configured-Client Pattern\nPreparing a database query, and post processing function, into a fully configured Request-Result object pairing, is missing the all important piece. The ability to observe this in action requires an operating server, a client application that knows how to access this server.\n\nA normal client-server program begins as library of functions, that are selected and run, configuration files are consulted and authorisation keys obtained to the point where it is ready to process the request. This process in itself may require several round trips to micro-service endpoints.\n\nWhile the ability to step through a program to observe its interactions intimately may be useful, the novelty of this painstaking process soon wears off.\n\nThe architecture that emerges in the moldable paradigm, is that ideally the Client-Server interface itself also be definable as a distinct configurable, inspectable, and observable item: an object defining the Client interface, paired with a working Server access configuration.\n\nPutting these two patterns together by building a Configured-Client interface out of a collection of pre-configured Request-Response objects, creates an end-to-end solution that that bears the moldable signature: configurable, inspectable, and observable throughout.\n## From Stateless to Observable\nImmutable pipelines and mouldable development stand on opposite sides of a single question: what role should state play?\n\nAn immutable pipeline treats state as a liability. Each stage is a pure function from input to output, the request object is consumed and replaced, and the system earns its predictability by refusing to remember, and so avoiding the risks that come with it: stale state, hidden coupling, order-dependent behaviour. To understand such a system you re-run it with captured inputs and compare what comes out — observation happens at the boundaries, by replay.\n\nMoldable development treats state as the medium of inquiry. The request object is configured, inspected, reshaped, and held — but that is not the end of the story. When the request is triggered, real data emerges that can also be observed and inspected. \n## Where These Patterns Lead\n\nAt this point the program itself can be in any language or production domain; what makes a system moldable is that it is instrumented for dynamic observation. Using a platform such as Glamorous Toolkit, you can walk into the program and look around — its tools reveal what happens inside, on examples, tests, or even on the live system itself.\n\nThese three patterns are not arbitrary. Each is a way of reintroducing state in a controlled, inspectable form — exactly where conventional design would have discarded it — and each names a way of working that, once seen, is hard to unsee.\n\n[watch this - insert demo]\n\nExamples capture state at the boundary so the system can be replayed. The marriage of two thunks holds state before execution so the request can be shaped, and after execution so the result can be examined. The Client-Server pairing holds state across a round trip, made inspectable on both ends.\n\nPatterns like these are becoming a vocabulary that is still emerging: a way of building systems whose shape is not fixed in advance, but discovered through the act of observing them. \n \nAsking an LLM to help build a system is problematic precisely because what happens under the hood is opaque to you. Asking an LLM to build a moldable system — using patterns like these — provides the ability to inspect the planned action before it is executed, try it out on safe examples, and observe what is really going on.\n\nIn a world where more and more software is written by things we cannot see into, moldable patterns are something we need more of.\n"
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-10T12:04:00.633287+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-10T12:04:00.633287+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "Moldable Development Patterns"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "c5e740bc-5882-4cf8-b786-dfc9e9615221"
+	}
+}
