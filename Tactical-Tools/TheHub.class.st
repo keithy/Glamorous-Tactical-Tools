@@ -89,6 +89,12 @@ TheHub class >> currentOrSubclass [
 		  
 ]
 
+{ #category : 'instance creation' }
+TheHub class >> currentTestable [
+	
+	^ self signalAuto
+]
+
 { #category : 'testing' }
 TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 	
@@ -503,6 +509,12 @@ TheHub >> current [
 	^ self class current 
 	
 
+]
+
+{ #category : 'environment' }
+TheHub >> currentTestable [
+ 
+	^ TheHub current
 ]
 
 { #category : 'handling' }

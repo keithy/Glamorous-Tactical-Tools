@@ -64,7 +64,7 @@ TTVaultAbstract >> appKey [
 
 { #category : 'accessing' }
 TTVaultAbstract >> appKey: anObject [
-	appKey := anObject
+	appKey := anObject 
 ]
 
 { #category : 'accessing' }
@@ -145,8 +145,8 @@ TTVaultAbstract >> getOptionsForApp: anAppKey [
 	 
 	 result := Dictionary new.
 
-	 self configApp: anAppKey optionAndFieldValuesDo: [ :option :field :value |
-	 	
+	 self configApp: anAppKey optionAndFieldValuesDo: [ :option :app :field :value |
+	 
 	 	| fields |
 	 	
 	 	fields := result at: option ifAbsentPut: [ Dictionary new ].
@@ -198,6 +198,13 @@ TTVaultAbstract >> projectId [
 	"update later"
 	
 	^ TheHub projectId
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> refresh [
+
+	appKey ifNil: [ self setOptionsForAll ]
+		ifNotNil: [ self setOptionsForApp: appKey ]
 ]
 
 { #category : 'accessing' }

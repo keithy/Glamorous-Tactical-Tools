@@ -6,6 +6,11 @@ Class {
 	#tag : 'Vault'
 }
 
+{ #category : 'accessing' }
+TTVault class >> commonFields [
+	^ #('_URL' '_USER' '_APIKEY' '_TOKEN' '_EMAIL' '_PASS')
+]
+
 { #category : 'instance creation' }
 TTVault class >> getCurrentVault [
 	^ self newWithRWConfigOSEnv
@@ -59,7 +64,7 @@ TTVault class >> makeTierConfig [
 	
 	| lastTier firstTier newTier|
 	
-	(self searchPathFor: TheHub current) 
+	(self searchPathFor: TheHub currentTestable) 
 	
 			reverseDo: [ :assoc | 
 				
@@ -210,17 +215,23 @@ TTVault class >> showMeTheSearchPath [
 { #category : 'accessing' }
 TTVault >> configApp: anApp optionAndFieldValuesDo: aBlock [
 
+	| ucApp |
+	
+	ucApp := anApp asUppercase.
+	
 	self configNormalized associations do: [ :assoc |
 	
 		| option keyStr field |
 		
-		keyStr := assoc key readString.
+		keyStr := assoc key readStream.
 		option := keyStr upToAll: '__'.
-		keyStr upToAll: anApp asUppercase.
-		field := keyStr upToEnd.
+		keyStr upToAll: ucApp.
 		
-		aBlock value: option value: field value: (assoc value)
-	
+		keyStr atEnd ifFalse: [
+		
+			field := keyStr upToEnd.
+			aBlock value: option value: ucApp value: field value: (assoc value)
+		]
 	].
 	
 	 
@@ -230,10 +241,14 @@ TTVault >> configApp: anApp optionAndFieldValuesDo: aBlock [
 { #category : 'accessing' }
 TTVault >> configNormalized [
 
+	| matcher |
+	
+	matcher := '__', ((appKey ifNil: '') asUppercase), '_'.
+
 	^ self config associations collect: [ :in |
 	 			(self funcUppercaseKeysOn: 
 	 				(self funcNormalizeDefaultsOn: in))
-		] thenSelect: [ :out | self funcAppFilter: out ]
+		] thenSelect: [ :out | self funcApp: matcher filter: out ]
 ]
 
 { #category : 'accessing' }
@@ -249,46 +264,39 @@ TTVault >> configRefresh [
 
 { #category : 'accessing' }
 TTVault >> configuredApps [
-
 	"scan for list of apps in config, should not need configNormalized"
-	
-	| apps hunt | 
-	
+
+	| apps hunt |
 	apps := Set new.
-	 
-	hunt := #('_URL' '_USER' '_APIKEY' '_TOKEN' '_EMAIL' '_PASS').
-	 
-	self config do: [ :assoc |
-	
+
+	hunt := self class commonFields.
+
+	self config
+		do: [ :assoc | 
 			| found key keyStr |
-			
 			key := assoc key.
-			
-			(hunt anySatisfy: [ :suffix | found := suffix. key endsWith: suffix ])
-			ifTrue: [ 
-					key := key withoutSuffix: found.
+
+			(hunt
+				anySatisfy: [ :suffix | 
+					found := suffix.
+					key endsWith: suffix ])
+				ifTrue: [ key := key withoutSuffix: found.
 					keyStr := assoc key readStream.
 					keyStr upToAll: '__'.
-					
+
 					keyStr atEnd ifFalse: [ key := keyStr upToEnd ].
-				 
-					apps add: key asLowercase
-			]
-	 
-	].
-	
+
+					apps add: key asLowercase ] ].
+
 	^ apps
-			 
 ]
 
 { #category : 'accessing' }
-TTVault >> funcAppFilter: assoc [
+TTVault >> funcApp: appMatcher filter: assoc [
 
 	"select function on appKey"
-  
-  appKey ifNil: [ ^ true ].
  	
-  ^ 0 < (assoc key findString: ('__', appKey, '_'))
+  ^ 0 < (assoc key findString: appMatcher )
 	 
  
 		
@@ -305,7 +313,7 @@ TTVault >> funcNormalizeDefaultsOn: assoc [
 			
 			key := assoc key.
 			 
-			option := keyStr copyUpToSubstring: '__'.
+			option := key copyUpToSubstring: '__'.
 			 
 			newKey := (option = key) 
 				ifTrue: [ 'default__',key ]
@@ -333,6 +341,8 @@ TTVault >> funcUppercaseKeysOn: assoc [
 	key := assoc key.
 	
 	start := key findString: '__'.
+	
+	"not found, set start"
 	start == 0 ifTrue: [ start := 1 ].
 	stop := key size.
 
@@ -349,17 +359,4 @@ TTVault >> funcUppercaseKeysOn: assoc [
 		
  
 	
-]
-
-{ #category : 'accessing' }
-TTVault >> refresh [ 
-
-	self configRefresh.
-	self optionsRefresh.
-	self appsRefresh.
-	 
-]
-
-{ #category : 'accessing' }
-TTVault >> reset [
 ]
