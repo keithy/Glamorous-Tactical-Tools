@@ -81,18 +81,41 @@ TTVaultAbstract >> config [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> config: anObject [
-	config := anObject
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract >> configApp: anApp optionAndFieldValuesDo: aBlock [
-	^ self subclassResponsibility
-]
-
-{ #category : 'accessing' }
 TTVaultAbstract >> configNormalized [
-	^ self subclassResponsibility
+
+	
+	"The normalized form of the keys is an array
+	#(<option> <App Key> <field>)
+	
+	1. options are lowercase
+	2. App keys are uppercase
+	3. Field keys are uppercase
+	"
+	
+	^ self config associations 
+	
+	collect: [ :in | self funcNormalizeOn: in ] 
+	thenSelect: [ :out | self funcAppFilter: out ]
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> configuredApps [
+
+	"scan for list of apps, key is pre-parsed"
+	
+	| apps |
+	
+	apps := Set new.
+ 
+	self configNormalized do: [ :assoc | 
+	
+			apps add: assoc key second.
+	
+	].
+		
+	^ apps
+
+	 
 ]
 
 { #category : 'accessing' }
@@ -109,50 +132,65 @@ TTVaultAbstract >> copyForAll [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> copyForApp: anApp [
+TTVaultAbstract >> funcAppFilter: assoc [
 
-	^ (self copy)
-			appKey: appKey;
-			setOptionsForApp: anApp;
-			yourself
-	 
-			 
-	
-	 
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract >> getOptionsForAll [
-
-	| result |
-	
-	result := Dictionary new.
-	
-	self configuredApps do: [ :app |
-	 
-	 	result at: app put: (self getOptionsForApp: app).
-	 	
-	]
+	"select function on appKey, assumes normalized pre-parsed assoc form"
  
+ | app |
+ 
+ "key was niled in order to be ignored"
+ assoc ifNil: [ ^ false ].
+ 
+ "key is pre parsed"
+ app := assoc key second.
+ 
+ "allow for the possibility that appKey is a '', glob or regex"
+ ^ appKey matches: app
+ 
+		
  
 	
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> getOptionsForApp: anAppKey [
+TTVaultAbstract >> funcNormalizeOn: in [ 
 
-	 | result |
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> getOptions [ 
+
+	 | result applyToAllApps |
 	 
+	 applyToAllApps := OrderedCollection new.
 	 result := Dictionary new.
 
-	 self configApp: anAppKey optionAndFieldValuesDo: [ :option :app :field :value |
+	 self configNormalized do: [ :assoc |
 	 
-	 	| fields |
+	 	| key option app field |
 	 	
-	 	fields := result at: option ifAbsentPut: [ Dictionary new ].
-	  
-	   fields at: field put: value
+	 	key := assoc key.
+	 	option := key first.
+	 	app := key second.
+	 	field := key third.
+	 	
+	 	app isEmpty 
+	 		ifTrue: [ applyToAllApps add: assoc ]
+	 		ifFalse: [ 
+	 								
+	 				(result at: app ifAbsentPut:[ Dictionary new ])
+	 						at: option at: field put: assoc value
+	 	]
 	 ].
+	 	
+ 	applyToAllApps do: [ :assoc |
+ 		
+ 		result do: [ :dict | 
+ 		
+ 				dict at: assoc first at: assoc third put: assoc value
+ 		]
+ 	].
  
  	^ result
 	
@@ -166,6 +204,17 @@ TTVaultAbstract >> gtItemsFor: aView [
 		title: 'Items';
 		priority: 10;
 		object: [ config ];
+		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultAbstract >> gtNormalizedFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Normalized';
+		priority: 10;
+		object: [ self configNormalized];
 		view: #gtItemsFor:
 ]
 
@@ -203,22 +252,27 @@ TTVaultAbstract >> projectId [
 { #category : 'accessing' }
 TTVaultAbstract >> refresh [
 
-	appKey ifNil: [ self setOptionsForAll ]
-		ifNotNil: [ self setOptionsForApp: appKey ]
+	self setOptions
+		
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> setConfig: anObject [
+	config := anObject
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> setOptions [
+
+	 options := self getOptions
+ 
+	
 ]
 
 { #category : 'accessing' }
 TTVaultAbstract >> setOptionsForAll [
 
 	 options := self getOptionsForAll
- 
-	
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract >> setOptionsForApp: appFilter [
-
-	 options := self getOptionsForApp: appFilter
  
 	
 ]

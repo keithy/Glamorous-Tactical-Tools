@@ -179,10 +179,10 @@ TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
 	tier setDictionary: dotenv.
 
 	vault := TTVault new.
-	vault ingress: tier.
-	vault optionsRefresh.
+	vault setConfig: tier.
+	vault refresh.
 
-	self assert: vault vault keys asSortedCollection asArray
+	self assert: vault options keys  
 		equals: #('default' 'host2').
 
 	self assert: (vault vault at: 'default') keys asSortedCollection asArray

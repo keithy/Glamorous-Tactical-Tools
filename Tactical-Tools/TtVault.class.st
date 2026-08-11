@@ -6,11 +6,6 @@ Class {
 	#tag : 'Vault'
 }
 
-{ #category : 'accessing' }
-TTVault class >> commonFields [
-	^ #('_URL' '_USER' '_APIKEY' '_TOKEN' '_EMAIL' '_PASS')
-]
-
 { #category : 'instance creation' }
 TTVault class >> getCurrentVault [
 	^ self newWithRWConfigOSEnv
@@ -146,7 +141,7 @@ TTVault class >> newWithRW [
  <gtExample>
 
  ^ self basicNew
-		config: self makeTierRW
+		setConfig: self makeTierRW
 		initialize
 		
 ]
@@ -163,7 +158,7 @@ TTVault class >> newWithRWConfigOSEnv [
  (nonBackedStore tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
   					 
  ^ (self basicNew)
-		config: nonBackedStore;
+		setConfig: nonBackedStore;
 		initialize
 		
 ]
@@ -213,48 +208,9 @@ TTVault class >> showMeTheSearchPath [
 ]
 
 { #category : 'accessing' }
-TTVault >> configApp: anApp optionAndFieldValuesDo: aBlock [
-
-	| ucApp |
-	
-	ucApp := anApp asUppercase.
-	
-	self configNormalized associations do: [ :assoc |
-	
-		| option keyStr field |
-		
-		keyStr := assoc key readStream.
-		option := keyStr upToAll: '__'.
-		keyStr upToAll: ucApp.
-		
-		keyStr atEnd ifFalse: [
-		
-			field := keyStr upToEnd.
-			aBlock value: option value: ucApp value: field value: (assoc value)
-		]
-	].
-	
-	 
-	
-]
-
-{ #category : 'accessing' }
-TTVault >> configNormalized [
-
-	| matcher |
-	
-	matcher := '__', ((appKey ifNil: '') asUppercase), '_'.
-
-	^ self config associations collect: [ :in |
-	 			(self funcUppercaseKeysOn: 
-	 				(self funcNormalizeDefaultsOn: in))
-		] thenSelect: [ :out | self funcApp: matcher filter: out ]
-]
-
-{ #category : 'accessing' }
 TTVault >> configRefresh [
   
-  "dont everyone do this"
+  "don't everyone do this"
   | unique |
   
 	unique := config tiersCollect: [ :tier | tier writableDictionary ] on: IdentitySet new.
@@ -263,99 +219,45 @@ TTVault >> configRefresh [
 ]
 
 { #category : 'accessing' }
-TTVault >> configuredApps [
-	"scan for list of apps in config, should not need configNormalized"
+TTVault >> funcNormalizeOn: assoc [
 
-	| apps hunt |
-	apps := Set new.
-
-	hunt := self class commonFields.
-
-	self config
-		do: [ :assoc | 
-			| found key keyStr |
-			key := assoc key.
-
-			(hunt
-				anySatisfy: [ :suffix | 
-					found := suffix.
-					key endsWith: suffix ])
-				ifTrue: [ key := key withoutSuffix: found.
-					keyStr := assoc key readStream.
-					keyStr upToAll: '__'.
-
-					keyStr atEnd ifFalse: [ key := keyStr upToEnd ].
-
-					apps add: key asLowercase ] ].
-
-	^ apps
-]
-
-{ #category : 'accessing' }
-TTVault >> funcApp: appMatcher filter: assoc [
-
-	"select function on appKey"
- 	
-  ^ 0 < (assoc key findString: appMatcher )
-	 
- 
-		
- 
+	"pass thru function that 
 	
-]
+		1. prepends default__ option to any <key>__<field> pair that has no given option.
+		2. any keys that had __<key> prefix are prefixed _<key> to avoid confusing the parser
+		3. any standalone <key> becomes default____<key>.
+		4. standardised capitalisation is applied <toLowercase>__<toUppercase>__<toUppercase>
+		
+	  SEE CLASS COMMENT for format decision tree"
 
-{ #category : 'accessing' }
-TTVault >> funcNormalizeDefaultsOn: assoc [
-
-	"pass thru function that prepends default__ to any keys that have no options"
-
-			| keyStr option key newKey |
+			| key newKey size |
+		 
+			key := (assoc key,'__') splitOn: '__'.
+			size := key size.
+ 
+			size = 4 ifFalse: [  
 			
-			key := assoc key.
-			 
-			option := key copyUpToSubstring: '__'.
-			 
-			newKey := (option = key) 
-				ifTrue: [ 'default__',key ]
-			  ifFalse: [ 
-			  		newKey := key copy.
-			  		newKey copyReplaceFrom: 1 to: option size with: option asLowercase
-			  ].
- 			
+				size = 3 ifTrue:  [ key addFirst: 'default'. 
+					key second ifEmpty: [ key at: 3 put: ('_', (key at: 3))
+				].
+			  
+			  size = 2 ifTrue: [ 
+			  	key addFirst: ''. 
+			  	key addFirst: 'default' ]
+			  ]
+			].
+			
+			key at: 1 put: (key at: 1) asLowercase.
+			key at: 2 put: (key at: 2) asUppercase.
+			key at: 3 put: (key at: 3) asUppercase.
+			key removeLast.
+			
+			"leaving the key as a pre-parsed array for downstream"
+			
   	^ (assoc copy)
-  			key: newKey;
+  			key: key asArray;
   			yourself				
 
-		
- 
-	
-]
-
-{ #category : 'accessing' }
-TTVault >> funcUppercaseKeysOn: assoc [
-
-	"pass thru function that ensures that keys are uppercase"
-
-	| key newKey start stop |
-			
-	key := assoc key.
-	
-	start := key findString: '__'.
-	
-	"not found, set start"
-	start == 0 ifTrue: [ start := 1 ].
-	stop := key size.
-
-	newKey := key copy.
-  	
-	start to: stop do: [ :n |
-	  newKey at: n put: (newKey at: n) asUppercase
-	].
-		
-  ^ (assoc copy)
-  			key: newKey;
-  			yourself				
- 
 		
  
 	
