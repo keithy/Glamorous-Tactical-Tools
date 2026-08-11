@@ -171,7 +171,7 @@ TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
 	| vault tier dotenv |
 	dotenv := TTDictionaryDotEnv new
 		valueWriter: TTVaultValueWriter new;
-		source: '/tmp/dummy.env' asFileReference;
+		source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
 		readSource;
 		yourself.
 
@@ -179,8 +179,8 @@ TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
 	tier setDictionary: dotenv.
 
 	vault := TTVault new.
-	vault store: tier.
-	vault vaultRefresh.
+	vault ingress: tier.
+	vault optionsRefresh.
 
 	self assert: vault vault keys asSortedCollection asArray
 		equals: #('default' 'host2').
@@ -191,7 +191,6 @@ TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
 	self assert: (vault vault at: 'host2') keys asSortedCollection asArray
 		equals: #('JIRA_TOKEN' 'JIRA_USER').
 
-	"obfuscated values come back wrapped as TTStringObfuscated"
 	self assert: ((vault vault at: 'default') at: 'JIRA_PASS') class
 		equals: TTStringObfuscated.
 

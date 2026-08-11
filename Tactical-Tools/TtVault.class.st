@@ -2,9 +2,10 @@ Class {
 	#name : 'TTVault',
 	#superclass : 'Object',
 	#instVars : [
-		'store',
 		'valueWriter',
-		'vault'
+		'ingress',
+		'apps',
+		'options'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -154,7 +155,7 @@ TTVault class >> newWithRW [
  <gtExample>
 
  ^ self basicNew
-		store: self makeTierRW
+		ingress: self makeTierRW
 		initialize
 		
 ]
@@ -164,14 +165,14 @@ TTVault class >> newWithRWConfigOSEnv [
 
  <gtExample>
 
- | store |
+ | nonBackedStore |
  
- store := self makeTierRW.
+ nonBackedStore := self makeTierRW.
  						
- (store tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
+ (nonBackedStore tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
   					 
  ^ (self basicNew)
-		store: store;
+		ingress: nonBackedStore;
 		initialize
 		
 ]
@@ -270,15 +271,21 @@ TTVault class >> vaultId [
 { #category : 'accessing' }
 TTVault >> apps [
 
+^ apps
+]
+
+{ #category : 'accessing' }
+TTVault >> appsRefresh [
+
 	| result hunt | 
 	
-	result := Set new.
+	apps := Set new.
 	 
 	hunt := #('_URL' '_USER' '_APIKEY' '_TOKEN' '_EMAIL' '_PASS').
 	 
-	vault do: [ :selection |
+	options do: [ :selection |
 	
-		(vault at: selection) associationsDo: [ :assoc |
+		(options at: selection) associationsDo: [ :assoc |
 		
 			| key |
 			
@@ -291,8 +298,6 @@ TTVault >> apps [
 		]
 	].
 			 
-	^ result
-	 
 ]
 
 { #category : 'accessing' }
@@ -313,7 +318,7 @@ TTVault >> forApp: anApp [
 	
 	vault do: [ :selection |
 	
-		(vault at: selection) associationsDo: [ :assoc |
+		(options at: selection) associationsDo: [ :assoc |
 		
 			| key |
 			
@@ -339,7 +344,7 @@ TTVault >> gtItemsFor: aView [
 	^ aView forward
 		title: 'Items';
 		priority: 10;
-		object: [ store ];
+		object: [ ingress ];
 		view: #gtItemsFor:
 ]
 
@@ -351,6 +356,17 @@ TTVault >> hubId [
 	^ TheHub hubId
 ]
 
+{ #category : 'accessing' }
+TTVault >> ingress [
+	^ ingress
+]
+
+{ #category : 'accessing' }
+TTVault >> ingressRefresh [
+
+	ingress tiersCollect: [ :tier | tier readSource ] on: OrderedCollection new
+]
+
 { #category : 'as yet unclassified' }
 TTVault >> isWhoAmI [
 
@@ -359,6 +375,33 @@ TTVault >> isWhoAmI [
 	"Can provide identity"
 
 	^ true
+]
+
+{ #category : 'accessing' }
+TTVault >> optionsRefresh [
+
+	options := Dictionary new.
+
+	^ ingress associations do: [ :assoc |
+			| keyStr selection key |
+			
+			key := assoc key.
+			keyStr := key readStream.
+			
+			selection := keyStr upToAll:'__'.
+			 
+			(selection = key)
+				ifTrue: [ selection := 'default' ]
+			  ifFalse: [ key := keyStr upToEnd ].
+ 
+ 			(options at: selection asLowercase ifAbsentPut: [ Dictionary new ])
+ 				at: key asUppercase put: assoc value.
+ 			
+		]
+	
+	
+	
+	
 ]
 
 { #category : 'accessing' }
@@ -377,11 +420,11 @@ TTVault >> projectId [
 { #category : 'accessing' }
 TTVault >> readStore [
 
-	vault := Dictionary new.
-	vault at: #default put: Dictionary new.
+	options := Dictionary new.
+	options at: #default put: Dictionary new.
 	
 
-	^ store associationsDo: [ :assoc |
+	^ ingress associationsDo: [ :assoc |
 		
 	
 	]
@@ -390,18 +433,16 @@ TTVault >> readStore [
 ]
 
 { #category : 'accessing' }
+TTVault >> refresh [ 
+
+	self ingressRefresh.
+	self optionsRefresh.
+	self appsRefresh.
+	 
+]
+
+{ #category : 'accessing' }
 TTVault >> reset [
-]
-
-{ #category : 'accessing' }
-TTVault >> store [
-	^ store
-]
-
-{ #category : 'accessing' }
-TTVault >> store: aTieredDict [
- 
-	store := aTieredDict
 ]
 
 { #category : 'accessing' }
@@ -414,32 +455,5 @@ TTVault >> userId [
 
 { #category : 'accessing' }
 TTVault >> vault [
-    ^ vault
-]
-
-{ #category : 'accessing' }
-TTVault >> vaultRefresh [
-
-	vault := Dictionary new.
-
-	^ store associations do: [ :assoc |
-			| keyStr selection key |
-			
-			key := assoc key.
-			keyStr := key readStream.
-			
-			selection := keyStr upToAll:'__'.
-			 
-			(selection = key)
-				ifTrue: [ selection := 'default' ]
-			  ifFalse: [ key := keyStr upToEnd ].
- 
- 			(vault at: selection asLowercase ifAbsentPut: [ Dictionary new ])
- 				at: key asUppercase put: assoc value.
- 			
-		]
-	
-	
-	
-	
+    ^ options
 ]
