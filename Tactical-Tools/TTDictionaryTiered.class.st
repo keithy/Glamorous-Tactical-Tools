@@ -169,6 +169,16 @@ TTDictionaryTiered >> next: aTieredDictionary [
 ]
 
 { #category : 'private - delegation' }
+TTDictionaryTiered >> postCopy [
+
+	(dict askFor: #isBacked) ifFalse: [
+		dict ifNotNil: [ dict := dict copy ]
+	].
+	next ifNotNil: [ next := next copy ].
+	
+]
+
+{ #category : 'private - delegation' }
 TTDictionaryTiered >> setDictionary: aDictionary [
 	
 	"writable dictionary"
@@ -189,6 +199,7 @@ TTDictionaryTiered >> tierAt: name [
 { #category : 'tier management' }
 TTDictionaryTiered >> tierInsert: newTier [
 
+	"unsafe private"
 	newTier next: self next.
   self next: newTier.
   

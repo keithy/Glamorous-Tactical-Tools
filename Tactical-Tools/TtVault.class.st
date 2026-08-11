@@ -1,24 +1,10 @@
 Class {
 	#name : 'TTVault',
-	#superclass : 'Object',
-	#instVars : [
-		'valueWriter',
-		'ingress',
-		'apps',
-		'options'
-	],
-	#classInstVars : [
-		'currentVault'
-	],
+	#superclass : 'TTVaultAbstract',
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
-
-{ #category : 'instance creation' }
-TTVault class >> currentVault [
-	^ currentVault ifNil: [ currentVault := self getCurrentVault ]
-]
 
 { #category : 'instance creation' }
 TTVault class >> getCurrentVault [
@@ -155,7 +141,7 @@ TTVault class >> newWithRW [
  <gtExample>
 
  ^ self basicNew
-		ingress: self makeTierRW
+		config: self makeTierRW
 		initialize
 		
 ]
@@ -172,15 +158,9 @@ TTVault class >> newWithRWConfigOSEnv [
  (nonBackedStore tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
   					 
  ^ (self basicNew)
-		ingress: nonBackedStore;
+		config: nonBackedStore;
 		initialize
 		
-]
-
-{ #category : 'accessing' }
-TTVault class >> reset [
-
-currentVault := nil
 ]
 
 { #category : 'instance creation' }
@@ -227,215 +207,154 @@ TTVault class >> showMeTheSearchPath [
 
 ]
 
-{ #category : 'instance creation' }
-TTVault class >> shutDown: quitting [
+{ #category : 'accessing' }
+TTVault >> configApp: anApp optionAndFieldValuesDo: aBlock [
 
-  <ttShutDown>
-
-  quitting ifTrue: [ self reset ]
+	self configNormalized associations do: [ :assoc |
 	
+		| option keyStr field |
+		
+		keyStr := assoc key readString.
+		option := keyStr upToAll: '__'.
+		keyStr upToAll: anApp asUppercase.
+		field := keyStr upToEnd.
+		
+		aBlock value: option value: field value: (assoc value)
 	
-]
-
-{ #category : 'instance creation' }
-TTVault class >> startUp: isImageStarting [
-
-	<ttStartUp>
+	].
 	
-	isImageStarting ifFalse: [ self reset ]
+	 
 	
-	
-]
-
-{ #category : 'instance creation' }
-TTVault class >> store: store addConfigFile: assoc afterTier: tierKey [
-	| file |
-	file := assoc value.
-	FileLookedForNotification signal: file fullName.
-
-	^ file exists
-		ifTrue: [ (store tierKeys includes: assoc key)
-				ifFalse: [ TTDictionaryDotEnv new
-						tierKey: assoc key;
-						tierInsertIn: store after: tierKey;
-						readSource: file;
-						yourself ] ]
-]
-
-{ #category : 'instance creation' }
-TTVault class >> vaultId [
-
-	^ (self name withoutSuffix: 'TT') asLowercase
 ]
 
 { #category : 'accessing' }
-TTVault >> apps [
+TTVault >> configNormalized [
 
-^ apps
+	^ self config associations collect: [ :in |
+	 			(self funcUppercaseKeysOn: 
+	 				(self funcNormalizeDefaultsOn: in))
+		] thenSelect: [ :out | self funcAppFilter: out ]
 ]
 
 { #category : 'accessing' }
-TTVault >> appsRefresh [
+TTVault >> configRefresh [
+  
+  "dont everyone do this"
+  | unique |
+  
+	unique := config tiersCollect: [ :tier | tier writableDictionary ] on: IdentitySet new.
+	unique do: [ :dict | dict askFor: #readSource ]
+	
+]
 
-	| result hunt | 
+{ #category : 'accessing' }
+TTVault >> configuredApps [
+
+	"scan for list of apps in config, should not need configNormalized"
+	
+	| apps hunt | 
 	
 	apps := Set new.
 	 
 	hunt := #('_URL' '_USER' '_APIKEY' '_TOKEN' '_EMAIL' '_PASS').
 	 
-	options do: [ :selection |
+	self config do: [ :assoc |
 	
-		(options at: selection) associationsDo: [ :assoc |
-		
-			| key |
+			| found key keyStr |
 			
 			key := assoc key.
 			
-			(hunt anySatisfy: [ :suffix | key endsWith: suffix ])
-				ifTrue: [ 
-							result add: (key readStream copyUpToLast: $_)
-				]
-		]
-	].
-			 
-]
-
-{ #category : 'accessing' }
-TTVault >> bundleId [
-
-	"update later"
-	
-	^ TheHub bundleId
-]
-
-{ #category : 'accessing' }
-TTVault >> forApp: anApp [
-
-	| result app | 
-	
-	result := Dictionary new.
-	app := anApp asUppercase
-	
-	vault do: [ :selection |
-	
-		(options at: selection) associationsDo: [ :assoc |
-		
-			| key |
-			
-			key := assoc key.
-			(key beginsWith: app)
-				ifTrue: [ 
-							
-						(result at: selection ifAbsentPut: [ Dictionary new ]) 
-								
-									at: (key withoutPrefix: app) put: assoc value.
-				]
-		]
-	]
-			 
-	
+			(hunt anySatisfy: [ :suffix | found := suffix. key endsWith: suffix ])
+			ifTrue: [ 
+					key := key withoutSuffix: found.
+					keyStr := assoc key readStream.
+					keyStr upToAll: '__'.
+					
+					keyStr atEnd ifFalse: [ key := keyStr upToEnd ].
+				 
+					apps add: key asLowercase
+			]
 	 
-]
-
-{ #category : 'as yet unclassified' }
-TTVault >> gtItemsFor: aView [
-	<gtView>
+	].
 	
-	^ aView forward
-		title: 'Items';
-		priority: 10;
-		object: [ ingress ];
-		view: #gtItemsFor:
+	^ apps
+			 
 ]
 
 { #category : 'accessing' }
-TTVault >> hubId [
+TTVault >> funcAppFilter: assoc [
 
-	"update later"
+	"select function on appKey"
+  
+  appKey ifNil: [ ^ true ].
+ 	
+  ^ 0 < (assoc key findString: ('__', appKey, '_'))
+	 
+ 
+		
+ 
 	
-	^ TheHub hubId
 ]
 
 { #category : 'accessing' }
-TTVault >> ingress [
-	^ ingress
-]
+TTVault >> funcNormalizeDefaultsOn: assoc [
 
-{ #category : 'accessing' }
-TTVault >> ingressRefresh [
+	"pass thru function that prepends default__ to any keys that have no options"
 
-	ingress tiersCollect: [ :tier | tier readSource ] on: OrderedCollection new
-]
-
-{ #category : 'as yet unclassified' }
-TTVault >> isWhoAmI [
-
-	<ttWhoAmI>
-	
-	"Can provide identity"
-
-	^ true
-]
-
-{ #category : 'accessing' }
-TTVault >> optionsRefresh [
-
-	options := Dictionary new.
-
-	^ ingress associations do: [ :assoc |
-			| keyStr selection key |
+			| keyStr option key newKey |
 			
 			key := assoc key.
-			keyStr := key readStream.
-			
-			selection := keyStr upToAll:'__'.
 			 
-			(selection = key)
-				ifTrue: [ selection := 'default' ]
-			  ifFalse: [ key := keyStr upToEnd ].
- 
- 			(options at: selection asLowercase ifAbsentPut: [ Dictionary new ])
- 				at: key asUppercase put: assoc value.
+			option := keyStr copyUpToSubstring: '__'.
+			 
+			newKey := (option = key) 
+				ifTrue: [ 'default__',key ]
+			  ifFalse: [ 
+			  		newKey := key copy.
+			  		newKey copyReplaceFrom: 1 to: option size with: option asLowercase
+			  ].
  			
-		]
-	
-	
-	
-	
-]
+  	^ (assoc copy)
+  			key: newKey;
+  			yourself				
 
-{ #category : 'accessing' }
-TTVault >> projectDirectory: anObject [
-	projectDirectory := anObject
-]
-
-{ #category : 'accessing' }
-TTVault >> projectId [
-
-	"update later"
-	
-	^ TheHub projectId
-]
-
-{ #category : 'accessing' }
-TTVault >> readStore [
-
-	options := Dictionary new.
-	options at: #default put: Dictionary new.
-	
-
-	^ ingress associationsDo: [ :assoc |
 		
+ 
 	
-	]
+]
+
+{ #category : 'accessing' }
+TTVault >> funcUppercaseKeysOn: assoc [
+
+	"pass thru function that ensures that keys are uppercase"
+
+	| key newKey start stop |
+			
+	key := assoc key.
 	
+	start := key findString: '__'.
+	start == 0 ifTrue: [ start := 1 ].
+	stop := key size.
+
+	newKey := key copy.
+  	
+	start to: stop do: [ :n |
+	  newKey at: n put: (newKey at: n) asUppercase
+	].
+		
+  ^ (assoc copy)
+  			key: newKey;
+  			yourself				
+ 
+		
+ 
 	
 ]
 
 { #category : 'accessing' }
 TTVault >> refresh [ 
 
-	self ingressRefresh.
+	self configRefresh.
 	self optionsRefresh.
 	self appsRefresh.
 	 
@@ -443,17 +362,4 @@ TTVault >> refresh [
 
 { #category : 'accessing' }
 TTVault >> reset [
-]
-
-{ #category : 'accessing' }
-TTVault >> userId [
-
-	"update later"
-	
-	^ TheHub userId
-]
-
-{ #category : 'accessing' }
-TTVault >> vault [
-    ^ options
 ]

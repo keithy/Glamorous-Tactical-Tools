@@ -20,6 +20,12 @@ TTDictionaryBacked >> at: key write: value [
 ]
 
 { #category : 'accessing' }
+TTDictionaryBacked >> isBacked [
+
+	^ true
+]
+
+{ #category : 'accessing' }
 TTDictionaryBacked >> readSource [
 
 	^ self subclassResponsibility
