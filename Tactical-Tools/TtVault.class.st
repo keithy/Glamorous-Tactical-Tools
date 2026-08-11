@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'store',
-		'valueWriter'
+		'valueWriter',
+		'vault'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -14,19 +15,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-TTVault class >> bundleId [
-  "use default"
-	^ TheHub bundleId
-]
-
-{ #category : 'instance creation' }
 TTVault class >> currentVault [
 	^ currentVault ifNil: [ currentVault := self getCurrentVault ]
 ]
 
 { #category : 'instance creation' }
 TTVault class >> getCurrentVault [
-	^ self newWithLocalConfigOSEnv
+	^ self newWithRWConfigOSEnv
 ]
 
 { #category : 'instance creation' }
@@ -102,15 +97,6 @@ TTVault class >> makeTierConfig [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeTierLocal [
-	
-		<gtExample>
-	
-	^ self makeTierWithKey:#local
-
-]
-
-{ #category : 'instance creation' }
 TTVault class >> makeTierMiseFor: project [
 	
 	<gtExample>
@@ -132,6 +118,15 @@ TTVault class >> makeTierOSEnv [
 ]
 
 { #category : 'instance creation' }
+TTVault class >> makeTierRW [
+	
+		<gtExample>
+	
+	^ self makeTierWithKey:#rw
+
+]
+
+{ #category : 'instance creation' }
 TTVault class >> makeTierWithKey: key [
 	
 		<gtExample>
@@ -149,29 +144,29 @@ TTVault class >> makeValueWriter [
 { #category : 'instance creation' }
 TTVault class >> new [
 
-^ self newWithLocalConfigOSEnv
+^ self newWithRWConfigOSEnv
 		
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newWithLocal [ 
+TTVault class >> newWithRW [ 
 
  <gtExample>
 
  ^ self basicNew
-		store: self makeTierLocal
+		store: self makeTierRW
 		initialize
 		
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newWithLocalConfigOSEnv [
+TTVault class >> newWithRWConfigOSEnv [
 
  <gtExample>
 
  | store |
  
- store := self makeTierLocal.
+ store := self makeTierRW.
  						
  (store tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
   					 
@@ -272,32 +267,69 @@ TTVault class >> vaultId [
 	^ (self name withoutSuffix: 'TT') asLowercase
 ]
 
-{ #category : 'as yet unclassified' }
-TTVault >> assocForApp: anApp user: aUserAssoc field: field ifAbsent: aBlock [
-	| user keys app |
-	
-	app := anApp asString. "?"
-	
-	user :=  aUserAssoc value.
-	
-	self logStartApp: app field: field user: aUserAssoc.
+{ #category : 'accessing' }
+TTVault >> apps [
 
-	keys := { (user, '__', app , '_' , field). (user asLowercase, '__', app , '_' , field). }. 
-
-	store deepAssociationAt: keys ifPresentAssocAndTierDo: [ :a | ^ a ].
-
-	keys := app , '_' , field.
+	| result hunt | 
 	
-	store deepAssociationAt: keys ifPresentAssocAndTierDo: [ :a  | ^ a  ].
-
-	^ aBlock value
+	result := Set new.
+	 
+	hunt := #('_URL' '_USER' '_APIKEY' '_TOKEN' '_EMAIL' '_PASS').
+	 
+	vault do: [ :selection |
 	
+		(vault at: selection) associationsDo: [ :assoc |
+		
+			| key |
+			
+			key := assoc key.
+			
+			(hunt anySatisfy: [ :suffix | key endsWith: suffix ])
+				ifTrue: [ 
+							result add: (key readStream copyUpToLast: $_)
+				]
+		]
+	].
+			 
+	^ result
+	 
 ]
 
-{ #category : 'as yet unclassified' }
-TTVault >> assocLocalUser [
+{ #category : 'accessing' }
+TTVault >> bundleId [
 
-	^ store deepAt: #('USER' 'USERNAME') ifPresentValueKeyAndTierDo: [ :v :k :t | t -> v copyReplaceAll: '-' with: '_' ]
+	"update later"
+	
+	^ TheHub bundleId
+]
+
+{ #category : 'accessing' }
+TTVault >> forApp: anApp [
+
+	| result app | 
+	
+	result := Dictionary new.
+	app := anApp asUppercase
+	
+	vault do: [ :selection |
+	
+		(vault at: selection) associationsDo: [ :assoc |
+		
+			| key |
+			
+			key := assoc key.
+			(key beginsWith: app)
+				ifTrue: [ 
+							
+						(result at: selection ifAbsentPut: [ Dictionary new ]) 
+								
+									at: (key withoutPrefix: app) put: assoc value.
+				]
+		]
+	]
+			 
+	
+	 
 ]
 
 { #category : 'as yet unclassified' }
@@ -309,6 +341,14 @@ TTVault >> gtItemsFor: aView [
 		priority: 10;
 		object: [ store ];
 		view: #gtItemsFor:
+]
+
+{ #category : 'accessing' }
+TTVault >> hubId [
+
+	"update later"
+	
+	^ TheHub hubId
 ]
 
 { #category : 'as yet unclassified' }
@@ -327,6 +367,29 @@ TTVault >> projectDirectory: anObject [
 ]
 
 { #category : 'accessing' }
+TTVault >> projectId [
+
+	"update later"
+	
+	^ TheHub projectId
+]
+
+{ #category : 'accessing' }
+TTVault >> readStore [
+
+	vault := Dictionary new.
+	vault at: #default put: Dictionary new.
+	
+
+	^ store associationsDo: [ :assoc |
+		
+	
+	]
+	
+	
+]
+
+{ #category : 'accessing' }
 TTVault >> reset [
 ]
 
@@ -339,4 +402,44 @@ TTVault >> store [
 TTVault >> store: aTieredDict [
  
 	store := aTieredDict
+]
+
+{ #category : 'accessing' }
+TTVault >> userId [
+
+	"update later"
+	
+	^ TheHub userId
+]
+
+{ #category : 'accessing' }
+TTVault >> vault [
+    ^ vault
+]
+
+{ #category : 'accessing' }
+TTVault >> vaultRefresh [
+
+	vault := Dictionary new.
+
+	^ store associations do: [ :assoc |
+			| keyStr selection key |
+			
+			key := assoc key.
+			keyStr := key readStream.
+			
+			selection := keyStr upToAll:'__'.
+			 
+			(selection = key)
+				ifTrue: [ selection := 'default' ]
+			  ifFalse: [ key := keyStr upToEnd ].
+ 
+ 			(vault at: selection asLowercase ifAbsentPut: [ Dictionary new ])
+ 				at: key asUppercase put: assoc value.
+ 			
+		]
+	
+	
+	
+	
 ]

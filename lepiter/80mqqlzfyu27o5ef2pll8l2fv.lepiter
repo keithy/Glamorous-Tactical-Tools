@@ -18,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-03T06:19:19.160962+01:00"
+						"dateAndTimeString" : "2026-08-10T23:57:41.258236+01:00"
 					}
 				},
 				"editEmail" : {
@@ -29,17 +29,54 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T15:33:15.328911+01:00"
+						"dateAndTimeString" : "2026-08-11T00:29:02.937448+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "GsS/mtaNReeq7SImEdalow=="
+					"uidString" : "CBqCXv1aR0ixN3sTMURtlw=="
 				},
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "We have a tiered dictionary datastructure, were a key lookup can be passed simply to the next tier if not found.\n\nTiers are subclasses of dictionary, and they are named. No changes are made to the normal dictionary interface for reading/writing. The read only public interface bottlenecks on methods: \n• {{gtMethod:TTDictionaryTiered>>deepAt:ifPresent:}} \n• {{gtMethod:TTDictionaryTiered>>#deepAssociationAt:ifPresent:}}\n\nExample Tiers:\n1. Normal Dictionary (can be serialised and deserialised to a file)\n2. Normal Dictionary whose values are read and cached from a file (env/toml etc. format)\n3. Normal Dictionary whose keys are read from a file, but whose values are re-read (on demand)\n4. Normal Dictionary whose keys are read from an API, and whose values are read from an API.\n5. Nickel configuration language interface (rust)\n6. Normal Dictionary whose keys are populated form a file find, and whose values are read on demand (ssh keys)\n7. Potential integrations with mise, vault, age, janus, sops\n\nPreviously we have had a dictionary that was \"kept\" in a class var to provide items persisted with the image, and we did a lot of re-reading of env files every time we re-initialised a set of clients.\n\nThis time we will look at keeping a permanent vault in the image, per-environment or shared. Dictionaries my be nominated as #beCache and will be zapped on shutdown.\n\n{{gtMethod:TheHub class>>theVault}} gives us a global store (overridable when testing via {{gtMethod:TheHub class>>#for:respondWith:during:}} )\n\n\n\n"
+				"string" : "We have a tiered dictionary datastructure implemented as a linked list populated from a number of sources, {{gtClass:TTDictionaryTiered|show=comment}}  \n\n{{gtClass:TTVault}} Holds a master copy this data in its store.\n\nTo use the store it must first be converted into a simple dictionary, via #asDictionary, however it is usual to apply a filter in the process.\n\n"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-11T00:23:38.97928+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-11T00:23:38.97928+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "y2Rs6mwEQduzV96nPlai7A=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## Construction\nTiers are built as a simple linked list.\n\n`tdOne appendTier: tdTwo.`\n### Reading\n\nNormal use is read only. For clients we generate a new copy as a normal Dictionary, \nflattening the tiers in reverse order: later tier data is shadowed by earlier tiers.\n \n `td asDictionary at: #foo.`\n\n **For case insensitive use:**\n \n`td asDictionaryWithUppercaseKeys  at: 'FOO'.`\n`td asDictionaryWithLowercaseKeys  at: #foo`.\n### Writing\nWriting only applies to the wrapped dictionary of the frontmost tier. \n \n`td writableDictionary.`\n\nWriting to other tiers is still straightforward.\n\n`(td tierAt: #layer) writableDictionary.`\n### Enabling/Disabling\n This implementation allows for reconfiguring the tiers without dismantling the structure,\n each tier can be individually disabled or re-enabled.\n \n `(td tierAt: ) beDisabled.`"
 			},
 			{
 				"__type" : "pharoSnippet",

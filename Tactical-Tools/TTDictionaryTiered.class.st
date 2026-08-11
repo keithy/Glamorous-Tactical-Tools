@@ -220,7 +220,7 @@ TTDictionaryTiered >> tierNewAppendWithKey: aSymbol [
 { #category : 'tier management' }
 TTDictionaryTiered >> tierNewInsertWithKey: aSymbol after: this [
 
-	^ (self tierAt: this) tierAdd: (self class newWithKey: aSymbol)  
+	^ (self tierAt: this) tierInsert: (self class newWithKey: aSymbol)  
 ]
 
 { #category : 'tier management' }
@@ -252,7 +252,7 @@ TTDictionaryTiered >> tiersReverseCollect: aBlock [
 
 	"can also select or reject by returning nil"
 	
-	^ self tiers reverse collect: aBlock thenSelect: [ :ea | ea | ea notNil ]
+	^ self tiers reverse collect: aBlock thenSelect: #notNil 
 
 	 
 	

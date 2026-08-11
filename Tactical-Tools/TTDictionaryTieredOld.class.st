@@ -9,9 +9,9 @@ Class {
 		'isCaseSensitive',
 		'dict'
 	],
-	#category : 'Tactical-Tools-Vault',
+	#category : 'Tactical-Tools-Old',
 	#package : 'Tactical-Tools',
-	#tag : 'Vault'
+	#tag : 'Old'
 }
 
 { #category : 'instance creation' }
