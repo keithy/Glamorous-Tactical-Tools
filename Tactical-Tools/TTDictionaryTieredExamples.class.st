@@ -163,38 +163,45 @@ TTDictionaryTieredExamples >> tierNewInsertFailsForMissingAnchor [
 	^ one
 ]
 
-{ #category : 'examples' }
+{ #category : 'examples - vault' }
 TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
-	<gtExample>
-	<return: #TTVault>
+  <gtExample>
+  <return: #TTVault>
 
-	| vault tier dotenv |
-	dotenv := TTDictionaryDotEnv new
-		valueWriter: TTVaultValueWriter new;
-		source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
-		readSource;
-		yourself.
+  | vault tier dotenv |
+  dotenv := TTDictionaryDotEnv new
+    valueWriter: TTVaultValueWriter new;
+    source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
+    readSource;
+    yourself.
 
-	tier := TTDictionaryTiered newWithKey: #dotenv.
-	tier setDictionary: dotenv.
+  tier := TTDictionaryTiered newWithKey: #dotenv.
+  tier setDictionary: dotenv.
 
-	vault := TTVault new.
-	vault setConfig: tier.
-	vault refresh.
+  vault := TTVault new.
+  vault setConfig: tier.
+  vault refresh.
 
-	self assert: vault options keys  
-		equals: #('default' 'host2').
+  "vault options is keyed by app (lowercase); each app dict is keyed by option name"
+  self assert: vault options keys asSortedCollection asArray
+    equals: #('gitlab_onprem' 'gitlab_saas' 'jira' 'my_cool_app').
 
-	self assert: (vault vault at: 'default') keys asSortedCollection asArray
-		equals: #('GITLAB_ONPREM_TOKEN' 'GITLAB_ONPREM_URL' 'GITLAB_ONPREM_USER' 'GITLAB_SAAS_TOKEN' 'GITLAB_SAAS_URL' 'GITLAB_SAAS_USER' 'JIRA_API_KEY' 'JIRA_EMAIL' 'JIRA_PASS' 'JIRA_URL' 'JIRA_USER' 'MY_COOL_APP_TOKEN').
+  self assert: (vault options at: 'jira') keys asSortedCollection asArray
+    equals: #('default' 'host2').
 
-	self assert: (vault vault at: 'host2') keys asSortedCollection asArray
-		equals: #('JIRA_TOKEN' 'JIRA_USER').
+  "The passthrough entries (no option__ prefix) for the empty app land in jira's default dict
+  because the empty-app passthrough is applied to every existing app."
+  self assert: ((vault options at: 'jira') at: 'default') keys asSortedCollection asArray
+    equals: #('Preseve_My_Case_Please' 'SOMELLM_API_KEY' '__MISE_EXE' '__Problem_Child' 'api_key' 'email' 'pass' 'url' 'user').
 
-	self assert: ((vault vault at: 'default') at: 'JIRA_PASS') class
-		equals: TTStringObfuscated.
+  self assert: ((vault options at: 'jira') at: 'host2') keys asSortedCollection asArray
+    equals: #('token' 'user').
 
-	^ vault
+  "host2 jira user overrides default jira user"
+  self assert: ((vault options at: 'jira') at: 'default' at: 'user') asString equals: 'alice'.
+  self assert: ((vault options at: 'jira') at: 'host2' at: 'user') asString equals: 'bob'.
+
+  ^ vault
 ]
 
 { #category : 'examples' }

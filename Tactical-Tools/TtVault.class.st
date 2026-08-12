@@ -129,9 +129,9 @@ TTVault class >> makeValueWriter [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> new [
+TTVault class >> new [ 
 
-^ self newWithRWConfigOSEnv
+	^ self newWithRW
 		
 ]
 
@@ -196,7 +196,7 @@ TTVault class >> searchPathFor: whoami [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> showMeTheSearchPath [
+TTVault class >> traceCurrentSearchPath [
 	
 	<gtExample>
 	
@@ -230,26 +230,32 @@ TTVault >> funcNormalizeOn: assoc [
 		
 	  SEE CLASS COMMENT for format decision tree"
 
-			| key newKey size |
+			| key size preserveCase |
 		 
+		  preserveCase := false.
 			key := (assoc key,'__') splitOn: '__'.
 			size := key size.
  
 			size = 4 ifFalse: [  
 			
-				size = 3 ifTrue:  [ key addFirst: 'default'. 
-					key second ifEmpty: [ key at: 3 put: ('_', (key at: 3))
+				size = 3 ifTrue:  [ 
+				  key addFirst: 'default'. 
+					key second ifEmpty: [ preserveCase := true. key at: 3 put: ('__', (key at: 3)) ]
 				].
 			  
-			  size = 2 ifTrue: [ 
+			  size = 2 ifTrue: [
+			  	preserveCase := true.
 			  	key addFirst: ''. 
-			  	key addFirst: 'default' ]
+			  	key addFirst: 'default' 
 			  ]
 			].
 			
-			key at: 1 put: (key at: 1) asLowercase.
-			key at: 2 put: (key at: 2) asUppercase.
-			key at: 3 put: (key at: 3) asUppercase.
+			preserveCase ifFalse: [
+				key at: 1 put: (key at: 1) asLowercase.
+				key at: 2 put: (key at: 2) asLowercase.
+				key at: 3 put: (key at: 3) asLowercase.
+			].
+			
 			key removeLast.
 			
 			"leaving the key as a pre-parsed array for downstream"

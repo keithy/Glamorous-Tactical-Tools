@@ -141,6 +141,8 @@ TTVaultAbstract >> funcAppFilter: assoc [
  "key was niled in order to be ignored"
  assoc ifNil: [ ^ false ].
  
+ appKey ifNil: [ ^ true ].
+ 
  "key is pre parsed"
  app := assoc key second.
  
@@ -159,41 +161,35 @@ TTVaultAbstract >> funcNormalizeOn: in [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> getOptions [ 
+TTVaultAbstract >> getOptions [
+  | result applyToAllApps |
+  applyToAllApps := OrderedCollection new.
+  result := Dictionary new.
 
-	 | result applyToAllApps |
-	 
-	 applyToAllApps := OrderedCollection new.
-	 result := Dictionary new.
+  self configNormalized do: [ :assoc |
+    | key option app field |
+    key := assoc key.
+    option := key first.
+    app := key second.
+    field := key third.
 
-	 self configNormalized do: [ :assoc |
-	 
-	 	| key option app field |
-	 	
-	 	key := assoc key.
-	 	option := key first.
-	 	app := key second.
-	 	field := key third.
-	 	
-	 	app isEmpty 
-	 		ifTrue: [ applyToAllApps add: assoc ]
-	 		ifFalse: [ 
-	 								
-	 				(result at: app ifAbsentPut:[ Dictionary new ])
-	 						at: option at: field put: assoc value
-	 	]
-	 ].
-	 	
- 	applyToAllApps do: [ :assoc |
- 		
- 		result do: [ :dict | 
- 		
- 				dict at: assoc first at: assoc third put: assoc value
- 		]
- 	].
- 
- 	^ result
-	
+    app isEmpty
+      ifTrue: [ applyToAllApps add: assoc ]
+      ifFalse: [
+        (result at: app ifAbsentPut: [ Dictionary new ])
+          at: option at: field put: assoc value ]
+  ].
+
+  applyToAllApps do: [ :assoc |
+    | key option field |
+    key := assoc key.
+    option := key first.
+    field := key third.
+    result do: [ :dict |
+      dict at: option at: field put: assoc value ]
+  ].
+
+  ^ result
 ]
 
 { #category : 'as yet unclassified' }

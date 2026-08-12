@@ -155,7 +155,7 @@ TTDictionaryTiered >> isEnabled [
 { #category : 'private - accessing' }
 TTDictionaryTiered >> next [
 	
-	^ next value
+	^ next
 ]
 
 { #category : 'private - accessing' }
