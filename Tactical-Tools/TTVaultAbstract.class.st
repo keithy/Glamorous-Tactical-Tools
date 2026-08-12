@@ -5,8 +5,8 @@ Class {
 		'options',
 		'config',
 		'appKey',
-		'env',
-		'search'
+		'search',
+		'apps'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -15,6 +15,12 @@ Class {
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
+
+{ #category : 'accessing' }
+TTVaultAbstract class >> basicNew [
+   self isAbstract ifTrue: [ self error:self name, ' is abstract' ].
+ ^ super basicNew
+]
 
 { #category : 'instance creation' }
 TTVaultAbstract class >> currentVault [
@@ -25,6 +31,12 @@ TTVaultAbstract class >> currentVault [
 TTVaultAbstract class >> getCurrentVault [
 
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract class >> isAbstract [
+
+	^ self == TTVaultAbstract
 ]
 
 { #category : 'accessing' }
@@ -80,11 +92,17 @@ TTVaultAbstract >> appKey: anObject [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> apps [
+
+	^ apps ifNil: [ apps := self getApps ]
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> asDictionary [
 
 	^ (IdentityDictionary new) 
 			at: #config put: self config;
-			at: #options put:self options;
+			at: #options put: self options;
 			yourself
 			 
  
@@ -128,7 +146,7 @@ TTVaultAbstract >> config [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> configNormalized [
+TTVaultAbstract >> configForApp [
 
 	
 	"The normalized form of the keys is an array
@@ -143,6 +161,24 @@ TTVaultAbstract >> configNormalized [
 	
 	collect: [ :in | self funcNormalizeOn: in ] 
 	thenSelect: [ :out | self funcAppFilter: out ]
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> configNormalized [
+
+	
+	"The normalized form of the keys is an array
+	#(<option> <App Key> <field>)
+	
+	1. options are lowercase
+	2. App keys are uppercase
+	3. Field keys are uppercase
+	"
+	
+	^ self config associations 
+	
+	collect: [ :in | self funcNormalizeOn: in ] 
+	thenSelect: #notNil
 ]
 
 { #category : 'accessing' }
@@ -180,8 +216,11 @@ TTVaultAbstract >> copyForAll [
 
 { #category : 'accessing' }
 TTVaultAbstract >> doesNotUnderstand: aMessage [
-
-	^ self lookup: aMessage selector ifPresent: [ :v | v ]
+	aMessage hasArguments ifFalse: [ 
+	
+		self lookup: aMessage selector ifPresent: [ :v | ^ v ]
+	].
+	^ super doesNotUnderstand: aMessage
 ]
 
 { #category : 'accessing' }
@@ -220,7 +259,7 @@ TTVaultAbstract >> funcNormalizeOn: in [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> getOptions [
+TTVaultAbstract >> getApps [
   | result applyToAllApps |
   applyToAllApps := OrderedCollection new.
   result := Dictionary new.
@@ -252,13 +291,46 @@ TTVaultAbstract >> getOptions [
 ]
 
 { #category : 'as yet unclassified' }
-TTVaultAbstract >> gtItemsFor: aView [
+TTVaultAbstract >> gtClientFor: aView [
 	<gtView>
 	
 	^ aView forward
-		title: 'Items';
-		priority: 10;
+		title: 'Client';
+		priority: 1;
+		object: [ self options];
+		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultAbstract >> gtConfigFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Config';
+		priority: 5;
 		object: [ config ];
+		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultAbstract >> gtConfiguredAppsFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Apps';
+		priority: 10;
+		object: [ self configuredApps];
+		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultAbstract >> gtNormalizedAppFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'N4App';
+		priority: 10;
+		object: [ self configForApp];
 		view: #gtItemsFor:
 ]
 
@@ -270,6 +342,17 @@ TTVaultAbstract >> gtNormalizedFor: aView [
 		title: 'Normalized';
 		priority: 10;
 		object: [ self configNormalized];
+		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultAbstract >> gtOptionsFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Options';
+		priority: 1;
+		object: [ self options];
 		view: #gtItemsFor:
 ]
 
@@ -305,7 +388,7 @@ TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
 	
 	start := self asDictionary.
 	
-	search do: [ :attempt |
+	self search do: [ :attempt |
 	
 		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
 						
@@ -321,7 +404,7 @@ TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
 
 { #category : 'accessing' }
 TTVaultAbstract >> options [
-    ^ options ifNil: [ options := Dictionary new ]
+    ^ options ifNil: [ options := self apps at: appKey ifAbsent: [ Dictionary new ]]
 ]
 
 { #category : 'accessing' }
@@ -335,27 +418,21 @@ TTVaultAbstract >> projectId [
 { #category : 'accessing' }
 TTVaultAbstract >> refresh [
 
-	self setOptions
+	apps := nil.
+	options := nil.
+	self options.
 		
 ]
 
 { #category : 'accessing' }
 TTVaultAbstract >> search [ 
 
-	^ search ifNil: #((config))
+	^ search ifNil: [ search := #((options default) (config)) ]
 ]
 
 { #category : 'accessing' }
 TTVaultAbstract >> setConfig: anyRespondsToAssociations [
 	config := anyRespondsToAssociations
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract >> setOptions [
-
-	 options := self getOptions
- 
-	
 ]
 
 { #category : 'accessing' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTMiseEnPlace',
-	#superclass : 'Object',
+	#superclass : 'TTClientAbstract',
 	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
 	#tag : 'Clients'
@@ -19,6 +19,21 @@ TTMiseEnPlace class >> basicExecMiseEnvironmentIn: source [
 			command: 'bash';
 			arguments: {'-c'. (cd, '~/.local/bin/mise env --json-extended').};
 			yourself
+]
+
+{ #category : 'as yet unclassified' }
+TTMiseEnPlace class >> clientId [
+
+	^ 'mise'
+]
+
+{ #category : 'as yet unclassified' }
+TTMiseEnPlace class >> new [
+
+	^ (self basicNew)
+			setVault: (TTVault currentVault);
+			initialize
+ 
 ]
 
 { #category : 'as yet unclassified' }
