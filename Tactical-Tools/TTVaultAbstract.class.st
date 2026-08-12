@@ -309,7 +309,7 @@ TTVaultAbstract >> getApps [
   ^ result
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'gt-views' }
 TTVaultAbstract >> gtClientFor: aView [
 	<gtView>
 	
@@ -320,7 +320,7 @@ TTVaultAbstract >> gtClientFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'gt-views' }
 TTVaultAbstract >> gtConfigFor: aView [
 	<gtView>
 	
@@ -331,7 +331,7 @@ TTVaultAbstract >> gtConfigFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'gt-views' }
 TTVaultAbstract >> gtConfiguredAppsFor: aView [
 	<gtView>
 	
@@ -342,7 +342,7 @@ TTVaultAbstract >> gtConfiguredAppsFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'gt-views' }
 TTVaultAbstract >> gtNormalizedAppFor: aView [
 	<gtView>
 	
@@ -353,7 +353,7 @@ TTVaultAbstract >> gtNormalizedAppFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'gt-views' }
 TTVaultAbstract >> gtNormalizedFor: aView [
 	<gtView>
 	
@@ -361,17 +361,6 @@ TTVaultAbstract >> gtNormalizedFor: aView [
 		title: 'Normalized';
 		priority: 10;
 		object: [ self configNormalized];
-		view: #gtItemsFor:
-]
-
-{ #category : 'as yet unclassified' }
-TTVaultAbstract >> gtOptionsFor: aView [
-	<gtView>
-	
-	^ aView forward
-		title: 'Options';
-		priority: 1;
-		object: [ self options];
 		view: #gtItemsFor:
 ]
 
@@ -383,7 +372,18 @@ TTVaultAbstract >> hubId [
 	^ TheHub hubId
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
+TTVaultAbstract >> initialize [
+
+	"We construct this instance without initialization
+	 this cascades the initialization"
+	  
+	self config initialize.
+	 
+	
+]
+
+{ #category : 'testing' }
 TTVaultAbstract >> isWhoAmI [
 
 	<ttWhoAmI>

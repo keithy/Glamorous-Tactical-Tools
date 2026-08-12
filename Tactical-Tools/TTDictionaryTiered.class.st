@@ -30,8 +30,8 @@ TTDictionaryTiered class >> newTest [
 TTDictionaryTiered class >> newWithKey: aKey [
 
 	^ self basicNew
-			tierKey: aKey;
-			initialize
+			tierKey: aKey
+			yourself
 ]
 
 { #category : 'public - accessing' }
@@ -148,7 +148,34 @@ TTDictionaryTiered >> gtTierKeysFor: aView [
 { #category : 'initialization' }
 TTDictionaryTiered >> initialize [
  
-	isEnabled := true.
+  "we, the top tier are initialised once, but we cascade
+  this twice in order to give some tiers the chance to 
+  know their peers after all of the other tiers have been
+  initialised"
+  
+  self initializeOne: self.
+  self initializeTwo: self.
+  
+]
+
+{ #category : 'initialization' }
+TTDictionaryTiered >> initializeOne: topTier [
+
+	"cascade initializeOne: return the last tier initialized"
+	
+	(dict respondsTo: #initializeOne:) ifTrue: [ dict initializeOne: topTier ].
+	
+	^ next ifNil: [ self ] ifNotNil: [ self initializeOne: topTier ]
+]
+
+{ #category : 'initialization' }
+TTDictionaryTiered >> initializeTwo: topTier [
+
+	"cascade initializeTwo: return the last tier initialized"
+	
+	(dict respondsTo: #initializeTwo:) ifTrue: [ dict initializeTwo: topTier ].
+		
+	^ next ifNil: [ self ] ifNotNil: [ self initializeTwo: topTier ]
 ]
 
 { #category : 'testing' }
@@ -160,7 +187,13 @@ TTDictionaryTiered >> isDictionaryTiered [
 { #category : 'initialization' }
 TTDictionaryTiered >> isEnabled [
 
-	^ isEnabled
+	^ isEnabled ifNil: [ isEnabled := true ]
+]
+
+{ #category : 'initialization' }
+TTDictionaryTiered >> isReady [
+ 
+	^ dict notNil and: [ dict notEmpty and: [ self beEnabled ] ]
 ]
 
 { #category : 'private - accessing' }
@@ -198,6 +231,15 @@ TTDictionaryTiered >> setDictionary: aDictionary [
 ]
 
 { #category : 'tier management' }
+TTDictionaryTiered >> tierAppend: aTier [
+
+	"It is safer to use this to build a stack from the top end
+	 because we can check for circular refences"
+	 
+	 ^ self tierInsert: aTier after: nil
+]
+
+{ #category : 'tier management' }
 TTDictionaryTiered >> tierAt: name [
 
 	name = tierKey ifTrue: [ ^ self ].
@@ -210,11 +252,36 @@ TTDictionaryTiered >> tierAt: name [
 { #category : 'tier management' }
 TTDictionaryTiered >> tierInsert: newTier [
 
-	"unsafe private"
+	"unsafe private, inserting in the middle means that 
+	 we can not protect against circular references"
+	 
 	newTier next: self next.
   self next: newTier.
   
   ^ newTier
+]
+
+{ #category : 'tier management' }
+TTDictionaryTiered >> tierInsert: aTier after: thisTierKey [
+
+	"It is safer to use this to build a stack from the top end
+	 because we can check for circular refences"
+	 
+	 | last |
+	 
+	 self tiers do: [ :tier | 
+	 
+	 	tier == aTier ifTrue: [ self error: 'Circular linked lists are a bad idea' ].
+	 	
+	 	tier tierKey = thisTierKey ifTrue: [ ^ tier tierInsert: aTier   ].
+	 	
+	 	last := tier.
+	 ].
+	  
+	  thisTierKey ifNotNil: [ KeyNotFound signalFor: thisTierKey ].
+	  
+	  "appending"
+	 ^ last tierInsert: aTier 
 ]
 
 { #category : 'tier management' }
@@ -236,13 +303,13 @@ TTDictionaryTiered >> tierKeys [
 { #category : 'tier management' }
 TTDictionaryTiered >> tierNewAppendWithKey: aSymbol [
 
-	^ self tiers last tierInsert: (self class newWithKey: aSymbol)  
+	^ self tierAppend: (self class newWithKey: aSymbol)  
 ]
 
 { #category : 'tier management' }
 TTDictionaryTiered >> tierNewInsertWithKey: aSymbol after: this [
 
-	^ (self tierAt: this) tierInsert: (self class newWithKey: aSymbol)  
+	^ self  tierInsert: (self class newWithKey: aSymbol) after: this  
 ]
 
 { #category : 'tier management' }

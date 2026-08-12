@@ -16,8 +16,7 @@ TTVault class >> makeDictionaryDotEnvFile: file [
 
 	^ TTDictionaryDotEnv new
 				setValueWriter: TTVaultValueWriter new;
-				source: file;
-				readSource;
+				setSource: file;
 				yourself
 ]
 
@@ -32,7 +31,7 @@ TTVault class >> makeDictionaryMiseFor: projectDirectory [
 
 	^ TTDictionaryMiseEnv new
 				setValueWriter: TTVaultValueWriter new;
-				source: projectDirectory;
+				setSource: projectDirectory;
 				yourself
 ]
 
@@ -40,9 +39,8 @@ TTVault class >> makeDictionaryMiseFor: projectDirectory [
 TTVault class >> makeDictionaryOSEnv [
 
 	^ TTDictionaryOSEnv new
-				source: TheHub;
+				setSource: TheHub;
 				setValueWriter: TTVaultValueWriter new;
-				readSource;
 				yourself
 ]
 
@@ -89,7 +87,7 @@ TTVault class >> makeTierMiseFor: project [
 	<gtExample>
 	  
   ^ (self makeTierWithKey:#mise) 
-			in: [ :newTier | newTier setDictionary: (self makeDictionaryMiseFor: project)    ];
+			setDictionary: (self makeDictionaryMiseFor: project);
 			yourself
 				 
 ]
@@ -100,7 +98,7 @@ TTVault class >> makeTierOSEnv [
 	<gtExample>
 
 	^ (self makeTierWithKey:#os) 
-			in: [ :newTier | newTier setDictionary: (self makeDictionaryOSEnv) ];
+			setDictionary: self makeDictionaryOSEnv;
 			yourself
 ]
 
@@ -157,7 +155,7 @@ TTVault class >> newWithRW [
 
  ^ self basicNew
 		setConfig: self makeTierRW
-		initialize
+		yourself
 		
 ]
 
@@ -166,14 +164,15 @@ TTVault class >> newWithRWConfigOSEnv [
 
  <gtExample>
 
- | nonBackedStore |
+ | firstTier |
  
- nonBackedStore := self makeTierRW.
- 						
- (nonBackedStore tierInsert: self makeTierConfig) tierInsert: self makeTierOSEnv.
+ firstTier := (self makeTierRW)
+ 									tierAppend: self makeTierConfig;
+									 tierAppend:self makeTierOSEnv;
+									 yourself.
   					 
  ^ (self basicNew)
-		setConfig: nonBackedStore;
+		setConfig: firstTier;
 		initialize
 		
 ]

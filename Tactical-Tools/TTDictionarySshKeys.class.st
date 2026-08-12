@@ -1,5 +1,5 @@
 Class {
-	#name : 'TTDictionaryDotEnv',
+	#name : 'TTDictionarySshKeys',
 	#superclass : 'TTDictionaryBacked',
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -7,26 +7,27 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTDictionaryDotEnv class >> newTest [
+TTDictionarySshKeys class >> newTest [
 
 	<gtExample>
+	 
+	| store |
 	
-	^ (self basicNew)
+	^ (self new)
 			setValueWriter: TTVaultValueWriter new;
 	 		setSource: 
 
 	'HELLO=WORLD
 	HELLO1=WORLD1
 	HELLO2_PASS="WORLD2" 
-	HELLO3_ENCODED="V09STEQz"';
-	    yourself
+	HELLO3_ENCODED="V09STEQz"'.
 	
  
 	 
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryDotEnv >> readFromStream: aStream [
+TTDictionarySshKeys >> readFromStream: aStream [
 
 	[ [ aStream atEnd ]
 		whileFalse: [ | line key value |
@@ -41,7 +42,7 @@ TTDictionaryDotEnv >> readFromStream: aStream [
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryDotEnv >> readSource [
+TTDictionarySshKeys >> readSource [
 	
 	self removeAll.
 	self readFromStream: self source readStream.
