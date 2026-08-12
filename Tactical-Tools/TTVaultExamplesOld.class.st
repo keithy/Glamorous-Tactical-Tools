@@ -1,5 +1,5 @@
 Class {
-	#name : 'TTVaultExamples',
+	#name : 'TTVaultExamplesOld',
 	#superclass : 'Object',
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'examples - funcNormalizeOn:' }
-TTVaultExamples >> funcNormalizeOn_appField_prependsDefault [
+TTVaultExamplesOld >> funcNormalizeOn_appField_prependsDefault [
   <gtExample>
   <return: #Association>
 
@@ -22,24 +22,22 @@ TTVaultExamples >> funcNormalizeOn_appField_prependsDefault [
 ]
 
 { #category : 'examples - funcNormalizeOn:' }
-TTVaultExamples >> funcNormalizeOn_leadingDoubleUnderscore_ignored [
-
-	"new scheme ignores keys that do not play our tune"
-	
+TTVaultExamplesOld >> funcNormalizeOn_leadingDoubleUnderscore_ignored [
   <gtExample>
- 
+  <return: #Association>
+
   | assoc normalized |
-  
   assoc := '__CFBundleIdentifier' -> 'v'.
   normalized := TTVault new funcNormalizeOn: assoc.
 
-  self assert: normalized equals: nil.
+  self assert: normalized key equals: #('default' '' '__CFBundleIdentifier' ).
+  self assert: normalized value equals: 'v'.
 
   ^ normalized
 ]
 
 { #category : 'examples - funcNormalizeOn:' }
-TTVaultExamples >> funcNormalizeOn_loneField_ignored [
+TTVaultExamplesOld >> funcNormalizeOn_loneField_ignored [
   <gtExample>
   <return: #Association>
 
@@ -47,13 +45,29 @@ TTVaultExamples >> funcNormalizeOn_loneField_ignored [
   assoc := 'fieLD_Of_Dreams' -> 'v'.
   normalized := TTVault basicNew funcNormalizeOn: assoc.
 
-  self assert: normalized  equals: nil.
-  
+  self assert: normalized key equals: #('default' '' 'fieLD_Of_Dreams').
+  self assert: normalized value equals: 'v'.
+
   ^ normalized
 ]
 
 { #category : 'examples - funcNormalizeOn:' }
-TTVaultExamples >> funcNormalizeOn_optionAppField_keepsOption [
+TTVaultExamplesOld >> funcNormalizeOn_loneField_is_preseved_WrappedAsDefaultEmptyApp [
+  <gtExample>
+  <return: #Association>
+
+  | assoc normalized |
+  assoc := 'fieLD_Of_Dreams' -> 'v'.
+  normalized := TTVault basicNew funcNormalizeOn: assoc.
+
+  self assert: normalized key equals: #('default' '' 'fieLD_Of_Dreams').
+  self assert: normalized value equals: 'v'.
+
+  ^ normalized
+]
+
+{ #category : 'examples - funcNormalizeOn:' }
+TTVaultExamplesOld >> funcNormalizeOn_optionAppField_keepsOption [
   <gtExample>
   <return: #Association>
 
@@ -68,11 +82,11 @@ TTVaultExamples >> funcNormalizeOn_optionAppField_keepsOption [
 ]
 
 { #category : 'examples - vault' }
-TTVaultExamples >> vault_from_fixture [
+TTVaultExamplesOld >> vault_mixedFormAndExplicitOption_resolveUnderSameApp [
   <gtExample>
   <return: #TTVault>
 
-  | vault tier dotenv normalized |
+  | vault tier dotenv options jiraDefault |
   dotenv := TTDictionaryDotEnv new
     valueWriter: TTVaultValueWriter new;
     source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
@@ -82,22 +96,9 @@ TTVaultExamples >> vault_from_fixture [
   tier := TTDictionaryTiered newWithKey: #dotenv.
   tier setDictionary: dotenv.
 
-  ^ (TTVault basicNew)
-  						setConfig: tier;
-  						initialize;
-  						refresh
-
- 
-]
-
-{ #category : 'examples - vault' }
-TTVaultExamples >> vault_mixedFormAndExplicitOption_resolveUnderSameApp [
-  <gtExample>
-  <return: #TTVault>
-
-  | vault tier dotenv options jiraDefault |
-   
-  vault := self vault_from_fixture.
+  vault := TTVault new.
+  vault setConfig: tier.
+  vault refresh.
   options := vault options.
 
   "jira merges from passthrough (no option) and explicit-form (no option) entries;
@@ -117,14 +118,24 @@ TTVaultExamples >> vault_mixedFormAndExplicitOption_resolveUnderSameApp [
 ]
 
 { #category : 'examples - vault' }
-TTVaultExamples >> vault_passthroughKeys_accessible_via_config [
+TTVaultExamplesOld >> vault_passthroughKeys_landInDefaultOption [
   <gtExample>
   <return: #TTVault>
 
-  | vault config |
-    
-    vault := self vault_from_fixture.
-    
+  | vault tier dotenv normalized |
+  dotenv := TTDictionaryDotEnv new
+    valueWriter: TTVaultValueWriter new;
+    source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
+    readSource;
+    yourself.
+
+  tier := TTDictionaryTiered newWithKey: #dotenv.
+  tier setDictionary: dotenv.
+
+  vault := TTVault new.
+  vault setConfig: tier.
+  vault refresh.
+
   "The fixture has 4 passthrough entries (no option__ prefix):
     Preserve_My_Case_Please=keep_me   -> lone field, parses as ('default', '', 'Preserve_My_Case_Please')
     SOME_LLM_API_KEY=my_key           -> lone field, parses as ('default', '', 'SOME_LLM_API_KEY')
@@ -132,38 +143,13 @@ TTVaultExamples >> vault_passthroughKeys_accessible_via_config [
     __MISE_EXE=/usr/local/bin/mise   -> app-only form, parses as ('default', '', '__MISE_EXE')
   The case is preserved in the field slot. Option is filled-in as 'default'."
 
-  config := vault config asDictionary.
-   
-  self assert: (config includesKey: 'Preserve_My_Case_Please').
-  self assert: (config includesKey: 'SOME_LLM_API_KEY').
-  self assert: (config includesKey: '__Problem_Child').
-  self assert: (config includesKey: '__MISE_EXE').
+  normalized := vault configNormalized.
+  normalized := normalized collect: [ :assoc | assoc key ].
 
-  ^ vault
-]
+  self assert: (normalized includes: #('default' '' 'Preserve_My_Case_Please')).
+  self assert: (normalized includes: #('default' '' 'SOME_LLM_API_KEY')).
+  self assert: (normalized includes: #('default' '' '__Problem_Child')).
+  self assert: (normalized includes: #('default' '' '__MISE_EXE')).
 
-{ #category : 'examples - vault' }
-TTVaultExamples >> vault_passthroughKeys_accessible_via_lookup [
-  <gtExample>
-  <return: #TTVault>
-
-  | vault |
-    
-    vault := self vault_from_fixture.
-    
-    vault setSearch: #(#(options) #(config)).
-    
-  "The fixture has 4 passthrough entries (no option__ prefix):
-    Preserve_My_Case_Please=keep_me   -> lone field, parses as ('default', '', 'Preserve_My_Case_Please')
-    SOME_LLM_API_KEY=my_key           -> lone field, parses as ('default', '', 'SOME_LLM_API_KEY')
-    __Problem_Child=problem_value    -> app-only form, parses as ('default', '', '__Problem_Child')
-    __MISE_EXE=/usr/local/bin/mise   -> app-only form, parses as ('default', '', '__MISE_EXE')
-  The case is preserved in the field slot. Option is filled-in as 'default'."
-
-  self assert: (vault at: 'Preserve_My_Case_Please') equals: 'keep_me'.
-  self assert: (vault at: 'SOME_LLM_API_KEY') equals: 'my_key'.
-  self assert: (vault at: '__Problem_Child') equals: 'problem_value'.
-  self assert: (vault at: '__MISE_EXE') equals: '/usr/local/bin/mise'.
-  
   ^ vault
 ]

@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'options',
 		'config',
-		'appKey'
+		'appKey',
+		'env',
+		'search'
 	],
 	#classInstVars : [
 		'currentVault'
@@ -26,9 +28,19 @@ TTVaultAbstract class >> getCurrentVault [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract class >> makeSearchDefault [
+	^ #((options default) (config))
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract class >> reset [
 
 currentVault := nil
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract class >> searchInitial [
+	^ #((options '*' default) (config))
 ]
 
 { #category : 'instance creation' }
@@ -68,6 +80,41 @@ TTVaultAbstract >> appKey: anObject [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> asDictionary [
+
+	^ (IdentityDictionary new) 
+			at: #config put: self config;
+			at: #options put:self options;
+			yourself
+			 
+ 
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> at: aKey [  
+
+	"convenience"
+  ^ self lookup: aKey ifPresent:[ :v | ^ v ]
+ 
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> at: aKey  ifAbsent: aBlock [
+	
+	"convenience"
+ ^ (self lookup: aKey ifPresent: [ :v | ^ v ]) ifNil: aBlock
+ 
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> at: aKey  ifPresent: pBlock [
+	
+	"convenience"
+ ^ self lookup: aKey ifPresent: pBlock
+ 
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> bundleId [
 
 	"update later"
@@ -77,7 +124,7 @@ TTVaultAbstract >> bundleId [
 
 { #category : 'accessing' }
 TTVaultAbstract >> config [
-	^ config
+	^ config ifNil: [ config := Dictionary new ]
 ]
 
 { #category : 'accessing' }
@@ -129,6 +176,18 @@ TTVaultAbstract >> copyForAll [
 			 
 	
 	 
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> doesNotUnderstand: aMessage [
+
+	^ self lookup: aMessage selector ifPresent: [ :v | v ]
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> errorKeyNotFound: aKey [
+
+	KeyNotFound signalFor: aKey
 ]
 
 { #category : 'accessing' }
@@ -233,8 +292,36 @@ TTVaultAbstract >> isWhoAmI [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
+
+	"
+	search = #( #(options default) #(config) )
+	attempt1, receiver is self (theVault)
+	
+	Thought of offering a wildcard option on the search, but it has limited use.
+
+	"
+	| start |
+	
+	start := self asDictionary.
+	
+	search do: [ :attempt |
+	
+		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
+						
+	].
+	
+	^ nil
+
+	
+	
+	
+	
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> options [
-    ^ options
+    ^ options ifNil: [ options := Dictionary new ]
 ]
 
 { #category : 'accessing' }
@@ -253,8 +340,14 @@ TTVaultAbstract >> refresh [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> setConfig: anObject [
-	config := anObject
+TTVaultAbstract >> search [ 
+
+	^ search ifNil: #((config))
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> setConfig: anyRespondsToAssociations [
+	config := anyRespondsToAssociations
 ]
 
 { #category : 'accessing' }
@@ -266,11 +359,8 @@ TTVaultAbstract >> setOptions [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> setOptionsForAll [
-
-	 options := self getOptionsForAll
- 
-	
+TTVaultAbstract >> setSearch: anArray [
+	search := anArray
 ]
 
 { #category : 'accessing' }

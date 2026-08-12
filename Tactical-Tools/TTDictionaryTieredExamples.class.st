@@ -22,9 +22,9 @@ TTDictionaryTieredExamples >> deepSizeReportsAllEnabledTiersCombined [
 	one := TTDictionaryTiered newWithKey: #one.
 	one tierNewAppendWithKey: #two.
 
-	one writableDictionary at: #a put: 1.
-	one next writableDictionary at: #b put: 2.
-	one next writableDictionary at: #b2 put: 22.
+	one wrappedDictionary at: #a put: 1.
+	one next wrappedDictionary at: #b put: 2.
+	one next wrappedDictionary at: #b2 put: 22.
 
 	self assert: one deepSize equals: 3.
 
@@ -55,11 +55,11 @@ TTDictionaryTieredExamples >> setDictionarySwapsWritableDictionary [
 
 	one := TTDictionaryTiered newWithKey: #one.
 
-	self assert: one writableDictionary isEmpty.
+	self assert: one wrappedDictionary isEmpty.
 
 	one setDictionary: (Dictionary with: #pre -> #loaded).
 
-	self assert: (one writableDictionary at: #pre) equals: #loaded.
+	self assert: (one wrappedDictionary at: #pre) equals: #loaded.
 
 	^ one
 ]
@@ -213,13 +213,13 @@ TTDictionaryTieredExamples >> writableDictionaryIsPerTier [
 	one tierNewAppendWithKey: #two.
 	one tierNewAppendWithKey: #three.
 
-	one writableDictionary at: #a put: 1.
-	one next writableDictionary at: #b put: 2.
-	one next next writableDictionary at: #c put: 3.
+	one wrappedDictionary at: #a put: 1.
+	one next wrappedDictionary at: #b put: 2.
+	one next next wrappedDictionary at: #c put: 3.
 
-	self assert: one writableDictionary size equals: 1.
-	self assert: (one next writableDictionary at: #b) equals: 2.
-	self assert: (one next next writableDictionary at: #c) equals: 3.
+	self assert: one wrappedDictionary size equals: 1.
+	self assert: (one next wrappedDictionary at: #b) equals: 2.
+	self assert: (one next next wrappedDictionary at: #c) equals: 3.
 
 	^ one
 ]

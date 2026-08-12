@@ -21,7 +21,7 @@ TTDictionaryTiered class >> newTest [
 	
 	test := self newWithKey: #test.
 	
-	self assert: test writableDictionary isDictionary.
+	self assert: test wrappedDictionary isDictionary.
 	self assert: test isEnabled.
 	
 ]
@@ -34,38 +34,49 @@ TTDictionaryTiered class >> newWithKey: aKey [
 			initialize
 ]
 
-{ #category : 'private - delegation' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> asDictionary [
-
+	
+	"flat dictionary"
+	
 	^ self associations asDictionary
 			 
 	
 ]
 
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> asDictionaryWithLowercaseKeys [
-
-	^ (self associations collect: [ :ea | ea key: ea key asLowercase ]) asDictionary
-			 
-	
-]
-
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> asDictionaryWithUppercaseKeys [
-
-	^ (self associations collect: [ :ea | ea key: ea key asUppercase ]) asDictionary
-			 
-	
-]
-
-{ #category : 'private - delegation' }
+{ #category : 'public - accessing' }
 TTDictionaryTiered >> associations [
 
 	^ (self tiersReverseCollect: [ :tier | 
 	
-				tier isEnabled ifTrue: [ tier writableDictionary associations ] ifFalse: nil
+				tier isEnabled ifTrue: [ tier wrappedDictionary associations ] ifFalse: nil
 			
 			]) flatten  
+]
+
+{ #category : 'public - accessing' }
+TTDictionaryTiered >> at: aKey [  
+
+	"convenience"
+  ^ self at: aKey ifPresent:[ :v | ^ v ]
+]
+
+{ #category : 'public - accessing' }
+TTDictionaryTiered >> at: aKey  ifAbsent: aBlock [
+	
+	"convenience"
+ ^ (self at: aKey ifPresent: [ :v | ^ v ]) ifNil: aBlock
+ 
+]
+
+{ #category : 'public - accessing' }
+TTDictionaryTiered >> at: aKey ifPresent: pBlock [
+	
+	"bottleneck method that allows us to act as a dictionary, for lookup at least"
+	
+	^ self tiersCollect: [ :t | t wrappedDictionary at: aKey ifPresent: [ :v | ^v ]
+	] on: OrderedCollection new
+
 ]
 
 { #category : 'initialization' }
@@ -83,7 +94,7 @@ TTDictionaryTiered >> beEnabled [
 { #category : 'public - accessing' }
 TTDictionaryTiered >> deepSize [
  
-	^(self tiersCollect: [ :tier | tier writableDictionary size ] on: OrderedCollection new) sum
+	^(self tiersCollect: [ :tier | tier wrappedDictionary size ] on: OrderedCollection new) sum
 ]
 
 { #category : 'views' }
@@ -92,7 +103,7 @@ TTDictionaryTiered >> gtItemsFor: aView [
 	^ aView columnedTree
 		title: 'Items';
 		priority: 1;
-		items: [ self tiers collect: [ :t | t -> t writableDictionary ] ];
+		items: [ self tiers collect: [ :t | t -> t wrappedDictionary ] ];
 		children: [ :each | 
 			each value isDictionary
 				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
@@ -168,7 +179,7 @@ TTDictionaryTiered >> next: aTieredDictionary [
 	next := aTieredDictionary
 ]
 
-{ #category : 'private - delegation' }
+{ #category : 'copying' }
 TTDictionaryTiered >> postCopy [
 
 	(dict askFor: #isBacked) ifFalse: [
@@ -178,7 +189,7 @@ TTDictionaryTiered >> postCopy [
 	
 ]
 
-{ #category : 'private - delegation' }
+{ #category : 'initialization' }
 TTDictionaryTiered >> setDictionary: aDictionary [
 	
 	"writable dictionary"
@@ -269,8 +280,8 @@ TTDictionaryTiered >> tiersReverseCollect: aBlock [
 	
 ]
 
-{ #category : 'private - delegation' }
-TTDictionaryTiered >> writableDictionary [
+{ #category : 'private - accessing' }
+TTDictionaryTiered >> wrappedDictionary [
 	
 	"writable dictionary"
 	

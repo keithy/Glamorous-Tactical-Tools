@@ -136,6 +136,16 @@ TTVault class >> new [
 ]
 
 { #category : 'instance creation' }
+TTVault class >> newEmpty [
+
+ <gtExample>
+
+ ^ self basicNew
+		initialize
+		
+]
+
+{ #category : 'instance creation' }
 TTVault class >> newWithRW [ 
 
  <gtExample>
@@ -213,7 +223,7 @@ TTVault >> configRefresh [
   "don't everyone do this"
   | unique |
   
-	unique := config tiersCollect: [ :tier | tier writableDictionary ] on: IdentitySet new.
+	unique := config tiersCollect: [ :tier | tier wrappedDictionary ] on: IdentitySet new.
 	unique do: [ :dict | dict askFor: #readSource ]
 	
 ]
@@ -223,42 +233,28 @@ TTVault >> funcNormalizeOn: assoc [
 
 	"pass thru function that 
 	
-		1. prepends default__ option to any <key>__<field> pair that has no given option.
-		2. any keys that had __<key> prefix are prefixed _<key> to avoid confusing the parser
-		3. any standalone <key> becomes default____<key>.
-		4. standardised capitalisation is applied <toLowercase>__<toUppercase>__<toUppercase>
+		1. Only handling keys that conform to our scheme
+		   Others can remain on the search path via #config.
+		   
+		2. prepends default__ option to any <key>__<field> pair that has no given option.
+		4. standardised capitalisation is applied <toLowercase>__<toLowercase>__<toLowercase>
 		
 	  SEE CLASS COMMENT for format decision tree"
 
 			| key size preserveCase |
 		 
-		  preserveCase := false.
-			key := (assoc key,'__') splitOn: '__'.
+			key := (assoc key) splitOn: '__'.
 			size := key size.
- 
-			size = 4 ifFalse: [  
+ 		 
+			(size < 2 or: [ key first isEmpty ]) ifTrue: [ ^ nil ].
 			
-				size = 3 ifTrue:  [ 
-				  key addFirst: 'default'. 
-					key second ifEmpty: [ preserveCase := true. key at: 3 put: ('__', (key at: 3)) ]
-				].
-			  
-			  size = 2 ifTrue: [
-			  	preserveCase := true.
-			  	key addFirst: ''. 
-			  	key addFirst: 'default' 
-			  ]
-			].
-			
-			preserveCase ifFalse: [
-				key at: 1 put: (key at: 1) asLowercase.
-				key at: 2 put: (key at: 2) asLowercase.
-				key at: 3 put: (key at: 3) asLowercase.
-			].
-			
-			key removeLast.
-			
+			size = 2 ifTrue:  [ key addFirst: 'default' ].
+		
 			"leaving the key as a pre-parsed array for downstream"
+
+			1 to: 3 do:[ :n |
+				key at: n put: (key at: n) asLowercase.
+			].
 			
   	^ (assoc copy)
   			key: key asArray;
