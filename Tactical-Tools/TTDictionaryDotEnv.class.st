@@ -14,8 +14,8 @@ TTDictionaryDotEnv class >> newTest [
 	| store |
 	
 	^ (self new)
-			valueWriter: TTVaultValueWriter new;
-	 		readSource: 
+			setValueWriter: TTVaultValueWriter new;
+	 		setSource: 
 
 	'HELLO=WORLD
 	HELLO1=WORLD1
@@ -27,15 +27,7 @@ TTDictionaryDotEnv class >> newTest [
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryDotEnv >> readSource [
-	
-	self removeAll.
-	self readingFromStream: self source readStream.
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryDotEnv >> readingFromStream: aStream [
+TTDictionaryDotEnv >> readFromStream: aStream [
 
 	[ [ aStream atEnd ]
 		whileFalse: [ | line key value |
@@ -47,4 +39,12 @@ TTDictionaryDotEnv >> readingFromStream: aStream [
 						ifFalse: [ self at: key write: value trimRight withoutQuoting ] ] ] ]
 						
 		ensure: [ aStream close ]
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryDotEnv >> readSource [
+	
+	self removeAll.
+	self readFromStream: self source readStream.
+	
 ]

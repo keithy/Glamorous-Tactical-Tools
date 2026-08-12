@@ -170,8 +170,8 @@ TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
 
   | vault tier dotenv |
   dotenv := TTDictionaryDotEnv new
-    valueWriter: TTVaultValueWriter new;
-    source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
+    setValueWriter: TTVaultValueWriter new;
+    setSource: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
     readSource;
     yourself.
 

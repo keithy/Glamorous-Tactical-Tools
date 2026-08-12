@@ -407,6 +407,14 @@ TTDictionaryTieredOld >> reset [
 	^ dict removeAll
 ]
 
+{ #category : 'initialization' }
+TTDictionaryTieredOld >> setValueWriter: aValueWriter [
+	
+	aValueWriter dict: self.
+	valueWriter := aValueWriter.
+
+]
+
 { #category : 'private - delegation' }
 TTDictionaryTieredOld >> size [ 
 
@@ -421,7 +429,7 @@ TTDictionaryTieredOld >> tierAppendTo: stack [
 	stack next ifNotNil: [ ^ self tierAppendTo: stack next ].
 	
 	(valueWriter isNil and: [ stack valueWriter notNil ])
-		ifTrue: [ self valueWriter: stack valueWriter copy ].
+		ifTrue: [ self setValueWriter: stack valueWriter copy ].
   
   stack next: self.
 	
@@ -449,7 +457,7 @@ TTDictionaryTieredOld >> tierInsertIn: stack after: key [
 	stack tierKey == key ifFalse: [ ^ self tierInsertIn: stack next after: key ].
 
 	"found"
-	valueWriter ifNil: [ self valueWriter: stack valueWriter copy ].
+	valueWriter ifNil: [ self setValueWriter: stack valueWriter copy ].
   self next: stack next.
   stack next: self.
 
@@ -502,13 +510,5 @@ TTDictionaryTieredOld >> tiersDo: aBlock [
 TTDictionaryTieredOld >> valueWriter [ 
 
 ^ valueWriter.
-
-]
-
-{ #category : 'initialization' }
-TTDictionaryTieredOld >> valueWriter: aValueWriter [
-	
-	aValueWriter dict: self.
-	valueWriter := aValueWriter.
 
 ]

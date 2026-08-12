@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-TTVault class >> getCurrentVault [
+TTVault class >> getDefaultVault [
 	^ self newWithRWConfigOSEnv
 ]
 
@@ -15,7 +15,7 @@ TTVault class >> getCurrentVault [
 TTVault class >> makeDictionaryDotEnvFile: file [
 
 	^ TTDictionaryDotEnv new
-				valueWriter: TTVaultValueWriter new;
+				setValueWriter: TTVaultValueWriter new;
 				source: file;
 				readSource;
 				yourself
@@ -31,7 +31,7 @@ TTVault class >> makeDictionaryFrom: streamable [
 TTVault class >> makeDictionaryMiseFor: projectDirectory [
 
 	^ TTDictionaryMiseEnv new
-				valueWriter: TTVaultValueWriter new;
+				setValueWriter: TTVaultValueWriter new;
 				source: projectDirectory;
 				yourself
 ]
@@ -41,7 +41,7 @@ TTVault class >> makeDictionaryOSEnv [
 
 	^ TTDictionaryOSEnv new
 				source: TheHub;
-				valueWriter: TTVaultValueWriter new;
+				setValueWriter: TTVaultValueWriter new;
 				readSource;
 				yourself
 ]
@@ -136,6 +136,11 @@ TTVault class >> new [
 ]
 
 { #category : 'instance creation' }
+TTVault class >> newDefaultVault [
+	^ self newWithRWConfigOSEnv
+]
+
+{ #category : 'instance creation' }
 TTVault class >> newEmpty [
 
  <gtExample>
@@ -210,7 +215,7 @@ TTVault class >> traceCurrentSearchPath [
 	
 	<gtExample>
 	
-	^ FileLookedForNotification collectDuring: [ self getCurrentVault ]
+	^ FileLookedForNotification collectDuring: [ self newDefaultVault ]
 
 
 	
@@ -221,6 +226,7 @@ TTVault class >> traceCurrentSearchPath [
 TTVault >> configRefresh [
   
   "don't everyone do this"
+  
   | unique |
   
 	unique := config tiersCollect: [ :tier | tier wrappedDictionary ] on: IdentitySet new.

@@ -24,11 +24,11 @@ TTVaultAbstract class >> basicNew [
 
 { #category : 'instance creation' }
 TTVaultAbstract class >> currentVault [
-	^ currentVault ifNil: [ currentVault := self getCurrentVault ]
+	^ currentVault ifNil: [ currentVault := self newDefaultVault ]
 ]
 
 { #category : 'instance creation' }
-TTVaultAbstract class >> getCurrentVault [
+TTVaultAbstract class >> getDefaultVault [
 
 	self subclassResponsibility
 ]
@@ -39,15 +39,28 @@ TTVaultAbstract class >> isAbstract [
 	^ self == TTVaultAbstract
 ]
 
-{ #category : 'accessing' }
+{ #category : 'instance creation' }
+TTVaultAbstract class >> makeSearch: aSelection [
+
+	^ self makeSearchDefault copyWithFirst: { #options. aSelection asSymbol. } asArray
+	
+	 
+
+	 
+]
+
+{ #category : 'instance creation' }
 TTVaultAbstract class >> makeSearchDefault [
+
 	^ #((options default) (config))
+
+	 
 ]
 
 { #category : 'accessing' }
 TTVaultAbstract class >> reset [
 
-currentVault := nil
+  currentVault := nil
 ]
 
 { #category : 'accessing' }
@@ -179,6 +192,12 @@ TTVaultAbstract >> configNormalized [
 	
 	collect: [ :in | self funcNormalizeOn: in ] 
 	thenSelect: #notNil
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> configRefresh [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -427,7 +446,16 @@ TTVaultAbstract >> refresh [
 { #category : 'accessing' }
 TTVaultAbstract >> search [ 
 
-	^ search ifNil: [ search := #((options default) (config)) ]
+	^ search ifNil: [ search := self class makeSearchDefault ]
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> select: anOption [
+
+	options := nil.
+	search := self class makeSearch: anOption
+
+
 ]
 
 { #category : 'accessing' }

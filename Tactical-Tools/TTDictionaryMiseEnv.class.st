@@ -13,8 +13,8 @@ TTDictionaryMiseEnv class >> newHomeDir [
 
 ^ (self new)
 		tierKey: #miseHome;
-		valueWriter: (TTVault makeValueWriter);
-		readSource: '~'; yourself
+		setValueWriter: (TTVault makeValueWriter);
+		setSource: '~'; yourself
 ]
 
 { #category : 'as yet unclassified' }
@@ -22,7 +22,7 @@ TTDictionaryMiseEnv >> execMiseEnv [
 
 	| cd |
 	
-	cd := source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
+	cd := self source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
 	
 ^ (GtExternalProcessBuilder new)
 		command: 'bash';
@@ -31,27 +31,17 @@ TTDictionaryMiseEnv >> execMiseEnv [
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryMiseEnv >> initialize [ 
-	super initialize.
-	tierKey := 'mise'
-]
-
-{ #category : 'accessing' }
-TTDictionaryMiseEnv >> isReadOnly [
-
-	^ mode == #readOnly
-]
-
-{ #category : 'as yet unclassified' }
-TTDictionaryMiseEnv >> readSource [
-	
-	self reset.
-	self readingFromStream: self execMiseEnv output stdout
-	
+TTDictionaryMiseEnv >> gtFileReferencePathFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Project Directory';
+		priority: 1;
+		object: [ self source asFileReference ];
+		view: #gtContentsFor:
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryMiseEnv >> readingFromStream: aStreamable [
+TTDictionaryMiseEnv >> readFromStream: aStreamable [
 	
 	(STONJSON fromStream: aStreamable readStream)	
 		
@@ -61,4 +51,17 @@ TTDictionaryMiseEnv >> readingFromStream: aStreamable [
 	
 	].
 	 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryMiseEnv >> readSource [
+	
+	self removeAll.
+	self readFromStream: self execMiseEnv output stdout
+	
+]
+
+{ #category : 'accessing' }
+TTDictionaryMiseEnv >> setProjectDirectory: anObject [
+	projectDirectory := anObject
 ]
