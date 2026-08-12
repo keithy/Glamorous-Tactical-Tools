@@ -16,7 +16,9 @@ Class {
 { #category : 'accessing' }
 TTDictionaryBacked >> at: key write: value [
 
-	^ valueWriter dict: self at: key write: value
+	^ valueWriter 
+					ifNil: [ self at: key put: value ]
+					ifNotNil: [ valueWriter dict: self at: key write: value ]
 ]
 
 { #category : 'accessing' }
@@ -40,14 +42,10 @@ TTDictionaryBacked >> initialize [
 { #category : 'accessing' }
 TTDictionaryBacked >> initializeOne: topTier [
 
-	"if we are participating in a tiered dictionary, we get two further
+	"if we are participating in a tiered dictionary, we get two
 	 initializations starting here"
-	 
-	valueWriter ifNil: [ self error: 'Require setValueWriter: for calling context' ].
 	
 	self initialize.
-	
-	
 	
 ]
 

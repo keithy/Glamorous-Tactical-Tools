@@ -3,7 +3,8 @@ Class {
 	#superclass : 'TTDictionaryBacked',
 	#instVars : [
 		'epb',
-		'readBlock'
+		'readBlock',
+		'vars'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -35,6 +36,21 @@ TTDictionaryBackedByCli class >> exampleFindSShKeys [
 ]
 
 { #category : 'accessing' }
+TTDictionaryBackedByCli class >> exampleLsProjectDir [
+	
+	<gtExample>
+	
+	| vault |
+	
+	vault := TTVault currentVault.
+	
+	^ (self newLsProjectDir) 
+			initializeOne: vault config;
+			initializeTwo: vault config;
+			yourself
+]
+
+{ #category : 'accessing' }
 TTDictionaryBackedByCli class >> makeEPBbash: dir script: script [
 
 	^ (GtExternalProcessBuilder new)
@@ -55,6 +71,7 @@ TTDictionaryBackedByCli class >> newFindGitUrls [
 	^ (self new)
 			setSource: code;
 			setEpb: (self makeEPBbash: code fullName script: cli);
+			readUsing: [ :dict :line | dict at: 'A' put: 'B' ];
 		  yourself
 ]
 
@@ -68,6 +85,19 @@ TTDictionaryBackedByCli class >> newFindSShKeys [
 	^ (self new)
 			setSource: (self asFile:'{home}/.ssh');
 			setEpb: (self makeEPBbash: '~/.ssh' script: cli);
+		  yourself
+]
+
+{ #category : 'accessing' }
+TTDictionaryBackedByCli class >> newLsProjectDir [
+
+	| cli code|
+
+	cli := 'ls -1 "$PROJECT_DIR"'.
+	
+	^ (self new)
+	    setVars: #('PROJECT_DIR' '__MISE_EXE');
+			setEpb: (self makeEPBbash: '.' script: cli);
 		  yourself
 ]
 
@@ -103,14 +133,24 @@ TTDictionaryBackedByCli >> initialize [
 { #category : 'accessing' }
 TTDictionaryBackedByCli >> initializeTwo: topTier [
 	
+	self vars do: [ :key |
+		topTier at: key ifPresent: [ :v | self epb setEnv: key value: v ]. 
+	].
+
 	"now its our turn"
 	self readSource.
 	
 ]
 
 { #category : 'accessing' }
+TTDictionaryBackedByCli >> loadEnvironment [
+]
+
+{ #category : 'accessing' }
 TTDictionaryBackedByCli >> output [
 
+	self loadEnvironment.
+	
 	^ epb output
 	 
 ]
@@ -135,4 +175,14 @@ TTDictionaryBackedByCli >> setEpb: anObject [
 
 	"set convention, setEpb required before initialization"
 	epb := anObject
+]
+
+{ #category : 'accessing' }
+TTDictionaryBackedByCli >> setVars: anObject [
+	vars := anObject
+]
+
+{ #category : 'accessing' }
+TTDictionaryBackedByCli >> vars [
+	^ vars ifNil: [ vars := #() ]
 ]
