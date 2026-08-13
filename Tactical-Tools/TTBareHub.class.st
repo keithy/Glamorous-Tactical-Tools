@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTBareHub class >> browse [
+TTBareHub class >> openBrowser [
 
 	^ TheHub current newBrowsing: self
 ]

@@ -7,6 +7,12 @@ Class {
 }
 
 { #category : 'environment' }
+TheGlamorousHub class >> _hubId [
+
+	^ 'gt'
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> gitRepositories [
 
 	"the list of repositories registered with the git tool"
@@ -49,12 +55,6 @@ TheGlamorousHub class >> homeTools [
 TheGlamorousHub class >> httpClientOptions [
 	
 	^ self signalAuto
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> hubId [
-
-	^ 'gt'
 ]
 
 { #category : 'environment' }
@@ -259,17 +259,6 @@ TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> tt [
-
-	"Tactical Tools"
-	
-	<ttHub>
-		
-  ^  #TacticalToolsHub asClass 
-		  
-]
-
-{ #category : 'environment' }
 TheGlamorousHub class >> whatIsHome [
 
 	"Main screen layout"
@@ -277,17 +266,6 @@ TheGlamorousHub class >> whatIsHome [
 	<ttSpoke>
 
 	^ GtHome
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> wip [
-
-	"Work In Progress"
-	
-	<ttHub>
-		
-  ^  #WipHub asClass 
-		  
 ]
 
 { #category : 'environment' }

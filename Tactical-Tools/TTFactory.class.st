@@ -15,6 +15,8 @@ TTFactory >> name [
 { #category : 'as yet unclassified' }
 TTFactory >> newMiseEnPlaceCli [
 
+	"Mise-En-Place - dev tools management"
+	
 	<ttClient>
 
 	^ self 
@@ -25,8 +27,23 @@ TTFactory >> newMiseEnPlaceCli [
 ]
 
 { #category : 'as yet unclassified' }
+TTFactory >> newOpenApiBrowser: aStreamable [
+
+	"OpenAPI - parser"
+	
+	<ttParser>
+	
+	^ (#GtOpenApiParser asClassIfAbsent: [ ^ nil ])  
+			readString: aStreamable
+			yourself
+	
+]
+
+{ #category : 'as yet unclassified' }
 TTFactory >> newWorldClockClient [
 
+	"World Clock"
+	
 	<ttApiClient>
 
   ^ self 

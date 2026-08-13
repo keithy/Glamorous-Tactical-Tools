@@ -14,25 +14,24 @@ Class {
 		'browsing'
 	],
 	#classVars : [
-		'WinningBrowserHubClass'
+		'WinningHubClass'
 	],
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
-{ #category : 'instance creation' }
-TheHub class >> browse [
+{ #category : 'environment' }
+TheHub class >> _hubId [
 
-^ self winningBrowserHubClass newBrowsing: self
-	 
-		  
+	^ self className asLowercase
 ]
 
 { #category : 'instance creation' }
-TheHub class >> browser [
-	
-	^ self winningBrowserHubClass 
+TheHub class >> browserClass [
+
+  ^ self classNamed: #TheHubBrowser
+		  
 ]
 
 { #category : 'environment' }
@@ -54,7 +53,7 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
 
    <ttWall>
 
-   	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
+   ^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
 { #category : 'wall' }
@@ -76,17 +75,7 @@ TheHub class >> collectNotificationsOfClass: aNotificationClass during: aBlock [
 { #category : 'instance creation' }
 TheHub class >> current [
 	
-	^ self winningBrowserHubClass
-]
-
-{ #category : 'instance creation' }
-TheHub class >> currentOrSubclass [
-
-	^ self == TheHub
-		 ifTrue: [ self current ]
- 		ifFalse: [ self ]
-	 
-		  
+	^ self winningHubClass
 ]
 
 { #category : 'instance creation' }
@@ -106,7 +95,7 @@ TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 		]
 ]
 
-{ #category : 'environment' }
+{ #category : 'external-process' }
 TheHub class >> execBash: script [
  
 	^ (GtExternalProcessBuilder new)
@@ -115,7 +104,7 @@ TheHub class >> execBash: script [
 			yourself
 ]
 
-{ #category : 'environment' }
+{ #category : 'external-process' }
 TheHub class >> execMiseEnvironmentIn: source [
 
 	"Mise environment"
@@ -130,7 +119,7 @@ TheHub class >> execMiseEnvironmentIn: source [
 			yourself
 ]
 
-{ #category : 'environment' }
+{ #category : 'external-process' }
 TheHub class >> executeExternalProcess: processBuilder [
 	
 	^ self current signalAuto
@@ -178,7 +167,7 @@ TheHub class >> fileReferenceFrom: aString [
 { #category : 'testing' }
 TheHub class >> for: instanceMethodSelector respondWith: substituteValue during: aBlock [
 	
-	^ aBlock on: WinningBrowserHubClass do: [  :ex | 
+	^ aBlock on: WinningHubClass do: [  :ex | 
 	
 			ex messageText == instanceMethodSelector
 				ifTrue: [ ex resume: substituteValue ] 
@@ -219,13 +208,13 @@ TheHub class >> httpClientMaximumEntitySize [
 { #category : 'environment' }
 TheHub class >> hubId [
 
-	^ self className asLowercase
+	^ self current _hubId
 ]
 
 { #category : 'browsing' }
 TheHub class >> hubs [
 
-	^ self browse hubs
+	^ self openBrowser hubs
 	
 
 ]
@@ -264,20 +253,18 @@ TheHub class >> namedFileLocations [
 	^ self current signalAuto
 ]
 
-{ #category : 'instance creation' }
-TheHub class >> newBrowsing: aClass [ 
-
-^ self basicNew
-		readFrom: aClass;
-		initialize
-		
-		
-]
-
 { #category : 'environment' }
 TheHub class >> onStartUpBidToBeBrowser [
 
 	^ 1
+]
+
+{ #category : 'instance creation' }
+TheHub class >> openBrowser [
+
+^ self browserClass newBrowsing: self
+	 
+		  
 ]
 
 { #category : 'environment' }
@@ -325,6 +312,28 @@ TheHub class >> pragmasAll_ttHub [
 	"All of the hubs... in the world"
 	
 	^ TheHub sortByComment: (Pragma allNamed: #ttHub)
+	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttUtility [
+
+	"All of the <ttUtility>... in the world"
+	
+	<ttSpoke>
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttUtility)
+	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttWall [
+
+	"All of the <ttWall>... in the world"
+	
+	<ttSpoke>
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttWall)
 	
 ]
 
@@ -389,7 +398,7 @@ TheHub class >> sortByComment: pragmas [
 { #category : 'browsing' }
 TheHub class >> spokes [
 
-^  self browse spokes
+^  self openBrowser spokes
 		 
  
 ]
@@ -408,7 +417,7 @@ TheHub class >> startUp: isImageStarting [
 	
 	| max bid |
 	
-	WinningBrowserHubClass := self. 
+	WinningHubClass := self. 
 	
 	max := 0.
 	self allSubclassesDo: [ :hubClass | 
@@ -417,7 +426,7 @@ TheHub class >> startUp: isImageStarting [
 		
 		bid > max ifTrue: [
 				
-				WinningBrowserHubClass := hubClass. 
+				WinningHubClass := hubClass. 
 				max := bid.
 				
 		]
@@ -443,6 +452,17 @@ TheHub class >> theVault [
 ]
 
 { #category : 'environment' }
+TheHub class >> tt [
+
+	"Tactical Tools"
+	
+	<ttHub>
+		
+  ^  #TacticalToolsHub asClass 
+		  
+]
+
+{ #category : 'environment' }
 TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 
 	<ttUtility>
@@ -453,13 +473,13 @@ TheHub class >> unixMillisToDate: millisSinceUnixEpoch [
 { #category : 'environment' }
 TheHub class >> userId [
 
-	^ self osEnvironment in: [ :os | os at: 'USER' ifAbsent: [ os at: 'USERNAME' ifAbsent: [ 'bob' ]] ] 
+	^ self osEnvironment in: [ :os | os at: 'USER' ifAbsent: [ os at: 'USERNAME' ifAbsent: [ 'nemo' ]] ] 
 ]
 
 { #category : 'as yet unclassified' }
 TheHub class >> utils [
 
-	^ self browse utils
+	^ self openBrowser utils
 	
 
 ]
@@ -471,17 +491,20 @@ TheHub class >> whoAmI [
 ]
 
 { #category : 'accessing' }
-TheHub class >> winningBrowserHubClass [
+TheHub class >> winningHubClass [
 	
-	^ WinningBrowserHubClass ifNil: [ WinningBrowserHubClass := self ]
+	^ WinningHubClass ifNil: [ WinningHubClass := self ]
 ]
 
 { #category : 'environment' }
-TheHub >> browser [
+TheHub class >> wip [
 
-	^ self class browser
+	"Work In Progress"
 	
-
+	<ttHub>
+		
+  ^  #WipHub asClass 
+		  
 ]
 
 { #category : 'browsing' }
@@ -531,217 +554,10 @@ TheHub >> executeExternalProcess: processBuilder [
 	^ processBuilder output stdout
 ]
 
-{ #category : 'browsing' }
-TheHub >> getSpokeFromPragma: aPragma [
-
-	| aMethod aClass | 
-	
-	aMethod := aPragma method.
-	aClass := aMethod methodClass.
-	
-	aMethod isClassSide ifTrue: [ aClass := aClass  soleInstance ].
-	
-	(aClass respondsTo: aMethod selector)
-		ifFalse: [ 
-			^ self error: 'Instance methods marked as spokes need a class side instanciation method with the same selector' ].
-
-	^ aClass perform: aMethod selector
-  
-]
-
-{ #category : 'browsing' }
-TheHub >> gtAllHubsFor: aView [  
-	<gtView>
-	
-		^ aView columnedList
-		title: 'All';
-		priority: 15;
-		items: [ self class pragmasAll_ttHub] ;
-		"actionUpdateButtonTooltip: 'Update item list';"
-		"column: '#' 
-			text: [ :eachItem :eachIndex | 
-				eachIndex asRopedText foreground: Color gray ]
-			width: 45;"
-		column: 'More'
-			text: [ :eachItem | eachItem method comment ifNil: '' ];
-		column: 'Pragma'
-			text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Open' translated
-			stencil: [ :each | 
-		 	
-		 	 each method in: [ :m |
-		 	 
-			  	(m isClassSide and: [ m numArgs == 0 ]) 
-			  		ifFalse: [ BlElement newEmpty ] 
-			  		ifTrue: [
-								BrButton new
-									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
-															BrGlamorousButtonWithIconAptitude;
-									icon: BrGlamorousVectorIcons run ;
-									label: m selector asString;
-									beTinySize;
-											
-											action: [ :button | 
-									
-									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
-									 in: [:hub |
-											  hub ifNotNil: [ :result | button phlow spawnObject: (self class newBrowsing: hub) ] 
-									]
-     ] ]]]
-			width: 50;
-			
-		 
-
-		dynamicContextItems: [ :anElement :aCollection | 
-			aCollection size = 1
-				ifTrue: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection first
-						hostElement: anElement ]
-				ifFalse: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection
-						hostElement: anElement ] ]
-	
-
-]
-
-{ #category : 'browsing' }
-TheHub >> gtHubsFor: aView [  
-	<gtView>
-	
-	self hubs ifEmpty: [ ^ aView empty ].
-		
-		^ aView columnedList
-		title: 'Hubs';
-		priority: 10;
-		items: [ self hubs] ;
-		"actionUpdateButtonTooltip: 'Update item list';"
-		"column: '#' 
-			text: [ :eachItem :eachIndex | 
-				eachIndex asRopedText foreground: Color gray ]
-			width: 45;"
-		column: 'More'
-			text: [ :eachItem | eachItem method comment ifNil: '' ];
-		column: 'Pragma'
-			text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'edit' translated
-			stencil: [ :pragma | 
-		 	
-		 	 pragma method in: [ :m |
-		 	 
-								BrButton new
-									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
-															BrGlamorousButtonWithIconAptitude;
-									icon: BrGlamorousVectorIcons edit ;
-									label: m selector asString;
-									beTinySize;
-											
-											action: [ :button | 
-									
-									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
-									 in: [:hub |
-									 
-											  hub ifNotNil: [ :result | button phlow spawnObject: pragma ] 
-									 ]
-							]
-     ] ]
-			width: 50;
-			
-		send: [ :each | 
-		
-		  each method in: [ :m |
-		 	 
-			  	(m isClassSide and: [ m numArgs == 0 ]) 
-			  		ifFalse: [ nil ] 
-			  		ifTrue: [
-								 
-									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
-									 in: [:hub |
-									 
-											  hub ifNotNil: [ :result | (self class newBrowsing: hub) ]]]].];
-											  
-
-		dynamicContextItems: [ :anElement :aCollection | 
-			aCollection size = 1
-				ifTrue: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection first
-						hostElement: anElement ]
-				ifFalse: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection
-						hostElement: anElement ] ]
-	
-
-]
-
-{ #category : 'browsing' }
-TheHub >> gtInspectorTitleString [ 
-    ^ self class name,' Browser (' ,(browsing gtDisplayString) , ')' 
-]
-
-{ #category : 'browsing' }
-TheHub >> gtMessageTextFor: aView [
-	<gtView>
-	^ (super gtMessageTextFor: aView) priority: 90
-		
-]
-
-{ #category : 'browsing' }
-TheHub >> gtSpokesFor: aView [
-	<gtView>
-	self spokes ifEmpty: [ ^ aView empty ].
-
-	^ aView columnedList
-		title: 'Spokes';
-		priority: 5;
-		items: [ self spokes ];
-		"column: '#'
-			text: [ :eachItem :eachIndex | eachIndex asRopedText foreground: Color gray ]
-			width: 45;"
-		column: 'Use' text: [ :eachItem | eachItem method comment ifNil: '' ];
-		column: 'Pragma' text: [ :eachItem | eachItem gtDisplayText ];
-		column: 'Open' translated
-			stencil: [ :each | 
-				
-						each method numArgs == 0
-							ifFalse: [ BlElement newEmpty ]
-							ifTrue: [ BrButton new
-									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + BrGlamorousButtonWithIconAptitude;
-									icon: BrGlamorousVectorIcons playinspect;
-									label: each selector asString;
-									beTinySize;
-									action: [ :button | 
-									
-										(self getSpokeFromPragma: each ) 
-											ifNotNil: [ :result | 
-													button phlow spawnObject: result ] ] 
-									
-									] 
-			]
-			width: 50;
-		yourself	"actionUpdateButtonTooltip: 'Update item list';"	"
-		dynamicContextItems: [ :anElement :aCollection | 
-			aCollection size = 1
-				ifTrue: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection first
-						hostElement: anElement ]
-				ifFalse: [ GtPhlowObjectContextMenuTarget
-						menuItemsForObject: aCollection
-						hostElement: anElement ] ]
-	"
-]
-
 { #category : 'as yet unclassified' }
 TheHub >> httpClientMaximumEntitySize [
 	
 	^ ZnCurrentOptions at: #maximumEntitySize
-]
-
-{ #category : 'browsing' }
-TheHub >> hubs [
-
-	^ TheHub sortByComment: 
-		((self class pragmasClassSideNamed: #ttHub in: browsing) 
-				select:[ :p | p method numArgs == 0 ])
-
 ]
 
 { #category : 'environment' }
@@ -772,13 +588,6 @@ TheHub >> platform [
 	
 ]
 
-{ #category : 'initializing' }
-TheHub >> readFrom: aHubClass [
- 
-  browsing := aHubClass.
-
-]
-
 { #category : 'environment' }
 TheHub >> sessionManager [
  
@@ -787,32 +596,6 @@ TheHub >> sessionManager [
   <ttSpoke>
   
 	^ SessionManager default
-]
-
-{ #category : 'browsing' }
-TheHub >> spokes [
-
-	^ TheHub sortByComment: (
-		(self class pragmasClassSideNamed: #ttSpoke in: browsing), 
-		(self class pragmasNamed: #ttSpoke in: browsing))
-	
-
-]
-
-{ #category : 'browsing' }
-TheHub >> utils [
-
-	^ self class pragmasClassSideNamed: #ttUtility in: browsing
-	
-	
-
-]
-
-{ #category : 'browsing' }
-TheHub >> wall [
-
-	^ self class pragmasClassSideNamed: #ttWall in: browsing
- 
 ]
 
 { #category : 'as yet unclassified' }

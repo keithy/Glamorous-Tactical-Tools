@@ -222,17 +222,6 @@ TTVault class >> traceCurrentSearchPath [
 ]
 
 { #category : 'accessing' }
-TTVault >> configRefresh [
-  
-  "don't everyone do this"
-  
-  self config refreshReading.
-  apps := nil.
-  options := nil.
-	
-]
-
-{ #category : 'accessing' }
 TTVault >> funcNormalizeOn: assoc [
 
 	"pass thru function that 

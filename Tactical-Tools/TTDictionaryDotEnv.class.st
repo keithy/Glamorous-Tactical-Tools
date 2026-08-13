@@ -26,6 +26,16 @@ TTDictionaryDotEnv class >> newTest [
 ]
 
 { #category : 'as yet unclassified' }
+TTDictionaryDotEnv >> gtFileReferencePathFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Source';
+		priority: 1;
+		object: [ self source asFileReference ];
+		view: #gtContentsFor:
+]
+
+{ #category : 'as yet unclassified' }
 TTDictionaryDotEnv >> readFromStream: aStream [
 
 	[ [ aStream atEnd ]

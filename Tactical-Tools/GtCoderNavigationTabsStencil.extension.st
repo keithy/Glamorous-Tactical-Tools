@@ -6,6 +6,10 @@ GtCoderNavigationTabsStencil >> gtPackagesFavoritesClassesFor: aView [
 	<ttExtension>
 	| explicitView |
 	self navigationModel ifNil: [ ^ aView empty ].
+	
+	
+	self packageOfInterest: 'Tactical-Tools'.
+	
 	explicitView := aView explicit
 			title: 'My Packages';
 			priority: 2;

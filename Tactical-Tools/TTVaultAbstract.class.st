@@ -200,8 +200,12 @@ TTVaultAbstract >> configNormalized [
 
 { #category : 'accessing' }
 TTVaultAbstract >> configRefresh [
-
-	^ self subclassResponsibility
+ 
+  "don't everyone do this"
+  
+  self config refreshReading.
+  apps := nil.
+  options := nil.
 ]
 
 { #category : 'accessing' }
@@ -290,7 +294,7 @@ TTVaultAbstract >> getApps [
   applyToAllApps := OrderedCollection new.
   result := Dictionary new.
 
-  self configNormalized do: [ :assoc |
+  self configForApp do: [ :assoc |
     | key option app field |
     key := assoc key.
     option := key first.
@@ -474,7 +478,7 @@ TTVaultAbstract >> hubId [
 
 	"update later"
 	
-	^ TheHub hubId
+	^ TheHub current hubId
 ]
 
 { #category : 'accessing' }
@@ -588,17 +592,17 @@ TTVaultAbstract >> lookupStart [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> optionSelect: anOption [
+TTVaultAbstract >> options [
+    ^ options ifNil: [ options := self apps at: appKey ifAbsent: [ Dictionary new ]]
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> optionsSelect: anOption [
 
 	options := nil.
 	search := self class makeSearch: anOption
 
 
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract >> options [
-    ^ options ifNil: [ options := self apps at: appKey ifAbsent: [ Dictionary new ]]
 ]
 
 { #category : 'accessing' }

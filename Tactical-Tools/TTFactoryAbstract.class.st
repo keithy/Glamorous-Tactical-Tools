@@ -21,10 +21,26 @@ TTFactoryAbstract class >> isAbstract [
 	^ self == TTFactoryAbstract
 ]
 
-{ #category : 'as yet unclassified' }
-TTFactoryAbstract class >> makeVaultCurrent [
+{ #category : 'accessing' }
+TTFactoryAbstract class >> makeClassNamed: aClassName [  
 
-	^ TTVault currentVault
+	^ TheHub classNamed: aClassName ifAbsent: [ ^ nil ].
+	 
+				
+	
+	 
+]
+
+{ #category : 'as yet unclassified' }
+TTFactoryAbstract class >> makeErrorHandler [
+
+^ [ :err |
+		
+			(err isKindOf: NameLookupFailure)
+				ifTrue: [  err messageText: 'Network problem?', err messageText ].
+				
+			err pass.
+	  ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -34,10 +50,16 @@ TTFactoryAbstract class >> makeVaultEmpty [
 ]
 
 { #category : 'as yet unclassified' }
+TTFactoryAbstract class >> makeVaultFromCurrent [
+
+	^ (TTVault currentVault) copy
+]
+
+{ #category : 'as yet unclassified' }
 TTFactoryAbstract class >> new [
 
 	^ (self basicNew)
-			setVault: self makeVaultCurrent;
+			setVault: self makeVaultFromCurrent;
 			initialize
 ]
 
@@ -48,8 +70,18 @@ TTFactoryAbstract class >> pragmasAll_ttClient [
 	
 	"All of the clients... in the world"
 	
-	^ TheHub sortByComment: (Pragma allNamed: #ttClient)
+	^ "TheHub sortByComment:  "
 	
+	 ((Pragma allNamed: #ttClient),(Pragma allNamed: #ttApiClient))
+	
+
+]
+
+{ #category : 'as yet unclassified' }
+TTFactoryAbstract >> configure: aNewInstance using: configureBlock [
+
+	^ (configureBlock value: aNewInstance) initialize.
+
 ]
 
 { #category : 'accessing' }
@@ -57,8 +89,8 @@ TTFactoryAbstract >> gtClientsFor: aView [
 	<gtView>
 	^ aView columnedList
 		priority: 10;
-		title: 'Clients Pragmas'
-		items: [ self pragmas_ttClient ];
+		title: 'Clients Live';
+		items: [ self class pragmasAll_ttClient ];
 		column: 'Env'
 			text: #entEnvironmentName
 			width: 80;
@@ -84,17 +116,73 @@ TTFactoryAbstract >> gtClientsFor: aView [
 ]
 
 { #category : 'accessing' }
+TTFactoryAbstract >> gtFactoryMethodsFor: aView [  
+	<gtView>
+	
+		^ aView columnedList
+		title: 'Factory';
+		priority: 15;
+		items: [ self class pragmasAll_ttClient] ;
+		actionUpdateButtonTooltip: 'Update item list';
+		"column: '#' 
+			text: [ :eachItem :eachIndex | 
+				eachIndex asRopedText foreground: Color gray ]
+			width: 45;"
+		column: 'More'
+			text: [ :eachItem | eachItem method comment ifNil: '' ];
+		column: 'Pragma'
+			text: [ :eachItem | eachItem gtDisplayText ];
+		column: 'Open' translated
+			stencil: [ :each | 
+		 	
+		 	 each method in: [ :m |
+		 	 
+			  	(m isClassSide and: [ m numArgs == 0 ]) 
+			  		ifFalse: [ BlElement newEmpty ] 
+			  		ifTrue: [
+								BrButton new
+									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
+															BrGlamorousButtonWithIconAptitude;
+									icon: BrGlamorousVectorIcons run ;
+									label: m selector asString;
+									beTinySize;
+											
+											action: [ :button | 
+									
+									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
+									 in: [:hub |
+											  hub ifNotNil: [ :result | button phlow spawnObject: (self class newBrowsing: hub) ] 
+									]
+     ] ]]]
+			width: 50;
+			
+		 
+
+		dynamicContextItems: [ :anElement :aCollection | 
+			aCollection size = 1
+				ifTrue: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection first
+						hostElement: anElement ]
+				ifFalse: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection
+						hostElement: anElement ] ]
+	
+
+]
+
+{ #category : 'accessing' }
 TTFactoryAbstract >> make: aClassName andConfigure: configureBlock [
 
 	| aNewClass aNewInstance factoryConfiguredInstance |
 	
-	aNewClass := aClassName asSymbol asClassIfAbsent: [ ^ nil ].
+	aNewClass := (self class makeClassNamed: aClassName) ifNil: [ ^ nil ].
 	
-	aNewInstance := (aNewClass basicNewForFactory: self ifFail: [ ^ nil ]) ifNil: [ ^ nil ].
+	aNewInstance := (aNewClass basicNewForFactory: self ifFail: [ ^ nil ]) 
+		ifNil: [ ^ nil ].
 	
-	factoryConfiguredInstance := (configureBlock value: aNewInstance) ifNil: [ ^ nil ].
+	factoryConfiguredInstance := (self configure: aNewInstance using: configureBlock) ifNil: [ ^ nil ].
 	
-	^ factoryConfiguredInstance initialize
+	^ factoryConfiguredInstance initializeForFactory: self ifFail: [ ^ nil ]
 																		
 																						 
 				

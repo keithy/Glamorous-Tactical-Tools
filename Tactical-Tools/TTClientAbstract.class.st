@@ -9,10 +9,12 @@ Class {
 	#tag : 'Clients'
 }
 
-{ #category : 'accessing' }
-TTClientAbstract class >> appVaultSearch [
-
-	^ #((options #clientId) #(config))
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> asHub [
+	
+	"Any Client class can be a hub on its own resources"
+	
+  ^ TheHub current newBrowsing: self
 ]
 
 { #category : 'accessing' }
@@ -21,14 +23,20 @@ TTClientAbstract class >> basicNew [
  ^ super basicNew
 ]
 
-{ #category : 'accessing' }
+{ #category : 'factory' }
 TTClientAbstract class >> basicNewForFactory: aFactory ifFail: fBlock [
+	
+	"the failblock pattern allows subclasses to inherit the whole method
+	 and build upon what we have here, rather than replace it"
 
 	(self vaultHasWhatINeed: aFactory vault) ifFalse: [ ^ fBlock value ].
 	
 	^ (self basicNew)
-				setVault: aFactory vault;
-				optionSelect: #default;
+				setVault: ((aFactory vault copy) 
+											appKey: self vaultAppKey;
+											optionsSelect: #default;
+											refresh;
+											yourself);
 				yourself
 
 
@@ -47,7 +55,7 @@ TTClientAbstract class >> isAbstract [
 ]
 
 { #category : 'as yet unclassified' }
-TTClientAbstract class >> makeVault [
+TTClientAbstract class >> makeVaultEmpty [
 
 ^ TTVault newEmpty
 ]
@@ -90,16 +98,22 @@ TTClientAbstract >> gtVaultViewFor: aView [
 		view: #gtRawFor:
 ]
 
+{ #category : 'factory' }
+TTClientAbstract >> initializeForFactory: aFactory ifFail: fBlock [
+
+	^ self initialize
+
+
+]
+
 { #category : 'accessing' }
 TTClientAbstract >> setVault: aVault [
-	vault := aVault copy.
-	vault appKey: self vaultAppKey.
-	vault refresh.
+	vault := aVault  
 ]
 
 { #category : 'accessing' }
 TTClientAbstract >> vault [
-	^ vault ifNil: [ vault := self class makeVault ]
+	^ vault ifNil: [ vault := self class makeVaultEmpty ]
 ]
 
 { #category : 'accessing' }

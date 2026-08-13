@@ -1,0 +1,131 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TimeZoneDB API",
+    "version": "2.1",
+    "description": "REST API for querying time zones, converting between zones, and listing supported zones. Free tier requires a registered API key.",
+    "contact": {
+      "name": "TimeZoneDB",
+      "url": "https://timezonedb.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.timezonedb.com/v2.1"
+    }
+  ],
+  "paths": {
+    "/list-time-zone": {
+      "get": {
+        "summary": "List available time zones",
+        "description": "Lists all available time zones. Results can be filtered by zone, country, and region. Free tier returns at most one zone per call when filtered; unfiltered calls return the full list.",
+        "parameters": [
+          {"in": "query", "name": "key", "required": true, "schema": {"type": "string"}, "description": "API key"},
+          {"in": "query", "name": "format", "required": true, "schema": {"type": "string", "enum": ["json", "xml"]}},
+          {"in": "query", "name": "zone", "required": false, "schema": {"type": "string"}, "description": "IANA zone name, e.g. Europe/London"},
+          {"in": "query", "name": "country", "required": false, "schema": {"type": "string"}, "description": "ISO 3166-1 alpha-2 country code"},
+          {"in": "query", "name": "region", "required": false, "schema": {"type": "string"}, "description": "Continent or region name, e.g. Europe"}
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of zones",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "OK"},
+                    "message": {"type": "string"},
+                    "zones": {
+                      "type": "array",
+                      "items": {"$ref": "#/components/schemas/Zone"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/get-time-zone": {
+      "get": {
+        "summary": "Get current time for one zone",
+        "parameters": [
+          {"in": "query", "name": "key", "required": true, "schema": {"type": "string"}},
+          {"in": "query", "name": "format", "required": true, "schema": {"type": "string", "enum": ["json", "xml"]}},
+          {"in": "query", "name": "by", "required": true, "schema": {"type": "string", "enum": ["zone", "positional", "city", "ip"]}},
+          {"in": "query", "name": "zone", "required": false, "schema": {"type": "string"}},
+          {"in": "query", "name": "city", "required": false, "schema": {"type": "string"}},
+          {"in": "query", "name": "lat", "required": false, "schema": {"type": "number", "format": "double"}},
+          {"in": "query", "name": "lng", "required": false, "schema": {"type": "number", "format": "double"}},
+          {"in": "query", "name": "ip", "required": false, "schema": {"type": "string"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "A single zone",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/Zone"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convert-time-zone": {
+      "get": {
+        "summary": "Convert a timestamp between two zones",
+        "parameters": [
+          {"in": "query", "name": "key", "required": true, "schema": {"type": "string"}},
+          {"in": "query", "name": "format", "required": true, "schema": {"type": "string", "enum": ["json", "xml"]}},
+          {"in": "query", "name": "from", "required": true, "schema": {"type": "string"}, "description": "Source IANA zone"},
+          {"in": "query", "name": "to", "required": true, "schema": {"type": "string"}, "description": "Target IANA zone"},
+          {"in": "query", "name": "time", "required": false, "schema": {"type": "string", "format": "date-time"}, "description": "Source timestamp. Defaults to now if omitted."}
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversion result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string", "example": "OK"},
+                    "message": {"type": "string"},
+                    "from": {"$ref": "#/components/schemas/Zone"},
+                    "to": {"$ref": "#/components/schemas/Zone"},
+                    "convertedTimestamp": {"type": "integer", "format": "int64", "description": "Unix timestamp of the converted moment"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Zone": {
+        "type": "object",
+        "properties": {
+          "countryCode": {"type": "string", "example": "GB"},
+          "countryName": {"type": "string", "example": "United Kingdom"},
+          "regionName": {"type": "string", "example": "Europe"},
+          "cityName": {"type": "string", "example": "London"},
+          "zoneName": {"type": "string", "example": "Europe/London"},
+          "abbreviation": {"type": "string", "example": "BST"},
+          "gmtOffset": {"type": "integer", "example": 3600},
+          "dst": {"type": "string", "example": "1"},
+          "zoneStart": {"type": "integer", "format": "int64"},
+          "zoneEnd": {"type": "integer", "format": "int64"},
+          "nextAbbreviation": {"type": "string"},
+          "timestamp": {"type": "integer", "format": "int64"},
+          "formatted": {"type": "string", "example": "2026-08-09 14:23:11"}
+        },
+        "required": ["zoneName", "gmtOffset", "timestamp", "formatted"]
+      }
+    }
+  }
+}
