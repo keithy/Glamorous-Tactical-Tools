@@ -12,7 +12,7 @@ Class {
 { #category : 'accessing' }
 TTWorldClockClient >> initialize [
 
-	maxDelay := vault lookup: #maxdelay ifAbsent: 0.
+	  maxDelay := (vault at: #max_delay) ifNil: 0.
 ]
 
 { #category : 'accessing' }
@@ -23,4 +23,12 @@ TTWorldClockClient >> maxDelay [
 { #category : 'accessing' }
 TTWorldClockClient >> maxDelay: anObject [
 	maxDelay := anObject
+]
+
+{ #category : 'accessing' }
+TTWorldClockClient >> randomDelayWait [
+
+  maxDelay = 0 ifTrue: [ ^ self ].
+  
+	(Delay forMilliseconds: (maxDelay * 1000) atRandom) wait
 ]

@@ -39,60 +39,6 @@ TTVaultAbstract class >> isAbstract [
 	^ self == TTVaultAbstract
 ]
 
-{ #category : 'accessing' }
-TTVaultAbstract class >> lookup: aKey ifAbsent: aBlock [
-
-	self lookup: aKey ifPresent: [ :v | ^ v ].
-	
-	^ aBlock value
-	
-	
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract class >> lookup: aKey ifPresent: pBlock [
-
-	"
-	search = #( #(options default) #(config) )
-	attempt1, receiver is self (theVault)
-	
-	Thought of offering a wildcard option on the search, but it has limited use.
-
-	"
-	| start |
-	
-	start := self asDictionary.
- 
-	self search do: [ :attempt |
-	
-		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
-						
-	].
-	
-	^ nil
-
-	
-	
-	
-	
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract class >> lookupHasFields: aList [
-	
-	aList do: [ :aField |	
-	
-		(self lookup: aField ifPresent: true) ifNil: [ ^ false ]
-	
-	].
-	
-	^ true
-	
-	
-	
-	
-]
-
 { #category : 'instance creation' }
 TTVaultAbstract class >> makeSearch: aSelection [
 	
@@ -181,24 +127,26 @@ TTVaultAbstract >> asDictionary [
 TTVaultAbstract >> at: aKey [  
 
 	"convenience"
-  ^ self lookup: aKey ifPresent:[ :v | ^ v ]
+	
+	"for #at:ifAbsent: (vault at: #use ifNil: 'me')"
+	"for #at:ifPresent: (vault at: #use ifNotNil: [ :v | ])"
+
+	^ self lookup: aKey 
  
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> at: aKey  ifAbsent: aBlock [
-	
-	"convenience"
- ^ (self lookup: aKey ifPresent: [ :v | ^ v ]) ifNil: aBlock
- 
-]
+TTVaultAbstract >> at: aKey ifPresent: pBlock [
 
-{ #category : 'accessing' }
-TTVaultAbstract >> at: aKey  ifPresent: pBlock [
-	
-	"convenience"
- ^ self lookup: aKey ifPresent: pBlock
- 
+ "convenience: this is only implemented for users who wish to use
+  aVault interchangably with aDictionary since the semantics of 
+  #at: are different (returns nil rather than error when absent)
+  but at least this behaves the same"
+
+  | vault |
+  ^ (vault at: aKey) ifNotNil: pBlock
+
+
 ]
 
 { #category : 'accessing' }
@@ -293,7 +241,8 @@ TTVaultAbstract >> copyForAll [
 TTVaultAbstract >> doesNotUnderstand: aMessage [
 	aMessage hasArguments ifFalse: [ 
 	
-		self lookup: aMessage selector ifPresent: [ :v | ^ v ]
+		(self lookup: aMessage selector) ifNotNil: [ :v | ^ v ]
+		
 	].
 	^ super doesNotUnderstand: aMessage
 ]
@@ -449,6 +398,95 @@ TTVaultAbstract >> isWhoAmI [
 	"Can provide identity"
 
 	^ true
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> lookup: aKey [  
+
+	"
+	search = #( #(options default) #(config) )
+	attempt1, receiver is self (theVault)
+	
+	Thought of offering a wildcard option on the search, but it has limited use.
+
+	"
+	| start |
+	
+	start := (IdentityDictionary new) 
+			at: #config put: self config;
+			at: #options put: self options;
+			yourself.
+ 
+	self search do: [ :attempt |
+	
+		((attempt inject: start into: [ :target :each | (target at: each) ifNil: [ ^ nil ]])  at: aKey)
+			ifNotNil: [ :v | ^v ].
+						
+	].
+	
+	^ nil
+
+	
+	
+	
+	
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
+
+	"
+	search = #( #(options default) #(config) )
+	attempt1, receiver is self (theVault)
+	
+	Thought of offering a wildcard option on the search, but it has limited use.
+	"
+	
+	| start |
+	
+	start := self lookupStart.
+ 
+	self search do: [ :attempt |
+	
+		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
+						
+	].
+	
+	^ nil
+
+	
+	
+	
+	
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> lookupHasFields: aList [
+	
+	aList do: [ :aField |	
+	
+		(self lookup: aField ifPresent: true) ifNil: [ ^ false ]
+	
+	].
+	
+	^ true
+	
+	
+	
+	
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> lookupStart [
+
+	^ (IdentityDictionary new) 
+			at: #config put: self config;
+			at: #options put: self options;
+			yourself.
+ 
+	 
+	
+	
 ]
 
 { #category : 'accessing' }

@@ -22,15 +22,15 @@ TTClientAbstract class >> basicNew [
 ]
 
 { #category : 'accessing' }
-TTClientAbstract class >> basicNewForFactory: aFactory ifFail: failBlock [
+TTClientAbstract class >> basicNewForFactory: aFactory ifFail: fBlock [
 
-	(self vaultHasWhatINeed: (aFactory vault)) ifFalse: [ ^ failBlock value ].
+	(self vaultHasWhatINeed: aFactory vault) ifFalse: [ ^ fBlock value ].
 	
 	^ (self basicNew)
-					setVault: aFactory vault;
-					optionSelect: #default;
-					yourself
-		
+				setVault: aFactory vault;
+				optionSelect: #default;
+				yourself
+
 
 ]
 

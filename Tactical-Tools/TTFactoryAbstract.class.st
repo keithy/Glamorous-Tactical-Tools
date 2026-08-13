@@ -44,9 +44,17 @@ TTFactoryAbstract class >> new [
 { #category : 'accessing' }
 TTFactoryAbstract >> make: aClassName andConfigure: configureBlock [
 
-	^ configureBlock value: 
-		((aClassName asSymbol asClassIfAbsent: [ ^ nil ])
-				basicNewForFactory: self ifFail: [ ^nil ]) initialize
+	| aNewClass aNewInstance factoryConfiguredInstance |
+	
+	aNewClass := aClassName asSymbol asClassIfAbsent: [ ^ nil ].
+	
+	aNewInstance := (aNewClass basicNewForFactory: self ifFail: [ ^ nil ]) ifNil: [ ^ nil ].
+	
+	factoryConfiguredInstance := (configureBlock value: aNewInstance) ifNil: [ ^ nil ].
+	
+	^ factoryConfiguredInstance initialize
+																		
+																						 
 				
 	
 	 
