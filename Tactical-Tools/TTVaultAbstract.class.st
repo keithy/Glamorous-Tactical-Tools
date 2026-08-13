@@ -317,14 +317,50 @@ TTVaultAbstract >> getApps [
 ]
 
 { #category : 'gt-views' }
-TTVaultAbstract >> gtClientFor: aView [
+TTVaultAbstract >> gtAppsConfigFor: aView [
 	<gtView>
 	
-	^ aView forward
-		title: 'Client';
-		priority: 1;
-		object: [ self options];
-		view: #gtItemsFor:
+	^ aView columnedTree
+		title: 'Apps';
+		priority: 6;
+		
+		"top row buttons"
+		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons "save" restart 
+												id: GtPhlowViewRefreshContentButtonId
+												tooltip: 'Re-read Configuration'
+												action: [ :aButton :aTab | 
+														self configRefresh.
+														aTab phlow fireViewUpdateWish ]];
+		actionUpdateButtonTooltip: 'Update item list';
+		
+		items: [ self apps associations sort: (#key collatedBy: #asString) ];
+		children: [ :each | 
+			each value isDictionary
+				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
+				ifFalse: [ 
+					(each value isArray and: [ each value allSatisfy: #isDictionary ])
+						ifTrue: [ each value collectWithIndex: [ :x :i | i -> x ] ]
+						ifFalse: [ #() ] ] ];
+		column: 'Key' text: [ :assoc | assoc key ];
+		column: 'Value' text: [ :assoc | 
+		
+		
+		assoc value isDictionary ifTrue: [ '' ] ifFalse: [ assoc value ]
+		
+		
+		
+		] weight: 3;
+		
+		contextItemLabel: 'Inspect key' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc key ];
+		contextItemLabel: 'Inspect value' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc value ];
+		contextItemLabel: 'Inspect association' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc ];
+		contextItemLabel: 'Remove key and value' action: [ :anElement :anAssoc | 
+			self removeKey: anAssoc key ifAbsent: [ "ignore" ].
+			anElement phlow contextMenuUpdateViewContent ];
+		send: [ :assoc | assoc value ].
 ]
 
 { #category : 'gt-views' }
@@ -333,7 +369,22 @@ TTVaultAbstract >> gtConfigFor: aView [
 	
 	^ aView forward
 		title: 'Config';
-		priority: 5;
+		priority: 9;
+		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons "save" restart 
+												id: GtPhlowViewRefreshContentButtonId
+												tooltip: 'Re-read Configuration'
+												action: [ :aButton :aTab | 
+														self configRefresh.
+														aTab phlow fireViewUpdateWish ]];
+														
+		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons search 
+												id: GtPhlowViewRefreshContentButtonId
+												tooltip: 'Search Path'
+												action: [ :aButton :aTab | 
+														self configRefresh.
+														aButton phlow spawnObject: self class traceCurrentSearchPath ]];														
+														
+		actionUpdateButtonTooltip: 'Update item list';
 		object: [ config ];
 		view: #gtItemsFor:
 ]
@@ -343,19 +394,19 @@ TTVaultAbstract >> gtConfiguredAppsFor: aView [
 	<gtView>
 	
 	^ aView forward
-		title: 'Apps';
-		priority: 10;
+		title: 'Apps List';
+		priority: 1;
 		object: [ self configuredApps];
 		view: #gtItemsFor:
 ]
 
 { #category : 'gt-views' }
-TTVaultAbstract >> gtNormalizedAppFor: aView [
+TTVaultAbstract >> gtNormalizedFilteredFor: aView [
 	<gtView>
 	
 	^ aView forward
-		title: 'N4App';
-		priority: 10;
+		title: 'Filtered';
+		priority: 15;
 		object: [ self configForApp];
 		view: #gtItemsFor:
 ]
@@ -369,6 +420,53 @@ TTVaultAbstract >> gtNormalizedFor: aView [
 		priority: 10;
 		object: [ self configNormalized];
 		view: #gtItemsFor:
+]
+
+{ #category : 'gt-views' }
+TTVaultAbstract >> gtOptionsFor: aView [
+	<gtView>
+	
+	^ aView columnedTree
+		title: 'Client';
+		priority: 3;
+		
+		"top row buttons"
+		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons "save" restart 
+												id: GtPhlowViewRefreshContentButtonId
+												tooltip: 'Re-read Configuration'
+												action: [ :aButton :aTab | 
+														self configRefresh.
+														aTab phlow fireViewUpdateWish ]];
+		actionUpdateButtonTooltip: 'Update item list';
+		
+		items: [ self options associations sort: (#key collatedBy: #asString) ];
+		children: [ :each | 
+			each value isDictionary
+				ifTrue: [ each value associations sort: (#key collatedBy: #asString) ]
+				ifFalse: [ 
+					(each value isArray and: [ each value allSatisfy: #isDictionary ])
+						ifTrue: [ each value collectWithIndex: [ :x :i | i -> x ] ]
+						ifFalse: [ #() ] ] ];
+		column: 'Key' text: [ :assoc | assoc key ];
+		column: 'Value' text: [ :assoc | 
+		
+		
+		assoc value isDictionary ifTrue: [ '' ] ifFalse: [ assoc value ]
+		
+		
+		
+		] weight: 3;
+		
+		contextItemLabel: 'Inspect key' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc key ];
+		contextItemLabel: 'Inspect value' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc value ];
+		contextItemLabel: 'Inspect association' action: [ :anElement :anAssoc | 
+			anElement phlow spawnObject: anAssoc ];
+		contextItemLabel: 'Remove key and value' action: [ :anElement :anAssoc | 
+			self removeKey: anAssoc key ifAbsent: [ "ignore" ].
+			anElement phlow contextMenuUpdateViewContent ];
+		send: [ :assoc | assoc value ].
 ]
 
 { #category : 'accessing' }

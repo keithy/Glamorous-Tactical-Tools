@@ -23,6 +23,14 @@ TTDictionaryBacked >> at: key write: value [
 ]
 
 { #category : 'accessing' }
+TTDictionaryBacked >> gtDisplayOn: stream [
+	self printNameOn: stream.
+	stream << ' [' << (self size) asString << (' item' asPluralBasedOn: self size) << '] '.
+	stream << '{ ' << (self source asString) << ' }'.
+	 
+]
+
+{ #category : 'accessing' }
 TTDictionaryBacked >> initialize [
 
 	"instance creation via new this initializes the empty dictionary using #initialize:"
@@ -122,5 +130,5 @@ TTDictionaryBacked >> valueWriter [
 	"do not lazy initialize, we require our caller to set us
 	 up correctly for the context"
 	 
-	^ valueWriter  
+	^ valueWriter 
 ]

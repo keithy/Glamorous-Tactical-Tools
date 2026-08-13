@@ -131,6 +131,10 @@ TTDictionaryTiered >> gtItemsFor: aView [
 		column: 'Value' text: [ :assoc | assoc value ] weight: 3;
 		contextItemLabel: 'Inspect Tier' action: [ :anElement :anAssoc | 
 			anElement phlow spawnObject: anAssoc key ];
+		contextItemLabel: 'Disable' action: [ :anElement :anAssoc | 
+			 anAssoc key beDisabled. anElement phlow fireViewUpdateWish ];
+		contextItemLabel: 'Enable' action: [ :anElement :anAssoc | 
+			 anAssoc key beEnabled. anElement phlow fireViewUpdateWish  ];
 		send: [ :assoc | assoc value ].
 		
 	"Implementation note: association sorting uses #collatedBy: to avoid a 'Symbol DNU value: value: error'"
@@ -148,10 +152,20 @@ TTDictionaryTiered >> gtTierKeysFor: aView [
 { #category : 'initialization' }
 TTDictionaryTiered >> initialize [
  
-  "we, the top tier take responsibility for initialising all tiers after
-   they are all setup"
+  "top tier only - take responsibility for initializing all tiers after
+   they are created and setup"
   
 	self tiers do: [ :tier | tier initializeWrapped ].
+	self initializeReading.
+	
+]
+
+{ #category : 'initialization' }
+TTDictionaryTiered >> initializeReading [
+ 
+  "top tier only - take responsibility for inviting the tiers to 
+   read from their backing stores"
+  
 	self tiers do: [ :tier | tier initializeReadingConfig: self].
 	
 ]
@@ -212,6 +226,14 @@ TTDictionaryTiered >> postCopy [
 		dict ifNotNil: [ dict := dict copy ]
 	].
 	next ifNotNil: [ next := next copy ].
+	
+]
+
+{ #category : 'initialization' }
+TTDictionaryTiered >> refreshReading [
+ 
+  "top tier only - trigger all tiers to re-read their backed dictionaries"
+	self initializeReading
 	
 ]
 

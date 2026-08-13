@@ -200,8 +200,8 @@ TTVault class >> searchPathFor: whoami [
 	  #hidden -> ('.env' asFileReference).
 		#cwd    -> ((hubId , '.env') asFileReference).
 		
-		#uconfig -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
-	  #uprefs -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
+		#'user-config' -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
+	  #'user-prefs' -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
 
 		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
 	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
@@ -226,7 +226,9 @@ TTVault >> configRefresh [
   
   "don't everyone do this"
   
-  self config initializeReadingConfig: self config.
+  self config refreshReading.
+  apps := nil.
+  options := nil.
 	
 ]
 

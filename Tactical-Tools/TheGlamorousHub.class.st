@@ -229,16 +229,17 @@ TheGlamorousHub class >> pragmasAll_gtViews [
 
 ]
 
-{ #category : 'spokes' }
-TheGlamorousHub class >> pragmasAll_ttStartUp [
+{ #category : 'environment' }
+TheGlamorousHub class >> shortCutRegistry [
+ 
+   "Shortcut Registry"
 
-	"All of the views... in the world"
+   <ttSpoke>
+ 	
+ 	^ BlShortcutKeymapRegistry default
+	 
+	 
 	
-	<ttSpoke>
-	
-	^ Pragma allNamed: #ttStartUp
-	
-
 ]
 
 { #category : 'as yet unclassified' }

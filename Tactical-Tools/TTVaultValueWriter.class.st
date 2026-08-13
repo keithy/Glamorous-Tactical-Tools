@@ -54,10 +54,10 @@ TTVaultValueWriter >> dict: dictionary at: key write: value [
 		suffix := assoc key.
 		selector  := assoc value.
 		
-		(key endsWith: suffix) ifTrue: [ 
+		(key asUppercase endsWith: suffix) ifTrue: [ 
 		
 				newKey := (self class suffixesToRemove includes: suffix)
-					ifTrue: [ key withoutSuffix: suffix ] ifFalse: [ key ].
+					ifTrue: [ key copyFrom: 1 to: key size - suffix size ] ifFalse: [ key ].
 		
 				"first match wins"
 				^ dictionary at: newKey put: (self perform: selector with: value)

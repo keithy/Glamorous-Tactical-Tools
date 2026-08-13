@@ -65,6 +65,18 @@ TacticalToolsHub class >> newTTChat [
 ]
 
 { #category : 'as yet unclassified' }
+TacticalToolsHub class >> pragmasAll_ttClient [
+
+	"Tactical-Tools client providers <ttClient>"
+	
+	<ttSpoke>
+	
+	^ (Pragma allNamed: #ttClient),(Pragma allNamed: #ttApiClient)
+	
+
+]
+
+{ #category : 'as yet unclassified' }
 TacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
 
 	"Tactical-Tools <ttShutDown>/<ttStartUp>"
@@ -121,6 +133,16 @@ TacticalToolsHub class >> shutDownStartUpTTDryRun [
 	<ttSpoke>
 	
 	^ (TTStartUpShutDown shutDownDryRun),(TTStartUpShutDown startUpDryRun)
+]
+
+{ #category : 'as yet unclassified' }
+TacticalToolsHub class >> theFactory [
+
+	"Fabulous Factory"
+	
+	<ttSpoke>
+	
+	^ TTFactory new
 ]
 
 { #category : 'as yet unclassified' }

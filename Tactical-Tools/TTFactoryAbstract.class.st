@@ -41,6 +41,48 @@ TTFactoryAbstract class >> new [
 			initialize
 ]
 
+{ #category : 'as yet unclassified' }
+TTFactoryAbstract class >> pragmasAll_ttClient [
+
+	<ttSpoke>
+	
+	"All of the clients... in the world"
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttClient)
+	
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> gtClientsFor: aView [
+	<gtView>
+	^ aView columnedList
+		priority: 10;
+		title: 'Clients Pragmas'
+		items: [ self pragmas_ttClient ];
+		column: 'Env'
+			text: #entEnvironmentName
+			width: 80;
+		column: 'Name'
+			text: #name
+			width: 130;
+		column: 'Alive?'
+			stencil: (aView
+					gtSoon: [ :ea | ea isAliveMessage ]
+					ifPending: '??'
+					ifError: nil)
+			width: 150;
+		column: 'Version'
+			stencil: (aView
+					gtSoon: [ :ea | ea serverVersion ifNil: '' ]
+					ifPending: '??'
+					ifError: '-')
+			width: 100;
+		column: 'Target' text: #gtDisplayTarget;
+		contextItemLabel: 'Questions'
+			action: [ :anElement :ea | anElement phlow spawnObject: (EntEnvironments with: (Array with: ea)) ];
+		send: #value
+]
+
 { #category : 'accessing' }
 TTFactoryAbstract >> make: aClassName andConfigure: configureBlock [
 

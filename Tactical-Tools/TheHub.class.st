@@ -361,19 +361,6 @@ TheHub class >> sessionManager [
 ]
 
 { #category : 'environment' }
-TheHub class >> shortCutRegistry [
- 
-   "Shortcut Registry"
-
-   <ttSpoke>
- 	
- 	^ BlShortcutKeymapRegistry default
-	 
-	 
-	
-]
-
-{ #category : 'environment' }
 TheHub class >> signalAuto [	
 
 	^ self signal: thisContext sender selector withTag: thisContext sender arguments
@@ -812,16 +799,6 @@ TheHub >> spokes [
 
 ]
 
-{ #category : 'as yet unclassified' }
-TheHub >> theVault [
-
-	"Vicarious Vault"
-	
-	<ttSpoke>
-	
-	^ TTVault currentVault
-]
-
 { #category : 'browsing' }
 TheHub >> utils [
 
@@ -841,9 +818,5 @@ TheHub >> wall [
 { #category : 'as yet unclassified' }
 TheHub >> whoAmI [
 
-	"Vicarious Vault"
-	
-	<ttSpoke>
-	
 	^ TTVault currentVault
 ]
