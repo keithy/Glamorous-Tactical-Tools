@@ -226,10 +226,7 @@ TTVault >> configRefresh [
   
   "don't everyone do this"
   
-  | unique |
-  
-	unique := config tiersCollect: [ :tier | tier wrappedDictionary ] on: IdentitySet new.
-	unique do: [ :dict | dict askFor: #readSource ]
+  self config initializeReadingConfig: self config.
 	
 ]
 

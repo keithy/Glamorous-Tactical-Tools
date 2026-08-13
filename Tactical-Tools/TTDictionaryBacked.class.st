@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Dictionary',
 	#instVars : [
 		'source',
-		'valueWriter'
+		'valueWriter',
+		'lastReadTime'
 	],
 	#classInstVars : [
 		'suffixReaderMap'
@@ -24,15 +25,14 @@ TTDictionaryBacked >> at: key write: value [
 { #category : 'accessing' }
 TTDictionaryBacked >> initialize [
 
-	"instance creation via new, initializes the empty dictionary using #initialize:"
+	"instance creation via new this initializes the empty dictionary using #initialize:"
 	
 	tally ifNil: [ self error: 'For instance creation use #new not basicNew' ].
 	
 	"assumes is fully setup, i.e. setValueWriter: and setSource:"
 
 	super initialize.
-	self readSource.
-	
+	 
 
  
 	
@@ -40,25 +40,12 @@ TTDictionaryBacked >> initialize [
 ]
 
 { #category : 'accessing' }
-TTDictionaryBacked >> initializeOne: topTier [
+TTDictionaryBacked >> initializeReadingConfig: config [
 
-	"if we are participating in a tiered dictionary, we get two
-	 initializations starting here"
-	
-	self initialize.
-	
-]
-
-{ #category : 'accessing' }
-TTDictionaryBacked >> initializeTwo: topTier [
-
-	"if we are participating in a tiered dictionary, we get two initializations"
-
-	"assumes is fully setup, i.e. setValueWriter: and setSource:"
-
+  self readSourceTooSoon ifTrue: [ ^ self ].
 	self readSource.
 	
-	^ super initialize
+	 
 	
 ]
 
@@ -79,6 +66,22 @@ TTDictionaryBacked >> readSource [
 
 	^ self subclassResponsibility
 
+]
+
+{ #category : 'accessing' }
+TTDictionaryBacked >> readSourceTooSoon [
+
+	"protects shared instances from being pounded"
+
+	| now |
+	
+	now := DateAndTime now.
+	lastReadTime ifNotNil: [  now - lastReadTime < 10 seconds ifTrue: [ ^ true ] ].
+  lastReadTime := now.
+	
+	^ false
+	 
+	
 ]
 
 { #category : 'accessing' }

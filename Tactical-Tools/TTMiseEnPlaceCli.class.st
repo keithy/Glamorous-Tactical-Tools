@@ -1,5 +1,5 @@
 Class {
-	#name : 'TTMiseEnPlace',
+	#name : 'TTMiseEnPlaceCli',
 	#superclass : 'TTClientAbstract',
 	#category : 'Tactical-Tools-Clients',
 	#package : 'Tactical-Tools',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace class >> basicExecMiseEnvironmentIn: source [
+TTMiseEnPlaceCli class >> basicExecMiseEnvironmentIn: source [
 
 	"Mise environment"
 	
@@ -22,13 +22,13 @@ TTMiseEnPlace class >> basicExecMiseEnvironmentIn: source [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace class >> clientId [
+TTMiseEnPlaceCli class >> clientId [
 
 	^ 'mise'
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace class >> new [
+TTMiseEnPlaceCli class >> new [
 
 	^ (self basicNew)
 			setVault: (TTVault currentVault);
@@ -37,15 +37,15 @@ TTMiseEnPlace class >> new [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace >> buildMise [
+TTMiseEnPlaceCli >> buildMise [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace >> buildMiseViaShell [
+TTMiseEnPlaceCli >> buildMiseViaShell [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace >> makeMiseEnv: source [
+TTMiseEnPlaceCli >> makeMiseEnv: source [
 
 	"Mise environment"
 	
@@ -58,7 +58,7 @@ TTMiseEnPlace >> makeMiseEnv: source [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace >> version [
+TTMiseEnPlaceCli >> version [
 
 	"Mise environment"
 	
@@ -68,7 +68,7 @@ TTMiseEnPlace >> version [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace >> versionNumber [
+TTMiseEnPlaceCli >> versionNumber [
 
 	"Mise environment"
 	
@@ -76,7 +76,7 @@ TTMiseEnPlace >> versionNumber [
 ]
 
 { #category : 'as yet unclassified' }
-TTMiseEnPlace >> versionRequest [
+TTMiseEnPlaceCli >> versionRequest [
 
 	"Mise version"
 	

@@ -39,10 +39,66 @@ TTVaultAbstract class >> isAbstract [
 	^ self == TTVaultAbstract
 ]
 
+{ #category : 'accessing' }
+TTVaultAbstract class >> lookup: aKey ifAbsent: aBlock [
+
+	self lookup: aKey ifPresent: [ :v | ^ v ].
+	
+	^ aBlock value
+	
+	
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract class >> lookup: aKey ifPresent: pBlock [
+
+	"
+	search = #( #(options default) #(config) )
+	attempt1, receiver is self (theVault)
+	
+	Thought of offering a wildcard option on the search, but it has limited use.
+
+	"
+	| start |
+	
+	start := self asDictionary.
+ 
+	self search do: [ :attempt |
+	
+		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
+						
+	].
+	
+	^ nil
+
+	
+	
+	
+	
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract class >> lookupHasFields: aList [
+	
+	aList do: [ :aField |	
+	
+		(self lookup: aField ifPresent: true) ifNil: [ ^ false ]
+	
+	].
+	
+	^ true
+	
+	
+	
+	
+]
+
 { #category : 'instance creation' }
 TTVaultAbstract class >> makeSearch: aSelection [
-
-	^ self makeSearchDefault copyWithFirst: { #options. aSelection asSymbol. } asArray
+	
+	aSelection == #default ifTrue: [ ^ self makeSearchDefault ].
+	
+	^ self makeSearchDefault copyWithFirst: { #options. aSelection asSymbol. }
 	
 	 
 
@@ -279,7 +335,9 @@ TTVaultAbstract >> funcNormalizeOn: in [
 
 { #category : 'accessing' }
 TTVaultAbstract >> getApps [
+
   | result applyToAllApps |
+
   applyToAllApps := OrderedCollection new.
   result := Dictionary new.
 
@@ -394,31 +452,12 @@ TTVaultAbstract >> isWhoAmI [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
+TTVaultAbstract >> optionSelect: anOption [
 
-	"
-	search = #( #(options default) #(config) )
-	attempt1, receiver is self (theVault)
-	
-	Thought of offering a wildcard option on the search, but it has limited use.
+	options := nil.
+	search := self class makeSearch: anOption
 
-	"
-	| start |
-	
-	start := self asDictionary.
-	
-	self search do: [ :attempt |
-	
-		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
-						
-	].
-	
-	^ nil
 
-	
-	
-	
-	
 ]
 
 { #category : 'accessing' }
@@ -447,15 +486,6 @@ TTVaultAbstract >> refresh [
 TTVaultAbstract >> search [ 
 
 	^ search ifNil: [ search := self class makeSearchDefault ]
-]
-
-{ #category : 'accessing' }
-TTVaultAbstract >> select: anOption [
-
-	options := nil.
-	search := self class makeSearch: anOption
-
-
 ]
 
 { #category : 'accessing' }

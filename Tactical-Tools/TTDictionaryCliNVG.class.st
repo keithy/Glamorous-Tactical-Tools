@@ -136,8 +136,10 @@ TTDictionaryCliNVG >> initialize [
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryCliNVG >> initializeTwo: topTier [
-	
+TTDictionaryCliNVG >> initializeReadingConfig: topTier [
+ 
+  self readSourceTooSoon ifTrue: [ ^ self ].
+ 
 	"now its our turn"
 	exes := self getExecutablesFrom: topTier.
 		

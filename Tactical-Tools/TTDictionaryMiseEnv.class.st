@@ -73,8 +73,9 @@ TTDictionaryMiseEnv >> initialize [
 ]
 
 { #category : 'as yet unclassified' }
-TTDictionaryMiseEnv >> initializeTwo: topTier [
-	
+TTDictionaryMiseEnv >> initializeReadingConfig: topTier [
+	self readSourceTooSoon ifTrue: [ ^ self ].
+ 
 	"now its our turn"
 	exes := self getExecutableFrom: topTier.
 		

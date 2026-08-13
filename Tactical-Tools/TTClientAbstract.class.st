@@ -21,6 +21,19 @@ TTClientAbstract class >> basicNew [
  ^ super basicNew
 ]
 
+{ #category : 'accessing' }
+TTClientAbstract class >> basicNewForFactory: aFactory ifFail: failBlock [
+
+	(self vaultHasWhatINeed: (aFactory vault)) ifFalse: [ ^ failBlock value ].
+	
+	^ (self basicNew)
+					setVault: aFactory vault;
+					optionSelect: #default;
+					yourself
+		
+
+]
+
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> clientId [
 
@@ -43,6 +56,12 @@ TTClientAbstract class >> makeVault [
 TTClientAbstract class >> vaultAppKey [
 
 	^ self clientId
+]
+
+{ #category : 'accessing' }
+TTClientAbstract class >> vaultHasWhatINeed: aFactoryVault [
+
+	^ aFactoryVault lookupHasFields: #(url)
 ]
 
 { #category : 'as yet unclassified' }
@@ -72,13 +91,19 @@ TTClientAbstract >> gtVaultViewFor: aView [
 ]
 
 { #category : 'accessing' }
-TTClientAbstract >> setVault: anObject [
-	vault := anObject.
-	vault appKey: self class vaultAppKey.
+TTClientAbstract >> setVault: aVault [
+	vault := aVault copy.
+	vault appKey: self vaultAppKey.
 	vault refresh.
 ]
 
 { #category : 'accessing' }
 TTClientAbstract >> vault [
 	^ vault ifNil: [ vault := self class makeVault ]
+]
+
+{ #category : 'accessing' }
+TTClientAbstract >> vaultAppKey [
+
+	^ self class vaultAppKey
 ]

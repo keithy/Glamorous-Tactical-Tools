@@ -148,34 +148,27 @@ TTDictionaryTiered >> gtTierKeysFor: aView [
 { #category : 'initialization' }
 TTDictionaryTiered >> initialize [
  
-  "we, the top tier are initialised once, but we cascade
-  this twice in order to give some tiers the chance to 
-  know their peers after all of the other tiers have been
-  initialised"
+  "we, the top tier take responsibility for initialising all tiers after
+   they are all setup"
   
-  self initializeOne: self.
-  self initializeTwo: self.
-  
+	self tiers do: [ :tier | tier initializeWrapped ].
+	self tiers do: [ :tier | tier initializeReadingConfig: self].
+	
 ]
 
 { #category : 'initialization' }
-TTDictionaryTiered >> initializeOne: topTier [
-
-	"cascade initializeOne: return the last tier initialized"
+TTDictionaryTiered >> initializeReadingConfig: config [
 	
-	(dict respondsTo: #initializeOne:) ifTrue: [ dict initializeOne: topTier ].
+	(dict respondsTo: #initializeReadingConfig:) ifTrue: [ dict initializeReadingConfig: config ].
 	
-	^ next ifNil: [ self ] ifNotNil: [ self initializeOne: topTier ]
 ]
 
 { #category : 'initialization' }
-TTDictionaryTiered >> initializeTwo: topTier [
+TTDictionaryTiered >> initializeWrapped [
 
-	"cascade initializeTwo: return the last tier initialized"
-	
-	(dict respondsTo: #initializeTwo:) ifTrue: [ dict initializeTwo: topTier ].
-		
-	^ next ifNil: [ self ] ifNotNil: [ self initializeTwo: topTier ]
+	^ self wrappedDictionary initialize
+   
+  
 ]
 
 { #category : 'testing' }

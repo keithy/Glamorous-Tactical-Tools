@@ -45,8 +45,8 @@ TTDictionaryBackedByCli class >> exampleLsProjectDir [
 	vault := TTVault currentVault.
 	
 	^ (self newLsProjectDir) 
-			initializeOne: vault config;
-			initializeTwo: vault config;
+			initialize 
+			initializeReadingConfig: vault config;
 			yourself
 ]
 
@@ -122,22 +122,14 @@ TTDictionaryBackedByCli >> gtFileReferencePathFor: aView [
 ]
 
 { #category : 'accessing' }
-TTDictionaryBackedByCli >> initialize [
+TTDictionaryBackedByCli >> initializeReadingConfig: config [
 	
-		"skip the first initialization"
-		
-	^ super initialize
-	 
-]
-
-{ #category : 'accessing' }
-TTDictionaryBackedByCli >> initializeTwo: topTier [
+  self readSourceTooSoon ifTrue: [ ^ self ].
 	
 	self vars do: [ :key |
-		topTier at: key ifPresent: [ :v | self epb setEnv: key value: v ]. 
+		config at: key ifPresent: [ :v | self epb setEnv: key value: v ]. 
 	].
 
-	"now its our turn"
 	self readSource.
 	
 ]
