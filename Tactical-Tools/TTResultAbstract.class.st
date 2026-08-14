@@ -2,8 +2,12 @@ Class {
 	#name : 'TTResultAbstract',
 	#superclass : 'Object',
 	#instVars : [
-		'parent',
-		'request'
+		'request',
+		'stdout',
+		'stderr',
+		'output',
+		'client',
+		'handlers'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -25,31 +29,95 @@ TTResultAbstract >> apply: aBoltOn [
 { #category : 'accessing' }
 TTResultAbstract >> basicSetupForClient: aClient [
 
-	parent := aClient
+	client := aClient.
+	handlers := aClient handlers.
 ]
 
 { #category : 'accessing' }
 TTResultAbstract >> basicSetupForModel: aModel [
 
-	parent := aModel
+	client := aModel
 ]
 
 { #category : 'accessing' }
 TTResultAbstract >> basicSetupForResult: aResult [
 
-	parent := aResult
+	client := aResult
+]
+
+{ #category : 'accessing' }
+TTResultAbstract >> client [
+
+	^ client
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> getContents [
+	^ self getOutput stdout
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> getOutput [
+
+	output ifNotNil: [ ^ output ].
+	
+	output := request output.
+		
+	self statusVerify ifFalse: [ self error: 'Unhandled Exit Status' ].  
+
+	^ output 
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> getStderr [
+
+	stderr ifNil: [ ^ stderr ].
+	
+	stderr := self getOutput stderr.
+	
+	^ stderr 
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> getStdout [
+	stdout ifNotNil: [ ^ stdout ].
+
+	stdout := [ [ self getContents ]
+			onErrorDo: [ :ex | 
+				self stderrAppend: ex messageText.
+				ex pass ] ] onErrorDo: self client requestErrorHandler.
+
+	^ stdout
+]
+
+{ #category : 'accessing' }
+TTResultAbstract >> handlers [
+
+	^ handlers ifNil: [ handlers := IdentityDictionary new ]
+]
+
+{ #category : 'accessing' }
+TTResultAbstract >> handlersGoodStatus: status [
+
+	self handlersOnStatus: status do: [ true ]
+]
+
+{ #category : 'accessing' }
+TTResultAbstract >> handlersOnStatus: sStatus do: aBlockReturningBool [
+
+	self handlers at: sStatus put: aBlockReturningBool
 ]
 
 { #category : 'accessing' }
 TTResultAbstract >> newRequest [
 
-	^ (self setRequest: (parent makeBasicRequestFor: self)) initialize
+	^ (self setRequest: (client makeBasicRequestFor: self)) initialize
 
 ]
 
 { #category : 'accessing' }
 TTResultAbstract >> parent [
-	^ parent
+	^ client
 ]
 
 { #category : 'accessing' }
@@ -98,4 +166,33 @@ TTResultAbstract >> setRequest: aRequest [
 	request setResult: self.
 	
 	^ request
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> status [ 
+
+	^ output ifNotNil: [ :out | [ out status code ] ifError: [ nil ] ]
+]
+
+{ #category : 'accessing' }
+TTResultAbstract >> statusVerify [
+	
+	handlers ifNotNil: [  
+		handlers at: self status ifPresent: [ :handlerBlock |
+	
+		   (handlerBlock cull: self) ifTrue: [ ^ true ] "handled"
+		]	
+	].
+	
+	^ self status == 0
+
+
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> stderrAppend: aMessage [
+	 
+	 stderr := String streamingContents: 
+	 
+	 	[ :str | (str << (stderr ifNil: '') << aMessage) cr ]
 ]

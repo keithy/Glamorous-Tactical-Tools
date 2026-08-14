@@ -2,9 +2,6 @@ Class {
 	#name : 'TTResult',
 	#superclass : 'TTResultAbstract',
 	#instVars : [
-		'stdout',
-		'output',
-		'stderr',
 		'thePayload',
 		'formatted',
 		'formatters',
@@ -36,85 +33,68 @@ TTResult >> formatting: actionBlockSymbolArrayOrNil [
 { #category : 'as yet unclassified' }
 TTResult >> getFormatStart [
  
-   "do not be tempted to refactor this method away, may be customized by subclasses"
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
+   
 	 ^ self getMapped
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> getFormatted [
 
-  ^ formatted ifNil: [ 
+  formatted ifNil: [ ^ formatted ].
   
-			formatted := self inject: nil into: (formatters ifNil: #getFormatStart).
-		] 
+	formatted := self inject: nil into: (formatters ifNil: #getFormatStart).
+	
+	^ formatted 
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> getMapped [
 
-  ^ mapped ifNil: [ 
+  mapped ifNotNil: [ ^ mapped ]. 
   
-			mapped := self inject: nil into: (mappers ifNil: #getMappingInput).
-		] 
+	mapped := self inject: nil into: (mappers ifNil: #getMappingInput).
+	
+	^ mapped
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> getMappingInput [
  
-   "do not be tempted to refactor this method away, may be customized by subclasses"
-	 ^ self getPayload
-]
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
 
-{ #category : 'as yet unclassified' }
-TTResult >> getOutput [
-
-	output ifNil: [ output := request 
-										ifNotNil: [ :req | req output ] 
-										ifNil:    [ self error: 'what a to do' ] ].
-	
-	^ output 
+   ^ self getPayload
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> getParsingInput [
  
-   "do not be tempted to refactor this method away, may be customized by subclasses"
-	 ^ self getStdout
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
+
+  ^ self getStdout
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> getPayload [
 
-  ^ thePayload ifNil: [ 
+	thePayload ifNotNil: [ ^ thePayload ].
   
-			self payload: payloadTailReducers.
-			thePayload := self inject: nil into: (payloadReducers ifNil: #getPayloadStart).
-		].
+	self payload: payloadTailReducers.
+	thePayload := self inject: nil into: (payloadReducers ifNil: #getPayloadStart).
 	
- 
+ ^ thePayload
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> getPayloadStart [
  
-   "do not be tempted to refactor this method away, may be customized by subclasses"
-	 ^ self getStdout
-]
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
 
-{ #category : 'as yet unclassified' }
-TTResult >> getStderr [
-
-	stderr ifNil: [ stderr := self getOutput stderr ].
-	
-	^ stderr 
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getStdout [
-
-	stdout ifNil: [ stdout := self getOutput stdout ].
-	
-	^ stdout 
+   ^ self getStdout
 ]
 
 { #category : 'accessing' }
@@ -234,4 +214,11 @@ TTResult >> request [
 { #category : 'accessing' }
 TTResult >> request: anObject [
 	request := anObject
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> ˆmap: actionBlockSymbolArrayOrNil [
+
+	"synonym"
+	self mapping: actionBlockSymbolArrayOrNil
 ]

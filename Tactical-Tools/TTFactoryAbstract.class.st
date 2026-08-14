@@ -44,6 +44,18 @@ TTFactoryAbstract class >> makeErrorHandler [
 ]
 
 { #category : 'as yet unclassified' }
+TTFactoryAbstract class >> makeNetworkErrorHandler [
+
+^ [ :err |
+		
+			(err isKindOf: NameLookupFailure)
+				ifTrue: [  err messageText: 'Network problem?', err messageText ].
+				
+			err pass.
+	  ]
+]
+
+{ #category : 'as yet unclassified' }
 TTFactoryAbstract class >> makeVaultEmpty [
 
 	^ TTVault newEmpty

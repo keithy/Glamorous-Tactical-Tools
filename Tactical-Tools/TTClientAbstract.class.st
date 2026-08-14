@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'vault',
 		'result',
-		'classTool'
+		'classTool',
+		'requestErrorHandler'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -157,13 +158,13 @@ TTClientAbstract >> makeInitializeRequest: aRequest [
 	aRequest isAuthRequired: self isAuthRequired  
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 TTClientAbstract >> newRequest [
 
 	 ^ self newResult newRequest
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 TTClientAbstract >> newResult [
 
 	"The client keeps the last result context as convenience for the user.
@@ -178,11 +179,23 @@ TTClientAbstract >> newResult [
 ]
 
 { #category : 'accessing' }
+TTClientAbstract >> requestErrorHandler [
+
+	^ requestErrorHandler ifNil: [ [ :err | err pass ] ]
+]
+
+{ #category : 'accessing' }
 TTClientAbstract >> setClassTool: aClass [
 	classTool := aClass
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
+TTClientAbstract >> setRequestErrorHandler: errorHandler [
+
+	requestErrorHandler := errorHandler
+]
+
+{ #category : 'initialization' }
 TTClientAbstract >> setVault: aVault [
 	vault := aVault  
 ]

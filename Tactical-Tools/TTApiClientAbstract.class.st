@@ -21,8 +21,15 @@ TTApiClientAbstract class >> basicNewForFactory: aFactory ifFail: failBlock [
 	
 	^ basicNewClient
 			setClassTool: TheHub classHttpClient;
+			setRequestErrorHandler: aFactory class makeNetworkErrorHandler;
 			yourself
 
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClientAbstract class >> makeBasicResult [
+
+	^ TTApiResult basicNew
 ]
 
 { #category : 'as yet unclassified' }
