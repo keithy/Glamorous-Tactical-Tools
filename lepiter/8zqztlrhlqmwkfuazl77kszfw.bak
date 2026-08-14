@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T02:57:04.397151+01:00"
+						"dateAndTimeString" : "2026-08-14T01:35:00.327021+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "##Dependency Injection\n###Methods\n\n{{gtMethod:TTVault class>>newWithLocalMiseConfigEnv}} #new implies 'new me' and will return an instance of the same class.\n\n{{gtMethod: TTVault class>>#makeStoreLocalMiseConfigOSEnv}} #make implies 'new somthing else' configured for this context.\n"
+				"string" : "##Dependency Injection\n###Methods\n\n{{gtMethod:TTVault class>>newWithRWConfigOSEnv}} #new implies 'new me' and will return an instance of the same class.\n\n{{gtMethod: TTVault class>>makeDictionaryOSEnv}} #make implies 'new something else' configured for this context.\n"
 			}
 		]
 	},

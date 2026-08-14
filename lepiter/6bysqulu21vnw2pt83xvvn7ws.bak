@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T15:14:09.640427+01:00"
+						"dateAndTimeString" : "2026-08-14T01:18:55.671925+01:00"
 					}
 				},
 				"uid" : {
@@ -39,41 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "At one point we created a WhoAmI class to represent the user, their project etc, as a single method object for handling those parameters into a search path.\n\nTo cut a long story short, just pass the whole vault, it is more than representative of the user and their context. There can be several vaults if dealing with multiple users or contexts. Copies of vaults are relatively efficient."
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T15:14:20.685357+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T15:15:41.508305+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "7DjBWdefQXq4HWpzdU/0FA=="
-				},
-				"code" : "TacticalToolsHub pragmasAll_ttWhoAmI"
+				"string" : "At one point we created a WhoAmI class to represent the user, their project etc, as a single method object for handling those parameters into a search path.\n\n{{gtExample:TheVault class>>searchPath}}\n\nTo cut a long story short, just pass the whole vault, it is more than representative of the user and their context {{gtPragma:ttWhoAmI}}. There can be several vaults if dealing with multiple users or contexts. Copies of vaults are relatively efficient."
 			}
 		]
 	},

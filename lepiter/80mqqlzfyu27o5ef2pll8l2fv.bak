@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-11T10:47:45.15624+01:00"
+						"dateAndTimeString" : "2026-08-14T01:59:35.912326+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The Vault maintains two views of configuration data, #config (the raw input form) and #options (the structured ready to use form).\n\nTheVault performs a dual role, \n\n1) from the client end and 2) from the host/environment end.\n## 1) From the Client\nA vault is empty by default and can be filled in.\n\na) A client class needs to be up and running easily\n\n`csClient := CloudsmithClient new.`\n\nAdding an api key ought to be as simple as.\n\n`csClient vaultConfig at: 'CLOUDSMITH_API_KEY' put: 'csa_xyz'`\n\n## 2) From the Host Environment\nThe TheVault current is populated by the world of env files and osEnvironment\ntaking into consideration obfuscation of passwords, and multiple client configurations\nfor multiple apps and hosts.\n\nThe whole kitchen sink is in there.\nvault := TheVault current\n\nWhen the vault is added to a client, the client gets an efficient copy, focusing on its own data.\n\nb) A fully configured client may be created by a dedicated factory class, and in the process\n\n`TheFactory newCloudsmithClient`\n```.\ncsClient>>setVault: aVault\n\t^ vault :=  aVault copyForApp: self appId) \n\t\t\t\t\ncsClient vaultOptions\n(#default #sandbox) \n```\n\n\n\n\t\t\nok\n\t\t\nThe Client chooses what form of the vault that it keeps, in this case\nall the data that is not cs specific is discarded, but the \n\n\nWe have a tiered dictionary datastructure implemented as a linked list populated from a number of sources, {{gtClass:TTDictionaryTiered|show=comment|view}}  \n\n{{gtClass:TTVault}} Holds a master copy this data in its \n\n\n\n"
+				"string" : "The Vault maintains two views of configuration data, #config (the raw input form) and #options (the structured ready to use form).\n\nTheVault performs a dual role, \n\n1) from the client end and 2) from the host/environment end.\n## 1) From the Client end\nA vault is empty by default and can be filled in.\n\na) A client class needs to be up and running easily\n\n`csClient := CloudsmithClient new.`\n\nAdding an api key ought to be as simple as.\n\n`csClient vault config at: #api_key put: 'csa_xyz'`\n## 2) From the Host Environment\nThe TheVault currentVault is populated from a world of env files, the osEnvironment and other useful things taking into consideration obfuscation of passwords, and multiple client configurations\nfor multiple apps and hosts.\n\nThe whole kitchen sink is in there.\nvault := TheVault currentVault\n\nWhen the vault is added to a client, the client gets an efficient copy, focusing on its own data.\n\nb) A fully configured client may be created by the factory class, the creation and configuration is negociated between teh factory and the client class. \n\nThe Client essentially chooses the form of the vault that it keeps, in the normal case\nall the data that is not client specific is discarded, in the client's local copy of the vault.\n\nWe have a tiered dictionary datastructure implemented as a linked list populated from a number of sources, {{gtClass:TTDictionaryTiered|show=comment|view}}  \n\n{{gtClass:TTVault}} Holds a master copy this data in its "
 			},
 			{
 				"__type" : "textSnippet",
@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-11T00:23:38.97928+01:00"
+						"dateAndTimeString" : "2026-08-14T02:05:36.263579+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "## Construction\nTiers are built as a simple linked list.\n\n`tdOne appendTier: tdTwo.`\n### Reading\n\nNormal use is read only. For clients we generate a new copy as a normal Dictionary, \nflattening the tiers in reverse order: later tier data is shadowed by earlier tiers.\n \n `td asDictionary at: #foo.`\n\n **For case insensitive use:**\n \n`td asDictionaryWithUppercaseKeys  at: 'FOO'.`\n`td asDictionaryWithLowercaseKeys  at: #foo`.\n### Writing\nWriting only applies to the wrapped dictionary of the frontmost tier. \n \n`td writableDictionary.`\n\nWriting to other tiers is still straightforward.\n\n`(td tierAt: #layer) writableDictionary.`\n### Enabling/Disabling\n This implementation allows for reconfiguring the tiers without dismantling the structure,\n each tier can be individually disabled or re-enabled.\n \n `(td tierAt: ) beDisabled.`"
+				"string" : "## Construction\nTiers are built as a simple linked list.\n\n`tdOne tierAppend: tdTwo.`\n### Reading\n\nNormal use is read only.\n \n `aClient vault api_key`\n or\n `aClient vault at: #api_key.`\n \n **For case insensitive use:**\n \nFully parsed items in the options dictionary are all normalized to lowercase.\n### Writing\nWriting only applies to the wrapped dictionary of the frontmost tier. \n \n`aClient config at: #this put: 'that'`\n### Enabling/Disabling\n This implementation allows for reconfiguring the tiers without dismantling the structure,\n each tier can be individually disabled or re-enabled.\n \n `(td tierAt: ) beDisabled.`"
 			},
 			{
 				"__type" : "pharoSnippet",

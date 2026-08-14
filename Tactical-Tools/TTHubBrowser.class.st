@@ -44,7 +44,7 @@ TTHubBrowser >> gtAllHubsFor: aView [
 		^ aView columnedList
 		title: 'All';
 		priority: 15;
-		items: [ self class pragmasAll_ttHub] ;
+		items: [ self hubsAll] ;
 		"actionUpdateButtonTooltip: 'Update item list';"
 		"column: '#' 
 			text: [ :eachItem :eachIndex | 
@@ -221,9 +221,22 @@ TTHubBrowser >> gtSpokesFor: aView [
 TTHubBrowser >> hubs [
 
 	^ TheHub sortByComment: 
-		((self class pragmasClassSideNamed: #ttHub in: browsing) 
+		((TheHub pragmasClassSideNamed: #ttHub in: browsing) 
 				select:[ :p | p method numArgs == 0 ])
 
+]
+
+{ #category : 'browsing' }
+TTHubBrowser >> hubsAll [
+	
+	| deDup allHubs |
+	
+	allHubs := (TheHub current pragmasAll_ttHub) select:[ :p | p method numArgs == 0 ].
+
+	deDup := (allHubs collect: [ :p | p method comment -> p ]) asDictionary.
+	
+	^ TheHub sortByComment: (deDup associations collect: [ :a | a value ]).
+	
 ]
 
 { #category : 'initializing' }
@@ -237,8 +250,8 @@ TTHubBrowser >> readFrom: aHubClass [
 TTHubBrowser >> spokes [
 
 	^ TheHub sortByComment: (
-		(TheHub current pragmasClassSideNamed: #ttSpoke in: browsing), 
-		(TheHub current pragmasNamed: #ttSpoke in: browsing))
+		(TheHub  pragmasClassSideNamed: #ttSpoke in: browsing), 
+		(TheHub  pragmasNamed: #ttSpoke in: browsing))
 	
 
 ]

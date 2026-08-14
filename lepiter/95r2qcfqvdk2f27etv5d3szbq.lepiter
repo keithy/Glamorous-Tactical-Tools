@@ -66,14 +66,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:10:24.07522+01:00"
+						"dateAndTimeString" : "2026-08-14T01:36:48.534263+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "txoCP1QbRkaNsEEPziHmIg=="
 				},
-				"code" : "\"Notice the Browser is TheGlamorousHub, the winner of the auction\"\rTheHub browse \r\"The Browsee is TheHub - a minimal presentation, but with 'Hubs' and 'All' tab\""
+				"code" : "\"Notice the Browsee is TheHub, not the winner of the auction\"\rTheHub openHubCodeBrowser "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-14T01:37:09.908801+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-14T01:37:20.701482+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "qus75GlNRYC0FspUaVfw4A=="
+				},
+				"code" : "TheHub current openHubCodeBrowser"
 			},
 			{
 				"__type" : "pharoSnippet",

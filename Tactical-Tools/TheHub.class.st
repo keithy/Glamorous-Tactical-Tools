@@ -27,13 +27,6 @@ TheHub class >> _hubId [
 	^ self className asLowercase
 ]
 
-{ #category : 'instance creation' }
-TheHub class >> browserClass [
-
-  ^ self classNamed: #TheHubBrowser
-		  
-]
-
 { #category : 'environment' }
 TheHub class >> bundleId [
 	
@@ -56,22 +49,6 @@ TheHub class >> classNamed: aName ifAbsent: aBlock [
    ^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
-{ #category : 'wall' }
-TheHub class >> collectNotificationsOfClass: aNotificationClass during: aBlock [
-
-	"Debugging pattern"
-
-  <ttWall>
- 
-	| list |
-	
-	list := OrderedCollection new.
-	
-	aBlock on: aNotificationClass do: [ :ex | list add: ex. ex pass ].
-
-	^ list asArray
-]
-
 { #category : 'instance creation' }
 TheHub class >> current [
 	
@@ -80,6 +57,12 @@ TheHub class >> current [
 
 { #category : 'instance creation' }
 TheHub class >> currentTestable [
+	
+	^ self signalAuto
+]
+
+{ #category : 'environment' }
+TheHub class >> currentVault [
 	
 	^ self signalAuto
 ]
@@ -224,7 +207,7 @@ TheHub class >> isWhoAmI [
 
 	<ttWhoAmI>
 
-	"Can provide identity"
+	"Identity provider from environment image"
 
 	^ true
 ]
@@ -259,14 +242,6 @@ TheHub class >> onStartUpBidToBeBrowser [
 	^ 1
 ]
 
-{ #category : 'instance creation' }
-TheHub class >> openBrowser [
-
-^ self browserClass newBrowsing: self
-	 
-		  
-]
-
 { #category : 'environment' }
 TheHub class >> openFileBrowser [
 
@@ -275,6 +250,24 @@ TheHub class >> openFileBrowser [
 	<ttSpoke>
 	
 	^ '.' asFileReference
+]
+
+{ #category : 'instance creation' }
+TheHub class >> openHubBrowser [
+
+^ (self classNamed: #TTHubBrowser) newBrowsing: self
+			
+	 
+		  
+]
+
+{ #category : 'instance creation' }
+TheHub class >> openHubCodeBrowser [
+
+^ (self classNamed: #TTHubCodeBrowser) newBrowsing: self
+			
+	 
+		  
 ]
 
 { #category : 'environment' }
@@ -388,7 +381,7 @@ TheHub class >> sortByComment: pragmas [
  
  	"Sort Pragmas by method comment"
  	
- 	<ttUtil>
+ 	<ttUtility>
  	
 	^ pragmas asSortedCollection: [ :a :b | (a method comment ifNil: '') <= (b method comment ifNil: '') ] 
 	
@@ -527,6 +520,16 @@ TheHub >> currentTestable [
 	^ TheHub current
 ]
 
+{ #category : 'environment' }
+TheHub >> currentVault [
+
+	"Vicarious Vault (Current)"
+	
+	<ttSpoke>
+	
+	^ TTVault currentVault
+]
+
 { #category : 'handling' }
 TheHub >> defaultAction [
 
@@ -601,5 +604,5 @@ TheHub >> sessionManager [
 { #category : 'as yet unclassified' }
 TheHub >> whoAmI [
 
-	^ TTVault currentVault
+	^ TheHub currentVault
 ]

@@ -17,6 +17,16 @@ WipHub class >> TacticalHub [
 ]
 
 { #category : 'as yet unclassified' }
+WipHub class >> currentVault [
+
+	"Vicarious Vault (current)"
+	
+	<ttSpoke>
+	
+	^ TheHub currentVault
+]
+
+{ #category : 'as yet unclassified' }
 WipHub class >> fileLocatorSupportedOriginsResolved [
  
    "FileLocator Named file origins RESOLVED"

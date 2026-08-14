@@ -7,6 +7,16 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TacticalToolsHub class >> currentVault [
+
+	"Vicarious Vault (current)"
+	
+	<ttSpoke>
+	
+	^ TheHub currentVault
+]
+
+{ #category : 'as yet unclassified' }
 TacticalToolsHub class >> healthCheckExamples [
 
 	"Tactical-Tools health check methods <ttHealthCheck>"
@@ -128,7 +138,7 @@ TacticalToolsHub class >> shutDownStartUpTTDryRun [
 
 	"Tactical Tools shutDown/startUp methods - Dry Run"
 	
-	"The idea is to sanity test shutDown methods without the risk of breaking the image"
+	"The idea is to sanity test startUp/shutDown methods without the risk of breaking the image"
 		
 	<ttSpoke>
 	
@@ -143,16 +153,6 @@ TacticalToolsHub class >> theFactory [
 	<ttSpoke>
 	
 	^ TTFactory new
-]
-
-{ #category : 'as yet unclassified' }
-TacticalToolsHub class >> theVault [
-
-	"Vicarious Vault"
-	
-	<ttSpoke>
-	
-	^ TTVault currentVault
 ]
 
 { #category : 'as yet unclassified' }

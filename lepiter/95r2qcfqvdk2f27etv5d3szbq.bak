@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:09:49.055764+01:00"
+						"dateAndTimeString" : "2026-08-13T21:06:42.558681+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>winningBrowserHubClass}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:TheGlamorousHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
+				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>winningHubClass}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:TheGlamorousHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:10:24.07522+01:00"
+						"dateAndTimeString" : "2026-08-14T01:36:48.534263+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "txoCP1QbRkaNsEEPziHmIg=="
 				},
-				"code" : "\"Notice the Browser is TheGlamorousHub, the winner of the auction\"\rTheHub browse \r\"The Browsee is TheHub - a minimal presentation, but with 'Hubs' and 'All' tab\""
+				"code" : "\"Notice the Browsee is TheHub, not the winner of the auction\"\rTheHub openHubCodeBrowser "
 			},
 			{
 				"__type" : "pharoSnippet",

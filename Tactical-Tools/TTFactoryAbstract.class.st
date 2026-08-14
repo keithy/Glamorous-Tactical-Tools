@@ -52,7 +52,7 @@ TTFactoryAbstract class >> makeVaultEmpty [
 { #category : 'as yet unclassified' }
 TTFactoryAbstract class >> makeVaultFromCurrent [
 
-	^ (TTVault currentVault) copy
+	^ (TheHub currentVault) copy
 ]
 
 { #category : 'as yet unclassified' }

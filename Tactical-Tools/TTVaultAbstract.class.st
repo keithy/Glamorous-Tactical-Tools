@@ -497,7 +497,7 @@ TTVaultAbstract >> isWhoAmI [
 
 	<ttWhoAmI>
 	
-	"Can provide identity"
+	"Identity read from configuration"
 
 	^ true
 ]

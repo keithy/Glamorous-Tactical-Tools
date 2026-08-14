@@ -31,7 +31,7 @@ TTMiseEnPlaceCli class >> clientId [
 TTMiseEnPlaceCli class >> new [
 
 	^ (self basicNew)
-			setVault: (TTVault currentVault);
+			setVault: (TheHub currentVault);
 			initialize
  
 ]

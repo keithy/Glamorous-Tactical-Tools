@@ -42,7 +42,7 @@ TTDictionaryBackedByCli class >> exampleLsProjectDir [
 	
 	| vault |
 	
-	vault := TTVault currentVault.
+	vault := TheHub currentVault.
 	
 	^ (self newLsProjectDir) 
 			initialize 
