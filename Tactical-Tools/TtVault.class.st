@@ -55,11 +55,11 @@ TTVault class >> makeTierConfig [
 
 	<gtExample>
 	
-	| lastTier firstTier newTier|
+	| firstTier newTier|
 	
 	(self searchPathFor: TheHub currentTestable) 
 	
-			reverseDo: [ :assoc | 
+			do: [ :assoc | 
 				
 				| tierKey file |
 				tierKey := assoc key.
@@ -72,9 +72,8 @@ TTVault class >> makeTierConfig [
 					
 					newTier setDictionary: (self makeDictionaryDotEnvFile: file) .
 														
-					lastTier 
-		  				ifNil: [ firstTier := newTier. lastTier := newTier ]
-		  				ifNotNil: [ lastTier := lastTier tierInsert: newTier ].
+					firstTier ifNil: [ firstTier := newTier ]
+		  							ifNotNil: [ firstTier tierAppend: newTier ].
 		  	]
 			].
 
@@ -199,13 +198,13 @@ TTVault class >> searchPathFor: whoami [
 	^ {
 	  #hidden -> ('.env' asFileReference).
 		#cwd    -> ((hubId , '.env') asFileReference).
-		
+			  
 		#'user-config' -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
 	  #'user-prefs' -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
-
+	
 		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
 	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
-	
+	  
 	}
 ]
 
