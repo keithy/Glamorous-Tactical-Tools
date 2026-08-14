@@ -12,7 +12,7 @@ Class {
 { #category : 'accessing' }
 TTWorldClockClient >> initialize [
 
-	  maxDelay := (vault at: #max_delay) ifNil: 0.
+	  maxDelay := (self 	vault at: #max_delay) ifNil: 0.
 ]
 
 { #category : 'accessing' }

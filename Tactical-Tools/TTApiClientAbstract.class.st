@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'accept',
 		'contentType',
-		'hostUrl',
-		'apiUrl'
+		'hostUrl'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -50,13 +49,13 @@ TTApiClientAbstract class >> vaultHasWhatINeed: aFactoryVault [
 { #category : 'accessing' }
 TTApiClientAbstract >> / anEndpoint [
 
-	^ self // apiUrl / anEndpoint
+	^ self // self hostUrl / anEndpoint
 ]
 
 { #category : 'accessing' }
 TTApiClientAbstract >> // aUrl [
 
-	^ self newRequest // (apiUrl := aUrl)
+	^ self newRequest //  aUrl
 ]
 
 { #category : 'accessing' }
@@ -195,7 +194,7 @@ TTApiClientAbstract >> useDELETE: endpoint [
 { #category : 'accessing' }
 TTApiClientAbstract >> useEndpoint: anEndpoint [
 
-	^ self // apiUrl / anEndpoint
+	^ self // self hostUrl / anEndpoint
 ]
 
 { #category : 'accessing' }
@@ -226,4 +225,10 @@ TTApiClientAbstract >> usePUT: endpoint [
 TTApiClientAbstract >> useUrl: aUrl [
 
 	^ self // aUrl 
+]
+
+{ #category : 'accessing' }
+TTApiClientAbstract >> vLatest [
+
+	^ self // self hostUrl / 'api'
 ]

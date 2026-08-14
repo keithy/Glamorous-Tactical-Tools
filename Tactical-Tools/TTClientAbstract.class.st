@@ -22,7 +22,7 @@ TTClientAbstract class >> asHub [
 
 { #category : 'accessing' }
 TTClientAbstract class >> basicNew [
-   self isAbstract ifTrue: [ self error:self name, ' is abstract' ].
+   self isAbstract ifTrue: [ self error:(self name, ' is abstract') ].
  ^ super basicNew
 ]
 
@@ -115,7 +115,7 @@ TTClientAbstract >> getUser [
 TTClientAbstract >> gtOptionsFor: aView [
 	<gtView>
 	^ aView forward
-		title: 'Options';
+		title: 'Vault Options';
 		priority: 5;
 		object: [ self vault ];
 		view: #gtOptionsFor:
@@ -125,10 +125,10 @@ TTClientAbstract >> gtOptionsFor: aView [
 TTClientAbstract >> gtVaultViewFor: aView [
 	<gtView>
 	^ aView forward
-		title: 'Vault';
+		title: 'Vault Config';
 		priority: 10;
 		object: [ self vault ];
-		view: #gtRawFor:
+		view: #gtConfigFor:
 ]
 
 { #category : 'factory' }

@@ -203,7 +203,7 @@ TTVaultAbstract >> configRefresh [
  
   "don't everyone do this"
   
-  self config refreshReading.
+  self config askFor: #refreshReading.
   apps := nil.
   options := nil.
 ]
@@ -521,7 +521,7 @@ TTVaultAbstract >> lookup: aKey [
  
 	self search do: [ :attempt |
 	
-		((attempt inject: start into: [ :target :each | (target at: each) ifNil: [ ^ nil ]])  at: aKey)
+		((attempt inject: start into: [ :target :each | target at: each ifAbsent: [ ^ nil ] ])  at: aKey)
 			ifNotNil: [ :v | ^v ].
 						
 	].
