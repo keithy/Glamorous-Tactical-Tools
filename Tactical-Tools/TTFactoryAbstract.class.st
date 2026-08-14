@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'vault'
 	],
-	#category : 'Tactical-Tools-Clients',
+	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
-	#tag : 'Clients'
+	#tag : 'Request-Result'
 }
 
 { #category : 'as yet unclassified' }
@@ -15,7 +15,7 @@ TTFactoryAbstract class >> factoryId [
 	^ ((self name withoutPrefix: 'TT') withoutSuffix: 'Factory') asLowercase
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'testing' }
 TTFactoryAbstract class >> isAbstract [
 
 	^ self == TTFactoryAbstract
@@ -55,7 +55,7 @@ TTFactoryAbstract class >> makeVaultFromCurrent [
 	^ (TheHub currentVault) copy
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 TTFactoryAbstract class >> new [
 
 	^ (self basicNew)

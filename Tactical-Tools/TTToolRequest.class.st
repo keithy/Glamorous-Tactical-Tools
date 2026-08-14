@@ -1,12 +1,9 @@
 Class {
 	#name : 'TTToolRequest',
-	#superclass : 'Object',
+	#superclass : 'TTRequestAbstract',
 	#instVars : [
 		'tool',
 		'workingDirectory',
-		'stdout',
-		'output',
-		'stderr',
 		'request',
 		'thePayload',
 		'readPayloadUsing'
@@ -14,9 +11,9 @@ Class {
 	#classInstVars : [
 		'exe'
 	],
-	#category : 'Tactical-Tools-Clients',
+	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
-	#tag : 'Clients'
+	#tag : 'Request-Result'
 }
 
 { #category : 'as yet unclassified' }

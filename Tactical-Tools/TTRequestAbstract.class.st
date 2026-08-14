@@ -1,0 +1,124 @@
+Class {
+	#name : 'TTRequestAbstract',
+	#superclass : 'Object',
+	#instVars : [
+		'client',
+		'result',
+		'isAuthRequired',
+		'type',
+		'parameters',
+		'text'
+	],
+	#category : 'Tactical-Tools-Request-Result',
+	#package : 'Tactical-Tools',
+	#tag : 'Request-Result'
+}
+
+{ #category : 'testing' }
+TTRequestAbstract class >> isAbstract [
+
+	^ self == TTRequestAbstract
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> client [
+	^ client
+]
+
+{ #category : 'initialization' }
+TTRequestAbstract >> initialize [
+
+	client makeInitializeRequest: self.
+	
+	
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> isAuthRequired [
+
+	^ isAuthRequired
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> isAuthRequired: bool [
+
+	isAuthRequired := bool
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> notify [
+
+	^ (TTRequestNotification new)
+		request: self;
+		signal 
+
+  
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> parameterAt: key put: value [
+
+	^ self parameters at: key put: value
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> parameters [
+
+	^ parameters ifNil: [  parameters := Dictionary new ]
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> result [
+	^ result
+]
+
+{ #category : 'initialization' }
+TTRequestAbstract >> setClient: anObject [
+	client := anObject
+]
+
+{ #category : 'initialization' }
+TTRequestAbstract >> setResult: anObject [
+	result := anObject
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> withDict: aDictish [
+	
+	"for readability the input may be an array of associations"
+	
+	^ self withSTON: aDictish asDictionary
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> withSTON: jsonable [
+
+  text := STON toJsonString: jsonable.
+  
+  ^ text
+		  
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> withText [
+	
+	^ text
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> withText: aText [
+	 
+	 "multiple uses append"
+	 text := (text ifNil: ''), aText.
+	 
+	 ^ text
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> withUsing: aBlock [
+  
+  "double dispatch this over to the result, 
+   clients can customize the result class"
+	
+	result requestUsing: aBlock  
+]

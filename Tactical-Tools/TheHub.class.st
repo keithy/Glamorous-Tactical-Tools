@@ -33,6 +33,15 @@ TheHub class >> bundleId [
 	^ self signalAuto
 ]
 
+{ #category : 'as yet unclassified' }
+TheHub class >> classHttpClient [
+
+	<ttWall>
+	
+	"not all environments have Zinc"
+	^ self classNamed: #TTGuzzlerPharo
+]
+
 { #category : 'wall' }
 TheHub class >> classNamed: aName [
 

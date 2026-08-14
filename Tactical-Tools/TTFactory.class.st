@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTFactory',
 	#superclass : 'TTFactoryAbstract',
-	#category : 'Tactical-Tools-Clients',
+	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
-	#tag : 'Clients'
+	#tag : 'Request-Result'
 }
 
 { #category : 'as yet unclassified' }

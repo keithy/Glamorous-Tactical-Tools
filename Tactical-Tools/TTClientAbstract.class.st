@@ -2,11 +2,13 @@ Class {
 	#name : 'TTClientAbstract',
 	#superclass : 'Object',
 	#instVars : [
-		'vault'
+		'vault',
+		'result',
+		'classTool'
 	],
-	#category : 'Tactical-Tools-Clients',
+	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
-	#tag : 'Clients'
+	#tag : 'Request-Result'
 }
 
 { #category : 'as yet unclassified' }
@@ -52,6 +54,36 @@ TTClientAbstract class >> clientId [
 TTClientAbstract class >> isAbstract [
 
 	^ self == TTClientAbstract
+]
+
+{ #category : 'accessing' }
+TTClientAbstract class >> makeBasicResult [
+
+	^ TTResult basicNew
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> makeBasicResultForClient: aClient [
+
+  ^ (self makeBasicResult) 
+  			basicSetupForClient: aClient
+  			yourself
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> makeBasicResultForModel: aClient [
+
+  ^ (self makeBasicResult) 
+  			basicSetupForModel: aClient
+  			yourself
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> makeBasicResultForResult: aClient [
+
+  ^ (self makeBasicResult) 
+  			basicSetupForResult: aClient
+  			yourself
 ]
 
 { #category : 'as yet unclassified' }
@@ -104,6 +136,50 @@ TTClientAbstract >> initializeForFactory: aFactory ifFail: fBlock [
 	^ self initialize
 
 
+]
+
+{ #category : 'factory' }
+TTClientAbstract >> isAuthRequired [
+
+	^ false
+]
+
+{ #category : 'accessing' }
+TTClientAbstract >> makeBasicRequestFor: aResult [
+
+	^ classTool ttClassApiRequest new
+	
+]
+
+{ #category : 'factory' }
+TTClientAbstract >> makeInitializeRequest: aRequest [
+
+	aRequest isAuthRequired: self isAuthRequired  
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> newRequest [
+
+	 ^ self newResult newRequest
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> newResult [
+
+	"The client keeps the last result context as convenience for the user.
+	This is multi-threaded unsafe etc.
+	
+	Each result-request pair represents an atomic query.
+	
+	Each result-request pair keeps a reference to the client, so that it is
+	easy to make further api calls of its own"
+
+	^ result := self class makeBasicResultForClient: self
+]
+
+{ #category : 'accessing' }
+TTClientAbstract >> setClassTool: aClass [
+	classTool := aClass
 ]
 
 { #category : 'accessing' }

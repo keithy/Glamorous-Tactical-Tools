@@ -1,29 +1,22 @@
 Class {
 	#name : 'TTResult',
-	#superclass : 'Object',
+	#superclass : 'TTResultAbstract',
 	#instVars : [
-		'tool',
-		'workingDirectory',
 		'stdout',
 		'output',
 		'stderr',
-		'request',
 		'thePayload',
-		'readPayloadUsing'
+		'formatted',
+		'formatters',
+		'mapped',
+		'mappers',
+		'payloadTailReducers',
+		'payloadReducers'
 	],
-	#classInstVars : [
-		'exe'
-	],
-	#category : 'Tactical-Tools-Clients',
+	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
-	#tag : 'Clients'
+	#tag : 'Request-Result'
 }
-
-{ #category : 'as yet unclassified' }
-TTResult >> apply: aBoltOn [
-
-	aBoltOn applyTo: self
-]
 
 { #category : 'as yet unclassified' }
 TTResult >> format: actionBlockSymbolArrayOrNil [
@@ -164,6 +157,13 @@ TTResult >> mapping: actionBlockSymbolArrayOrNil [
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       mappers ifNil: [ mappers := OrderedCollection with: #getMappingInput ].
       mappers add: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'accessing' }
+TTResult >> newRequest [
+
+	^ self request: self class requestClass new.	
+
 ]
 
 { #category : 'as yet unclassified' }
