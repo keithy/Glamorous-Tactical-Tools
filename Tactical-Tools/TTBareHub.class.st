@@ -7,6 +7,16 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTBareHub class >> isHub [
+
+  <ttIsHub>
+  
+	"The Tactical Tools Hub"
+	
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
 TTBareHub class >> openHubBrowser [
 
 ^ (TheHub getClass: #TTHubBrowser) newBrowsing: self

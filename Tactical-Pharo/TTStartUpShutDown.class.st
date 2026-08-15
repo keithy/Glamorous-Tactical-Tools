@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTStartUpShutDown',
 	#superclass : 'Object',
-	#category : 'Tactical-Tools-Hub',
-	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#category : 'Tactical-Pharo-StartUp/ShutDown',
+	#package : 'Tactical-Pharo',
+	#tag : 'StartUp/ShutDown'
 }
 
 { #category : 'environment' }
@@ -46,6 +46,18 @@ TTStartUpShutDown class >> pragmasAll_ttStartUp [
 	^ Pragma allNamed: #ttStartUp
 ]
 
+{ #category : 'spokes' }
+TTStartUpShutDown class >> selectorShutDown [
+
+	^ #shutDown:
+]
+
+{ #category : 'spokes' }
+TTStartUpShutDown class >> selectorStartUp [
+
+	^ #startUp:
+]
+
 { #category : 'environment' }
 TTStartUpShutDown class >> shutDown: quitting [
 
@@ -54,9 +66,9 @@ TTStartUpShutDown class >> shutDown: quitting [
 			
 				(self mustBeClassSide: pragma) ifTrue:[ 
 				
-						(pragma method selector = 'shutDown:') ifFalse: [ self error ].
+						(pragma method selector = self selectorShutDown) ifFalse: [ self error ].
 						
-						TTStartUpNotification signal:pragma displayString withTag: pragma method.
+						TTStartUpShutDownNotification signal:pragma displayString withTag: pragma method.
 						pragma method methodClass soleInstance 
 							perform: pragma method selector 
 							with: quitting
@@ -73,7 +85,7 @@ TTStartUpShutDown class >> shutDownDryRun [
 
 	"Sanity test startUp methods without the risk of breaking the image"
 	
-	^ TTStartUpNotification collectDuring: [ 
+	^ TTStartUpShutDownNotification collectDuring: [ 
 		
 		   self shutDown: true
 		]
@@ -90,10 +102,9 @@ TTStartUpShutDown class >> startUp: isImageStarting [
 			
 				(self mustBeClassSide: pragma) ifTrue:[ 
 				
-				
-						(pragma method selector = 'startUp:') ifFalse: [ self error ].
+						(pragma method selector = self selectorStartUp) ifFalse: [ ^ nil ].
 
-						TTStartUpNotification signal:pragma displayString withTag: pragma method.
+						TTStartUpShutDownNotification signal:pragma displayString withTag: pragma method.
 						pragma method methodClass soleInstance 
 							perform: pragma method selector 
 							with: isImageStarting
@@ -108,7 +119,7 @@ TTStartUpShutDown class >> startUpDryRun [
 
 	"Sanity test startUp methods without the risk of breaking the image"
 	
-	^ TTStartUpNotification collectDuring: [ 
+	^ TTStartUpShutDownNotification collectDuring: [ 
 		 
 		 self startUp: true
 		 
@@ -116,4 +127,10 @@ TTStartUpShutDown class >> startUpDryRun [
 
 
 
+]
+
+{ #category : 'spokes' }
+TTStartUpShutDown class >> startUpSelector [
+
+	^ #startUp:
 ]

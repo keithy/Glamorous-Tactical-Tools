@@ -28,16 +28,6 @@ TheTacticalToolsHub class >> healthCheckExamples [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> isHub [
-
-  <ttIsHub>
-  
-	"The Tactical Tools Hub"
-	
-	^ true
-]
-
-{ #category : 'as yet unclassified' }
 TheTacticalToolsHub class >> llmChatRegistry [ 
 
 	"LLM Chats"

@@ -9,7 +9,7 @@ Values are obtained from the surrounding image context via a resumable notificat
 "
 Class {
 	#name : 'TheHub',
-	#superclass : 'TTAbstractNotifyingHub',
+	#superclass : 'TTNotifyingHubAbstract',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
@@ -29,7 +29,7 @@ TheHub class >> classHttpClient [
 { #category : 'as yet unclassified' }
 TheHub class >> getClassNamespaceSearchPath [
 
-	^ #(Pharo '$LOCATION' '$COMPANY' '$PROJECT') 
+	^ #(Pharo '$USER' '$LOCATION' '$COMPANY' '$PROJECT' '$PLATFORM') 
 ]
 
 { #category : 'environment' }
