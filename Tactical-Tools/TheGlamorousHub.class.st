@@ -128,7 +128,7 @@ TheGlamorousHub class >> lepiterReload [
 TheGlamorousHub class >> onStartUpBidToBeBrowser [
 	
 	"Determine if we are based on GT or Pharo (better ways?)"
-	(self classNamed: #GtImage ifAbsent: [ ^ 0 ]).
+	(self ensureClass: #GtImage ifAbsent: [ ^ 0 ]).
 	
 	^ 20 
 ]

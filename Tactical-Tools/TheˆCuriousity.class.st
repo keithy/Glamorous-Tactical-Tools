@@ -1,5 +1,5 @@
 Class {
-	#name : 'TheCuriousity',
+	#name : 'TheˆCuriousity',
 	#superclass : 'Object',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TheCuriousity class >> baselines [
+TheˆCuriousity class >> baselines [
 
   "Baselines"
 
@@ -17,7 +17,7 @@ TheCuriousity class >> baselines [
 ]
 
 { #category : 'as yet unclassified' }
-TheCuriousity class >> classesThatAreUniqueIds [
+TheˆCuriousity class >> classesThatAreUniqueIds [
 
   "Classes that dont do a lot - unique ids"
 
@@ -27,7 +27,7 @@ TheCuriousity class >> classesThatAreUniqueIds [
 ]
 
 { #category : 'as yet unclassified' }
-TheCuriousity class >> pragmaClassSideUnaryMethods [
+TheˆCuriousity class >> pragmaClassSideUnaryMethods [
 
  "Potential spoke methods"
 
@@ -37,7 +37,7 @@ TheCuriousity class >> pragmaClassSideUnaryMethods [
 ]
 
 { #category : 'as yet unclassified' }
-TheCuriousity class >> pragmasAllFixes [
+TheˆCuriousity class >> pragmasAllFixes [
 
 	"Fixes to base environment <ttFix>"
 	
@@ -47,7 +47,7 @@ TheCuriousity class >> pragmasAllFixes [
 ]
 
 { #category : 'as yet unclassified' }
-TheCuriousity class >> stencils [
+TheˆCuriousity class >> stencils [
 
   "Stencils"
 

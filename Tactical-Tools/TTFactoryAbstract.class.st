@@ -21,16 +21,6 @@ TTFactoryAbstract class >> isAbstract [
 	^ self == TTFactoryAbstract
 ]
 
-{ #category : 'accessing' }
-TTFactoryAbstract class >> makeClassNamed: aClassName [  
-
-	^ TheHub classNamed: aClassName ifAbsent: [ ^ nil ].
-	 
-				
-	
-	 
-]
-
 { #category : 'as yet unclassified' }
 TTFactoryAbstract class >> makeErrorHandler [
 
@@ -90,10 +80,17 @@ TTFactoryAbstract class >> pragmasAll_ttClient [
 ]
 
 { #category : 'as yet unclassified' }
-TTFactoryAbstract >> configure: aNewInstance using: configureBlock [
+TTFactoryAbstract >> claim: aClassOrName andConfigure: configureBlock [
+ 
+	| supervisingClass winningClass |
+	
+	supervisingClass := TheHub ensureClass: aClassOrName ifAbsent: [ ^ nil ].
+	
+	winningClass := supervisingClass findSuitableFor: self vault.
+	
+	^ self make: winningClass andConfigure: configureBlock
 
-	^ (configureBlock value: aNewInstance) initialize.
-
+																		
 ]
 
 { #category : 'accessing' }
@@ -183,23 +180,16 @@ TTFactoryAbstract >> gtFactoryMethodsFor: aView [
 ]
 
 { #category : 'accessing' }
-TTFactoryAbstract >> make: aClassName andConfigure: configureBlock [
+TTFactoryAbstract >> make: aClassOrName andConfigure: configureBlock [
 
-	| aNewClass aNewInstance factoryConfiguredInstance |
+	| aNewClass aNewInstance |
 	
-	aNewClass := (self class makeClassNamed: aClassName) ifNil: [ ^ nil ].
+	aNewClass := TheHub ensureClass: aClassOrName ifAbsent: [ ^ nil ].
 	
-	aNewInstance := (aNewClass basicNewForFactory: self ifFail: [ ^ nil ]) 
-		ifNil: [ ^ nil ].
-	
-	factoryConfiguredInstance := (self configure: aNewInstance using: configureBlock) ifNil: [ ^ nil ].
-	
-	^ factoryConfiguredInstance initializeForFactory: self ifFail: [ ^ nil ]
+	aNewInstance := aNewClass basicNewForVault: self ifFail: [ ^ nil ].
+
+	^ (configureBlock value: aNewInstance) initializeForFactory: self ifFail: [ ^ nil ]
 																		
-																						 
-				
-	
-	 
 ]
 
 { #category : 'accessing' }

@@ -87,6 +87,18 @@ TheHub class >> during: aBlock use: substituteValue for: methodSelector [
 		]
 ]
 
+{ #category : 'accessing' }
+TheHub class >> ensureClass: aClassOrName ifAbsent: aBlock [
+
+   <ttWall>
+
+   aClassOrName ifNil: [ ^ aBlock value ].
+   
+   aClassOrName isClass ifTrue: [ ^ aClassOrName ].
+   
+   ^ Smalltalk at: aClassOrName asSymbol ifAbsent: aBlock
+]
+
 { #category : 'external-process' }
 TheHub class >> execBash: script [
  
@@ -157,11 +169,11 @@ TheHub class >> fileReferenceFrom: aString [
 ]
 
 { #category : 'testing' }
-TheHub class >> for: instanceMethodSelector respondWith: substituteValue during: aBlock [
+TheHub class >> for: selector respondWith: substituteValue during: aBlock [
 	
 	^ aBlock on: WinningHubClass do: [  :ex | 
 	
-			ex messageText == instanceMethodSelector
+			ex messageText == selector
 				ifTrue: [ ex resume: substituteValue ] 
 				ifFalse: [ ex pass ]
 		]
@@ -227,6 +239,25 @@ TheHub class >> lookupClass: aName [
 	"testable equivalent of #MyClass asClass"
 	
 	
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> makeNetworkErrorHandler [
+
+	"Network Error Handler"
+	
+	<ttWall>
+	
+	"For your Context - Different Context, subclass TheHub"
+	
+	^ [ :err |
+			
+				(err isKindOf: NameLookupFailure)
+					ifTrue: [  err messageText: 'Network problem?', err messageText ].
+					
+				err pass.
+		  ]
+		  
 ]
 
 { #category : 'environment' }
@@ -443,7 +474,7 @@ TheHub class >> theCuriousity [
 	
 	<ttHub>
 		
-  ^  TheCuriousity 
+  ^  TheˆCuriousity 
 		  
 ]
 

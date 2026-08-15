@@ -27,15 +27,15 @@ TTClientAbstract class >> basicNew [
 ]
 
 { #category : 'factory' }
-TTClientAbstract class >> basicNewForFactory: aFactory ifFail: fBlock [
+TTClientAbstract class >> basicNewForVault: aVault ifFail: fBlock [
 	
 	"the failblock pattern allows subclasses to inherit the whole method
 	 and build upon what we have here, rather than replace it"
 
-	(self vaultHasWhatINeed: aFactory vault) ifFalse: [ ^ fBlock value ].
+	(self suitsVault: aVault) ifFalse: [ ^ fBlock value ].
 	
 	^ (self basicNew)
-				setVault: ((aFactory vault copy) 
+				setVault: ((aVault copy) 
 											appKey: self vaultAppKey;
 											optionsSelect: #default;
 											refresh;
@@ -51,10 +51,28 @@ TTClientAbstract class >> clientId [
 	^ ((self name withoutPrefix: 'TT') withoutSuffix: 'Client') asLowercase
 ]
 
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> findSuitableFor: aVaultable [
+	
+	"return first match"
+
+	aVaultable askFor: #vault ifAbsent: [ ^ self error: 'Expected aFactory or aClient' ].
+	
+	self withAllSubclassesDo: [ :ea | (ea isSuitableFor: aVaultable) ifTrue: [ ^ ea ] ].
+	
+	^ nil
+]
+
 { #category : 'accessing' }
 TTClientAbstract class >> isAbstract [
 
 	^ self == TTClientAbstract
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> isSuitableFor: aFactoryOrClient [
+
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -94,15 +112,15 @@ TTClientAbstract class >> makeVaultEmpty [
 ]
 
 { #category : 'accessing' }
-TTClientAbstract class >> vaultAppKey [
+TTClientAbstract class >> suitsVault: aVault [
 
-	^ self clientId
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-TTClientAbstract class >> vaultHasWhatINeed: aFactoryVault [
+TTClientAbstract class >> vaultAppKey [
 
-	^ aFactoryVault lookupHasFields: #(url)
+	^ self clientId
 ]
 
 { #category : 'as yet unclassified' }
@@ -203,10 +221,4 @@ TTClientAbstract >> setVault: aVault [
 { #category : 'accessing' }
 TTClientAbstract >> vault [
 	^ vault ifNil: [ vault := self class makeVaultEmpty ]
-]
-
-{ #category : 'accessing' }
-TTClientAbstract >> vaultAppKey [
-
-	^ self class vaultAppKey
 ]

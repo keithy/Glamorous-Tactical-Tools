@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : 'accessing' }
+TTWorldClockClient class >> vaultAppKey [
+
+	"Same for subclasses"
+	
+	^ 'worldclock'
+]
+
+{ #category : 'accessing' }
 TTWorldClockClient >> initialize [
 
 	  maxDelay := (self 	vault at: #max_delay) ifNil: 0.
