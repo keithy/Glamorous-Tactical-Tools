@@ -10,6 +10,8 @@ Values are obtained from the surrounding image context via a resumable notificat
 Class {
 	#name : 'TheHub',
 	#superclass : 'Notification',
+	#traits : 'T3Namespace',
+	#classTraits : 'T3Namespace classTrait',
 	#instVars : [
 		'browsing'
 	],
@@ -32,13 +34,6 @@ TheHub class >> allClasses [
 
       
    ^ Smalltalk allClasses select: [ :c | c isClass ]
-
-]
-
-{ #category : 'accessing' }
-TheHub class >> allNamespaces [ 
-      ^ (self allClasses
-          select: [ :c | c askFor: #isNamespaced ] thenCollect: [ :n | n ttNamespace ])
 
 ]
 

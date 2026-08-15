@@ -5,48 +5,48 @@ Trait {
 	#tag : 'Hub'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced classSide >> isNamespaced [
     ^ true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced classSide >> ttFullName [
     ^ self name
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced classSide >> ttLocalName [
     ^ (self name copyFrom: self ttPrefixSize + 1 to: self name size) asSymbol
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced classSide >> ttNamespace [
     ^ (self name copyFrom: 1 to: self ttPrefixSize) asSymbol
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced classSide >> ttPrefixSize [
     ^ self name indexOf: $ˆ
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced >> isNamespaced [
     ^ self class isNamespaced
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced >> printOn: aStream [
     aStream nextPutAll: 'a '.
     self ttDisplayName printOn: aStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced >> ttDisplayName [
     ^ self class ttLocalName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'namespace' }
 TNamespaced >> ttFullName [
     ^ self class ttFullName
 ]
