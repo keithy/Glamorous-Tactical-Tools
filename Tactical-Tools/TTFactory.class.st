@@ -40,14 +40,40 @@ TTFactory >> newOpenApiBrowser: aStreamable [
 ]
 
 { #category : 'as yet unclassified' }
-TTFactory >> newWorldClockClient [
+TTFactory >> newWorldClockClient_option1 [
 
 	"World Clock"
 	
 	<ttApiClient>
 
   ^ self 
-			make: #TTWorldClockClient  
+			use: (self tryAll)
+			andConfigure: [ :wc | wc ]
+
+]
+
+{ #category : 'as yet unclassified' }
+TTFactory >> newWorldClockClient_option2 [
+
+	"World Clock"
+	
+	<ttApiClient>
+
+  ^ self 
+			use: (self tryAll: #TTWorldClockClient) 
+			andConfigure: [ :wc | wc ]
+
+]
+
+{ #category : 'as yet unclassified' }
+TTFactory >> newWorldClockClient_option3 [
+
+	"World Clock"
+	
+	<ttApiClient>
+
+  ^ self 
+			makeFor: (self askAll: #TTWorldClockClient) first
 			andConfigure: [ :wc | wc ]
 
 ]

@@ -320,6 +320,14 @@ TTVaultAbstract >> getApps [
   ^ result
 ]
 
+{ #category : 'testing' }
+TTVaultAbstract >> getVault [
+
+	"a vault is vaultable"
+	
+	^ self
+]
+
 { #category : 'gt-views' }
 TTVaultAbstract >> gtAppsConfigFor: aView [
 	<gtView>

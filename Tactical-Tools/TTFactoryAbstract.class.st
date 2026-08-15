@@ -22,18 +22,6 @@ TTFactoryAbstract class >> isAbstract [
 ]
 
 { #category : 'as yet unclassified' }
-TTFactoryAbstract class >> makeErrorHandler [
-
-^ [ :err |
-		
-			(err isKindOf: NameLookupFailure)
-				ifTrue: [  err messageText: 'Network problem?', err messageText ].
-				
-			err pass.
-	  ]
-]
-
-{ #category : 'as yet unclassified' }
 TTFactoryAbstract class >> makeNetworkErrorHandler [
 
 ^ [ :err |
@@ -79,18 +67,29 @@ TTFactoryAbstract class >> pragmasAll_ttClient [
 
 ]
 
-{ #category : 'as yet unclassified' }
-TTFactoryAbstract >> claim: aClassOrName andConfigure: configureBlock [
- 
-	| supervisingClass winningClass |
+{ #category : 'accessing' }
+TTFactoryAbstract >> askAll [ 
 	
-	supervisingClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
-	
-	winningClass := supervisingClass findSuitableFor: self vault.
-	
-	^ self make: winningClass andConfigure: configureBlock
+	^ self askAll: TTClientAbstract  
 
-																		
+	 
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> askAll: aClassOrName [ 
+
+	| aNewClass |
+	
+	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	
+	^ aNewClass withAllSubclassesCollectSuccessfulVaultsFor: vault.
+ 
+	 
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> getVault [
+	^ vault
 ]
 
 { #category : 'accessing' }
@@ -186,9 +185,23 @@ TTFactoryAbstract >> make: aClassOrName andConfigure: configureBlock [
 	
 	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
 	
-	aNewInstance := aNewClass basicNewForVault: self ifFail: [ ^ nil ].
+	aNewInstance := aNewClass basicNewForPotential: self .
 
-	^ (configureBlock value: aNewInstance) initializeForFactory: self ifFail: [ ^ nil ]
+	^ self use: aNewInstance andConfigure: configureBlock
+																		
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> makeFor: association andConfigure: configureBlock [
+
+	| aNewClass aNewVault aNewInstance |
+	
+	aNewClass := association value.
+	aNewVault := association key.
+
+  aNewInstance := aNewClass basicNewFor: aNewVault .
+
+	^ self use: aNewInstance andConfigure: configureBlock
 																		
 ]
 
@@ -201,6 +214,28 @@ TTFactoryAbstract >> setVault: anObject [
 ]
 
 { #category : 'accessing' }
-TTFactoryAbstract >> vault [
-	^ vault
+TTFactoryAbstract >> tryAll [ 
+	
+	^ self tryAll: TTClientAbstract  
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> tryAll: aClassOrName [ 
+
+	| aNewClass |
+	
+	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	
+	^ aNewClass withAllSubclassesDetectSuccessfulMakeFor: vault.
+
+	 
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> use: aNewInstance andConfigure: configureBlock [
+
+	aNewInstance ifNil: [ ^ nil ].
+
+	^ (configureBlock value: aNewInstance) initializeFor: self  
+																		
 ]

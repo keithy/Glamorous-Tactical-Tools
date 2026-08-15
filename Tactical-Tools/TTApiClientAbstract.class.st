@@ -12,15 +12,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTApiClientAbstract class >> basicNewForVault: aFactory ifFail: failBlock [
+TTApiClientAbstract class >> basicNewFor: aVaultable ifFail: failBlock [
 
 	| basicNewClient |
 	
-	basicNewClient := super basicNewForVault: aFactory ifFail: [ ^ failBlock value ].
+	basicNewClient := super basicNewFor: aVaultable ifFail: [ ^ failBlock value ].
 	
 	^ basicNewClient
 			setClassTool: TheHub classHttpClient;
-			setRequestErrorHandler: aFactory class makeNetworkErrorHandler;
+			setRequestErrorHandler: TheHub makeNetworkErrorHandler;
 			yourself
 
 ]
@@ -38,42 +38,6 @@ TTApiClientAbstract class >> makeOpenApiBrowser: aStreamable [
 			readString: aStreamable
 			yourself
 	
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract class >> suitableOptions: appOptions [
-
-  ^ appOptions associationsSelect: [ :assoc | self suitsOption: assoc value ]
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract class >> suitableOptionsInVault: aVault [
-
-	| appOptions |
-	
-	appOptions := aVault apps at: self vaultAppKey ifAbsent: [ ^ #() ]. 
-	
-	^ self suitableOptions: appOptions
-
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract class >> suitsOption: appConfig [
-
-	 ^ appConfig at: #url ifPresent: [ :url | url = self urlHostApi ] ifAbsent: false
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTApiClientAbstract class >> suitsVault: aVault [
-
-	^ aVault lookupHasFields: #(url)
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract class >> urlHostApi [
-
-   ^ 'nemo://'
 ]
 
 { #category : 'accessing' }

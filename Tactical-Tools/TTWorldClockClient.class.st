@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTWorldClockClient',
-	#superclass : 'TTApiClientAbstract',
+	#superclass : 'TTOneJobManySuppliers',
 	#instVars : [
 		'maxDelay'
 	],
@@ -20,7 +20,7 @@ TTWorldClockClient class >> vaultAppKey [
 { #category : 'accessing' }
 TTWorldClockClient >> initialize [
 
-	  maxDelay := (self 	vault at: #max_delay) ifNil: 0.
+	  maxDelay := (self 	getVault at: #max_delay) ifNil: 0.
 ]
 
 { #category : 'accessing' }

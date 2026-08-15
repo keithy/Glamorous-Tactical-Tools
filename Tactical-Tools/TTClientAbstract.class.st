@@ -29,20 +29,55 @@ TTClientAbstract class >> basicNew [
 ]
 
 { #category : 'factory' }
-TTClientAbstract class >> basicNewForVault: aVault ifFail: fBlock [
+TTClientAbstract class >> basicNewFor: actualVault [
+	
+ 	^ (self basicNew)
+					setVault:  actualVault
+					yourself
+
+
+]
+
+{ #category : 'factory' }
+TTClientAbstract class >> basicNewForPotential: aVaultable [
+	
+ 	^ self basicNewFor:  ((self makeNewVaultFor: aVaultable) ifNil: [ ^ nil ])
+					yourself
+
+
+]
+
+{ #category : 'factory' }
+TTClientAbstract class >> checkNewVault: aVaultable [ 
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+TTClientAbstract class >> checkPotentialVault: aVault [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'factory' }
+TTClientAbstract class >> checkVault: aVaultable [  
 	
 	"the failblock pattern allows subclasses to inherit the whole method
 	 and build upon what we have here, rather than replace it"
 
-	(self suitsVault: aVault) ifFalse: [ ^ fBlock value ].
+	| myVault |
 	
-	^ (self basicNew)
-				setVault: ((aVault copy) 
-											appKey: self vaultAppKey;
-											optionsSelect: #default;
-											refresh;
-											yourself);
-				yourself
+	 (self checkPotentialVault: aVaultable ) ifFalse: [ ^ nil ].
+	
+	 myVault := (aVaultable getVault copy) 
+									appKey: self vaultAppKey;
+									optionsSelect: #default;
+									refresh;
+									yourself.
+								
+   (self checkMyNewVault: aVaultable ) ifFalse: [  ^ nil ].
+				
+ 	^ myVault
 
 
 ]
@@ -54,27 +89,18 @@ TTClientAbstract class >> clientId [
 ]
 
 { #category : 'as yet unclassified' }
-TTClientAbstract class >> findSuitableFor: aVaultable [
-	
-	"return first match"
+TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 
-	aVaultable askFor: #vault ifAbsent: [ ^ self error: 'Expected aFactory or aClient' ].
-	
-	self withAllSubclassesDo: [ :ea | (ea isSuitableFor: aVaultable) ifTrue: [ ^ ea ] ].
-	
-	^ nil
+	^ (aVaultable 
+		appKey: self vaultAppKey
+		refresh) options keys
+
 ]
 
 { #category : 'accessing' }
 TTClientAbstract class >> isAbstract [
 
 	^ self == TTClientAbstract
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> isSuitableFor: aFactoryOrClient [
-
-	^ false
 ]
 
 { #category : 'accessing' }
@@ -107,16 +133,56 @@ TTClientAbstract class >> makeBasicResultForResult: aClient [
   			yourself
 ]
 
+{ #category : 'factory' }
+TTClientAbstract class >> makeNewVaultFor: aVaultable [  
+	
+	| myVault |
+	
+	 (self checkPotentialVault: aVaultable ) ifFalse: [ ^ nil ].
+	
+	 myVault := (aVaultable getVault copy) 
+									appKey: self vaultAppKey;
+									optionsSelect: #default;
+									refresh;
+									yourself.
+								
+   (self checkNewVault: myVault ) ifFalse: [  ^ nil ].
+				
+ 	^ myVault
+
+
+]
+
+{ #category : 'factory' }
+TTClientAbstract class >> makeNewVaultsForAllOptionsOf: aVaultable [  
+	
+	| theOptions |
+	
+	 (self checkPotentialVault: aVaultable ) ifFalse: [ ^ nil ].
+	
+	 theOptions := self collectAllTheOptionKeysAsASetFor:aVaultable.
+	
+	 ^ theOptions collect: [ :optionKey |
+	
+	 		| newVault |
+	 		
+	 		newVault := (aVaultable getVault copy) 
+									appKey: self vaultAppKey;
+									optionsSelect: optionKey;
+									refresh;
+									yourself.
+								
+   		(self checkNewVault: newVault ) ifFalse: [ nil ].
+				
+ 	]
+
+
+]
+
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> makeVaultEmpty [
 
 ^ TTVault newEmpty
-]
-
-{ #category : 'accessing' }
-TTClientAbstract class >> suitsVault: aVault [
-
-	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -126,9 +192,50 @@ TTClientAbstract class >> vaultAppKey [
 ]
 
 { #category : 'as yet unclassified' }
+TTClientAbstract class >> withAllSubclassesCollectSuccessfulVaultsFor: aVaultable [
+	"return all items that succeeds making a vault"
+
+	^ self withAllSubclasses
+							collect: [ :ea | (ea makeNewVaultFor: aVaultable) -> ea ]
+							thenSelect: #notNil
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> withAllSubclassesCollectSuccessfulVaultsForAllOptionsOf: aVaultable [
+	"return all items that succeeds making a vault"
+
+	^ (self withAllSubclasses
+		flatCollect: [ :ea | 
+		
+					(ea makeNewVaultsForAllOptionsOf: aVaultable) 
+															collect: [ :vault | vault -> ea ] ])
+					
+		select: #notNil
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> withAllSubclassesDetectSuccessfulMakeFor: aVaultable [ 
+
+	"return the first item that succeeds in instanciation"
+	
+	self withAllSubclassesDo: [ :ea | 
+	
+			(ea basicNewForPotential: aVaultable ) ifNotNil: [ :success | ^ success ] 
+	].
+	
+	^ nil
+
+]
+
+{ #category : 'as yet unclassified' }
 TTClientAbstract >> getUser [
 
 ^ vault user
+]
+
+{ #category : 'accessing' }
+TTClientAbstract >> getVault [
+	^ vault ifNil: [ vault := self class makeVaultEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -137,7 +244,7 @@ TTClientAbstract >> gtOptionsFor: aView [
 	^ aView forward
 		title: 'Vault Options';
 		priority: 5;
-		object: [ self vault ];
+		object: [ self getVault ];
 		view: #gtOptionsFor:
 ]
 
@@ -147,12 +254,20 @@ TTClientAbstract >> gtVaultViewFor: aView [
 	^ aView forward
 		title: 'Vault Config';
 		priority: 10;
-		object: [ self vault ];
+		object: [ self getVault ];
 		view: #gtConfigFor:
 ]
 
 { #category : 'factory' }
-TTClientAbstract >> initializeForFactory: aFactory ifFail: fBlock [
+TTClientAbstract >> initializeFor: aVaultable [  
+
+	^ self initialize
+
+
+]
+
+{ #category : 'factory' }
+TTClientAbstract >> initializeFor: aVaultable ifFail: fBlock [
 
 	^ self initialize
 
@@ -218,9 +333,4 @@ TTClientAbstract >> setRequestErrorHandler: errorHandler [
 { #category : 'initialization' }
 TTClientAbstract >> setVault: aVault [
 	vault := aVault  
-]
-
-{ #category : 'accessing' }
-TTClientAbstract >> vault [
-	^ vault ifNil: [ vault := self class makeVaultEmpty ]
 ]
