@@ -27,6 +27,13 @@ TheHub class >> _hubId [
 	^ self className asLowercase
 ]
 
+{ #category : 'accessing' }
+TheHub class >> allNamespaces [ 
+      ^ (Smalltalk allClasses
+          reject: [ :c | false = (c askFor: #ttNamespace) ])
+
+]
+
 { #category : 'environment' }
 TheHub class >> bundleId [
 	
