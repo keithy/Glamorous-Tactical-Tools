@@ -1,6 +1,6 @@
 Class {
 	#name : 'TheGlamorousHub',
-	#superclass : 'TTAbstractHub',
+	#superclass : 'ThePharoHub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
@@ -10,6 +10,36 @@ Class {
 TheGlamorousHub class >> _hubId [
 
 	^ 'gt'
+]
+
+{ #category : 'external-process' }
+TheGlamorousHub class >> execBash: script [
+ 
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. script};
+			yourself
+]
+
+{ #category : 'external-process' }
+TheGlamorousHub class >> execMiseEnvironmentIn: source [
+
+	"Mise environment"
+	
+	| cd |
+	
+	cd := source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
+	
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. (cd, '~/.local/bin/mise env --json-extended').};
+			yourself
+]
+
+{ #category : 'external-process' }
+TheGlamorousHub class >> executeExternalProcess: processBuilder [
+	
+	^ self current signalAuto
 ]
 
 { #category : 'environment' }
@@ -55,56 +85,6 @@ TheGlamorousHub class >> homeTools [
 		
   ^  GtHomeToolsSection 
 		  
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> httpClientOptions [
-	
-	^ self signalAuto
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> iceCredentialsStore [
-
-	"Credentials (iceberg/git)"
-	
-	<ttSpoke>
-
-		^ IceCredentialStore current
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> iceRepositories [
-
-	^ self signalAuto
-
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> iceRepositoryIncludesPackageNamed: aPackage [
-
-	"public interface to repositories list (testable)
-		 
-	TheHub current for: #iceRepositories respondWith: { ... } during: [ .. ]"
-	
-	^ self iceRepositories 
-		detect: [ :repository | repository includesPackageNamed: aPackage name ]
-		ifNone: [ nil ]
-		
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> iceRepositoryNamed: aString [
-	
-	"public interface to repositories list (testable)
-	
-	 TheHub current for: #iceRepositories respondWith: { ... } during: [ .. ]"
-	
-		^ self iceRepositories 
-		
-		detect: [ :each | each name = aString ]
-		ifNone: [ nil ]
-	 
 ]
 
 { #category : 'environment' }
@@ -282,6 +262,27 @@ TheGlamorousHub class >> whatIsHome [
 	<ttSpoke>
 
 	^ GtHome
+]
+
+{ #category : 'environment' }
+TheGlamorousHub >> execMiseEnvironmentIn: source [
+
+	"Mise environment"
+	
+	| cd |
+	
+	cd := source ifNil: '' ifNotNil: [ cd := 'cd ', source, ' && ' ].
+	
+	^ (GtExternalProcessBuilder new)
+			command: 'bash';
+			arguments: {'-c'. (cd, '~/.local/bin/mise env --json-extended').};
+			yourself
+]
+
+{ #category : 'environment' }
+TheGlamorousHub >> executeExternalProcess: processBuilder [
+ 
+	^ processBuilder output stdout
 ]
 
 { #category : 'environment' }

@@ -1,6 +1,6 @@
 Class {
 	#name : 'TheCuisHub',
-	#superclass : 'TTAbstractHub',
+	#superclass : 'TheHub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'

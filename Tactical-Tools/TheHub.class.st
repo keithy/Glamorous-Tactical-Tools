@@ -14,3 +14,122 @@ Class {
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
+
+{ #category : 'as yet unclassified' }
+TheHub class >> classHttpClient [
+
+	<ttWall>
+	
+	"not all environments have ZnClient,this ˆ means, 
+	 apply TheHub current ensureClassNamespaceSearchPath"
+	 
+	^ self getClass: #ˆGuzzler
+]
+
+{ #category : 'environment' }
+TheHub class >> gt [
+
+	"The Glamorous Toolkit"
+	
+	<ttHub>
+		
+  ^  TheGlamorousHub 
+		  
+]
+
+{ #category : 'browsing' }
+TheHub class >> hubs [
+
+	^ self openBrowser hubs
+	
+
+]
+
+{ #category : 'handling' }
+TheHub class >> isWhoAmI [
+
+	<ttWhoAmI>
+
+	"Identity provider from environment image"
+
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
+TheHub class >> makeNetworkErrorHandler [
+
+	"Network Error Handler"
+	
+	<ttWall>
+	
+	"For your Context - Different Context, subclass TheHub"
+	
+	^ [ :err |
+			
+				(err isKindOf: NameLookupFailure)
+					ifTrue: [  err messageText: 'Network problem?', err messageText ].
+					
+				err pass.
+		  ]
+		  
+]
+
+{ #category : 'environment' }
+TheHub class >> onStartUpBidToBeBrowser [
+
+	^ 1
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttHealthy [
+
+	"Environment health checks"
+	
+	<ttSpoke>
+	
+	^ #ttHealthCheck gtPragmas
+	
+
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttHub [
+
+	"All of the hubs... in the world"
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttHub)
+	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttQuirk [
+
+	"All of the <ttQuirk>... in the world"
+	
+	<ttSpoke>
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttQuirk)
+	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttUtility [
+
+	"All of the <ttUtility>... in the world"
+	
+	<ttSpoke>
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttUtility)
+	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttWall [
+
+	"All of the <ttWall>... in the world"
+	
+	<ttSpoke>
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttWall)
+	
+]
