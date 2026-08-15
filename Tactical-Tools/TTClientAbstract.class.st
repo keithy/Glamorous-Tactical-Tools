@@ -1,6 +1,8 @@
 Class {
 	#name : 'TTClientAbstract',
 	#superclass : 'Object',
+	#traits : 'T2Namespace',
+	#classTraits : 'T2Namespace classTrait',
 	#instVars : [
 		'vault',
 		'result',

@@ -28,9 +28,23 @@ TheHub class >> _hubId [
 ]
 
 { #category : 'accessing' }
+TheHub class >> allClasses [
+
+      
+   ^ Smalltalk allClasses select: [ :c | c isClass ]
+
+]
+
+{ #category : 'accessing' }
 TheHub class >> allNamespaces [ 
-      ^ (Smalltalk allClasses
-          reject: [ :c | false = (c askFor: #ttNamespace) ])
+      ^ (self allClasses
+          select: [ :c | c askFor: #isNamespaced ] thenCollect: [ :n | n ttNamespace ])
+
+]
+
+{ #category : 'accessing' }
+TheHub class >> allTraits [
+      ^ Smalltalk allClasses select: [ :c | c isTrait ]
 
 ]
 
@@ -352,6 +366,17 @@ TheHub class >> pragmasAll_ttHub [
 	"All of the hubs... in the world"
 	
 	^ TheHub sortByComment: (Pragma allNamed: #ttHub)
+	
+]
+
+{ #category : 'spokes' }
+TheHub class >> pragmasAll_ttQuirk [
+
+	"All of the <ttQuirk>... in the world"
+	
+	<ttSpoke>
+	
+	^ TheHub sortByComment: (Pragma allNamed: #ttQuirk)
 	
 ]
 
