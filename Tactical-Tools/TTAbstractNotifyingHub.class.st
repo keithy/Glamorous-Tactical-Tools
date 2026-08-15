@@ -1,9 +1,6 @@
 Class {
-	#name : 'TTAbstractHub',
+	#name : 'TTAbstractNotifyingHub',
 	#superclass : 'Notification',
-	#instVars : [
-		'browsing'
-	],
 	#classVars : [
 		'WinningHubClass'
 	],
@@ -13,13 +10,13 @@ Class {
 }
 
 { #category : 'environment' }
-TTAbstractHub class >> _hubId [
+TTAbstractNotifyingHub class >> _hubId [
 
 	^ self className asLowercase
 ]
 
 { #category : 'accessing' }
-TTAbstractHub class >> allIdentifyingAsClasses [
+TTAbstractNotifyingHub class >> allIdentifyingAsClasses [
 
 	<ttWall>
       
@@ -28,42 +25,49 @@ TTAbstractHub class >> allIdentifyingAsClasses [
 ]
 
 { #category : 'accessing' }
-TTAbstractHub class >> allIdentifyingAsTraits [
+TTAbstractNotifyingHub class >> allIdentifyingAsTraits [
       ^ Smalltalk allClasses select: [ :c | c isTrait ]
 
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> bundleId [
+TTAbstractNotifyingHub class >> bundleId [
 	
 	^ self signalAuto
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> current [
+TTAbstractNotifyingHub class >> current [
 	
 	^ self winningHubClass
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> currentTestable [
+TTAbstractNotifyingHub class >> currentTestable [
 	
 	^ self signalAuto
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> currentVault [
+TTAbstractNotifyingHub class >> currentVault [
 	
 	^ self signalAuto
 ]
 
+{ #category : 'environment' }
+TTAbstractNotifyingHub class >> currentVaultUpdated: incomingNewVault [
+	
+	"A courtesy call from the incomming current vault"
+ 
+]
+
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> doRebuildMethodDictionary [
+TTAbstractNotifyingHub class >> doRebuildMethodDictionary [
 	self subclassResponsibility
 ]
 
 { #category : 'testing' }
-TTAbstractHub class >> during: aBlock use: substituteValue for: methodSelector [
+TTAbstractNotifyingHub class >> during: aBlock use: substituteValue for: methodSelector [
 	
 	^ aBlock on: self current do: [  :ex | 
 	
@@ -74,7 +78,7 @@ TTAbstractHub class >> during: aBlock use: substituteValue for: methodSelector [
 ]
 
 { #category : 'testing' }
-TTAbstractHub class >> for: selector respondWith: substituteValue during: aBlock [
+TTAbstractNotifyingHub class >> for: selector respondWith: substituteValue during: aBlock [
 	
 	^ aBlock on: WinningHubClass do: [  :ex | 
 	
@@ -85,7 +89,7 @@ TTAbstractHub class >> for: selector respondWith: substituteValue during: aBlock
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> getClass: aClassOrName [
+TTAbstractNotifyingHub class >> getClass: aClassOrName [
 
 	 "Better #asClass"
 
@@ -99,7 +103,7 @@ TTAbstractHub class >> getClass: aClassOrName [
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> getClass: aClassOrName ifAbsent: aBlock [
+TTAbstractNotifyingHub class >> getClass: aClassOrName ifAbsent: aBlock [
 
 	 "Better #asClass"
 
@@ -124,7 +128,7 @@ TTAbstractHub class >> getClass: aClassOrName ifAbsent: aBlock [
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> getClass: aClassOrName search: aList [
+TTAbstractNotifyingHub class >> getClass: aClassOrName search: aList [
 
 	aList do: [ :ea |
 		
@@ -136,14 +140,8 @@ TTAbstractHub class >> getClass: aClassOrName search: aList [
 
 ]
 
-{ #category : 'accessing' }
-TTAbstractHub class >> getClassNamespaceSearchPath [
-
-	^ #(Pharo)
-]
-
 { #category : 'wall' }
-TTAbstractHub class >> globalAt: aName ifAbsent: aBlock [
+TTAbstractNotifyingHub class >> globalAt: aName ifAbsent: aBlock [
 
 	"Globals motherload"
 	
@@ -153,7 +151,7 @@ TTAbstractHub class >> globalAt: aName ifAbsent: aBlock [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> hubId [
+TTAbstractNotifyingHub class >> hubId [
 
 	"The Hub"
 	
@@ -161,7 +159,7 @@ TTAbstractHub class >> hubId [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> isHub [
+TTAbstractNotifyingHub class >> isHub [
 
   <ttIsHub>
   
@@ -171,12 +169,12 @@ TTAbstractHub class >> isHub [
 ]
 
 { #category : 'namespace' }
-TTAbstractHub class >> isNamespaced [
+TTAbstractNotifyingHub class >> isNamespaced [
 	self subclassResponsibility
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> mustBeClassSide: pragma [
+TTAbstractNotifyingHub class >> mustBeClassSide: pragma [
 	
 	^ pragma method isClassSide ifFalse: [
 			Warning signal: pragma displayString , 'Needs to be set Class Side'.
@@ -186,13 +184,13 @@ TTAbstractHub class >> mustBeClassSide: pragma [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> namedFileLocations [
+TTAbstractNotifyingHub class >> namedFileLocations [
 	
 	^ self current signalAuto
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> openHubBrowser [
+TTAbstractNotifyingHub class >> openHubBrowser [
 
 ^ (self getClass: #TTHubBrowser) newBrowsing: self
 			
@@ -201,7 +199,7 @@ TTAbstractHub class >> openHubBrowser [
 ]
 
 { #category : 'instance creation' }
-TTAbstractHub class >> openHubCodeBrowser [
+TTAbstractNotifyingHub class >> openHubCodeBrowser [
 
 ^ (self getClass: #TTHubCodeBrowser) newBrowsing: self
 			
@@ -210,13 +208,13 @@ TTAbstractHub class >> openHubCodeBrowser [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> osEnvironment [
+TTAbstractNotifyingHub class >> osEnvironment [
 	
 	^ self current signalAuto
 ]
 
 { #category : 'wall' }
-TTAbstractHub class >> pragmasClassSideNamed: aSymbol in: aClass [
+TTAbstractNotifyingHub class >> pragmasClassSideNamed: aSymbol in: aClass [
  
   "Pragma queries (class side)"
   
@@ -229,7 +227,7 @@ TTAbstractHub class >> pragmasClassSideNamed: aSymbol in: aClass [
 ]
 
 { #category : 'wall' }
-TTAbstractHub class >> pragmasNamed: aSymbol in: aClass [
+TTAbstractNotifyingHub class >> pragmasNamed: aSymbol in: aClass [
  
   "Pragma queries"
   
@@ -242,23 +240,23 @@ TTAbstractHub class >> pragmasNamed: aSymbol in: aClass [
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
+TTAbstractNotifyingHub class >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	self subclassResponsibility
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> removeFromComposition: aTrait [
+TTAbstractNotifyingHub class >> removeFromComposition: aTrait [
 	self subclassResponsibility
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> sessionManager [
+TTAbstractNotifyingHub class >> sessionManager [
 
 	^ self signalAuto
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> signalAuto [	
+TTAbstractNotifyingHub class >> signalAuto [	
 
 	^ self signal: thisContext sender selector withTag: thisContext sender arguments
 	
@@ -266,13 +264,13 @@ TTAbstractHub class >> signalAuto [
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> smalltalkImage [
+TTAbstractNotifyingHub class >> smalltalkImage [
 	
  ^ self signalAuto
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> sortByComment: pragmas [
+TTAbstractNotifyingHub class >> sortByComment: pragmas [
  
  	"Sort Pragmas by method comment"
  	
@@ -284,7 +282,7 @@ TTAbstractHub class >> sortByComment: pragmas [
 ]
 
 { #category : 'browsing' }
-TTAbstractHub class >> spokes [
+TTAbstractNotifyingHub class >> spokes [
 
 ^  self openBrowser spokes
 		 
@@ -292,14 +290,14 @@ TTAbstractHub class >> spokes [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> spokesMethods [
+TTAbstractNotifyingHub class >> spokesMethods [
 
 ^ self spokes collect: [ :ea | ea method ]
 		 
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> startUp: isImageStarting [
+TTAbstractNotifyingHub class >> startUp: isImageStarting [
 	
 	<ttStartUp>
 	
@@ -323,7 +321,7 @@ TTAbstractHub class >> startUp: isImageStarting [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> theCuriousity [
+TTAbstractNotifyingHub class >> theCuriousity [
 
 	"Curious Things"
 	
@@ -334,23 +332,23 @@ TTAbstractHub class >> theCuriousity [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> theVault [
+TTAbstractNotifyingHub class >> theVault [
 	
 	^ self signalAuto
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> traitComposition: aComposition [
+TTAbstractNotifyingHub class >> traitComposition: aComposition [
 	self subclassResponsibility
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> traitUsers [
+TTAbstractNotifyingHub class >> traitUsers [
 	self subclassResponsibility
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> tt [
+TTAbstractNotifyingHub class >> tt [
 
 	"Tactical Tools"
 	
@@ -361,27 +359,27 @@ TTAbstractHub class >> tt [
 ]
 
 { #category : 'namespace' }
-TTAbstractHub class >> ttFullName [
+TTAbstractNotifyingHub class >> ttFullName [
 	self subclassResponsibility
 ]
 
 { #category : 'namespace' }
-TTAbstractHub class >> ttLocalName [
+TTAbstractNotifyingHub class >> ttLocalName [
 	self subclassResponsibility
 ]
 
 { #category : 'namespace' }
-TTAbstractHub class >> ttNamespace [
+TTAbstractNotifyingHub class >> ttNamespace [
 	self subclassResponsibility
 ]
 
 { #category : 'namespace' }
-TTAbstractHub class >> ttPrefixSize [
+TTAbstractNotifyingHub class >> ttPrefixSize [
 	self subclassResponsibility
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> unixMillisToDate: millisSinceUnixEpoch [
+TTAbstractNotifyingHub class >> unixMillisToDate: millisSinceUnixEpoch [
 
 	<ttUtility>
 
@@ -389,13 +387,13 @@ TTAbstractHub class >> unixMillisToDate: millisSinceUnixEpoch [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> userId [
+TTAbstractNotifyingHub class >> userId [
 
 	^ self osEnvironment in: [ :os | os at: 'USER' ifAbsent: [ os at: 'USERNAME' ifAbsent: [ 'nemo' ]] ] 
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub class >> utils [
+TTAbstractNotifyingHub class >> utils [
 
 	^ self openBrowser utils
 	
@@ -403,19 +401,19 @@ TTAbstractHub class >> utils [
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> whoAmI [
+TTAbstractNotifyingHub class >> whoAmI [
 	
 	^ self signalAuto
 ]
 
 { #category : 'accessing' }
-TTAbstractHub class >> winningHubClass [
+TTAbstractNotifyingHub class >> winningHubClass [
 	
 	^ WinningHubClass ifNil: [ WinningHubClass := self ]
 ]
 
 { #category : 'environment' }
-TTAbstractHub class >> wip [
+TTAbstractNotifyingHub class >> wip [
 
 	"Work In Progress"
 	
@@ -426,13 +424,13 @@ TTAbstractHub class >> wip [
 ]
 
 { #category : 'browsing' }
-TTAbstractHub >> bundleId [
+TTAbstractNotifyingHub >> bundleId [
 
 	^ self class osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'environment' }
-TTAbstractHub >> current [
+TTAbstractNotifyingHub >> current [
 
 	^ self class current 
 	
@@ -440,13 +438,13 @@ TTAbstractHub >> current [
 ]
 
 { #category : 'environment' }
-TTAbstractHub >> currentTestable [
+TTAbstractNotifyingHub >> currentTestable [
  
 	^ TheHub current
 ]
 
 { #category : 'environment' }
-TTAbstractHub >> currentVault [
+TTAbstractNotifyingHub >> currentVault [
 
 	"Vicarious Vault (Current)"
 	
@@ -456,18 +454,18 @@ TTAbstractHub >> currentVault [
 ]
 
 { #category : 'handling' }
-TTAbstractHub >> defaultAction [
+TTAbstractNotifyingHub >> defaultAction [
 
 	^ self perform: messageText withArguments: tag
 ]
 
 { #category : 'namespace' }
-TTAbstractHub >> isNamespaced [
+TTAbstractNotifyingHub >> isNamespaced [
 	self subclassResponsibility
 ]
 
 { #category : 'environment' }
-TTAbstractHub >> osEnvironment [
+TTAbstractNotifyingHub >> osEnvironment [
 
 	"Host environment"
 	
@@ -477,7 +475,7 @@ TTAbstractHub >> osEnvironment [
 ]
 
 { #category : 'environment' }
-TTAbstractHub >> sessionManager [
+TTAbstractNotifyingHub >> sessionManager [
  
   "Session manager - startUp/shutdown lists"
   
@@ -487,17 +485,17 @@ TTAbstractHub >> sessionManager [
 ]
 
 { #category : 'namespace' }
-TTAbstractHub >> ttDisplayName [
+TTAbstractNotifyingHub >> ttDisplayName [
 	self subclassResponsibility
 ]
 
 { #category : 'namespace' }
-TTAbstractHub >> ttFullName [
+TTAbstractNotifyingHub >> ttFullName [
 	self subclassResponsibility
 ]
 
 { #category : 'as yet unclassified' }
-TTAbstractHub >> whoAmI [
+TTAbstractNotifyingHub >> whoAmI [
 
 	^ TheHub currentVault
 ]

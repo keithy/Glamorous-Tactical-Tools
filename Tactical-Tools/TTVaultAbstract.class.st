@@ -24,13 +24,7 @@ TTVaultAbstract class >> basicNew [
 
 { #category : 'instance creation' }
 TTVaultAbstract class >> currentVault [
-	^ currentVault ifNil: [ currentVault := self newDefaultVault ]
-]
-
-{ #category : 'instance creation' }
-TTVaultAbstract class >> getDefaultVault [
-
-	self subclassResponsibility
+	^ currentVault ifNil: [ currentVault := TheHub current vaultUpdate:(self newDefaultVault) ]
 ]
 
 { #category : 'accessing' }
@@ -57,6 +51,12 @@ TTVaultAbstract class >> makeSearchDefault [
 	^ #((options default) (config))
 
 	 
+]
+
+{ #category : 'instance creation' }
+TTVaultAbstract class >> newDefaultVault [
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }

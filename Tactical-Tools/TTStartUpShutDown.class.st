@@ -54,7 +54,7 @@ TTStartUpShutDown class >> shutDown: quitting [
 			
 				(self mustBeClassSide: pragma) ifTrue:[ 
 				
-						(pragma method selector beginsWith: 'shutDown') ifFalse: [ self error ].
+						(pragma method selector = 'shutDown:') ifFalse: [ self error ].
 						
 						TTStartUpNotification signal:pragma displayString withTag: pragma method.
 						pragma method methodClass soleInstance 
@@ -91,7 +91,7 @@ TTStartUpShutDown class >> startUp: isImageStarting [
 				(self mustBeClassSide: pragma) ifTrue:[ 
 				
 				
-						(pragma method selector beginsWith: 'startUp') ifFalse: [ self error ].
+						(pragma method selector = 'startUp:') ifFalse: [ self error ].
 
 						TTStartUpNotification signal:pragma displayString withTag: pragma method.
 						pragma method methodClass soleInstance 

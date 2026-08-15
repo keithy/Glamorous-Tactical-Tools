@@ -12,6 +12,20 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTApiClientAbstract class >> basicNewFor: aVaultable [  
+
+	| basicNewClient |
+	
+	basicNewClient := (super basicNewFor: aVaultable) ifNil: [ ^nil ].  
+	 
+	^ basicNewClient
+			setClassTool: TheHub classHttpClient;
+			setRequestErrorHandler: TheHub makeNetworkErrorHandler;
+			yourself
+
+]
+
+{ #category : 'as yet unclassified' }
 TTApiClientAbstract class >> basicNewFor: aVaultable ifFail: failBlock [
 
 	| basicNewClient |

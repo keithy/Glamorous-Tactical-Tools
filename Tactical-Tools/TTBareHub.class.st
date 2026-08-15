@@ -7,7 +7,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTBareHub class >> openBrowser [
+TTBareHub class >> openHubBrowser [
 
-	^ TheHub current newBrowsing: self
+^ (TheHub getClass: #TTHubBrowser) newBrowsing: self
+			
+]
+
+{ #category : 'as yet unclassified' }
+TTBareHub class >> openHubCodeBrowser [
+
+^ (TheHub getClass: #TTHubCodeBrowser) newBrowsing: self
+			
 ]

@@ -7,11 +7,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-TTVault class >> getDefaultVault [
-	^ self newWithRWConfigOSEnv
-]
-
-{ #category : 'instance creation' }
 TTVault class >> makeDictionaryDotEnvFile: file [
 
 	^ TTDictionaryDotEnv new

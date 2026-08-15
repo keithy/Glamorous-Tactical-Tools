@@ -9,7 +9,7 @@ Values are obtained from the surrounding image context via a resumable notificat
 "
 Class {
 	#name : 'TheHub',
-	#superclass : 'TTAbstractHub',
+	#superclass : 'TTAbstractNotifyingHub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
@@ -26,6 +26,12 @@ TheHub class >> classHttpClient [
 	^ self getClass: #ˆGuzzler
 ]
 
+{ #category : 'as yet unclassified' }
+TheHub class >> getClassNamespaceSearchPath [
+
+	^ #(Pharo '$LOCATION' '$COMPANY' '$PROJECT') 
+]
+
 { #category : 'environment' }
 TheHub class >> gt [
 
@@ -35,6 +41,22 @@ TheHub class >> gt [
 		
   ^  TheGlamorousHub 
 		  
+]
+
+{ #category : 'browsing' }
+TheHub class >> hubHome [
+
+	<ttHub>
+	
+	^ self getClass: 'ˆHomeHub'
+]
+
+{ #category : 'browsing' }
+TheHub class >> hubWork [
+
+	<ttHub>
+	
+	^ self getClass: 'ˆWorkHub'
 ]
 
 { #category : 'browsing' }
@@ -72,6 +94,25 @@ TheHub class >> makeNetworkErrorHandler [
 				err pass.
 		  ]
 		  
+]
+
+{ #category : 'browsing' }
+TheHub class >> mapVarsInto: entry [
+	| value env |
+	
+	value := entry.
+	
+	(entry allRangesOfRegexMatches: '\$\{[^}]*\}')
+		do: [ :r | 
+			env := entry copyFrom: r first + 2 to: r last - 1.	"lookup - not logged"	"self _at: env ifPresent: [ :v | value := value copyReplaceAll: ('${', env, '}') with: v ]"	"lookup - logged"
+			self
+				assocAt: env
+				ifPresent: [ :assoc | value := value copyReplaceAll: '${' , env , '}' with: assoc value ].	"subst env vars"
+			self osEnvironment
+				at: env
+				ifPresent: [ :v | value := value copyReplaceAll: '${' , env , '}' with: v ] ].
+
+	^ value
 ]
 
 { #category : 'environment' }
