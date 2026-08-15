@@ -206,11 +206,37 @@ TTFactoryAbstract >> makeFor: association andConfigure: configureBlock [
 ]
 
 { #category : 'accessing' }
+TTFactoryAbstract >> makeForAll: associations andConfigure: configureBlock [
+
+ 	^ associations collect: [ :assoc |
+ 	
+ 		self makeFor: assoc andConfigure: configureBlock
+ 		
+ 	] thenSelect: #notNil
+ 	
+																		
+]
+
+{ #category : 'accessing' }
 TTFactoryAbstract >> setVault: anObject [
 	
 	"set implies that it is essential prior to #initialize"
 	
 	vault := anObject
+]
+
+{ #category : 'accessing' }
+TTFactoryAbstract >> sort: associations by: lookupKey [
+
+  | worthy |
+  
+  worthy := associations select: [ :assoc | (assoc key lookup: lookupKey) notNil ].
+
+	^ worthy asSortedCollection: [ :a :b | 
+	
+			(b key lookup: lookupKey) <= (b key lookup: lookupKey)
+		]
+	 
 ]
 
 { #category : 'accessing' }

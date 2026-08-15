@@ -73,7 +73,20 @@ TTFactory >> newWorldClockClient_option3 [
 	<ttApiClient>
 
   ^ self 
-			makeFor: (self askAll: #TTWorldClockClient) first
+			makeFor: ((self sort: (self askAll: #TTWorldClockClient) by: #priority) at: 1 ifAbsent: nil)
+			andConfigure: [ :wc | wc ]
+
+]
+
+{ #category : 'as yet unclassified' }
+TTFactory >> newWorldClockClient_option4 [
+
+	"World Clock"
+	
+	<ttApiClient>
+
+  ^ self 
+			makeForAll: (self askAll: #TTWorldClockClient)  
 			andConfigure: [ :wc | wc ]
 
 ]
