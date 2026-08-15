@@ -19,6 +19,18 @@ TTHubBrowser class >> newBrowsing: aClass [
 		
 ]
 
+{ #category : 'as yet unclassified' }
+TTHubBrowser class >> pragmasAll_ttIsHub [
+
+	"Hub Classes"
+	
+	<ttSpoke>
+	
+	^ Pragma allNamed: #ttIsHub
+	
+
+]
+
 { #category : 'browsing' }
 TTHubBrowser >> getSpokeFromPragma: aPragma [
 
@@ -161,6 +173,70 @@ TTHubBrowser >> gtHubsFor: aView [
 ]
 
 { #category : 'browsing' }
+TTHubBrowser >> gtHubsMajorFor: aView [  
+	<gtView>
+	
+	self hubs ifEmpty: [ ^ aView empty ].
+		
+		^ aView columnedList
+		title: 'Big';
+		priority: 10;
+		items: [ self hubsMajor] ;
+		"actionUpdateButtonTooltip: 'Update item list';"
+		"column: '#' 
+			text: [ :eachItem :eachIndex | 
+				eachIndex asRopedText foreground: Color gray ]
+			width: 45;"
+		column: 'More'
+			text: [ :eachItem | eachItem method comment ifNil: '' ];
+		column: 'Pragma'
+			text: [ :eachItem | eachItem gtDisplayText ];
+		column: 'edit' translated
+			stencil: [ :pragma | 
+		 	
+		 	 pragma method in: [ :m |
+		 	 
+								BrButton new
+									aptitude: BrGlamorousButtonWithLabelTooltipAptitude2 + 
+															BrGlamorousButtonWithIconAptitude;
+									icon: BrGlamorousVectorIcons edit ;
+									label: m selector asString;
+									beTinySize;
+											
+											action: [ :button | 
+									
+									 (m valueWithReceiver: m methodClass soleInstance arguments:#()) 
+									 in: [:hub |
+									 
+											  hub ifNotNil: [ :result | button phlow spawnObject: pragma ] 
+									 ]
+							]
+     ] ]
+			width: 50;
+			
+		send: [ :each | 
+		
+		  each method in: [ :m |
+		 	 
+			  	(m isClassSide and: [ m numArgs == 0 ]) 
+			  		ifFalse: [ nil ] 
+			  		ifTrue: [
+								   (self class newBrowsing: m methodClass soleInstance) ]]];
+											  
+
+		dynamicContextItems: [ :anElement :aCollection | 
+			aCollection size = 1
+				ifTrue: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection first
+						hostElement: anElement ]
+				ifFalse: [ GtPhlowObjectContextMenuTarget
+						menuItemsForObject: aCollection
+						hostElement: anElement ] ]
+	
+
+]
+
+{ #category : 'browsing' }
 TTHubBrowser >> gtInspectorTitleString [ 
     ^ self class name,' Browser (' ,(browsing gtDisplayString) , ')' 
 ]
@@ -237,6 +313,13 @@ TTHubBrowser >> hubsAll [
 	
 	^ TheHub sortByComment: (deDup associations collect: [ :a | a value ]).
 	
+]
+
+{ #category : 'browsing' }
+TTHubBrowser >> hubsMajor [
+ 
+	^ TheHub sortByComment: (self class pragmasAll_ttIsHub)
+	 
 ]
 
 { #category : 'initializing' }

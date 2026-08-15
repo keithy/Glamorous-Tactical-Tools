@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T01:53:09.991444+01:00"
+						"dateAndTimeString" : "2026-08-15T07:33:12.230395+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "{{gtClass:TTStartUpShutDown}} is registered once and supports the pragmas {{gtPragma:ttStartUp}} and {{gtPragma:ttShutDown}} attached to #startUp:/#shutDown: methods as a convenience.\n\nThe process of registering Classes for startup and shutDown \"officially\" is more fiddly than it need be; unregistering them is doubly so.  Once the implementation of a class has settled down it may make more sense to use the official pattern.\n\nAn example of this is {{gtMethod:ImageStoreResolver class>>initialize}} which has its own priorities\n\nInstance level #startUp can be done using #allInstancesDo: (perhaps Vaults want to re-read their backing stores).\n\nThe  {{gtMethod:\nTacticalToolsHub class>>shutDownStartUpTTDryRun}}  is a good thing to know about.\n\n"
+				"string" : "{{gtClass:TTStartUpShutDown}} is registered once and supports the pragmas {{gtPragma:ttStartUp}} and {{gtPragma:ttShutDown}} attached to #startUp:/#shutDown: methods as a convenience.\n\nThe process of registering Classes for startup and shutDown \"officially\" is more fiddly than it need be; unregistering them is doubly so.  Once the implementation of a class has settled down it may make more sense to use the official pattern.\n\nAn example of this is {{gtMethod:ImageStoreResolver class>>initialize}} which has its own priorities\n\nInstance level #startUp can be done using #allInstancesDo: (perhaps Vaults want to re-read their backing stores).\n\nThe  {{gtMethod:\nTheTacticalToolsHub class>>shutDownStartUpTTDryRun}}  is a good thing to know about.\n\n"
 			}
 		]
 	},

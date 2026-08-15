@@ -13,7 +13,7 @@ WipHub class >> TacticalHub [
 	
 	<ttHub>
 		
-  ^  #TacticalToolsHub asClass 
+  ^  #TheTacticalToolsHub asClass 
 ]
 
 { #category : 'as yet unclassified' }
@@ -52,6 +52,16 @@ WipHub class >> imageFileSystemsInfo [
 	<ttSpoke>
 
 	^ ImageStore imageFileSystemsInfo
+]
+
+{ #category : 'as yet unclassified' }
+WipHub class >> isHub [ 
+
+  <ttIsHub>
+  
+	"Work In Progress"
+	
+	^  true
 ]
 
 { #category : 'as yet unclassified' }

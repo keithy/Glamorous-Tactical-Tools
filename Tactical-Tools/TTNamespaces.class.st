@@ -11,11 +11,7 @@ Class {
 
 { #category : 'accessing' }
 TTNamespaces class >> allNamespaces [ 
-      ^ ((TheHub allClasses
-          select: [ :c | c askFor: #isNamespaced ] thenCollect: [ :n | n ttNamespace ]) 
-          
-          asSet asSortedCollection: [:a :b | a size >= b size ]) asArray.
-
+      ^ (self traitedNamespaces  , self someNamespaces)
 ]
 
 { #category : 'accessing' }
@@ -23,17 +19,19 @@ TTNamespaces class >> allNamespacesRegistry [
 
 	| namespaces registry |
 	
-	namespaces := self allNamespaces .
+	namespaces := self allNamespacesSorted .
 	registry :=  Dictionary new.
 	
-  TheHub allClasses collect: [ :c | 
+  TheHub allIdentifyingAsClasses collect: [ :c | 
      
      	| namespace |
      	
-     	namespace := self namespaceFor: c name.
+     	namespace := self nameAsAssoc: c name.
      	
      	namespace ifNotNil: [ :ns |
-     			(registry at: ns ifAbsentPut: IdentityDictionary new) at: c name put: c.
+     			(registry at: ns value ifAbsentPut: IdentityDictionary new) 
+     			
+     			at: (self nameKeyFromAssoc: namespace) put:c
        ]
   	].
           
@@ -42,38 +40,99 @@ TTNamespaces class >> allNamespacesRegistry [
 ]
 
 { #category : 'accessing' }
-TTNamespaces class >> namespaceFor: aClassName [
+TTNamespaces class >> allNamespacesSorted [
+      ^ (self allNamespaces asSortedCollection: [:a :b | a size >= b size ]) asArray.
+]
 
-	
-	
-	^ self registry detect: [ :ns | 
-	
-			(aClassName beginsWith: ns) ifTrue: [ 
-		
-						(aClassName at: (ns size + 1)) isLowercase ifTrue: [ ^ nil ].
-			
-			true
-		] 
-		ifFalse: false
-		
-	] ifNone: [ ^ nil ].
-	
+{ #category : 'accessing' }
+TTNamespaces class >> name: aClassName after: n [
+
+    ^ aClassName copyFrom: (n + 1) to: aClassName size
 	 
  
 ]
 
 { #category : 'accessing' }
-TTNamespaces class >> registry [
+TTNamespaces class >> name: aClassName before: n [
 
-	 ^ Registry ifNil: [ Registry := self allNamespaces ]
+    ^ aClassName copyFrom:  1 to: n
+	 
+ 
 ]
 
 { #category : 'accessing' }
-TTNamespaces class >> shutDown [
+TTNamespaces class >> nameAsAssoc: aClassName [
+
+	| n |
+	
+	n := (self namespacePrefixSizeFor: aClassName) ifNil: [ ^nil ].
+	
+  ^ Association  
+    		key: (self name: aClassName after: n)
+    		value: (self name: aClassName before: n)
+ 
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> nameAssocAsKey: assoc [
+
+  ^  (assoc value),'ˆ', (assoc key)
+     
+ 
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> nameKeyFromAssoc: assoc [
+
+  ^  (assoc value),'ˆ', (assoc key)
+     
+ 
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> namespacePrefixSizeFor: aClassName [
+
+	self registry do: [ :ns | 
+	
+			(aClassName beginsWith: ns) ifTrue: [ 
+		
+						aClassName size = ns size ifTrue: [ ^ nil ].
+						(aClassName at: (ns size + 1)) isLowercase ifTrue: [ ^ nil ].
+			
+			 		^ ns size
+			 	]
+		].
+		
+		^ nil
+		 
+	  
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> registry [
+
+	 ^ Registry ifNil: [ Registry := self allNamespacesSorted ]
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> shutDown: quitting [
 	
 	<ttShutDown>
 	
 	Registry := nil
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> someNamespaces [
+
+	^ #(Gt4 GtCSS GtCS GtL Gt GT Br Bl)
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> traitedNamespaces [
+      ^ (TheHub allIdentifyingAsClasses
+          select: [ :c | c askFor: #isNamespaced ] thenCollect: [ :n | n ttNamespace ])  asSet 
+
 ]
 
 { #category : 'accessing' }

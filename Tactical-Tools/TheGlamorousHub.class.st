@@ -1,6 +1,6 @@
 Class {
 	#name : 'TheGlamorousHub',
-	#superclass : 'TheHub',
+	#superclass : 'TTAbstractHub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
@@ -10,6 +10,12 @@ Class {
 TheGlamorousHub class >> _hubId [
 
 	^ 'gt'
+]
+
+{ #category : 'environment' }
+TheGlamorousHub class >> getClassNamespaceSearchPath [
+
+	^ #(Glam Pharo)
 ]
 
 { #category : 'environment' }
@@ -102,6 +108,16 @@ TheGlamorousHub class >> iceRepositoryNamed: aString [
 ]
 
 { #category : 'environment' }
+TheGlamorousHub class >> isHub [
+
+  <ttIsHub>
+  
+	"The Glamorous Hub"
+	
+	^ true
+]
+
+{ #category : 'environment' }
 TheGlamorousHub class >> lepiter [
 
 	^ self current signalAuto
@@ -128,7 +144,7 @@ TheGlamorousHub class >> lepiterReload [
 TheGlamorousHub class >> onStartUpBidToBeBrowser [
 	
 	"Determine if we are based on GT or Pharo (better ways?)"
-	(self ensureClass: #GtImage ifAbsent: [ ^ 0 ]).
+	(self getClass: #GtImage ifAbsent: [ ^ 0 ]).
 	
 	^ 20 
 ]

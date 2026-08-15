@@ -1,5 +1,5 @@
 Class {
-	#name : 'TTGuzzlerPharo',
+	#name : 'PharoˆGuzzler',
 	#superclass : 'Object',
 	#instVars : [
 		'executeSelector',
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> makeZnClient [ 
+PharoˆGuzzler class >> makeZnClient [ 
 
-  ^ (TheHub classNamed: #ZnClient) new
+  ^ (TheHub getClass: #ZnClient) new
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new [ 
+PharoˆGuzzler class >> new [ 
 
   "Normally we are a stand in for Zinc"
   
@@ -27,7 +27,7 @@ TTGuzzlerPharo class >> new [
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> newForScheme: aScheme [ 
+PharoˆGuzzler class >> newForScheme: aScheme [ 
 
   "In this case we have a chance to work OUR magic"
   
@@ -35,7 +35,7 @@ TTGuzzlerPharo class >> newForScheme: aScheme [
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> newForUrl: aUrl [ 
+PharoˆGuzzler class >> newForUrl: aUrl [ 
 
   "In this case we have a chance to work OUR magic"
   
@@ -43,43 +43,43 @@ TTGuzzlerPharo class >> newForUrl: aUrl [
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_L1http [
+PharoˆGuzzler class >> new_L1http [
 
 	^ self makeZnClient logLevel: 1
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_L2http [
+PharoˆGuzzler class >> new_L2http [
 
 	^ self makeZnClient logLevel: 2
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_L3http [
+PharoˆGuzzler class >> new_L3http [
 
 	^ self makeZnClient logLevel: 3
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_T1http [
+PharoˆGuzzler class >> new_T1http [
 
 	^ self makeZnClient logToTranscript; logLevel: 1
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_T2http [
+PharoˆGuzzler class >> new_T2http [
 
 	^ self makeZnClient logToTranscript; logLevel: 2
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_T3http [
+PharoˆGuzzler class >> new_T3http [
 
 	^ self makeZnClient logToTranscript; logLevel: 3
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_echo [
+PharoˆGuzzler class >> new_echo [
 
 	^ (self basicNew)
 	    setHttpClient: (self makeZnClient);
@@ -88,14 +88,14 @@ TTGuzzlerPharo class >> new_echo [
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_file [
+PharoˆGuzzler class >> new_file [
 
 	^ self makeZnClient
 
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_headers [
+PharoˆGuzzler class >> new_headers [
 
 	^ (self basicNew)
 	    setHttpClient: (self makeZnClient);
@@ -104,19 +104,19 @@ TTGuzzlerPharo class >> new_headers [
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_http [
+PharoˆGuzzler class >> new_http [
 
 	^ self makeZnClient loggingOff
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_https [
+PharoˆGuzzler class >> new_https [
 
 	^ self makeZnClient loggingOff
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_mock [
+PharoˆGuzzler class >> new_mock [
 
 	^ (self basicNew)
 	    setHttpClient: (self makeZnClient);
@@ -125,7 +125,7 @@ TTGuzzlerPharo class >> new_mock [
 ]
 
 { #category : 'instance creation' }
-TTGuzzlerPharo class >> new_unhttps [
+PharoˆGuzzler class >> new_unhttps [
  
 "todo:
 	Unified Http(s)
@@ -142,13 +142,13 @@ TTGuzzlerPharo class >> new_unhttps [
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> contents [ 
+PharoˆGuzzler >> contents [ 
 
 	^ contents ifNil: [ httpClient contents ]
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> doesNotUnderstand: aMessage [
+PharoˆGuzzler >> doesNotUnderstand: aMessage [
 
 	"delegation"
 	
@@ -156,19 +156,19 @@ TTGuzzlerPharo >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> execute [
+PharoˆGuzzler >> execute [
 
 	self perform: executeSelector
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> executeEcho [
+PharoˆGuzzler >> executeEcho [
 
 	contents := httpClient url readStream skipTo: $:; upToEnd. 
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> executeHeaders [
+PharoˆGuzzler >> executeHeaders [
 
 	data := httpClient request headers headers.
 	
@@ -176,31 +176,32 @@ TTGuzzlerPharo >> executeHeaders [
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> executeMock [
+PharoˆGuzzler >> executeMock [
 
 	| classNameFromUrl aMocker urlStr methodFromUrl theRest |
 	
 	"mock:Faker/endpoint/etc"
 	
 	urlStr := httpClient url readStream.
+	
 	classNameFromUrl := urlStr skipTo: $:; upTo: $/.
 	
 	methodFromUrl := ('mock_',((urlStr upTo: $?) replaceAll: '/' with: '_'), ':') asSymbol.
 	
 	theRest := urlStr upToEnd.
 	
-	aMocker := TheHub classNamed: classNameFromUrl.
+	aMocker := TheHub getClass: classNameFromUrl.
 	
 	contents :=  aMocker perform: methodFromUrl with: theRest
 	
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> setExecuteSelector: anObject [
+PharoˆGuzzler >> setExecuteSelector: anObject [
 	executeSelector := anObject
 ]
 
 { #category : 'accessing' }
-TTGuzzlerPharo >> setHttpClient: anObject [
+PharoˆGuzzler >> setHttpClient: anObject [
 	httpClient := anObject
 ]

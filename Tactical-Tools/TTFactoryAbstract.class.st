@@ -84,7 +84,7 @@ TTFactoryAbstract >> claim: aClassOrName andConfigure: configureBlock [
  
 	| supervisingClass winningClass |
 	
-	supervisingClass := TheHub ensureClass: aClassOrName ifAbsent: [ ^ nil ].
+	supervisingClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
 	
 	winningClass := supervisingClass findSuitableFor: self vault.
 	
@@ -184,7 +184,7 @@ TTFactoryAbstract >> make: aClassOrName andConfigure: configureBlock [
 
 	| aNewClass aNewInstance |
 	
-	aNewClass := TheHub ensureClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
 	
 	aNewInstance := aNewClass basicNewForVault: self ifFail: [ ^ nil ].
 

@@ -408,6 +408,8 @@ TTVaultAbstract >> gtConfiguredAppsFor: aView [
 TTVaultAbstract >> gtNormalizedFilteredFor: aView [
 	<gtView>
 	
+	appKey ifNil: [ ^ aView empty ].
+	
 	^ aView forward
 		title: 'Filtered';
 		priority: 15;
@@ -429,6 +431,8 @@ TTVaultAbstract >> gtNormalizedFor: aView [
 { #category : 'gt-views' }
 TTVaultAbstract >> gtOptionsFor: aView [
 	<gtView>
+	
+	self options ifEmpty: [ ^ aView empty ].
 	
 	^ aView columnedTree
 		title: 'Client';
