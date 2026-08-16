@@ -164,7 +164,7 @@ TTTacticalToolsHub class >> startUpShutDownSystem [
 	
 	"Tactical Tools - shutdown/startUp subsystem"
 	<ttHub>
-	^ TTStartUpShutDownAtSystemPriority
+	^ TTStartUpShutDownSubsystem
 ]
 
 { #category : 'as yet unclassified' }

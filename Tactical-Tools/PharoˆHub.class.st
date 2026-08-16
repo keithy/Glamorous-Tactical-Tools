@@ -18,7 +18,7 @@ PharoˆHub class >> fileLocatorFrom: aString [
 ]
 
 { #category : 'wall' }
-PharoˆHub class >> fileReferenceFrom: aString [
+PharoˆHub class >> fileReferenceFromString: aString [
 
   <ttWall>
 

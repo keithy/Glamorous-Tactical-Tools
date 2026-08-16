@@ -244,13 +244,6 @@ TTHubBrowser >> gtInspectorTitleString [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> gtMessageTextFor: aView [
-	<gtView>
-	^ (super gtMessageTextFor: aView) priority: 90
-		
-]
-
-{ #category : 'browsing' }
 TTHubBrowser >> gtSpokesFor: aView [
 	<gtView>
 	self spokes ifEmpty: [ ^ aView empty ].

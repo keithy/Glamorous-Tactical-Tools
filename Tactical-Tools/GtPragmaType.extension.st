@@ -9,6 +9,8 @@ GtPragmaType >> gtPragmasBetterFor: aView [
 		items: [ self pragmas sorted: [:a :b | a gtDisplayString < b gtDisplayString] ];
 		column: 'Class' text: [:each | each methodClass name ];
 		column: 'Selector' text: [:each | each method selector];
+		
+		"Added Comment"
 		column: 'Comment' text: [:each | each method comment ifNil: '' ]
 ]
 

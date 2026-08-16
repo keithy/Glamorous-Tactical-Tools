@@ -97,6 +97,12 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 
 ]
 
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> fileReferenceFrom: aHub [
+
+	^ self workingDirectory
+]
+
 { #category : 'accessing' }
 TTClientAbstract class >> isAbstract [
 
@@ -225,6 +231,12 @@ TTClientAbstract class >> withAllSubclassesDetectSuccessfulMakeFor: aVaultable [
 	
 	^ nil
 
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> workingDirectory [ 
+
+^ Hub fileReferenceFrom: ('./', self ttLocalName)
 ]
 
 { #category : 'as yet unclassified' }

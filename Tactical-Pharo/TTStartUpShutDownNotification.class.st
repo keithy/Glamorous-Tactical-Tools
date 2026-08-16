@@ -1,7 +1,7 @@
 Class {
 	#name : 'TTStartUpShutDownNotification',
 	#superclass : 'Notification',
-	#category : 'Tactical-Pharo-StartUp/ShutDown',
+	#category : 'Tactical-Pharo-StartUp-ShutDown',
 	#package : 'Tactical-Pharo',
-	#tag : 'StartUp/ShutDown'
+	#tag : 'StartUp-ShutDown'
 }

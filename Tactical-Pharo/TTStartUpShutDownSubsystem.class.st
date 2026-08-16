@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTStartUpShutDownSubsystem',
 	#superclass : 'Object',
-	#category : 'Tactical-Pharo-StartUp/ShutDown',
+	#category : 'Tactical-Pharo-StartUp-ShutDown',
 	#package : 'Tactical-Pharo',
-	#tag : 'StartUp/ShutDown'
+	#tag : 'StartUp-ShutDown'
 }
 
 { #category : 'environment' }
@@ -30,7 +30,7 @@ TTStartUpShutDownSubsystem class >> initialize [
 
 { #category : 'environment' }
 TTStartUpShutDownSubsystem class >> initializeAtSystemPriority [
-	Hub sessionManager
+	self sessionManager
 		in: [ :sm | 
 			sm
 				register: ((TTMessageSessionHandler forClassNamed: self name)
@@ -44,7 +44,7 @@ TTStartUpShutDownSubsystem class >> initializeAtSystemPriority [
 
 { #category : 'as yet unclassified' }
 TTStartUpShutDownSubsystem class >> initializeAtToolsPriority [
-	Hub sessionManager
+	self sessionManager
 		in: [ :sm | 
 			sm
 				register: ((TTMessageSessionHandler forClassNamed: self name)
@@ -64,6 +64,12 @@ TTStartUpShutDownSubsystem class >> mustBeClassSide: pragma [
 			false.
 		] ifTrue: [ true ]
 			
+]
+
+{ #category : 'environment' }
+TTStartUpShutDownSubsystem class >> open [
+
+	^ TTHubBrowser newBrowsing: self
 ]
 
 { #category : 'environment' }
@@ -113,17 +119,25 @@ TTStartUpShutDownSubsystem class >> pragmasAll_ttStartUp [
 ]
 
 { #category : 'spokes' }
-TTStartUpShutDownSubsystem class >> pragmasShutDown: match [
+TTStartUpShutDownSubsystem class >> pragmasShutDown: aShutDownSelector [
  
 	^ self pragmasAll_ttShutDown
-		select: [ :p | (p methodSelector = match) and: [ self mustBeClassSide: p] ]
+		select: [ :p | (p methodSelector = aShutDownSelector) and: [ self mustBeClassSide: p] ]
 ]
 
 { #category : 'spokes' }
-TTStartUpShutDownSubsystem class >> pragmasStartUp: match [
+TTStartUpShutDownSubsystem class >> pragmasStartUp: aStartUpSelector [
  
 	^ self pragmasAll_ttStartUp
-		select: [ :p | (p methodSelector = match) and: [ self mustBeClassSide: p] ]
+		select: [ :p | (p methodSelector = aStartUpSelector) and: [ self mustBeClassSide: p] ]
+]
+
+{ #category : 'environment' }
+TTStartUpShutDownSubsystem class >> sessionManager [
+	"Session Manager"
+
+	<ttSpoke>
+	^ Hub sessionManager
 ]
 
 { #category : 'environment' }

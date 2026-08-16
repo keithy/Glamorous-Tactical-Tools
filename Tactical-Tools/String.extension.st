@@ -1,6 +1,14 @@
 Extension { #name : 'String' }
 
 { #category : '*Tactical-Tools' }
+String >> fileReferenceFrom: aHub [
+	
+	"double dispatch"
+	^ aHub fileReferenceFromString: self
+	
+]
+
+{ #category : '*Tactical-Tools' }
 String >> gtCloneGithubRepository [
 
 	<ttFix>

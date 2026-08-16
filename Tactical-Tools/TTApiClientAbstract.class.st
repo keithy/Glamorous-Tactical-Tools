@@ -12,6 +12,24 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTApiClientAbstract class >> / endPoint [
+
+	^ self new /  endPoint
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClientAbstract class >> // aUrl [
+
+	^ self new //  aUrl
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClientAbstract class >> > selector [ 
+
+^ self perform: selector
+]
+
+{ #category : 'as yet unclassified' }
 TTApiClientAbstract class >> basicNewFor: aVaultable [  
 
 	| basicNewClient |

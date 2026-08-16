@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T01:19:49.761503+01:00"
+						"dateAndTimeString" : "2026-08-16T08:22:10.345092+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "At one point we created a WhoAmI class to represent the user, their project etc, as a single method object for handling those parameters into a search path.\n\n{{gtExample:TTVault class>>traceCurrentSearchPath}}\n\nTo cut a long story short, just pass the whole vault, it is more than representative of the user and their context {{gtPragma:ttWhoAmI}}. There can be several vaults if dealing with multiple users or contexts. Copies of vaults are relatively efficient."
+				"string" : "At one point we created a WhoAmI class to represent the user, their project etc, as a single method object for handling those parameters into a search path.\n{{gtExample:TTVault class>>traceCurrentSearchPath}}\n\nTo cut a long story short, just pass the whole vault, it is more than representative of the user and their context {{gtPragma:ttWhoAmI}}. There can be several vaults if dealing with multiple users or contexts. Copies of vaults are relatively efficient."
 			}
 		]
 	},

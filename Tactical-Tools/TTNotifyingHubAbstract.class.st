@@ -398,8 +398,9 @@ TTNotifyingHubAbstract class >> tt [
 	"Tactical Tools"
 	
 	<ttHub>
+	<ttSpoke>
 		
-  ^  #TTTacticalToolsHub asClass 
+  ^  Hub getClass:#TTTacticalToolsHub 
 		  
 ]
 

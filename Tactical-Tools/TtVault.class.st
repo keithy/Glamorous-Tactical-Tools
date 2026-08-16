@@ -209,10 +209,6 @@ TTVault class >> traceCurrentSearchPath [
 	<gtExample>
 	
 	^ FileLookedForNotification collectDuring: [ self newDefaultVault ]
-
-
-	
-
 ]
 
 { #category : 'accessing' }

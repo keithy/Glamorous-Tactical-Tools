@@ -28,10 +28,25 @@ Hub class >> classHttpClient [
 	^ self getClass: #ˆGuzzler
 ]
 
+{ #category : 'wall' }
+Hub class >> fileReferenceFrom: aThing [
+ 
+	"The best file reference provider... in the world"
+ 
+  	<ttWall>
+
+  	"This allows other classes to play, but we start
+  	by going via the current platform-resolved Hub"
+  	
+ 	^ aThing fileReferenceFrom: self current
+ 	
+ 	
+]
+
 { #category : 'environment' }
 Hub class >> gt [
 
-	"The Glamorous Toolkit"
+	"Glamorous Toolkit"
 	
 	<ttHub>
 		
@@ -114,7 +129,7 @@ Hub class >> mapVarsInto: entry [
 { #category : 'as yet unclassified' }
 Hub class >> namespaceSearchPath [
 
-	^ #(Pharo '$USER' '$LOCATION' '$COMPANY' '$PROJECT' '$PLATFORM') 
+	^ #(Pharo '$NICKNAME' '$LOCATION' '$COMPANY' '$PROJECT' '$PLATFORM') 
 ]
 
 { #category : 'environment' }
