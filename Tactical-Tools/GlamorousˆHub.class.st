@@ -121,7 +121,7 @@ GlamorousˆHub class >> namespaceSearchPath [
 ]
 
 { #category : 'environment' }
-GlamorousˆHub class >> onStartUpBidToBeBrowser [
+GlamorousˆHub class >> onStartUpBidToBeCurrent [
 	
 	"Determine if we are based on GT or Pharo (better ways?)"
 	(self getClass: #GtImage ifAbsent: [ ^ 0 ]).

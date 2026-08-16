@@ -143,8 +143,7 @@ TTVaultAbstract >> at: aKey ifPresent: pBlock [
   #at: are different (returns nil rather than error when absent)
   but at least this behaves the same"
 
-  | vault |
-  ^ (vault at: aKey) ifNotNil: pBlock
+  ^ self lookup: aKey ifPresent: pBlock
 
 
 ]
@@ -243,11 +242,9 @@ TTVaultAbstract >> copyForAll [
 
 { #category : 'accessing' }
 TTVaultAbstract >> doesNotUnderstand: aMessage [
-	aMessage hasArguments ifFalse: [ 
-	
-		(self lookup: aMessage selector) ifNotNil: [ :v | ^ v ]
-		
-	].
+	aMessage hasArguments
+		ifFalse: [ self lookup: aMessage selector ifPresent: [ :v | ^ v ] ].
+
 	^ super doesNotUnderstand: aMessage
 ]
 
@@ -517,61 +514,35 @@ TTVaultAbstract >> isWhoAmI [
 { #category : 'accessing' }
 TTVaultAbstract >> lookup: aKey [  
 
-	"
-	search = #( #(options default) #(config) )
-	attempt1, receiver is self (theVault)
-	
-	Thought of offering a wildcard option on the search, but it has limited use.
-
-	"
-	| start |
-	
-	start := (IdentityDictionary new) 
-			at: #config put: self config;
-			at: #options put: self options;
-			yourself.
- 
-	self search do: [ :attempt |
-	
-		((attempt inject: start into: [ :target :each | target at: each ifAbsent: [ ^ nil ] ])  at: aKey)
-			ifNotNil: [ :v | ^v ].
-						
-	].
+	self lookup: aKey ifPresent: [ :v | ^ v ].
 	
 	^ nil
-
-	
-	
-	
-	
 ]
 
 { #category : 'accessing' }
 TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
+  ^ self lookup: aKey ifPresentDontResolve: [ :v | ^ pBlock value: (v templateResolveUsing: self) ] 
+]
 
+{ #category : 'accessing' }
+TTVaultAbstract >> lookup: aKey ifPresentDontResolve: pBlock [
 	"
 	search = #( #(options default) #(config) )
 	attempt1, receiver is self (theVault)
 	
 	Thought of offering a wildcard option on the search, but it has limited use.
 	"
-	
-	| start |
-	
-	start := self lookupStart.
- 
-	self search do: [ :attempt |
-	
-		(attempt inject: start into: [ :target :each | target at: each ]) at: aKey ifPresent: pBlock.
-						
-	].
-	
-	^ nil
 
-	
-	
-	
-	
+	| start |
+	start := self lookupStart.
+
+	self search
+		do: [ :attempt | 
+			(attempt inject: start into: [ :target :each | target at: each ])
+				at: aKey
+				ifPresent: [ :v | ^ pBlock value: v ] ].
+
+	^ nil
 ]
 
 { #category : 'accessing' }

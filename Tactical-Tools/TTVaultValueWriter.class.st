@@ -10,64 +10,57 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTVaultValueWriter class >> suffixMapsBuild [
+TTVaultValueWriter class >> suffixMap [
 
-	suffixReaderMap := (OrderedCollection new)
- 
-			add: ('_CYPHER'   -> #valueAsCyphered:  ) ;
-			add: ('_ENCODED'  -> #valueAsEncoded:   ) ;
-			add: ('_BASE64'   -> #valueAsEncoded:   ) ;
-			add: ('_API_KEY'  -> #valueAsObfuscated:) ;
-			add: ('_APIKEY'   -> #valueAsObfuscated:) ;
-	  	add: ('_PASS'     -> #valueAsObfuscated:) ;
-	  	add: ('_PASSWORD' -> #valueAsObfuscated:) ;
-			yourself
-		
-]
-
-{ #category : 'as yet unclassified' }
-TTVaultValueWriter class >> suffixReaderMap [
-
-	<gtExample>
-	
-	suffixReaderMap ifNil: [ self suffixMapsBuild ].
-	
-	^ suffixReaderMap
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTVaultValueWriter class >> suffixesToRemove [
-
-	^ #('_CYPHER' '_ENCODED' '_BASE64') 
-			yourself
-		
+	^ self selectors select: [ :ea | ea beginsWith: 'valueAs_' ] thenCollect: [ :ea | ea -> (ea copyFrom: 8 to: ea size - 1) ] 
 ]
 
 { #category : 'accessing' }
-TTVaultValueWriter >> dict: dictionary at: key write: value [
- 
-	self class suffixReaderMap do: [ :assoc |
-	
-		| suffix selector newKey |
-		
-		suffix := assoc key.
-		selector  := assoc value.
-		
-		(key asUppercase endsWith: suffix) ifTrue: [ 
-		
-				newKey := (self class suffixesToRemove includes: suffix)
-					ifTrue: [ key copyFrom: 1 to: key size - suffix size ] ifFalse: [ key ].
-		
-				"first match wins"
-				^ dictionary at: newKey put: (self perform: selector with: value)
-				
-		]
-	].
-	
-	"straight forward fall through"
-	^ dictionary at: key put: value.
+TTVaultValueWriter >> dict: theDict at: aKeyWithSuffix write: aValue [
+	| selector newKey map |
+	map := self class suffixMap
+			detect: [ :ea | aKeyWithSuffix endsWith: ea value ]
+			ifNone: [ #valueAsSame: -> '' ].
 
+	selector := map key.
+	newKey := map value last = $_
+			ifTrue: [ aKeyWithSuffix withoutSuffix: map value ]
+			ifFalse: [ aKeyWithSuffix ].
+
+	^ theDict at: newKey put: (self perform: selector with: aValue)
+]
+
+{ #category : 'accessing' }
+TTVaultValueWriter >> selectorFor: aKey [
+	self class suffixReaderMap
+		do: [ :assoc | 
+			| suffix selector |
+			suffix := assoc key.
+			selector := assoc value.
+
+			(aKey asUppercase endsWith: suffix)
+				ifTrue: [ ^ selector -> (self trimKey: aKey removing: suffix) ] ].
+
+	^ #valueAsSame: -> aKey
+]
+
+{ #category : 'accessing' }
+TTVaultValueWriter >> suffixFor: aKey [
+	^ self class suffixMap detect: [ :suffix | aKey endsWith: suffix ] ifNone: ''
+]
+
+{ #category : 'accessing' }
+TTVaultValueWriter >> trimKey: key removing: suffix [
+	^ (self class suffixesToRemove includes: suffix)
+		ifTrue: [ key copyFrom: 1 to: key size - suffix size ]
+		ifFalse: [ key ]
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAsBase64: aString [
+
+	^ (TTStringEncoded newFrom: aString) beBase64
+ 
 ]
 
 { #category : 'as yet unclassified' }
@@ -80,13 +73,6 @@ TTVaultValueWriter >> valueAsCyphered: aString [
 ]
 
 { #category : 'as yet unclassified' }
-TTVaultValueWriter >> valueAsEncoded: aString [
-
-	^ (TTStringEncoded newFrom: aString) beBase64
- 
-]
-
-{ #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAsObfuscated: aString [
 
 	^ TTStringObfuscated newFrom: aString
@@ -94,7 +80,70 @@ TTVaultValueWriter >> valueAsObfuscated: aString [
 ]
 
 { #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAsSame: aString [
+
+	^ aString
+ 
+]
+
+{ #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAsString: aString [
 
 	^ aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAsTemplate: aString [
+
+	^ TTStringTemplate newFrom: aString
+ 
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_APIKEY: aString [
+	^ self valueAsObfuscated: aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_API_KEY: aString [
+	^ self valueAsObfuscated: aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_BASE64_: aString [
+
+	^ self valueAsBase64: aString
+ 
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_CYPHER_: aString [
+	^ self valueAsCyphered: aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_ENCODED_: aString [
+
+	^ self valueAsBase64: aString
+ 
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_OBFUSCATE_: aString [
+	^ self valueAsObfuscated: aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_PASS: aString [
+	^ self valueAsObfuscated: aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_PASSWORD: aString [
+	^ self valueAsObfuscated: aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAs_TEMPLATE_: aString [
+	^ self valueAsTemplate: aString
 ]

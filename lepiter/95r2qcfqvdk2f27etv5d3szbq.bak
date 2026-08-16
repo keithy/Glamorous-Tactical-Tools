@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T00:26:18.247899+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.585569+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>winningHubClass}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:GlamorousˆHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
+				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:Hub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:Hub class>>winningHubClass}} .   Subclasses can override {{gtMethod:Hub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:GlamorousˆHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T01:36:48.534263+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:36.941371+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "txoCP1QbRkaNsEEPziHmIg=="
 				},
-				"code" : "\"Notice the Browsee is TheHub, not the winner of the auction\"\rTheHub openHubCodeBrowser "
+				"code" : "\"Notice the Browsee is TheHub, not the winner of the auction\"\rHub openHubCodeBrowser "
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -100,14 +100,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T01:37:20.701482+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.017729+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "qus75GlNRYC0FspUaVfw4A=="
 				},
-				"code" : "TheHub current openHubCodeBrowser"
+				"code" : "Hub current openHubCodeBrowser"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -134,14 +134,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:01:01.623403+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:35.966021+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "0vyLdyQwQaitNf+Yg5YYVA=="
 				},
-				"code" : "\"More directly\"\rTheHub gt browse"
+				"code" : "\"More directly\"\rHub gt browse"
 			}
 		]
 	},

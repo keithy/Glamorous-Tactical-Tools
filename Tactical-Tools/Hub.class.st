@@ -129,11 +129,11 @@ Hub class >> mapVarsInto: entry [
 { #category : 'as yet unclassified' }
 Hub class >> namespaceSearchPath [
 
-	^ #(Pharo '$NICKNAME' '$LOCATION' '$COMPANY' '$PROJECT' '$PLATFORM') 
+	^ #(Pharo '${NICKNAME}' '${LOCATION}' '${COMPANY}' '${PROJECT}' '${PLATFORM}') 
 ]
 
 { #category : 'environment' }
-Hub class >> onStartUpBidToBeBrowser [
+Hub class >> onStartUpBidToBeCurrent [
 
 	^ 1
 ]

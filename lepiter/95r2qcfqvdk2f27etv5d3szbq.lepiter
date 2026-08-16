@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T00:27:37.585569+01:00"
+						"dateAndTimeString" : "2026-08-16T10:24:21.075802+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:Hub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:Hub class>>winningHubClass}} .   Subclasses can override {{gtMethod:Hub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:GlamorousˆHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
+				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:Hub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:Hub class>>winningHubClass}} .   Subclasses can override {{gtMethod:Hub class>>onStartUpBidToBeCurrent}} to outbid {{gtMethod:GlamorousˆHub class>>onStartUpBidToBeCurrent}}  if they wish to be in control."
 			},
 			{
 				"__type" : "pharoSnippet",

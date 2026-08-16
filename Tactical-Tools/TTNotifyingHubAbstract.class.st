@@ -353,7 +353,7 @@ TTNotifyingHubAbstract class >> startUpAtSystemPriority: isImageStarting [
 	max := 0.
 	self allSubclassesDo: [ :hubClass | 
 	
-		bid := hubClass onStartUpBidToBeBrowser.
+		bid := hubClass onStartUpBidToBeCurrent.
 		
 		bid > max ifTrue: [
 				

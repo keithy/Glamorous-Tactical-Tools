@@ -14,7 +14,7 @@ Class {
 TTStringEncoded class >> newFrom: aString [
 
 	^ (self new)
-	     encoded: aString
+	     setEncoded: aString
 	     yourself 
 ]
 
@@ -106,11 +106,6 @@ TTStringEncoded >> encoded [
 ]
 
 { #category : 'accessing' }
-TTStringEncoded >> encoded: anObject [
-	encoded := anObject
-]
-
-{ #category : 'accessing' }
 TTStringEncoded >> explain [
 
 	^ decodeSelector withoutPrefix: 'decode'
@@ -165,6 +160,11 @@ TTStringEncoded >> gtViewHintFor: aView [
 TTStringEncoded >> printOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
+]
+
+{ #category : 'accessing' }
+TTStringEncoded >> setEncoded: anObject [
+	encoded := anObject
 ]
 
 { #category : 'accessing' }
