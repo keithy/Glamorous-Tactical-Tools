@@ -8,15 +8,17 @@ If code is to be portable to other smalltalk environments I am that replacable i
 Values are obtained from the surrounding image context via a resumable notification. This provides a mechanism for these singletons to be overriden within a block context, and customized via subclassing.
 "
 Class {
-	#name : 'TheHub',
+	#name : 'Hub',
 	#superclass : 'TTNotifyingHubAbstract',
+	#traits : 'TNamespaced',
+	#classTraits : 'TNamespaced classTrait',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
 { #category : 'as yet unclassified' }
-TheHub class >> classHttpClient [
+Hub class >> classHttpClient [
 
 	<ttWall>
 	
@@ -26,25 +28,19 @@ TheHub class >> classHttpClient [
 	^ self getClass: #ˆGuzzler
 ]
 
-{ #category : 'as yet unclassified' }
-TheHub class >> getClassNamespaceSearchPath [
-
-	^ #(Pharo '$USER' '$LOCATION' '$COMPANY' '$PROJECT' '$PLATFORM') 
-]
-
 { #category : 'environment' }
-TheHub class >> gt [
+Hub class >> gt [
 
 	"The Glamorous Toolkit"
 	
 	<ttHub>
 		
-  ^  TheGlamorousHub 
+  ^  GlamorousˆHub 
 		  
 ]
 
 { #category : 'browsing' }
-TheHub class >> hubHome [
+Hub class >> hubHome [
 
 	<ttHub>
 	
@@ -52,7 +48,7 @@ TheHub class >> hubHome [
 ]
 
 { #category : 'browsing' }
-TheHub class >> hubWork [
+Hub class >> hubWork [
 
 	<ttHub>
 	
@@ -60,7 +56,7 @@ TheHub class >> hubWork [
 ]
 
 { #category : 'browsing' }
-TheHub class >> hubs [
+Hub class >> hubs [
 
 	^ self openBrowser hubs
 	
@@ -68,7 +64,7 @@ TheHub class >> hubs [
 ]
 
 { #category : 'handling' }
-TheHub class >> isWhoAmI [
+Hub class >> isWhoAmI [
 
 	<ttWhoAmI>
 
@@ -78,7 +74,7 @@ TheHub class >> isWhoAmI [
 ]
 
 { #category : 'as yet unclassified' }
-TheHub class >> makeNetworkErrorHandler [
+Hub class >> makeNetworkErrorHandler [
 
 	"Network Error Handler"
 	
@@ -97,7 +93,7 @@ TheHub class >> makeNetworkErrorHandler [
 ]
 
 { #category : 'browsing' }
-TheHub class >> mapVarsInto: entry [
+Hub class >> mapVarsInto: entry [
 	| value env |
 	
 	value := entry.
@@ -115,14 +111,31 @@ TheHub class >> mapVarsInto: entry [
 	^ value
 ]
 
+{ #category : 'as yet unclassified' }
+Hub class >> namespaceSearchPath [
+
+	^ #(Pharo '$USER' '$LOCATION' '$COMPANY' '$PROJECT' '$PLATFORM') 
+]
+
 { #category : 'environment' }
-TheHub class >> onStartUpBidToBeBrowser [
+Hub class >> onStartUpBidToBeBrowser [
 
 	^ 1
 ]
 
+{ #category : 'instance creation' }
+Hub class >> open [
+
+	"convenience"
+	
+	^ self openHubCodeBrowser
+			
+	 
+		  
+]
+
 { #category : 'spokes' }
-TheHub class >> pragmasAll_ttHealthy [
+Hub class >> pragmasAll_ttHealthy [
 
 	"Environment health checks"
 	
@@ -134,43 +147,43 @@ TheHub class >> pragmasAll_ttHealthy [
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAll_ttHub [
+Hub class >> pragmasAll_ttHub [
 
 	"All of the hubs... in the world"
 	
-	^ TheHub sortByComment: (Pragma allNamed: #ttHub)
+	^ Hub sortByComment: (Pragma allNamed: #ttHub)
 	
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAll_ttQuirk [
+Hub class >> pragmasAll_ttQuirk [
 
 	"All of the <ttQuirk>... in the world"
 	
 	<ttSpoke>
 	
-	^ TheHub sortByComment: (Pragma allNamed: #ttQuirk)
+	^ Hub sortByComment: (Pragma allNamed: #ttQuirk)
 	
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAll_ttUtility [
+Hub class >> pragmasAll_ttUtility [
 
 	"All of the <ttUtility>... in the world"
 	
 	<ttSpoke>
 	
-	^ TheHub sortByComment: (Pragma allNamed: #ttUtility)
+	^ Hub sortByComment: (Pragma allNamed: #ttUtility)
 	
 ]
 
 { #category : 'spokes' }
-TheHub class >> pragmasAll_ttWall [
+Hub class >> pragmasAll_ttWall [
 
 	"All of the <ttWall>... in the world"
 	
 	<ttSpoke>
 	
-	^ TheHub sortByComment: (Pragma allNamed: #ttWall)
+	^ Hub sortByComment: (Pragma allNamed: #ttWall)
 	
 ]

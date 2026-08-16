@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T04:04:36.073486+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.925454+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### System Interface\n{{gtClass:TheHub}} is a starting point for *Tactical-Tools* to connect into the rest of the system at a macro level. It doubles as a *meta interface* defined between these tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere. We call this interface \"TheWall\"."
+				"string" : "### System Interface\n{{gtClass:Hub}} is a starting point for *Tactical-Tools* to connect into the rest of the system at a macro level. It doubles as a *meta interface* defined between these tools and the underlying system that can be adapted to other Smalltalk environments [Pharo](https://pharo.org),  [Squeak](https://squeak.org)  or [Cuis](https://cuis.st) should the code ever be ported elsewhere. We call this interface \"TheWall\"."
 			},
 			{
 				"__type" : "textSnippet",
@@ -140,14 +140,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T06:54:45.223512+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.087279+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "saVhoxCAS42uJszibZw98g=="
 				},
-				"code" : "\"Lower level - Grease\"\rTheHub platform"
+				"code" : "\"Lower level - Grease\"\rHub platform"
 			}
 		]
 	},

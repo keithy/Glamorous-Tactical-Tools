@@ -4,9 +4,9 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : 'Tactical-Tools-Hub',
-	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#category : 'Tactical-Pharo-Namespaces',
+	#package : 'Tactical-Pharo',
+	#tag : 'Namespaces'
 }
 
 { #category : 'accessing' }
@@ -22,16 +22,14 @@ TTNamespaces class >> allNamespacesRegistry [
 	namespaces := self allNamespacesSorted .
 	registry :=  Dictionary new.
 	
-  TheHub allIdentifyingAsClasses collect: [ :c | 
+  Hub allIdentifyingAsClasses collect: [ :c | 
      
-     	| namespace |
-     	
-     	namespace := self nameAsAssoc: c name.
-     	
-     	namespace ifNotNil: [ :ns |
-     			(registry at: ns value ifAbsentPut: IdentityDictionary new) 
+     (self nameAsAssoc: c name)
+     	 ifNotNil: [ :nsAssoc |
+     	 
+     			(registry at: nsAssoc value ifAbsentPut: IdentityDictionary new) 
      			
-     			at: (self nameKeyFromAssoc: namespace) put:c
+     			at: (self nameKeyFrom: nsAssoc) put:c
        ]
   	].
           
@@ -41,7 +39,18 @@ TTNamespaces class >> allNamespacesRegistry [
 
 { #category : 'accessing' }
 TTNamespaces class >> allNamespacesSorted [
-      ^ (self allNamespaces asSortedCollection: [:a :b | a size >= b size ]) asArray.
+	^ (self allNamespaces asSortedCollection: [ :a :b | a size >= b size ]) asArray
+]
+
+{ #category : 'accessing' }
+TTNamespaces class >> gtItemsFor: aView [
+ 
+	<gtView>
+ 
+	^ aView forward
+		title: 'Items';
+		object: [ self allNamespacesRegistry ];
+		view: #gtItemsFor:
 ]
 
 { #category : 'accessing' }
@@ -74,15 +83,7 @@ TTNamespaces class >> nameAsAssoc: aClassName [
 ]
 
 { #category : 'accessing' }
-TTNamespaces class >> nameAssocAsKey: assoc [
-
-  ^  (assoc value),'ˆ', (assoc key)
-     
- 
-]
-
-{ #category : 'accessing' }
-TTNamespaces class >> nameKeyFromAssoc: assoc [
+TTNamespaces class >> nameKeyFrom: assoc [
 
   ^  (assoc value),'ˆ', (assoc key)
      
@@ -115,7 +116,7 @@ TTNamespaces class >> registry [
 ]
 
 { #category : 'accessing' }
-TTNamespaces class >> shutDown: quitting [
+TTNamespaces class >> shutDownSystem: quitting [
 	
 	<ttShutDown>
 	
@@ -130,9 +131,9 @@ TTNamespaces class >> someNamespaces [
 
 { #category : 'accessing' }
 TTNamespaces class >> traitedNamespaces [
-      ^ (TheHub allIdentifyingAsClasses
-          select: [ :c | c askFor: #isNamespaced ] thenCollect: [ :n | n ttNamespace ])  asSet 
-
+	^ (Hub allIdentifyingAsClasses
+		select: [ :c | c askFor: #isNamespaced ]
+		thenCollect: [ :n | n ttNamespace ]) asSet
 ]
 
 { #category : 'accessing' }

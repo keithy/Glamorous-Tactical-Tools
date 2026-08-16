@@ -103,7 +103,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T01:32:54.003281+01:00"
+						"dateAndTimeString" : "2026-08-16T00:26:17.774144+01:00"
 					}
 				},
 				"uid" : {
@@ -113,7 +113,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "##Dedicated Projects\nDedicated Projects may subclass {{gtClass:TheGlamorousHub}} and provide their own custom Hub. {{gtMethod:TheHub class>>openHubBrowser}}\n\nIn particular they may wish to customise the Hub 'Spokes' tool items click through mode, to be more \"user friendly\" so as not to show spoke code. This is demonstrated in The Hub 'Hubs' tool click through mode.\n\nThe bespoke DedicatedHub will bid to be `TheHub current`.\n\nThe DedicatedHub will participate as a top level identity provider {{gtPragma:ttWhoAmI}} providing its own {{gtMethod:TheHub class>>hubId}} and {{gtMethod:TheHub>>bundleId}} so the search path for vault config/prefs files will include {preferences}/com.mydomain.myown.env {{gtMethod:TTVault class>>searchPathFor:}} \n\n`TheHub currentVault` will return `TheVault currentVault` but this may be overriden if the default vault configuration or implementation does not inspire.\n\nFactories provide a list of all available clients, those clients whose credentials are satisfied by `TheHub currentVault` will be usable.\n\nDedicatedHub can present a filtered view of potential clients, or can defer to a custom TTFactory subclass offering bespoke clients. "
+				"string" : "##Dedicated Projects\nDedicated Projects may subclass {{gtClass:GlamorousˆHub}} and provide their own custom Hub. {{gtMethod:TheHub class>>openHubBrowser}}\n\nIn particular they may wish to customise the Hub 'Spokes' tool items click through mode, to be more \"user friendly\" so as not to show spoke code. This is demonstrated in The Hub 'Hubs' tool click through mode.\n\nThe bespoke DedicatedHub will bid to be `TheHub current`.\n\nThe DedicatedHub will participate as a top level identity provider {{gtPragma:ttWhoAmI}} providing its own {{gtMethod:TheHub class>>hubId}} and {{gtMethod:TheHub>>bundleId}} so the search path for vault config/prefs files will include {preferences}/com.mydomain.myown.env {{gtMethod:TTVault class>>searchPathFor:}} \n\n`TheHub currentVault` will return `TheVault currentVault` but this may be overriden if the default vault configuration or implementation does not inspire.\n\nFactories provide a list of all available clients, those clients whose credentials are satisfied by `TheHub currentVault` will be usable.\n\nA DedicatedHub can present a filtered view of potential clients, or can defer to a custom TTFactory subclass offering bespoke clients. "
 			}
 		]
 	},

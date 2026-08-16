@@ -108,7 +108,7 @@ TTToolRequest class >> reset [
 ]
 
 { #category : 'as yet unclassified' }
-TTToolRequest class >> startUp: restarting [
+TTToolRequest class >> startUpAtToolPriority: restarting [
 
 	<ttStartUp>
 	

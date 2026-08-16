@@ -13,7 +13,7 @@ WipHub class >> TacticalHub [
 	
 	<ttHub>
 		
-  ^  #TheTacticalToolsHub asClass 
+  ^  #TTTacticalToolsHub asClass 
 ]
 
 { #category : 'as yet unclassified' }
@@ -23,7 +23,7 @@ WipHub class >> currentVault [
 	
 	<ttSpoke>
 	
-	^ TheHub currentVault
+	^ Hub currentVault
 ]
 
 { #category : 'as yet unclassified' }
@@ -99,7 +99,7 @@ WipHub class >> theHub [
 	
 	"The Current Hub"
 
-	^ TheHub current
+	^ Hub current
 ]
 
 { #category : 'as yet unclassified' }

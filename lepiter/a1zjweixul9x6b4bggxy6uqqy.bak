@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T15:39:25.052156+01:00"
+						"dateAndTimeString" : "2026-08-08T15:39:32.264051+01:00"
 					}
 				},
 				"uid" : {
@@ -76,41 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma {{gtPragma:ttWall>>. Notice how any method in the system can be marked, implying that this will be available in all Smalltalks in which Tactical-Tools loads."
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T03:53:14.618322+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-08T04:54:17.180248+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "8g8Ms73kQvaEmEoYXZv0bA=="
-				},
-				"code" : "TacticalToolsHub pragmasAll_ttWall "
+				"string" : "### Higher level isolation/compatibility\nMethods fulfilling this role can be marked with pragma {{gtPragma:ttWall}}. Notice how any method in the system can be marked, implying that this will be available in all Smalltalks in which Tactical-Tools loads."
 			},
 			{
 				"__type" : "textSnippet",

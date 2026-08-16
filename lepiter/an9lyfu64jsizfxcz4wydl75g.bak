@@ -384,7 +384,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:37:02.847761+01:00"
+						"dateAndTimeString" : "2026-07-31T07:37:40.399067+01:00"
 					}
 				},
 				"uid" : {
@@ -394,7 +394,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "For example, testing environment variable USERNAME would depend upon the host system, making tests difficult. {{gtClass:TheHub}} allows tests to be wrapped in an inner scope, temporarily overiding the environment. \n"
+				"string" : "For example, testing environment variable USERNAME would depend upon the host system, making tests difficult. {{gtMethod:TheHub class>>for:respondWith:during:}} allows tests to be wrapped in an inner scope, temporarily overiding the environment. \n"
 			},
 			{
 				"__type" : "pharoSnippet",

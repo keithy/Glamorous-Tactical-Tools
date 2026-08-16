@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T03:16:41.034975+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:36.419128+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "yzpTcRvkQvW5+gESj9PbIw=="
 				},
-				"code" : "(TheHub fileLocatorFrom: '{imageStore}/help')  "
+				"code" : "(Hub fileLocatorFrom: '{imageStore}/help')  "
 			},
 			{
 				"__type" : "textSnippet",
@@ -137,14 +137,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-06T03:20:44.27357+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.644297+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "bXmibUesSBSpZGBs9zhMJg=="
 				},
-				"code" : "(TheHub fileLocatorFrom: '{ramdisk}/help')  "
+				"code" : "(Hub fileLocatorFrom: '{ramdisk}/help')  "
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -171,14 +171,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T02:06:39.421883+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.249361+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "IdztJ08xStuzkEgYtHUsjw=="
 				},
-				"code" : "TheHub gt openHubCodeBrowser"
+				"code" : "Hub gt openHubCodeBrowser"
 			}
 		]
 	},

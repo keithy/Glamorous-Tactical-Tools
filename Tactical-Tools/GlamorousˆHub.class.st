@@ -1,19 +1,19 @@
 Class {
-	#name : 'TheGlamorousHub',
-	#superclass : 'ThePharoHub',
+	#name : 'GlamorousˆHub',
+	#superclass : 'PharoˆHub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
 { #category : 'environment' }
-TheGlamorousHub class >> _hubId [
+GlamorousˆHub class >> _hubId [
 
 	^ 'gt'
 ]
 
 { #category : 'external-process' }
-TheGlamorousHub class >> execBash: script [
+GlamorousˆHub class >> execBash: script [
  
 	^ (GtExternalProcessBuilder new)
 			command: 'bash';
@@ -22,7 +22,7 @@ TheGlamorousHub class >> execBash: script [
 ]
 
 { #category : 'external-process' }
-TheGlamorousHub class >> execMiseEnvironmentIn: source [
+GlamorousˆHub class >> execMiseEnvironmentIn: source [
 
 	"Mise environment"
 	
@@ -37,19 +37,13 @@ TheGlamorousHub class >> execMiseEnvironmentIn: source [
 ]
 
 { #category : 'external-process' }
-TheGlamorousHub class >> executeExternalProcess: processBuilder [
+GlamorousˆHub class >> executeExternalProcess: processBuilder [
 	
 	^ self current signalAuto
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> getClassNamespaceSearchPath [
-
-	^ #(Glam Pharo)
-]
-
-{ #category : 'environment' }
-TheGlamorousHub class >> gitRepositories [
+GlamorousˆHub class >> gitRepositories [
 
 	"the list of repositories registered with the git tool"
 	^ self signalAuto
@@ -57,7 +51,7 @@ TheGlamorousHub class >> gitRepositories [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> gtImageInfo [
+GlamorousˆHub class >> gtImageInfo [
 
 	"Image information"
 	
@@ -67,7 +61,7 @@ TheGlamorousHub class >> gtImageInfo [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> gtImageStats [
+GlamorousˆHub class >> gtImageStats [
 
 	"Live image stats"
 	
@@ -77,7 +71,7 @@ TheGlamorousHub class >> gtImageStats [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> homeTools [ 
+GlamorousˆHub class >> homeTools [ 
 
 	"Home Tools"
 	
@@ -88,7 +82,7 @@ TheGlamorousHub class >> homeTools [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> isHub [
+GlamorousˆHub class >> isHub [
 
   <ttIsHub>
   
@@ -98,13 +92,13 @@ TheGlamorousHub class >> isHub [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> lepiter [
+GlamorousˆHub class >> lepiter [
 
 	^ self current signalAuto
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> lepiterPropertiesFile [
+GlamorousˆHub class >> lepiterPropertiesFile [
 
 	"Lepiter properties file (fix this if duplicate databases are defined)"
 	
@@ -114,14 +108,20 @@ TheGlamorousHub class >> lepiterPropertiesFile [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> lepiterReload [
+GlamorousˆHub class >> lepiterReload [
 
 	"re-read batabases defined in the the properties file"
 	^ self lepiter reload
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> onStartUpBidToBeBrowser [
+GlamorousˆHub class >> namespaceSearchPath [
+
+	^ #(Glam Pharo)
+]
+
+{ #category : 'environment' }
+GlamorousˆHub class >> onStartUpBidToBeBrowser [
 	
 	"Determine if we are based on GT or Pharo (better ways?)"
 	(self getClass: #GtImage ifAbsent: [ ^ 0 ]).
@@ -130,7 +130,7 @@ TheGlamorousHub class >> onStartUpBidToBeBrowser [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openGettingStartedSection [
+GlamorousˆHub class >> openGettingStartedSection [
 
 	"Open getting started section"
 	
@@ -140,7 +140,7 @@ TheGlamorousHub class >> openGettingStartedSection [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openMonitor: aCard [
+GlamorousˆHub class >> openMonitor: aCard [
 
   "from GtHomeToolsSection"
  
@@ -153,7 +153,7 @@ TheGlamorousHub class >> openMonitor: aCard [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openMonitorWindow [
+GlamorousˆHub class >> openMonitorWindow [
 
 	"Open monitor window"
 	
@@ -165,7 +165,7 @@ TheGlamorousHub class >> openMonitorWindow [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openTranscript: aCard [
+GlamorousˆHub class >> openTranscript: aCard [
 
   "from GtHomeToolsSection"
  
@@ -178,7 +178,7 @@ TheGlamorousHub class >> openTranscript: aCard [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> openTranscriptWindow [
+GlamorousˆHub class >> openTranscriptWindow [
   
   "Open transcript window"
   
@@ -190,7 +190,7 @@ TheGlamorousHub class >> openTranscriptWindow [
 ]
 
 { #category : 'spokes' }
-TheGlamorousHub class >> pragmasAll_gtExamples [
+GlamorousˆHub class >> pragmasAll_gtExamples [
 
 	"All examples (needs an examples browser)"
 
@@ -202,7 +202,7 @@ TheGlamorousHub class >> pragmasAll_gtExamples [
 ]
 
 { #category : 'spokes' }
-TheGlamorousHub class >> pragmasAll_gtToolButton [
+GlamorousˆHub class >> pragmasAll_gtToolButton [
 
 	"Tool button stencils"
 	
@@ -214,7 +214,7 @@ TheGlamorousHub class >> pragmasAll_gtToolButton [
 ]
 
 { #category : 'spokes' }
-TheGlamorousHub class >> pragmasAll_gtViews [
+GlamorousˆHub class >> pragmasAll_gtViews [
 
 	"All of the views... in the world"
 	
@@ -226,7 +226,7 @@ TheGlamorousHub class >> pragmasAll_gtViews [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> shortCutRegistry [
+GlamorousˆHub class >> shortCutRegistry [
  
    "Shortcut Registry"
 
@@ -239,7 +239,7 @@ TheGlamorousHub class >> shortCutRegistry [
 ]
 
 { #category : 'as yet unclassified' }
-TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil from: anotherElement [
+GlamorousˆHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil from: anotherElement [
 
   "Utility method for opening an new space borrowed verbatim from GtHomeToolsSection"
 
@@ -255,7 +255,7 @@ TheGlamorousHub class >> showSpaceWithIcon: anIcon title: aString with: aStencil
 ]
 
 { #category : 'environment' }
-TheGlamorousHub class >> whatIsHome [
+GlamorousˆHub class >> whatIsHome [
 
 	"Main screen layout"
 	
@@ -265,7 +265,7 @@ TheGlamorousHub class >> whatIsHome [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> execMiseEnvironmentIn: source [
+GlamorousˆHub >> execMiseEnvironmentIn: source [
 
 	"Mise environment"
 	
@@ -280,13 +280,13 @@ TheGlamorousHub >> execMiseEnvironmentIn: source [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> executeExternalProcess: processBuilder [
+GlamorousˆHub >> executeExternalProcess: processBuilder [
  
 	^ processBuilder output stdout
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> gitRepositories [
+GlamorousˆHub >> gitRepositories [
 
 	"Repository browsers (iceberg/git)"
 
@@ -296,7 +296,7 @@ TheGlamorousHub >> gitRepositories [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> httpClientOptions [ 
+GlamorousˆHub >> httpClientOptions [ 
 
 	"Http client default options (zinc)"
 	
@@ -307,7 +307,7 @@ TheGlamorousHub >> httpClientOptions [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> iceRepositories [
+GlamorousˆHub >> iceRepositories [
 	
 	"Repositories registration (git)"
 	 
@@ -317,7 +317,7 @@ TheGlamorousHub >> iceRepositories [
 ]
 
 { #category : 'environment' }
-TheGlamorousHub >> lepiter [
+GlamorousˆHub >> lepiter [
 
  	"Lepiter - current loaded default logical database"
  	

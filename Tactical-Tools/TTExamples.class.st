@@ -11,10 +11,10 @@ TTExamples >> testGlobalsMiseEnvironment [
 
 <gtExample>
 
-TheHub for: #osEnvironment respondWith: { ('USER' -> 'Me'). } asDictionary
+Hub for: #osEnvironment respondWith: { ('USER' -> 'Me'). } asDictionary
 during:
 [
-	self assert: (TheHub osEnvironment at: 'USER') equals: 'Me'.
+	self assert: (Hub osEnvironment at: 'USER') equals: 'Me'.
 ]
 
 ]
@@ -24,10 +24,10 @@ TTExamples >> testGlobalsOsEnvironment [
 
 <gtExample>
 
-TheHub for: #osEnvironment respondWith: { ('USER' -> 'Me'). } asDictionary
+Hub for: #osEnvironment respondWith: { ('USER' -> 'Me'). } asDictionary
 during:
 [
-	self assert: (TheHub osEnvironment at: 'USER') equals: 'Me'.
+	self assert: (Hub osEnvironment at: 'USER') equals: 'Me'.
 ]
 
 ]

@@ -24,7 +24,7 @@ TTVaultAbstract class >> basicNew [
 
 { #category : 'instance creation' }
 TTVaultAbstract class >> currentVault [
-	^ currentVault ifNil: [ currentVault := TheHub current vaultUpdate:(self newDefaultVault) ]
+	^ currentVault ifNil: [ currentVault := Hub current vaultUpdate:(self newDefaultVault) ]
 ]
 
 { #category : 'accessing' }
@@ -71,7 +71,7 @@ TTVaultAbstract class >> searchInitial [
 ]
 
 { #category : 'instance creation' }
-TTVaultAbstract class >> shutDown: quitting [
+TTVaultAbstract class >> shutDownSystem: quitting [
 
   <ttShutDown>
 
@@ -81,7 +81,7 @@ TTVaultAbstract class >> shutDown: quitting [
 ]
 
 { #category : 'instance creation' }
-TTVaultAbstract class >> startUp: isImageStarting [
+TTVaultAbstract class >> startUpAtSystemPriority: isImageStarting [
 
 	<ttStartUp>
 	
@@ -154,7 +154,7 @@ TTVaultAbstract >> bundleId [
 
 	"update later"
 	
-	^ TheHub bundleId
+	^ Hub bundleId
 ]
 
 { #category : 'accessing' }
@@ -381,7 +381,7 @@ TTVaultAbstract >> gtConfigFor: aView [
 	
 	^ aView forward
 		title: 'Config';
-		priority: 9;
+		priority: 1;
 		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons "save" restart 
 												id: GtPhlowViewRefreshContentButtonId
 												tooltip: 'Re-read Configuration'
@@ -407,7 +407,7 @@ TTVaultAbstract >> gtConfiguredAppsFor: aView [
 	
 	^ aView forward
 		title: 'Apps List';
-		priority: 1;
+		priority: 3;
 		object: [ self configuredApps];
 		view: #gtItemsFor:
 ]
@@ -490,7 +490,7 @@ TTVaultAbstract >> hubId [
 
 	"update later"
 	
-	^ TheHub current hubId
+	^ Hub current hubId
 ]
 
 { #category : 'accessing' }
@@ -622,7 +622,7 @@ TTVaultAbstract >> projectId [
 
 	"update later"
 	
-	^ TheHub projectId
+	^ Hub projectId
 ]
 
 { #category : 'accessing' }
@@ -655,5 +655,5 @@ TTVaultAbstract >> userId [
 
 	"update later"
 	
-	^ TheHub userId
+	^ Hub userId
 ]

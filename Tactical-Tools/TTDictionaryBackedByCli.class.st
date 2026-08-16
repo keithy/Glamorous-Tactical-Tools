@@ -14,7 +14,7 @@ Class {
 { #category : 'accessing' }
 TTDictionaryBackedByCli class >> asFile: pathString [
 
-	^ TheHub fileReferenceFrom: pathString
+	^ Hub fileReferenceFrom: pathString
 
 	 
 ]
@@ -42,7 +42,7 @@ TTDictionaryBackedByCli class >> exampleLsProjectDir [
 	
 	| vault |
 	
-	vault := TheHub currentVault.
+	vault := Hub currentVault.
 	
 	^ (self newLsProjectDir) 
 			initialize 

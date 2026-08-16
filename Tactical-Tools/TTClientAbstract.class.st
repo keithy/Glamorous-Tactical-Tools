@@ -19,7 +19,7 @@ TTClientAbstract class >> asHub [
 	
 	"Any Client class can be a hub on its own resources"
 	
-  ^ TheHub current newBrowsing: self
+  ^ Hub current newBrowsing: self
 ]
 
 { #category : 'accessing' }

@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T06:36:34.679645+01:00"
+						"dateAndTimeString" : "2026-08-16T00:26:18.044111+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The GlamorousToolkit environment is voluminous, {{gtClass:TheGlamorousHub}} is intended as a starting point for discovery."
+				"string" : "The GlamorousToolkit environment is voluminous, {{gtClass:GlamorousˆHub}} is intended as a starting point for discovery."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -103,14 +103,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T00:04:26.797954+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.469251+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "VsrTyWjKSbauxdqJOwmi8Q=="
 				},
-				"code" : "\"common tools\"\rTheHub openFileBrowser"
+				"code" : "\"common tools\"\rHub openFileBrowser"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -137,14 +137,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T06:37:33.833366+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.346499+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "8v/RQrqzRwGk1S95Dy8NkA=="
 				},
-				"code" : "\"not so common, more useful, but usually hidden deep inside the environment\"\rTheHub namedFileLocations"
+				"code" : "\"not so common, more useful, but usually hidden deep inside the environment\"\rHub namedFileLocations"
 			},
 			{
 				"__type" : "textSnippet",
@@ -208,14 +208,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-29T23:58:24.916276+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.380458+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "yA9p0+LZSjypZ1ND+u/Beg=="
 				},
-				"code" : "TheHub current"
+				"code" : "Hub current"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -242,14 +242,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T00:01:13.137163+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.405764+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "EBvZesUwSj2QWzvzULpqFA=="
 				},
-				"code" : "TheHub current iceCredentialsStore."
+				"code" : "Hub current iceCredentialsStore."
 			},
 			{
 				"__type" : "textSnippet",
@@ -313,14 +313,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T06:00:02.015146+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.531917+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "hhRSXfpvTmKGMUxPKeTRww=="
 				},
-				"code" : "TheHub browse"
+				"code" : "Hub browse"
 			}
 		]
 	},

@@ -42,7 +42,7 @@ TTFactoryAbstract class >> makeVaultEmpty [
 { #category : 'as yet unclassified' }
 TTFactoryAbstract class >> makeVaultFromCurrent [
 
-	^ (TheHub currentVault) copy
+	^ (Hub currentVault) copy
 ]
 
 { #category : 'instance creation' }
@@ -80,7 +80,7 @@ TTFactoryAbstract >> askAll: aClassOrName [
 
 	| aNewClass |
 	
-	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := Hub getClass: aClassOrName ifAbsent: [ ^ nil ].
 	
 	^ aNewClass withAllSubclassesCollectSuccessfulVaultsFor: vault.
  
@@ -96,7 +96,7 @@ TTFactoryAbstract >> getVault [
 TTFactoryAbstract >> gtClientsFor: aView [
 	<gtView>
 	^ aView columnedList
-		priority: 10;
+		priority: 100;
 		title: 'Clients Live';
 		items: [ self class pragmasAll_ttClient ];
 		column: 'Env'
@@ -183,7 +183,7 @@ TTFactoryAbstract >> make: aClassOrName andConfigure: configureBlock [
 
 	| aNewClass aNewInstance |
 	
-	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := Hub getClass: aClassOrName ifAbsent: [ ^ nil ].
 	
 	aNewInstance := aNewClass basicNewForPotential: self .
 
@@ -250,7 +250,7 @@ TTFactoryAbstract >> tryAll: aClassOrName [
 
 	| aNewClass |
 	
-	aNewClass := TheHub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := Hub getClass: aClassOrName ifAbsent: [ ^ nil ].
 	
 	^ aNewClass withAllSubclassesDetectSuccessfulMakeFor: vault.
 

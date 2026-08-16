@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:49:52.988557+01:00"
+						"dateAndTimeString" : "2026-08-16T00:26:18.348442+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "##Focal Point for Dedicated Projects\r\nThe Hub is a *Top Level* oversight mechanism and so it provides an interface for other dedicated projects built upon Pharo or GT to manage their own interface at this level.\n\nFor example, the ability for {{gtClass:TheHub}} to provide an oversight of the system through browsing GT, can be easily adopted by any and all other projects, in any smalltalk that supports Pragma annotations.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>current}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeCurrentHubClass}} to outbid {{gtMethod:TheGlamorousHub class>>onStartUpBidToBeCurrentHubClass}}  if they wish to be in control."
+				"string" : "##Focal Point for Dedicated Projects\r\nThe Hub is a *Top Level* oversight mechanism and so it provides an interface for other dedicated projects built upon Pharo or GT to manage their own interface at this level.\n\nFor example, the ability for {{gtClass:TheHub}} to provide an oversight of the system through browsing GT, can be easily adopted by any and all other projects, in any smalltalk that supports Pragma annotations.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>current}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:GlamorousˆHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
 			}
 		]
 	},

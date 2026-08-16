@@ -91,14 +91,14 @@ TTNotifyingHubAbstract class >> for: selector respondWith: substituteValue durin
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClass: aClassOrName [
 
-	 "Better #asClass"
+	 "A Better #asClass"
 
 	 <ttWall>
 	 
-	 "When you direct your makeClass request towards a preferred Hub,
-	 that Hub may offer local Namespacing lookup"
-	 
-   self getClass: aClassOrName ifAbsent: [ KeyNotFound signalFor: aClassOrName ]
+	 "Better, handles nil quietly, class already passthrough,
+	 and fall back through namespace lookup"
+   
+   ^ self getClass: aClassOrName ifAbsent: [ KeyNotFound signalFor: aClassOrName ]
    
 ]
 
@@ -109,18 +109,18 @@ TTNotifyingHubAbstract class >> getClass: aClassOrName ifAbsent: aBlock [
 
 	 <ttWall>
 	 
-	 "When you direct your makeClass request towards a preferred Hub,
-	 that Hub may offer local Namespacing lookup"
+	"Better, handles nil, class already passthrough,
+	 and fall back through namespace lookup"
 	 
    aClassOrName ifNil: [ ^ aBlock value ].
    
    aClassOrName isClass ifTrue: [ ^ aClassOrName ].
    
+   "This is a circumflex"
    (aClassOrName first = $ˆ) ifTrue: [ 
    		(self getClass: aClassOrName 
-   				 search: self getClassNamespaceSearchPath)
+   				 search: self getClassSearchPath)
    				 ifNotNil: [ :found | ^ found ]
-   				  
    ].
    
    ^ Smalltalk at: aClassOrName asSymbol ifAbsent: aBlock
@@ -128,15 +128,38 @@ TTNotifyingHubAbstract class >> getClass: aClassOrName ifAbsent: aBlock [
 ]
 
 { #category : 'instance creation' }
-TTNotifyingHubAbstract class >> getClass: aClassOrName search: aList [
+TTNotifyingHubAbstract class >> getClass: circumflexAndClassName search: aList [
+	aList
+		do: [ :ea | 
+			| namespace |
+			namespace := (ea first = $$) ifFalse: [ ea ] ifTrue: [ self getEnv: ea ].
 
-	aList do: [ :ea |
+			namespace
+				ifNotNil: [ (self getClass: namespace , circumflexAndClassName)
+						ifNotNil: [ :found | ^ found ] ] ].
+
+	^ self getClass: (circumflexAndClassName copyWithoutFirst)
+]
+
+{ #category : 'instance creation' }
+TTNotifyingHubAbstract class >> getClassSearchPath [
+	^ (self namespaceSearchPath
+		collect: [ :ea | self getEnv: ea ]
+		thenSelect: #notNil) asArray
+]
+
+{ #category : 'instance creation' }
+TTNotifyingHubAbstract class >> getEnv: varNameWithDollar [
+
+	"go via vault later"
+	
+	| varName |
+	
+	varName := varNameWithDollar withoutPrefix: '${'.
+	varName := varName withoutSuffix: '}'.
+	
+	^ self osEnvironment at: (varName asSymbol) ifAbsent: nil
 		
-		(Smalltalk at: (ea, aClassOrName) asSymbol ifAbsent: nil) ifNotNil: [ :c | ^ c ].
-	
-	].
-	
-	^ nil
 
 ]
 
@@ -180,6 +203,16 @@ TTNotifyingHubAbstract class >> isNamespaced [
 ]
 
 { #category : 'environment' }
+TTNotifyingHubAbstract class >> makeFactory [
+
+	"Fabulous Factory"
+	
+	<ttSpoke>
+	
+	^ TTFactory new
+]
+
+{ #category : 'environment' }
 TTNotifyingHubAbstract class >> mustBeClassSide: pragma [
 	
 	^ pragma method isClassSide ifFalse: [
@@ -193,6 +226,12 @@ TTNotifyingHubAbstract class >> mustBeClassSide: pragma [
 TTNotifyingHubAbstract class >> namedFileLocations [
 	
 	^ self current signalAuto
+]
+
+{ #category : 'instance creation' }
+TTNotifyingHubAbstract class >> namespaceSearchPath [
+
+	self subclassResponsibility
 ]
 
 { #category : 'instance creation' }
@@ -303,7 +342,7 @@ TTNotifyingHubAbstract class >> spokesMethods [
 ]
 
 { #category : 'environment' }
-TTNotifyingHubAbstract class >> startUp: isImageStarting [
+TTNotifyingHubAbstract class >> startUpAtSystemPriority: isImageStarting [
 	
 	<ttStartUp>
 	
@@ -360,17 +399,12 @@ TTNotifyingHubAbstract class >> tt [
 	
 	<ttHub>
 		
-  ^  #TheTacticalToolsHub asClass 
+  ^  #TTTacticalToolsHub asClass 
 		  
 ]
 
 { #category : 'namespace' }
 TTNotifyingHubAbstract class >> ttFullName [
-	self subclassResponsibility
-]
-
-{ #category : 'namespace' }
-TTNotifyingHubAbstract class >> ttLocalName [
 	self subclassResponsibility
 ]
 
@@ -446,7 +480,7 @@ TTNotifyingHubAbstract >> current [
 { #category : 'environment' }
 TTNotifyingHubAbstract >> currentTestable [
  
-	^ TheHub current
+	^ Hub current
 ]
 
 { #category : 'environment' }
@@ -475,8 +509,6 @@ TTNotifyingHubAbstract >> osEnvironment [
 
 	"Host environment"
 	
-	<ttSpoke>
-	
 	^ OSEnvironment current
 ]
 
@@ -503,5 +535,5 @@ TTNotifyingHubAbstract >> ttFullName [
 { #category : 'as yet unclassified' }
 TTNotifyingHubAbstract >> whoAmI [
 
-	^ TheHub currentVault
+	^ Hub currentVault
 ]

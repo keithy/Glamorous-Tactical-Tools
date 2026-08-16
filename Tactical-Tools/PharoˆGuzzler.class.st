@@ -15,7 +15,7 @@ Class {
 { #category : 'instance creation' }
 PharoˆGuzzler class >> makeZnClient [ 
 
-  ^ (TheHub getClass: #ZnClient) new
+  ^ (Hub getClass: #ZnClient) new
 ]
 
 { #category : 'instance creation' }
@@ -190,7 +190,7 @@ PharoˆGuzzler >> executeMock [
 	
 	theRest := urlStr upToEnd.
 	
-	aMocker := TheHub getClass: classNameFromUrl.
+	aMocker := Hub getClass: classNameFromUrl.
 	
 	contents :=  aMocker perform: methodFromUrl with: theRest
 	

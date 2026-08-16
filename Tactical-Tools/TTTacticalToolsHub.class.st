@@ -1,23 +1,25 @@
 Class {
-	#name : 'TheTacticalToolsHub',
+	#name : 'TTTacticalToolsHub',
 	#superclass : 'TTBareHub',
+	#traits : 'T2Namespace',
+	#classTraits : 'T2Namespace classTrait',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> currentVault [
+TTTacticalToolsHub class >> currentVault [
 
 	"Vicarious Vault (current)"
 	
 	<ttSpoke>
 	
-	^ TheHub currentVault
+	^ Hub currentVault
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> healthCheckExamples [
+TTTacticalToolsHub class >> healthCheckExamples [
 
 	"Tactical-Tools health check methods <ttHealthCheck>"
 	
@@ -28,7 +30,7 @@ TheTacticalToolsHub class >> healthCheckExamples [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> llmChatRegistry [ 
+TTTacticalToolsHub class >> llmChatRegistry [ 
 
 	"LLM Chats"
 	
@@ -38,7 +40,7 @@ TheTacticalToolsHub class >> llmChatRegistry [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> llmConnectionRegistry [ 
+TTTacticalToolsHub class >> llmConnectionRegistry [ 
 
 	"LLM Connections"
 	
@@ -48,7 +50,7 @@ TheTacticalToolsHub class >> llmConnectionRegistry [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> newGtChatWithProvider: aProviderOrNil [
+TTTacticalToolsHub class >> newGtChatWithProvider: aProviderOrNil [
 	| chat |
 	chat := GtLChat new.
 	chat withDefaultSummarizers.
@@ -64,7 +66,7 @@ TheTacticalToolsHub class >> newGtChatWithProvider: aProviderOrNil [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> newTTChat [ 
+TTTacticalToolsHub class >> newTTChat [ 
 
 	"Let Us Chat"
 	
@@ -75,7 +77,7 @@ TheTacticalToolsHub class >> newTTChat [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> pragmasAll_ttClient [
+TTTacticalToolsHub class >> pragmasAll_ttClient [
 
 	"Tactical-Tools client providers <ttClient>"
 	
@@ -87,19 +89,19 @@ TheTacticalToolsHub class >> pragmasAll_ttClient [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
+TTTacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
 
 	"Tactical-Tools <ttShutDown>/<ttStartUp>"
 	
 	<ttSpoke>
 	
-	^ TTStartUpShutDown pragmasAll_ttShutDown, (TTStartUpShutDown pragmasAll_ttStartUp)
+	^ TTStartUpShutDownAtSystemPriority pragmasAll_ttShutDown, (TTStartUpShutDownAtSystemPriority pragmasAll_ttStartUp)
 	  
 	
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> pragmasAll_ttUtility [
+TTTacticalToolsHub class >> pragmasAll_ttUtility [
 
 	"Tactical-Tools utility methods <ttUtility>"
 	
@@ -110,7 +112,7 @@ TheTacticalToolsHub class >> pragmasAll_ttUtility [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> pragmasAll_ttWall [
+TTTacticalToolsHub class >> pragmasAll_ttWall [
 
 	"Tactical-Tools wall methods <ttWall>"
 	
@@ -122,9 +124,9 @@ TheTacticalToolsHub class >> pragmasAll_ttWall [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> pragmasAll_ttWhoAmI [
+TTTacticalToolsHub class >> pragmasAll_ttWhoAmI [
 
-	"Tactical-Tools identity providers <ttWhoAmI>"
+	"Identity providers <ttWhoAmI>"
 	
 	<ttSpoke>
 	
@@ -134,7 +136,7 @@ TheTacticalToolsHub class >> pragmasAll_ttWhoAmI [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> shutDownStartUpTTDryRun [
+TTTacticalToolsHub class >> shutDownStartUpTTDryRun [
 
 	"Tactical Tools shutDown/startUp methods - Dry Run"
 	
@@ -142,11 +144,11 @@ TheTacticalToolsHub class >> shutDownStartUpTTDryRun [
 		
 	<ttSpoke>
 	
-	^ (TTStartUpShutDown shutDownDryRun),(TTStartUpShutDown startUpDryRun)
+	^ (TTStartUpShutDownAtSystemPriority shutDownDryRun),(TTStartUpShutDownAtSystemPriority startUpDryRun)
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> theFactory [
+TTTacticalToolsHub class >> theFactory [
 
 	"Fabulous Factory"
 	
@@ -156,7 +158,7 @@ TheTacticalToolsHub class >> theFactory [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> theVaultSearchPath [
+TTTacticalToolsHub class >> theVaultSearchPath [
 
 	"Vicarious Vault - Search Path"
 	
@@ -166,7 +168,7 @@ TheTacticalToolsHub class >> theVaultSearchPath [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> ttLeDatabase [
+TTTacticalToolsHub class >> ttLeDatabase [
 	
 	"Lepiter - Tactical Tools "
 	
@@ -176,7 +178,7 @@ TheTacticalToolsHub class >> ttLeDatabase [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> ttLlmInstructions [
+TTTacticalToolsHub class >> ttLlmInstructions [
 	
 	"Lepiter - LLM Instructions "
 	
@@ -186,6 +188,6 @@ TheTacticalToolsHub class >> ttLlmInstructions [
 ]
 
 { #category : 'as yet unclassified' }
-TheTacticalToolsHub class >> ttPageExplanation: aPageName [ 
+TTTacticalToolsHub class >> ttPageExplanation: aPageName [ 
 	^ self ttLeDatabase pageNamed: aPageName
 ]

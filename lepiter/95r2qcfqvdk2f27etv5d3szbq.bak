@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-13T21:06:42.558681+01:00"
+						"dateAndTimeString" : "2026-08-16T00:26:18.247899+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>winningHubClass}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:TheGlamorousHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
+				"string" : "The **Browser** manages the user interface, and the **Browsee** manages the content.\n\nAt startup time  {{gtMethod:TheHub class>>startUp}}  an auction selects the most suitable class to be  {{gtMethod:TheHub class>>winningHubClass}} .   Subclasses can override {{gtMethod:TheHub class>>onStartUpBidToBeBrowser}} to outbid {{gtMethod:GlamorousˆHub class>>onStartUpBidToBeBrowser}}  if they wish to be in control."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -74,6 +74,40 @@
 					"uidString" : "txoCP1QbRkaNsEEPziHmIg=="
 				},
 				"code" : "\"Notice the Browsee is TheHub, not the winner of the auction\"\rTheHub openHubCodeBrowser "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-14T01:37:09.908801+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-14T01:37:20.701482+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "qus75GlNRYC0FspUaVfw4A=="
+				},
+				"code" : "TheHub current openHubCodeBrowser"
 			},
 			{
 				"__type" : "pharoSnippet",

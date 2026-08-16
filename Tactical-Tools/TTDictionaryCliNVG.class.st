@@ -27,7 +27,7 @@ TTDictionaryCliNVG class >> defaultExe [
 { #category : 'as yet unclassified' }
 TTDictionaryCliNVG class >> defaultExes [
 
-	^ (self getExesFrom: TheHub osEnvironment) ifNil: [ #('/bin/ls') ] 
+	^ (self getExesFrom: Hub osEnvironment) ifNil: [ #('/bin/ls') ] 
 ]
 
 { #category : 'as yet unclassified' }
@@ -39,7 +39,7 @@ TTDictionaryCliNVG class >> defaultReadBlock [
 { #category : 'as yet unclassified' }
 TTDictionaryCliNVG class >> defaultShell [
 
-	^ self getShellFrom: TheHub osEnvironment
+	^ self getShellFrom: Hub osEnvironment
 ]
 
 { #category : 'as yet unclassified' }

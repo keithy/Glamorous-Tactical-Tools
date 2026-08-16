@@ -19,13 +19,13 @@ TTBareHub class >> isHub [
 { #category : 'as yet unclassified' }
 TTBareHub class >> openHubBrowser [
 
-^ (TheHub getClass: #TTHubBrowser) newBrowsing: self
+^ (Hub getClass: #TTHubBrowser) newBrowsing: self
 			
 ]
 
 { #category : 'as yet unclassified' }
 TTBareHub class >> openHubCodeBrowser [
 
-^ (TheHub getClass: #TTHubCodeBrowser) newBrowsing: self
+^ (Hub getClass: #TTHubCodeBrowser) newBrowsing: self
 			
 ]

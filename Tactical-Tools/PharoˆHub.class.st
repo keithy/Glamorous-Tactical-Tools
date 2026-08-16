@@ -1,13 +1,13 @@
 Class {
-	#name : 'ThePharoHub',
-	#superclass : 'TheHub',
+	#name : 'PharoˆHub',
+	#superclass : 'Hub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
 { #category : 'wall' }
-ThePharoHub class >> fileLocatorFrom: aString [
+PharoˆHub class >> fileLocatorFrom: aString [
 
   <ttWall>
 
@@ -18,7 +18,7 @@ ThePharoHub class >> fileLocatorFrom: aString [
 ]
 
 { #category : 'wall' }
-ThePharoHub class >> fileReferenceFrom: aString [
+PharoˆHub class >> fileReferenceFrom: aString [
 
   <ttWall>
 
@@ -46,7 +46,7 @@ ThePharoHub class >> fileReferenceFrom: aString [
 ]
 
 { #category : 'wall' }
-ThePharoHub class >> httpClientMaximumEntitySize [
+PharoˆHub class >> httpClientMaximumEntitySize [
 
 	<ttWall>
 	
@@ -55,13 +55,13 @@ ThePharoHub class >> httpClientMaximumEntitySize [
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> httpClientOptions [
+PharoˆHub class >> httpClientOptions [
 	
 	^ self signalAuto
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> iceCredentialsStore [
+PharoˆHub class >> iceCredentialsStore [
 
 	"Credentials (iceberg/git)"
 	
@@ -71,14 +71,14 @@ ThePharoHub class >> iceCredentialsStore [
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> iceRepositories [
+PharoˆHub class >> iceRepositories [
 
 	^ self signalAuto
 
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> iceRepositoryIncludesPackageNamed: aPackage [
+PharoˆHub class >> iceRepositoryIncludesPackageNamed: aPackage [
 
 	"public interface to repositories list (testable)
 		 
@@ -91,7 +91,7 @@ ThePharoHub class >> iceRepositoryIncludesPackageNamed: aPackage [
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> iceRepositoryNamed: aString [
+PharoˆHub class >> iceRepositoryNamed: aString [
 	
 	"public interface to repositories list (testable)
 	
@@ -105,7 +105,7 @@ ThePharoHub class >> iceRepositoryNamed: aString [
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> openFileBrowser [
+PharoˆHub class >> openFileBrowser [
 
 	"Current Working Directory"
 	
@@ -115,7 +115,7 @@ ThePharoHub class >> openFileBrowser [
 ]
 
 { #category : 'environment' }
-ThePharoHub class >> platform [
+PharoˆHub class >> platform [
 
   "Grease Platform"
   
@@ -126,19 +126,13 @@ ThePharoHub class >> platform [
 ]
 
 { #category : 'as yet unclassified' }
-ThePharoHub >> getClassNamespaceSearchPath [
-
-	^ #(Pharo)
-]
-
-{ #category : 'as yet unclassified' }
-ThePharoHub >> httpClientMaximumEntitySize [
+PharoˆHub >> httpClientMaximumEntitySize [
 	
 	^ ZnCurrentOptions at: #maximumEntitySize
 ]
 
 { #category : 'environment' }
-ThePharoHub >> namedFileLocations [
+PharoˆHub >> namedFileLocations [
  
    "Named file locations"
 
@@ -148,8 +142,14 @@ ThePharoHub >> namedFileLocations [
 	
 ]
 
+{ #category : 'as yet unclassified' }
+PharoˆHub >> namespaceSearchPath [
+
+	^ #(Pharo)
+]
+
 { #category : 'wall' }
-ThePharoHub >> platform [
+PharoˆHub >> platform [
 
 	^ GRPlatform current 
 	

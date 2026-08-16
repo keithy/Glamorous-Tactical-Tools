@@ -5,3 +5,9 @@ Class {
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
+
+{ #category : 'as yet unclassified' }
+TTHubCodeBrowser >> gtDisplayString [
+
+^ 'Bob'
+]

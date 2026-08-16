@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T15:58:52.04263+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.512249+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Globals and singletons are considered by some to embody evilness. One common finding is that many codebases have multiple instances of their so-called singletons.\n\n{{gtClass:TheHub}} provides a unifying interface to some globals and the abilty to write tests using them:"
+				"string" : "Globals and singletons are considered by some to embody evilness. One common finding is that many codebases have multiple instances of their so-called singletons.\n\n{{gtClass:Hub}} provides a unifying interface to some globals and the abilty to write tests using them:"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T13:34:03.96927+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:36.818648+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "LD5L4BcsS/Cb7TvP+j47MA=="
 				},
-				"code" : "TheHub osEnvironment"
+				"code" : "Hub osEnvironment"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -100,14 +100,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-30T00:06:43.841732+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.830156+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "s2gHj1luSS+eDxhVE0493A=="
 				},
-				"code" : "\"Re-imagining of: FileLocator supportedOrigins\"\rTheHub namedFileLocations"
+				"code" : "\"Re-imagining of: FileLocator supportedOrigins\"\rHub namedFileLocations"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -134,14 +134,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:22:17.568607+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:36.258514+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "mJeGCUctQ5+9f3JxeicKkA=="
 				},
-				"code" : "\"Interface on to the filesystem persisted in the image\"\rTheHub ramdisk"
+				"code" : "\"Interface on to the filesystem persisted in the image\"\rHub ramdisk"
 			},
 			{
 				"__type" : "textSnippet",
@@ -168,7 +168,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T15:25:46.974482+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:38.64573+01:00"
 					}
 				},
 				"uid" : {
@@ -178,7 +178,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "{{gtClass:TheHub}} adopts a {{gtClass:Notification}} based pattern that allows for tempory re-definitions of globals within the scope of a block of code, primarily for testing: {{gtMethod:TheHub class>>#for:respondWith:during:}}"
+				"string" : "{{gtClass:Hub}} adopts a {{gtClass:Notification}} based pattern that allows for tempory re-definitions of globals within the scope of a block of code, primarily for testing: {{gtMethod:Hub class>>#for:respondWith:during:}}"
 			},
 			{
 				"__type" : "textSnippet",
@@ -350,14 +350,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-28T13:58:25.41953+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:36.329718+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "IBj39sCDRKKrtVEoteGiUQ=="
 				},
-				"code" : "TheHub osEnvironment"
+				"code" : "Hub osEnvironment"
 			},
 			{
 				"__type" : "textSnippet",
@@ -384,7 +384,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:37:40.399067+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:36.127231+01:00"
 					}
 				},
 				"uid" : {
@@ -394,7 +394,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "For example, testing environment variable USERNAME would depend upon the host system, making tests difficult. {{gtMethod:TheHub class>>for:respondWith:during:}} allows tests to be wrapped in an inner scope, temporarily overiding the environment. \n"
+				"string" : "For example, testing environment variable USERNAME would depend upon the host system, making tests difficult. {{gtMethod:Hub class>>for:respondWith:during:}} allows tests to be wrapped in an inner scope, temporarily overiding the environment. \n"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -421,14 +421,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-07-31T07:35:45.327786+01:00"
+						"dateAndTimeString" : "2026-08-16T00:27:37.188432+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "K30wx8cGRpaTyVCsr5jTTg=="
 				},
-				"code" : "TheHub\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'She' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (TheHub  osEnvironment at: #USERNAME) equals: 'She'.\r\t\t\r\t\ttrue.\r\t]."
+				"code" : "Hub\r\tfor: #osEnvironment\r\trespondWith: { #USERNAME -> 'She' } asDictionary\r\tduring: [ \r\t\r\t\tself assert: (Hub  osEnvironment at: #USERNAME) equals: 'She'.\r\t\t\r\t\ttrue.\r\t]."
 			},
 			{
 				"__type" : "textSnippet",

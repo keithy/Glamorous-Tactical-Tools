@@ -1,6 +1,8 @@
 Class {
 	#name : 'TTHubBrowser',
 	#superclass : 'Object',
+	#traits : 'T2Namespace',
+	#classTraits : 'T2Namespace classTrait',
 	#instVars : [
 		'browsing'
 	],
@@ -238,7 +240,7 @@ TTHubBrowser >> gtHubsMajorFor: aView [
 
 { #category : 'browsing' }
 TTHubBrowser >> gtInspectorTitleString [ 
-    ^ self class name,' Browser (' ,(browsing gtDisplayString) , ')' 
+    ^ (self class ttPrettyName),' (' ,(browsing gtDisplayString) , ')' 
 ]
 
 { #category : 'browsing' }
@@ -296,8 +298,8 @@ TTHubBrowser >> gtSpokesFor: aView [
 { #category : 'browsing' }
 TTHubBrowser >> hubs [
 
-	^ TheHub sortByComment: 
-		((TheHub pragmasClassSideNamed: #ttHub in: browsing) 
+	^ Hub sortByComment: 
+		((Hub pragmasClassSideNamed: #ttHub in: browsing) 
 				select:[ :p | p method numArgs == 0 ])
 
 ]
@@ -307,18 +309,18 @@ TTHubBrowser >> hubsAll [
 	
 	| deDup allHubs |
 	
-	allHubs := (TheHub current pragmasAll_ttHub) select:[ :p | p method numArgs == 0 ].
+	allHubs := (Hub current pragmasAll_ttHub) select:[ :p | p method numArgs == 0 ].
 
 	deDup := (allHubs collect: [ :p | p method comment -> p ]) asDictionary.
 	
-	^ TheHub sortByComment: (deDup associations collect: [ :a | a value ]).
+	^ Hub sortByComment: (deDup associations collect: [ :a | a value ]).
 	
 ]
 
 { #category : 'browsing' }
 TTHubBrowser >> hubsMajor [
  
-	^ TheHub sortByComment: (self class pragmasAll_ttIsHub)
+	^ Hub sortByComment: (self class pragmasAll_ttIsHub)
 	 
 ]
 
@@ -332,9 +334,9 @@ TTHubBrowser >> readFrom: aHubClass [
 { #category : 'browsing' }
 TTHubBrowser >> spokes [
 
-	^ TheHub sortByComment: (
-		(TheHub  pragmasClassSideNamed: #ttSpoke in: browsing), 
-		(TheHub  pragmasNamed: #ttSpoke in: browsing))
+	^ Hub sortByComment: (
+		(Hub  pragmasClassSideNamed: #ttSpoke in: browsing), 
+		(Hub  pragmasNamed: #ttSpoke in: browsing))
 	
 
 ]
@@ -342,7 +344,7 @@ TTHubBrowser >> spokes [
 { #category : 'browsing' }
 TTHubBrowser >> utils [
 
-	^ TheHub current pragmasClassSideNamed: #ttUtility in: browsing
+	^ Hub current pragmasClassSideNamed: #ttUtility in: browsing
 	
 	
 
@@ -351,6 +353,6 @@ TTHubBrowser >> utils [
 { #category : 'browsing' }
 TTHubBrowser >> wall [
 
-	^ TheHub current pragmasClassSideNamed: #ttWall in: browsing
+	^ Hub current pragmasClassSideNamed: #ttWall in: browsing
  
 ]

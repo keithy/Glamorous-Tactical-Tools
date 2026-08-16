@@ -19,8 +19,8 @@ TTApiClientAbstract class >> basicNewFor: aVaultable [
 	basicNewClient := (super basicNewFor: aVaultable) ifNil: [ ^nil ].  
 	 
 	^ basicNewClient
-			setClassTool: TheHub classHttpClient;
-			setRequestErrorHandler: TheHub makeNetworkErrorHandler;
+			setClassTool: Hub classHttpClient;
+			setRequestErrorHandler: Hub makeNetworkErrorHandler;
 			yourself
 
 ]
@@ -33,8 +33,8 @@ TTApiClientAbstract class >> basicNewFor: aVaultable ifFail: failBlock [
 	basicNewClient := super basicNewFor: aVaultable ifFail: [ ^ failBlock value ].
 	
 	^ basicNewClient
-			setClassTool: TheHub classHttpClient;
-			setRequestErrorHandler: TheHub makeNetworkErrorHandler;
+			setClassTool: Hub classHttpClient;
+			setRequestErrorHandler: Hub makeNetworkErrorHandler;
 			yourself
 
 ]

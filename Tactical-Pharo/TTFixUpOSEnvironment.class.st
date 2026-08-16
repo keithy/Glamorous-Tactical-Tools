@@ -7,15 +7,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTFixUpOSEnvironment >> startUp: isImageStarting [
+TTFixUpOSEnvironment >> fixUp [
 
 	<ttStartUp>
 	
 	OSEnvironment current in: [ :env |
 	
 		"May there always be a #USER"
-		env at: #USER ifAbsent: [ env at: #USER put: (env at: #USERNAME ifAbsentPut: 'Nemo')  ]
+		env at: #USER ifAbsentPut: [ env at: #USERNAME ifAbsent: 'Nemo' ].
+		env at: #ttPLATFORM ifAbsentPut: [  OSPlatform current family  ]
 	
 	]
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTFixUpOSEnvironment >> startUpAtSystemPriority: isImageStarting [
+
+	<ttStartUp>
+	
+	self fixUp
 	
 ]

@@ -1,13 +1,13 @@
 Class {
-	#name : 'TheCuisHub',
-	#superclass : 'TheHub',
+	#name : 'CuisˆHub',
+	#superclass : 'Hub',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
 
 { #category : 'as yet unclassified' }
-TheCuisHub >> getClassNamespaceSearchPath [
+CuisˆHub >> namespaceSearchPath [
 
 	^ #(Cuis)
 ]

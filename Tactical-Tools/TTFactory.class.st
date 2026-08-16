@@ -73,7 +73,7 @@ TTFactory >> newWorldClockClient_option3 [
 	<ttApiClient>
 
   ^ self 
-			makeFor: ((self sort: (self askAll: #TTWorldClockClient) by: #priority) at: 1 ifAbsent: nil)
+			makeForAll: (self askAll: #TTWorldClockClient)  
 			andConfigure: [ :wc | wc ]
 
 ]
@@ -86,7 +86,7 @@ TTFactory >> newWorldClockClient_option4 [
 	<ttApiClient>
 
   ^ self 
-			makeForAll: (self askAll: #TTWorldClockClient)  
+			makeFor: ((self sort: (self askAll: #TTWorldClockClient) by: #priority) at: 1 ifAbsent: nil)
 			andConfigure: [ :wc | wc ]
 
 ]

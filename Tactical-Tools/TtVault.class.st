@@ -34,7 +34,7 @@ TTVault class >> makeDictionaryMiseFor: projectDirectory [
 TTVault class >> makeDictionaryOSEnv [
 
 	^ TTDictionaryOSEnv new
-				setSource: TheHub;
+				setSource: Hub;
 				setValueWriter: TTVaultValueWriter new;
 				yourself
 ]
@@ -52,7 +52,7 @@ TTVault class >> makeTierConfig [
 	
 	| firstTier newTier|
 	
-	(self searchPathFor: TheHub currentTestable) 
+	(self searchPathFor: Hub currentTestable) 
 	
 			do: [ :assoc | 
 				
@@ -175,7 +175,7 @@ TTVault class >> newWithRWConfigOSEnv [
 TTVault class >> searchPath [
 	<gtExample>
  
-	^ self searchPathFor: (TheHub current)
+	^ self searchPathFor: (Hub current)
 ]
 
 { #category : 'instance creation' }
@@ -194,11 +194,11 @@ TTVault class >> searchPathFor: whoami [
 	  #hidden -> ('.env' asFileReference).
 		#cwd    -> ((hubId , '.env') asFileReference).
 			  
-		#'user-config' -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
-	  #'user-prefs' -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
+		#'user-config' -> ((Hub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
+	  #'user-prefs' -> ((Hub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
 	
-		#config -> ((TheHub fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
-	  #prefs -> ((TheHub fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
+		#config -> ((Hub fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
+	  #prefs -> ((Hub fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
 	  
 	}
 ]
