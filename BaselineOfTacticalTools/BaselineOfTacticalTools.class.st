@@ -24,6 +24,9 @@ BaselineOfTacticalTools class >> loadLepiter [
 BaselineOfTacticalTools >> baseline: spec [
 	<baseline>
 		^ spec for: #common do: [
+		
 				spec package: 'Tactical-Tools' with: [ spec requires: #('Tactical-Fixes') ].
+				spec package: 'Tactical-Pharo' with: [ spec requires: #('Tactical-Tools') ].
+				 
 		]
 ]

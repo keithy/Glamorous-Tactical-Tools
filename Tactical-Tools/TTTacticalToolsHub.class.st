@@ -136,6 +136,18 @@ TTTacticalToolsHub class >> pragmasAll_ttWhoAmI [
 ]
 
 { #category : 'as yet unclassified' }
+TTTacticalToolsHub class >> pragmasShutDownStartUp [
+
+	"Tactical-Tools <ttShutDown>/<ttStartUp>"
+	
+	<ttSpoke>
+	
+	^ TTStartUpShutDownAtSystemPriority pragmasShutDown, (TTStartUpShutDownAtSystemPriority pragmasStartUp)
+	  
+	
+]
+
+{ #category : 'as yet unclassified' }
 TTTacticalToolsHub class >> shutDownStartUpTTDryRun [
 
 	"Tactical Tools shutDown/startUp methods - Dry Run"

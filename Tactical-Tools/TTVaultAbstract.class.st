@@ -71,7 +71,7 @@ TTVaultAbstract class >> searchInitial [
 ]
 
 { #category : 'instance creation' }
-TTVaultAbstract class >> shutDownSystem: quitting [
+TTVaultAbstract class >> shutDownAtSystemPriority: quitting [
 
   <ttShutDown>
 

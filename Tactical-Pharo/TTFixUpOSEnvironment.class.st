@@ -7,9 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTFixUpOSEnvironment >> fixUp [
-
-	<ttStartUp>
+TTFixUpOSEnvironment class >> fixUp [
 	
 	OSEnvironment current in: [ :env |
 	
@@ -22,7 +20,7 @@ TTFixUpOSEnvironment >> fixUp [
 ]
 
 { #category : 'as yet unclassified' }
-TTFixUpOSEnvironment >> startUpAtSystemPriority: isImageStarting [
+TTFixUpOSEnvironment class >> startUpAtSystemPriority: isImageStarting [
 
 	<ttStartUp>
 	

@@ -11,9 +11,9 @@ TTBareHub class >> isHub [
 
   <ttIsHub>
   
-	"The Tactical Tools Hub"
+	"Tactical Tools"
 	
-	^ true
+	^ TTBareHub !==self
 ]
 
 { #category : 'as yet unclassified' }

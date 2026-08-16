@@ -39,16 +39,6 @@ TTToolRequest class >> findExecutable: tool [
 ]
 
 { #category : 'as yet unclassified' }
-TTToolRequest class >> initialize [
-	
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 50.
-	
-	self startUp: true.
-]
-
-{ #category : 'as yet unclassified' }
 TTToolRequest class >> makeRawShell: script [
 
 ^ GtExternalProcessBuilder new

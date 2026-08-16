@@ -65,14 +65,14 @@ TTStartUpShutDownAtSystemPriority class >> pragmasShutDown [
 
 { #category : 'environment' }
 TTStartUpShutDownAtSystemPriority class >> pragmasStartUp [
-	^ self pragmasAll_ttShutDown
+	^ self pragmasAll_ttStartUp
 		select: [ :p | p methodSelector = self selectorStartUp and: [ self mustBeClassSide: p ] ]
 ]
 
 { #category : 'spokes' }
 TTStartUpShutDownAtSystemPriority class >> selectorShutDown [
 
-	^ #shutDown:
+	^ #shutDownAtSystemPriority:
 ]
 
 { #category : 'spokes' }

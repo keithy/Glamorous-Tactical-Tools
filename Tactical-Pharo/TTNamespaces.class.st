@@ -116,7 +116,7 @@ TTNamespaces class >> registry [
 ]
 
 { #category : 'accessing' }
-TTNamespaces class >> shutDownSystem: quitting [
+TTNamespaces class >> shutDownAtSystemPriority: quitting [
 	
 	<ttShutDown>
 	

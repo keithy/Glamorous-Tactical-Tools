@@ -194,11 +194,11 @@ TTVault class >> searchPathFor: whoami [
 	  #hidden -> ('.env' asFileReference).
 		#cwd    -> ((hubId , '.env') asFileReference).
 			  
-		#'user-config' -> ((Hub fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
-	  #'user-prefs' -> ((Hub fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
+		#'user-config' -> ((Hub current fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
+	  #'user-prefs' -> ((Hub current  fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
 	
-		#config -> ((Hub fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
-	  #prefs -> ((Hub fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
+		#config -> ((Hub current fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
+	  #prefs -> ((Hub current fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
 	  
 	}
 ]

@@ -86,7 +86,7 @@ GlamorousˆHub class >> isHub [
 
   <ttIsHub>
   
-	"The Glamorous Hub"
+	"Glamorous Toolkit"
 	
 	^ true
 ]
