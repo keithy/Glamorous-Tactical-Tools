@@ -9,7 +9,5 @@ PlatformResolver >> code [
 { #category : '*Tactical-Tools' }
 PlatformResolver >> project [
 
-	<origin>
-
 	^ Hub current projectDir
 ]
