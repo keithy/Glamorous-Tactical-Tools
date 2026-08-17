@@ -9,12 +9,6 @@ Class {
 	#tag : 'Hub'
 }
 
-{ #category : 'environment' }
-TTNotifyingHubAbstract class >> _hubId [
-
-	^ self className asLowercase
-]
-
 { #category : 'accessing' }
 TTNotifyingHubAbstract class >> allIdentifyingAsClasses [
 
@@ -30,10 +24,10 @@ TTNotifyingHubAbstract class >> allIdentifyingAsTraits [
 
 ]
 
-{ #category : 'environment' }
+{ #category : 'whoami' }
 TTNotifyingHubAbstract class >> bundleId [
-	
-	^ self signalAuto
+
+	^ self class osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'instance creation' }
@@ -179,12 +173,12 @@ TTNotifyingHubAbstract class >> globalAt: aName ifAbsent: aBlock [
 	^ Smalltalk at: aName asSymbol ifAbsent: aBlock
 ]
 
-{ #category : 'environment' }
+{ #category : 'whoami' }
 TTNotifyingHubAbstract class >> hubId [
 
 	"The Hub"
 	
-	^ self current _hubId
+	^ self current ttNamespace 
 ]
 
 { #category : 'environment' }
@@ -206,6 +200,16 @@ TTNotifyingHubAbstract class >> isHub [
 { #category : 'namespace' }
 TTNotifyingHubAbstract class >> isNamespaced [
 	self subclassResponsibility
+]
+
+{ #category : 'handling' }
+TTNotifyingHubAbstract class >> isWhoAmI [
+
+	<ttWhoAmI>
+
+	"Identity provider from environment image, in lieu of currentVault"
+
+	^ true
 ]
 
 { #category : 'environment' }
@@ -288,6 +292,24 @@ TTNotifyingHubAbstract class >> pragmasNamed: aSymbol in: aClass [
 		allNamed: aSymbol
 		from: aClass
 		toButExcluding: Object  
+]
+
+{ #category : 'whoami' }
+TTNotifyingHubAbstract class >> projectDir [
+
+	^ self osEnvironment at: 'PROJECT_DIR' ifAbsent: 'xanadu' 
+]
+
+{ #category : 'whoami' }
+TTNotifyingHubAbstract class >> projectId [
+
+	^ self osEnvironment at: 'PROJECT_ID' ifAbsent: 'Xanadu' 
+]
+
+{ #category : 'whoami' }
+TTNotifyingHubAbstract class >> projectName [
+
+	^ self osEnvironment at: 'PROJECT_NAME' ifAbsent: 'Xanadu' 
 ]
 
 { #category : 'as yet unclassified' }
@@ -429,8 +451,11 @@ TTNotifyingHubAbstract class >> unixMillisToDate: millisSinceUnixEpoch [
 
 { #category : 'environment' }
 TTNotifyingHubAbstract class >> userId [
-
-	^ self osEnvironment in: [ :os | os at: 'USER' ifAbsent: [ os at: 'USERNAME' ifAbsent: [ 'nemo' ]] ] 
+  #(NICKNAME USER USERNAME) do: [ :var |
+    self osEnvironment in: [ :os | os at: var ifPresent: [ :v | ^ v ] ]
+  ].
+  
+  ^ 'Nemo' 
 ]
 
 { #category : 'as yet unclassified' }
@@ -443,7 +468,13 @@ TTNotifyingHubAbstract class >> utils [
 
 { #category : 'environment' }
 TTNotifyingHubAbstract class >> whoAmI [
+	"For Identity before currentVault has been read, use Hub class methods"
 	
+	"Identity provider methods:
+			 #bundleId/#bundleId/#projectId/#projectDir/#projectName,
+	 For testing use  Hub with an alternative vault: 
+	 Hub for: #whoAmI respondWith: (TTVault new ...) during: [ ... ]"
+
 	^ self signalAuto
 ]
 
@@ -462,12 +493,6 @@ TTNotifyingHubAbstract class >> wip [
 		
   ^  #WipHub asClass 
 		  
-]
-
-{ #category : 'browsing' }
-TTNotifyingHubAbstract >> bundleId [
-
-	^ self class osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'environment' }
@@ -523,24 +548,6 @@ TTNotifyingHubAbstract >> osEnvironment [
 	^ OSEnvironment current
 ]
 
-{ #category : 'browsing' }
-TTNotifyingHubAbstract >> projectDir [
-
-	^ self class osEnvironment at: 'PROJECT_DIR' ifAbsent: 'xanadu' 
-]
-
-{ #category : 'browsing' }
-TTNotifyingHubAbstract >> projectId [
-
-	^ self class osEnvironment at: 'PROJECT_ID' ifAbsent: 'xanadu' 
-]
-
-{ #category : 'browsing' }
-TTNotifyingHubAbstract >> projectName [
-
-	^ self class osEnvironment at: 'PROJECT_NAME' ifAbsent: 'Xanadu' 
-]
-
 { #category : 'environment' }
 TTNotifyingHubAbstract >> sessionManager [
  
@@ -561,7 +568,7 @@ TTNotifyingHubAbstract >> ttFullName [
 	self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'whoami' }
 TTNotifyingHubAbstract >> whoAmI [
 
 	^ Hub currentVault

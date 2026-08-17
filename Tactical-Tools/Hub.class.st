@@ -84,16 +84,6 @@ Hub class >> hubs [
 
 ]
 
-{ #category : 'handling' }
-Hub class >> isWhoAmI [
-
-	<ttWhoAmI>
-
-	"Identity provider from environment image"
-
-	^ true
-]
-
 { #category : 'as yet unclassified' }
 Hub class >> makeNetworkErrorHandler [
 
