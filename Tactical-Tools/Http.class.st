@@ -1,5 +1,5 @@
 Class {
-	#name : 'Https',
+	#name : 'Http',
 	#superclass : 'TTFactory',
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',

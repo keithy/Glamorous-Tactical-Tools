@@ -220,13 +220,17 @@ Hub class >> startDoubleDispatchFromClassClass: theClass with: aClassNameOrClass
 ]
 
 { #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchFromFileClass: anObject with: aClassNameOrClassOrOrigin [
-
-	(FileLocator supportedOrigins includes:  aClassNameOrClassOrOrigin)
-		ifTrue:[ ^ FileLocator origin: aClassNameOrClassOrOrigin ]
-		
-		
+Hub class >> startDoubleDispatchFromFileClass: theFileClass with: aClassNameOrClassOrOrigin [
+	| aClass |
+	"Handle known origin symbols (rather then dd to Symbol)"
+	(FileLocator supportedOrigins includes: aClassNameOrClassOrOrigin)
+		ifTrue: [ ^ FileLocator origin: aClassNameOrClassOrOrigin ].
  
+	aClass := Hub current
+			getClass: aClassNameOrClassOrOrigin
+			ifAbsent: [ ^ Hub fileReferenceFrom: aClassNameOrClassOrOrigin ].
+
+	^ aClass fileReferenceFrom: aClassNameOrClassOrOrigin
 ]
 
 { #category : 'as yet unclassified' }
@@ -238,6 +242,34 @@ Hub class >> startDoubleDispatchFromString: aClassNameOrString with: it [
 { #category : 'as yet unclassified' }
 Hub class >> startDoubleDispatchTo: it [ 
 	^ it // self
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchfromAFileReference: aFileReference with: aClassNameOrClass [
+
+	^ (Hub current getClass: aClassNameOrClass) doubleDispatchFrom: (Hub current) andAFileReference: aFileReference
+
+
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchfromClientClass: anObject with: aClassNameOrClass [ 
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchfromFactoryClass: anObject with: aClassNameOrClass [ 
+
+"Options:
+	string - instanciate or report on supporters of a particular vaultAppId
+	class - Ask the class to instanciate itself via that particualar factory
+	        (e.g. Http/Http) Project Factories for project configured variants
+	
+	
+"
+
+
+
+
 ]
 
 { #category : 'comparing' }

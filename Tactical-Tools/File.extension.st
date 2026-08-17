@@ -1,10 +1,10 @@
 Extension { #name : 'File' }
 
 { #category : '*Tactical-Tools' }
-File class >> // aClassNameOrClassOrOrigin [ 
+File class >> // anOriginClassOrString [ 
 
 	"File // . aka double dispatch"
-	^ Hub startDoubleDispatchFromFileClass: self with:  aClassNameOrClassOrOrigin
+	^ Hub startDoubleDispatchFromFileClass: self with:  anOriginClassOrString
 ]
 
 { #category : '*Tactical-Tools' }

@@ -7,7 +7,8 @@ Class {
 		'vault',
 		'result',
 		'classTool',
-		'requestErrorHandler'
+		'requestErrorHandler',
+		'workingDirectory'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -104,6 +105,21 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 ]
 
 { #category : 'as yet unclassified' }
+TTClientAbstract class >> doubleDispatchFrom: hub andAFileReference: aFileReference [
+
+	^ (self basicNewFor: (hub currentVault)) 
+	        "doubleDispatchFrom: hub andAFileReference: aFileReference (possible0"
+					setFileReference: aFileReference;
+					initialize
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> doubleDispatchFromFileClass: fileClass [
+	
+	^ self workingDirectory
+]
+
+{ #category : 'as yet unclassified' }
 TTClientAbstract class >> fileReferenceFrom: aHub [
 
 	^ self workingDirectory
@@ -114,12 +130,6 @@ TTClientAbstract class >> fromClassClass: theClass [
 
 	"double dispatch from //"
 	^ self new
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> fromFileClass: fileClass [
-	
-	^ Hub fileReferenceFrom: self
 ]
 
 { #category : 'accessing' }
@@ -353,6 +363,30 @@ TTClientAbstract >> requestErrorHandler [
 { #category : 'accessing' }
 TTClientAbstract >> setClassTool: aClass [
 	classTool := aClass
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> setDirectory: aFR [
+	workingDirectory := aFR
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> setFile: aFR [ 
+
+	self subclassResponsibility
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> setFileReference: aFR [
+	aFR isDirectory ifTrue: [ ^ self setDirectory: aFR ].
+	aFR isFile ifTrue: [ self setFile: aFR ].
+	
+	self setNewFileReference: aFR.
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> setNewFileReference: aFR [ 
+	self subclassResponsibility
 ]
 
 { #category : 'initialization' }

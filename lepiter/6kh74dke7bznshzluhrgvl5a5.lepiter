@@ -165,48 +165,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T09:15:10.066205+01:00"
+						"dateAndTimeString" : "2026-08-17T05:50:43.659845+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "FfmjSzUvTCKVejVcqxc1sg=="
 				},
-				"code" : "File // '.'"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T09:18:41.248033+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T09:57:37.950481+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "MbLWlIbeQwO4IN+nOOkvqw=="
-				},
-				"code" : "File // TTWorldClockClient / 'test_file'"
+				"code" : "\"Open File Browser\"  \rFile // '.'"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -233,14 +199,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-17T00:46:53.531585+01:00"
+						"dateAndTimeString" : "2026-08-17T05:49:42.104718+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "yRwOPVMaRDGgY6rGDfmUaA=="
 				},
-				"code" : "File // #code"
+				"code" : "File // #code "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-16T09:18:41.248033+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-17T05:50:00.340381+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "MbLWlIbeQwO4IN+nOOkvqw=="
+				},
+				"code" : "File // TTWorldClockClient  "
 			},
 			{
 				"__type" : "pharoSnippet",
