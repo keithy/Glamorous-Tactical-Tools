@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTFactoryAbstract class >> // aClassNameOrClass [
+
+^ Hub startDoubleDispatchfromFactoryClass: self with: aClassNameOrClass
+
+]
+
+{ #category : 'as yet unclassified' }
 TTFactoryAbstract class >> factoryId [
 
 	^ ((self name withoutPrefix: 'TT') withoutSuffix: 'Factory') asLowercase

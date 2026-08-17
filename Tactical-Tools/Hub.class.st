@@ -18,6 +18,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+Hub class >> // it [
+
+	^  self startDoubleDispatchTo: it
+]
+
+{ #category : 'as yet unclassified' }
 Hub class >> classHttpClient [
 
 	<ttWall>
@@ -201,4 +207,47 @@ Hub class >> pragmasAll_ttWall [
 	
 	^ Hub sortByComment: (Pragma allNamed: #ttWall)
 	
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchFromClassClass: theClass with: aClassNameOrClass [
+	"No need to dd in this case"
+
+	aClassNameOrClass == Class
+		ifTrue: [ ^ self error: 'avoiding infinite recursion here' ].
+
+	^ self current getClass: aClassNameOrClass
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchFromFileClass: anObject with: aClassNameOrClassOrOrigin [
+
+	(FileLocator supportedOrigins includes:  aClassNameOrClassOrOrigin)
+		ifTrue:[ ^ FileLocator origin: aClassNameOrClassOrOrigin ]
+		
+		
+ 
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchFromString: aClassNameOrString with: it [ 
+
+	^(self current getClass: aClassNameOrString) // it
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchTo: it [ 
+	^ it // self
+]
+
+{ #category : 'comparing' }
+Hub class >> startDoubleDispatchfromPragma: anObject with: aClassNameOrClass [
+
+	"So experimental do not know what this is for yet"
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleDispatchfromPragmaClass: anObject with: aClassNameOrClass [ 
+
+	"So experimental, do not know what it is for yet"
 ]

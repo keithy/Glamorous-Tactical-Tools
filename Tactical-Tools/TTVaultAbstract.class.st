@@ -17,6 +17,12 @@ Class {
 }
 
 { #category : 'accessing' }
+TTVaultAbstract class >> // aClassNameOrClass [
+
+^ Hub startDoubleDispatchfromVaultClass: self with: aClassNameOrClass
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract class >> basicNew [
    self isAbstract ifTrue: [ self error:self name, ' is abstract' ].
  ^ super basicNew

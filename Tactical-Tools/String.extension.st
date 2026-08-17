@@ -1,6 +1,14 @@
 Extension { #name : 'String' }
 
 { #category : '*Tactical-Tools' }
+String >> // it [
+
+"start of // aka double dispatch"
+
+^ Hub startDoubleDispatchFromString: self with: it 
+]
+
+{ #category : '*Tactical-Tools' }
 String >> fileReferenceFrom: aHub [
 	
 	"double dispatch"

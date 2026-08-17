@@ -15,6 +15,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTClientAbstract class >> // aClassNameOrClass [
+
+^ Hub startDoubleDispatchfromClientClass: self with: aClassNameOrClass
+]
+
+{ #category : 'as yet unclassified' }
 TTClientAbstract class >> asHub [
 	
 	"Any Client class can be a hub on its own resources"
@@ -101,6 +107,19 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 TTClientAbstract class >> fileReferenceFrom: aHub [
 
 	^ self workingDirectory
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> fromClassClass: theClass [
+
+	"double dispatch from //"
+	^ self new
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> fromFileClass: fileClass [
+	
+	^ Hub fileReferenceFrom: self
 ]
 
 { #category : 'accessing' }

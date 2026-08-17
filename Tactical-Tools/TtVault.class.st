@@ -182,24 +182,38 @@ TTVault class >> searchPath [
 TTVault class >> searchPathFor: whoami [
 	"Prefer / (a,'.env) over / a , 'env' " 
 
-	| bundleId hubId userId |
+	| vmId hubId userId projectId |
 	
 	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identity' ].
 	
-	bundleId := whoami bundleId.
+	vmId := whoami bundleId.
 	hubId := whoami hubId.
+	projectId := whoami projectId. "$PROJECT_ID"
 	userId := whoami userId.
 	
-	^ {
-	  #hidden -> ('.env' asFileReference).
-		#cwd    -> ((hubId , '.env') asFileReference).
-			  
-		#'user-config' -> ((Hub current fileReferenceFrom: '{home}/.config') / bundleId / (userId , '.env')) resolve.
-	  #'user-prefs' -> ((Hub current  fileReferenceFrom: '{preferences}') / (bundleId,'.', userId , '.env') ) resolve.
+	"(#project is $PROJECT_DIR)"
 	
-		#config -> ((Hub current fileReferenceFrom: '{home}/.config') / bundleId / (hubId , '.env')) resolve.
-	  #prefs -> ((Hub current fileReferenceFrom: '{preferences}') / (bundleId,'.', hubId , '.env') ) resolve.
-	  
+	^ {
+	
+		#cwd     -> ((hubId , '.env') asFileReference).
+		
+		"likely redundant (have a different scanner for these)"
+		#'embedded-project'     -> (File // projectId / (hubId, '.env')) resolve.
+		#'embedded-project-config'     -> (File // projectId / 'config'/ (hubId, '.env')) resolve.
+		
+		"Project origin defined by $PROJECT"
+		#'project-override' -> (File // #project / '.env') resolve. "gitignored"
+		#'project' -> (File // #project / (projectId, '.env')) resolve.
+		#'project-platform' -> (File // #project / (hubId, '.env')) resolve.
+ 	 #'project-platform-config' -> (File // #project / 'config' / (hubId , '.env')) resolve.
+
+		#'user-project' -> (File // #config / projectId/ (hubId , '.env')) resolve.
+	  #'user-project-prefs' -> (File // #preferences / (projectId, '.', hubId , '.env') ) resolve.
+
+		"per user"
+		#'user-platform' -> (File // #config / vmId / (hubId , '.env')) resolve.
+	  #'user-platform-prefs' -> (File // #preferences / (vmId,'.', hubId , '.env') ) resolve.
+	   
 	}
 ]
 

@@ -1,6 +1,36 @@
 Extension { #name : 'Pragma' }
 
 { #category : '*Tactical-Tools' }
+Pragma class >> // aClassNameOrClass [
+
+	"experimental"
+
+	^ Hub startDoubleDispatchfromPragmaClass: self with: aClassNameOrClass
+]
+
+{ #category : '*Tactical-Tools' }
+Pragma >> // aClassNameOrClass [
+
+	"experimental"
+
+	^ Hub startDoubleDispatchfromPragma: self with: aClassNameOrClass
+]
+
+{ #category : '*Tactical-Tools' }
+Pragma >> = aPragma [
+
+	self == aPragma ifTrue: [^true].
+	self species == aPragma species ifFalse: [^false].
+
+	self method = aPragma method ifFalse: [^false].
+	self method selector = aPragma method selector ifFalse: [ ^false ].
+	self selector = aPragma selector ifFalse: [^false].
+	self arguments = aPragma arguments ifFalse: [^false].
+
+	^true
+]
+
+{ #category : '*Tactical-Tools' }
 Pragma class >> ttItemsWithActionFor: aView context: theContext [
 
 	<ttViewInCollection>

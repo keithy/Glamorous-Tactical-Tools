@@ -23,9 +23,8 @@ Class class >> / aStringable [
 ]
 
 { #category : '*Tactical-Tools' }
-Class class >> // aStringable [
+Class class >> // aClassNameOrClass [
+	"Class // . aka double dispatch"
 
-	"experiment"
-
-	^ Hub getClass: aStringable
+	^ Hub startDoubleDispatchFromClassClass: self with: aClassNameOrClass
 ]

@@ -1,6 +1,16 @@
 Extension { #name : 'PlatformResolver' }
 
 { #category : '*Tactical-Fixes' }
+PlatformResolver >> config [
+
+	"Unified origin for all OSes"
+		
+	<origin>
+ 
+	^  self home / '.config' 
+]
+
+{ #category : '*Tactical-Fixes' }
 PlatformResolver >> preferences [
 
 	^ self subclassResponsibility
