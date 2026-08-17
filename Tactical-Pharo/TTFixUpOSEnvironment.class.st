@@ -7,7 +7,21 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTFixUpOSEnvironment class >> fixUp [
+TTFixUpOSEnvironment class >> fixUpProject [
+	
+	<ttOSEnvironment>
+	
+	OSEnvironment current in: [ :env |
+	
+		env at: #PROJECT_ID ifAbsentPut: [ 'Xanadu' ].
+		env at: #PROJECT_DIR ifAbsentPut: [ (File // #code / 'xanadu') fullName ].
+		env at: #PROJECT_NAME ifAbsentPut: [ 'Xanadu'  ]
+ 
+	]
+]
+
+{ #category : 'as yet unclassified' }
+TTFixUpOSEnvironment class >> fixUpWhoAmI [
 	
 	<ttOSEnvironment>
 	
@@ -20,7 +34,6 @@ TTFixUpOSEnvironment class >> fixUp [
 		env at: #USER ifAbsentPut: [ env at: #USERNAME ifAbsent: 'Nemo' ].
 		env at: #NICKNAME ifAbsentPut: [ (env at: #USER) capitalized ].
 		env at: #PLATFORM ifAbsentPut: [  OSPlatform current family  ]
- 
 	]
 ]
 

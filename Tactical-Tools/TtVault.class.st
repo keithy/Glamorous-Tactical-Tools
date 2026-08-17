@@ -9,7 +9,7 @@ Class {
 { #category : 'instance creation' }
 TTVault class >> makeDictionaryDotEnvFile: file [
 
-	^ TTDictionaryDotEnv new
+	^ TTDictionaryConfigEnv new
 				setValueWriter: TTVaultValueWriter new;
 				setSource: file;
 				yourself
@@ -91,9 +91,8 @@ TTVault class >> makeTierOSEnv [
 
 	<gtExample>
 
-	^ (self makeTierWithKey:#os) 
-			setDictionary: self makeDictionaryOSEnv;
-			yourself
+	^ TTDictionaryOSEnv makeAsTier 
+			 
 ]
 
 { #category : 'instance creation' }
@@ -169,60 +168,6 @@ TTVault class >> newWithRWConfigOSEnv [
 		setConfig: firstTier;
 		initialize
 		
-]
-
-{ #category : 'instance creation' }
-TTVault class >> searchPath [
-	<gtExample>
- 
-	^ self searchPathFor: (Hub current)
-]
-
-{ #category : 'instance creation' }
-TTVault class >> searchPathFor: whoami [
-	"Prefer / (a,'.env) over / a , 'env' " 
-
-	| vmId hubId userId projectId |
-	
-	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identity' ].
-	
-	vmId := whoami bundleId.
-	hubId := whoami hubId.
-	projectId := whoami projectId. "$PROJECT_ID"
-	userId := whoami userId.
-	
-	"(#project is $PROJECT_DIR)"
-	
-	^ {
-	
-		#cwd     -> ((hubId , '.env') asFileReference).
-		
-		"likely redundant (have a different scanner for these)"
-		#'embedded-project'     -> (File // projectId / (hubId, '.env')) resolve.
-		#'embedded-project-config'     -> (File // projectId / 'config'/ (hubId, '.env')) resolve.
-		
-		"Project origin defined by $PROJECT"
-		#'project-override' -> (File // #project / '.env') resolve. "gitignored"
-		#'project' -> (File // #project / (projectId, '.env')) resolve.
-		#'project-platform' -> (File // #project / (hubId, '.env')) resolve.
- 	 #'project-platform-config' -> (File // #project / 'config' / (hubId , '.env')) resolve.
-
-		#'user-project' -> (File // #config / projectId/ (hubId , '.env')) resolve.
-	  #'user-project-prefs' -> (File // #preferences / (projectId, '.', hubId , '.env') ) resolve.
-
-		"per user"
-		#'user-platform' -> (File // #config / vmId / (hubId , '.env')) resolve.
-	  #'user-platform-prefs' -> (File // #preferences / (vmId,'.', hubId , '.env') ) resolve.
-	   
-	}
-]
-
-{ #category : 'instance creation' }
-TTVault class >> traceCurrentSearchPath [
-	
-	<gtExample>
-	
-	^ FileLookedForNotification collectDuring: [ self newDefaultVault ]
 ]
 
 { #category : 'accessing' }

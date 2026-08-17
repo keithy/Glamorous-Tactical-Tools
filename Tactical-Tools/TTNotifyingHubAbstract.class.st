@@ -24,12 +24,6 @@ TTNotifyingHubAbstract class >> allIdentifyingAsTraits [
 
 ]
 
-{ #category : 'whoami' }
-TTNotifyingHubAbstract class >> bundleId [
-
-	^ self osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
-]
-
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> current [
 	
@@ -464,6 +458,12 @@ TTNotifyingHubAbstract class >> utils [
 	^ self openBrowser utils
 	
 
+]
+
+{ #category : 'whoami' }
+TTNotifyingHubAbstract class >> vmId [
+
+	^ self osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'environment' }

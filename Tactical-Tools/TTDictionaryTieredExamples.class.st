@@ -169,7 +169,7 @@ TTDictionaryTieredExamples >> vaultRefreshSegmentsEntriesByHost [
   <return: #TTVault>
 
   | vault tier dotenv |
-  dotenv := TTDictionaryDotEnv new
+  dotenv := TTDictionaryConfigEnv new
     setValueWriter: TTVaultValueWriter new;
     setSource: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
     readSource;

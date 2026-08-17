@@ -87,7 +87,7 @@ TTVaultExamplesOld >> vault_mixedFormAndExplicitOption_resolveUnderSameApp [
   <return: #TTVault>
 
   | vault tier dotenv options jiraDefault |
-  dotenv := TTDictionaryDotEnv new
+  dotenv := TTDictionaryConfigEnv new
     setValueWriter: TTVaultValueWriter new;
     source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
     readSource;
@@ -123,7 +123,7 @@ TTVaultExamplesOld >> vault_passthroughKeys_landInDefaultOption [
   <return: #TTVault>
 
   | vault tier dotenv normalized |
-  dotenv := TTDictionaryDotEnv new
+  dotenv := TTDictionaryConfigEnv new
     setValueWriter: TTVaultValueWriter new;
     source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
     readSource;

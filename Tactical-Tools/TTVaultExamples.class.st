@@ -73,7 +73,7 @@ TTVaultExamples >> vault_from_fixture [
   <return: #TTVault>
 
   | vault tier dotenv normalized |
-  dotenv := TTDictionaryDotEnv new
+  dotenv := TTDictionaryConfigEnv new
     setValueWriter: TTVaultValueWriter new;
     source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
     readSource;

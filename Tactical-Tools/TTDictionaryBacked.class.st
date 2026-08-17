@@ -14,6 +14,35 @@ Class {
 	#tag : 'Vault'
 }
 
+{ #category : 'as yet unclassified' }
+TTDictionaryBacked class >> makeAsTier [
+
+	self subclassResponsibility
+	"^  self makeAsTierWithKey: #os"
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryBacked class >> makeAsTierWithKey: aKey source: aSource [
+
+	<gtExample>
+
+	^  (TTDictionaryTiered newWithKey: aKey) 
+			setDictionary: (self newSource:aSource) ;
+			yourself
+]
+
+{ #category : 'accessing' }
+TTDictionaryBacked class >> newSource: aSource [
+
+ 	"super new initiizes the dictionary, 
+ 	 topTier runs our own #initialize after all tiers have been composed"
+ 
+	^ (self new)
+			setValueWriter: TTVaultValueWriter new;
+			setSource: aSource
+			yourself
+]
+
 { #category : 'accessing' }
 TTDictionaryBacked >> at: key write: value [
 

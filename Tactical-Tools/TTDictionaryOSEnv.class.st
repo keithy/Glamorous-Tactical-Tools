@@ -7,6 +7,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTDictionaryOSEnv class >> makeAsTier [
+
+	<gtExample>
+
+	^  self makeAsTierWithKey: #os source: Hub 
+]
+
+{ #category : 'as yet unclassified' }
+TTDictionaryOSEnv class >> new [
+
+ 	"super new initiizes the dictionary, 
+ 	 topTier runs our own #initialize after all tiers have been composed"
+
+	^ (super new)
+			setSource: Hub;
+			yourself
+]
+
+{ #category : 'as yet unclassified' }
 TTDictionaryOSEnv >> readSource [
 	
 	self removeAll.

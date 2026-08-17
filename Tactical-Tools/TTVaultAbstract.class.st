@@ -167,14 +167,6 @@ TTVaultAbstract >> at: aKey ifPresent: pBlock [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> bundleId [
-
-	"update later"
-	
-	^ Hub bundleId
-]
-
-{ #category : 'accessing' }
 TTVaultAbstract >> config [
 	^ config ifNil: [ config := Dictionary new ]
 ]
@@ -661,4 +653,12 @@ TTVaultAbstract >> userId [
 	"update later"
 	
 	^ Hub userId
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> vmId [
+
+	"update later"
+	
+	^ Hub vmId
 ]
