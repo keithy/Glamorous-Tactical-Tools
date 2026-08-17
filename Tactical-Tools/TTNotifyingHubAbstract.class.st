@@ -27,7 +27,7 @@ TTNotifyingHubAbstract class >> allIdentifyingAsTraits [
 { #category : 'whoami' }
 TTNotifyingHubAbstract class >> bundleId [
 
-	^ self class osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
+	^ self osEnvironment at: '__CFBundleIdentifier' ifAbsent: 'gtoolkit' 
 ]
 
 { #category : 'instance creation' }

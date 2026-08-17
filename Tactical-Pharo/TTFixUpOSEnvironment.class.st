@@ -9,6 +9,8 @@ Class {
 { #category : 'as yet unclassified' }
 TTFixUpOSEnvironment class >> fixUp [
 	
+	<ttOSEnvironment>
+	
 	"Since we are more likely to be passing on an environment to
 	 other tools, fixing it up makes sense"
 	
@@ -24,9 +26,7 @@ TTFixUpOSEnvironment class >> fixUp [
 
 { #category : 'as yet unclassified' }
 TTFixUpOSEnvironment class >> startUpAtSystemPriority: isImageStarting [
-
 	<ttStartUp>
-	
-	self fixUp
-	
+	(Hub pragmasClassSideNamed: #ttOSEnvironment in: self)
+		do: [ :pragma | pragma method valueWithReceiver: self arguments: #() ]
 ]

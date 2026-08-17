@@ -1,9 +1,9 @@
 Class {
 	#name : 'FileLookedForNotification',
 	#superclass : 'Notification',
-	#category : 'Tactical-Tools-Exceptions',
+	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
-	#tag : 'Exceptions'
+	#tag : 'Vault'
 }
 
 { #category : 'as yet unclassified' }

@@ -7,7 +7,7 @@ Trait {
 
 { #category : 'namespace' }
 TNamespaced classSide >> isNamespaced [
-    ^ true
+    ^ self ttPrefixSize ~~ 0
 ]
 
 { #category : 'namespace' }
@@ -17,7 +17,11 @@ TNamespaced classSide >> ttFullName [
 
 { #category : 'namespace' }
 TNamespaced classSide >> ttLocalName [
-    ^ (self name copyFrom: self ttPrefixSize + 1 to: self name size) asSymbol
+	| start |
+	start := self ttPrefixSize + 2.
+	start = 2 ifTrue: [ start := 1 ].
+
+	^ (self name copyFrom: start to: self name size) asSymbol
 ]
 
 { #category : 'namespace' }
@@ -27,7 +31,7 @@ TNamespaced classSide >> ttNamespace [
 
 { #category : 'namespace' }
 TNamespaced classSide >> ttPrefixSize [
-    ^ self name indexOf: $ˆ
+    ^ (self name indexOf: $ˆ)  
 ]
 
 { #category : 'namespace' }
