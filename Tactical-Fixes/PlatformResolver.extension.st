@@ -12,3 +12,13 @@ PlatformResolver >> temp [
 
 	^ self subclassResponsibility
 ]
+
+{ #category : '*Tactical-Fixes' }
+PlatformResolver >> config [
+
+	"Unified origin for all OSes"
+		
+	<origin>
+ 
+	^  self home / '.config' 
+]

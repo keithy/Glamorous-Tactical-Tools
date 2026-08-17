@@ -1,18 +1,6 @@
 Extension { #name : 'SystemResolver' }
 
 { #category : '*Tactical-Tools' }
-SystemResolver >> code [
-	<origin>
-	^  self home / 'code'
-]
-
-{ #category : '*Tactical-Tools' }
-SystemResolver >> project [
-
-	^ Hub current projectDir
-]
-
-{ #category : '*Tactical-Tools' }
 SystemResolver >> ramdisk [
 	
 	<ttFix>
