@@ -18,12 +18,6 @@ TTApiClientAbstract class >> / endPoint [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClientAbstract class >> // aUrl [
-
-	^ self new //  aUrl
-]
-
-{ #category : 'as yet unclassified' }
 TTApiClientAbstract class >> > selector [ 
 
 ^ self perform: selector

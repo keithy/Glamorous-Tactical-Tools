@@ -11,5 +11,5 @@ PlatformResolver >> project [
 
 	<origin>
 
-	^ self directoryFromEnvVariableNamed: 'PROJECT_DIR' or: [ self code]
+	^ Hub current projectDir
 ]

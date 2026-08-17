@@ -4,7 +4,7 @@ Extension { #name : 'File' }
 File class >> // anOriginClassOrString [ 
 
 	"File // . aka double dispatch"
-	^ Hub startDoubleDispatchFromFileClass: self with:  anOriginClassOrString
+	^ Hub current startDoubleSlashFromFileClass: self with:  anOriginClassOrString
 ]
 
 { #category : '*Tactical-Tools' }

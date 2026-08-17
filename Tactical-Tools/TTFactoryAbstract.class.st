@@ -12,7 +12,7 @@ Class {
 { #category : 'as yet unclassified' }
 TTFactoryAbstract class >> // aClassNameOrClass [
 
-^ Hub startDoubleDispatchfromFactoryClass: self with: aClassNameOrClass
+^ Hub current startDoubleSlashFromFactoryClass: self to: aClassNameOrClass
 
 ]
 

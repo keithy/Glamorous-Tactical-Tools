@@ -1,5 +1,5 @@
 Class {
-	#name : 'KeithˆHomeHub',
+	#name : 'KeithƒHomeHub',
 	#superclass : 'TTBareHub',
 	#traits : 'TNamespaced',
 	#classTraits : 'TNamespaced classTrait',

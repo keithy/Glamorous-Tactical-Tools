@@ -5,7 +5,7 @@ String >> // it [
 
 "start of // aka double dispatch"
 
-^ Hub startDoubleDispatchFromString: self with: it 
+^ Hub current startDoubleSlashFromString: self with: it 
 ]
 
 { #category : '*Tactical-Tools' }

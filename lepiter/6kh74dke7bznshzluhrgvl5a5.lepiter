@@ -63,14 +63,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T09:06:06.072301+01:00"
+						"dateAndTimeString" : "2026-08-17T07:01:15.779323+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "3cuVhV5xRNq9pHmDhWOBOw=="
 				},
-				"code" : "Https // TTWorldClockClient  / 'status'"
+				"code" : "Https // TTWorldClockClient  // 'status'"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -139,6 +139,40 @@
 					"uidString" : "UMBxgY7oQWCEtpVWFMXp6Q=="
 				},
 				"code" : "(Https // TTWorldClockClient)"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-17T07:02:04.530929+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-17T07:02:17.453153+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Qj4Xm2yrRL23VHbgrQcPNA=="
+				},
+				"code" : "TTWorldClockClient // 'test'"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -275,6 +309,40 @@
 					"uidString" : "eCbkE0PeS/2Gc8tGmoCGGQ=="
 				},
 				"code" : "Hub namedFileLocations\rpreferences"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-17T07:31:30.623219+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-17T08:39:14.916039+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "yS1XWW1rTEOfgH+Wq8x8/Q=="
+				},
+				"code" : "Https // TTWorldClockClient  "
 			},
 			{
 				"__type" : "textSnippet",

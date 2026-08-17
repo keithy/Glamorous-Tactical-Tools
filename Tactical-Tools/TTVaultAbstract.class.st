@@ -103,6 +103,18 @@ TTVaultAbstract class >> vaultId [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> @ optionKey [
+
+	^ self optionsSelect: optionKey
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> @@ anAppKey [
+
+	^ self appKey: anAppKey
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> appKey [
 	^ appKey
 ]
@@ -595,11 +607,27 @@ TTVaultAbstract >> optionsSelect: anOption [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> projectDir [
+
+	"update later"
+	
+	^ Hub projectDir
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> projectId [
 
 	"update later"
 	
 	^ Hub projectId
+]
+
+{ #category : 'accessing' }
+TTVaultAbstract >> projectName [
+
+	"update later"
+	
+	^ Hub projectName
 ]
 
 { #category : 'accessing' }

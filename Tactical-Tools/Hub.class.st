@@ -20,7 +20,7 @@ Class {
 { #category : 'as yet unclassified' }
 Hub class >> // it [
 
-	^  self startDoubleDispatchTo: it
+	^  Hub current startDoubleSlashFromHub: self to: it
 ]
 
 { #category : 'as yet unclassified' }
@@ -209,69 +209,6 @@ Hub class >> pragmasAll_ttWall [
 	
 ]
 
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchFromClassClass: theClass with: aClassNameOrClass [
-	"No need to dd in this case"
-
-	aClassNameOrClass == Class
-		ifTrue: [ ^ self error: 'avoiding infinite recursion here' ].
-
-	^ self current getClass: aClassNameOrClass
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchFromFileClass: theFileClass with: aClassNameOrClassOrOrigin [
-	| aClass |
-	"Handle known origin symbols (rather then dd to Symbol)"
-	(FileLocator supportedOrigins includes: aClassNameOrClassOrOrigin)
-		ifTrue: [ ^ FileLocator origin: aClassNameOrClassOrOrigin ].
- 
-	aClass := Hub current
-			getClass: aClassNameOrClassOrOrigin
-			ifAbsent: [ ^ Hub fileReferenceFrom: aClassNameOrClassOrOrigin ].
-
-	^ aClass fileReferenceFrom: aClassNameOrClassOrOrigin
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchFromString: aClassNameOrString with: it [ 
-
-	^(self current getClass: aClassNameOrString) // it
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchTo: it [ 
-	^ it // self
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchfromAFileReference: aFileReference with: aClassNameOrClass [
-
-	^ (Hub current getClass: aClassNameOrClass) doubleDispatchFrom: (Hub current) andAFileReference: aFileReference
-
-
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchfromClientClass: anObject with: aClassNameOrClass [ 
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchfromFactoryClass: anObject with: aClassNameOrClass [ 
-
-"Options:
-	string - instanciate or report on supporters of a particular vaultAppId
-	class - Ask the class to instanciate itself via that particualar factory
-	        (e.g. Http/Http) Project Factories for project configured variants
-	
-	
-"
-
-
-
-
-]
-
 { #category : 'comparing' }
 Hub class >> startDoubleDispatchfromPragma: anObject with: aClassNameOrClass [
 
@@ -282,4 +219,74 @@ Hub class >> startDoubleDispatchfromPragma: anObject with: aClassNameOrClass [
 Hub class >> startDoubleDispatchfromPragmaClass: anObject with: aClassNameOrClass [ 
 
 	"So experimental, do not know what it is for yet"
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromAFileReference: aFileReference with: aClassNameOrClass [
+
+	^ (self getClass: aClassNameOrClass) doubleDispatchFromAFileReference: aFileReference andCH: (self)
+
+
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromClassClass: theClass with: aClassNameOrClass [
+	"No need to dd in this case"
+
+	aClassNameOrClass == Class
+		ifTrue: [ ^ self error: 'avoiding infinite recursion here' ].
+
+	^ self current getClass: aClassNameOrClass
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromClientClass: aClientClass with: aSymbolUrlStringOrClass [
+	"Hub is vaultable"
+
+	^ aClientClass doubleDispatchWithCH: self to: aSymbolUrlStringOrClass  
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromFactoryClass: aFactory to: aClassNameOrClass [ 
+
+"Options:
+	string - instanciate or report on supporters of a particular vaultAppId
+	class - Ask the class to instanciate itself via that particualar factory
+	        (e.g. Http/Http) Project Factories for project configured variants
+"
+ 
+ ^ ( self getClass: aClassNameOrClass) doubleSlashFromFactoryClass: aFactory andCH: self  
+
+	
+
+
+
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromFileClass: theFileClass with: aClassNameOrClassOrOrigin [
+	| aClass |
+	"Handle known origin symbols (rather then dd to Symbol)"
+	(FileLocator supportedOrigins includes: aClassNameOrClassOrOrigin)
+		ifTrue: [ ^ FileLocator origin: aClassNameOrClassOrOrigin ].
+ 
+	aClass := self
+			getClass: aClassNameOrClassOrOrigin
+			ifAbsent: [ ^ self fileReferenceFrom: aClassNameOrClassOrOrigin ].
+
+	^ aClass fileReferenceFrom: aClassNameOrClassOrOrigin
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromHub: receiverHub to: aThing [ 
+
+"aHub is the original reciever of //, (self is aHub current)"
+"stack overflow = problem!  (Hub//File)"
+	^ aThing doubleSlashFromHub: receiverHub to: aThing andCH: self
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashFromString: aClassNameOrString with: it [ 
+
+	^(self getClass: aClassNameOrString) // it
 ]

@@ -3,5 +3,5 @@ Extension { #name : 'AbstractFileReference' }
 { #category : '*Tactical-Tools' }
 AbstractFileReference >> // aThing [
 	 
-	 ^ Hub startDoubleDispatchfromAFileReference: self with: aThing
+	 ^ Hub current startDoubleSlashFromAFileReference: self with: aThing
 ]

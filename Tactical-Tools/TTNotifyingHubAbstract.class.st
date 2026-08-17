@@ -163,6 +163,12 @@ TTNotifyingHubAbstract class >> getEnv: varNameWithDollar [
 
 ]
 
+{ #category : 'environment' }
+TTNotifyingHubAbstract class >> getVault [
+	
+	^ self signalAuto
+]
+
 { #category : 'wall' }
 TTNotifyingHubAbstract class >> globalAt: aName ifAbsent: aBlock [
 
@@ -376,12 +382,6 @@ TTNotifyingHubAbstract class >> theCuriousity [
 		  
 ]
 
-{ #category : 'environment' }
-TTNotifyingHubAbstract class >> theVault [
-	
-	^ self signalAuto
-]
-
 { #category : 'as yet unclassified' }
 TTNotifyingHubAbstract class >> traitComposition: aComposition [
 	self subclassResponsibility
@@ -500,6 +500,16 @@ TTNotifyingHubAbstract >> defaultAction [
 	^ self perform: messageText withArguments: tag
 ]
 
+{ #category : 'environment' }
+TTNotifyingHubAbstract >> getVault [
+
+	"Vicarious Vault (Current)"
+	
+	<ttSpoke>
+	
+	^ TTVault currentVault
+]
+
 { #category : 'namespace' }
 TTNotifyingHubAbstract >> isNamespaced [
 	self subclassResponsibility
@@ -511,6 +521,24 @@ TTNotifyingHubAbstract >> osEnvironment [
 	"Host environment"
 	
 	^ OSEnvironment current
+]
+
+{ #category : 'browsing' }
+TTNotifyingHubAbstract >> projectDir [
+
+	^ self class osEnvironment at: 'PROJECT_DIR' ifAbsent: 'xanadu' 
+]
+
+{ #category : 'browsing' }
+TTNotifyingHubAbstract >> projectId [
+
+	^ self class osEnvironment at: 'PROJECT_ID' ifAbsent: 'xanadu' 
+]
+
+{ #category : 'browsing' }
+TTNotifyingHubAbstract >> projectName [
+
+	^ self class osEnvironment at: 'PROJECT_NAME' ifAbsent: 'Xanadu' 
 ]
 
 { #category : 'environment' }

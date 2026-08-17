@@ -18,7 +18,11 @@ Class {
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> // aClassNameOrClass [
 
-^ Hub startDoubleDispatchfromClientClass: self with: aClassNameOrClass
+"Simplifies To: 
+(self basicNewFor: Hub current) initialize // aSymbolUrlStringOrClass
+"
+
+^ Hub current startDoubleSlashFromClientClass: self with: aClassNameOrClass
 ]
 
 { #category : 'as yet unclassified' }
@@ -36,10 +40,10 @@ TTClientAbstract class >> basicNew [
 ]
 
 { #category : 'factory' }
-TTClientAbstract class >> basicNewFor: actualVault [
+TTClientAbstract class >> basicNewFor: aVaultable [
 	
  	^ (self basicNew)
-					setVault:  actualVault
+					setVault:  aVaultable getVault
 					yourself
 
 
@@ -105,9 +109,9 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 ]
 
 { #category : 'as yet unclassified' }
-TTClientAbstract class >> doubleDispatchFrom: hub andAFileReference: aFileReference [
+TTClientAbstract class >> doubleDispatchFromAFileReference: aFileReference andCH: hub [
 
-	^ (self basicNewFor: (hub currentVault)) 
+	^ (self basicNewFor: hub) 
 	        "doubleDispatchFrom: hub andAFileReference: aFileReference (possible0"
 					setFileReference: aFileReference;
 					initialize
@@ -117,6 +121,20 @@ TTClientAbstract class >> doubleDispatchFrom: hub andAFileReference: aFileRefere
 TTClientAbstract class >> doubleDispatchFromFileClass: fileClass [
 	
 	^ self workingDirectory
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> doubleDispatchWithCH: hub to: aSymbolUrlStringOrClass [
+   
+	^ (self basicNewFor: hub) initialize // aSymbolUrlStringOrClass
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> doubleSlashFromFactoryClass: aFactory andCH: hub [
+
+	^ aFactory new askAll: self
+
+
 ]
 
 { #category : 'as yet unclassified' }
@@ -268,6 +286,12 @@ TTClientAbstract class >> workingDirectory [
 ^ Hub fileReferenceFrom: ('./', self ttLocalName)
 ]
 
+{ #category : 'initialization' }
+TTClientAbstract >> @ option [
+	
+	vault @ option
+]
+
 { #category : 'as yet unclassified' }
 TTClientAbstract >> getUser [
 
@@ -398,4 +422,9 @@ TTClientAbstract >> setRequestErrorHandler: errorHandler [
 { #category : 'initialization' }
 TTClientAbstract >> setVault: aVault [
 	vault := aVault  
+]
+
+{ #category : 'as yet unclassified' }
+TTClientAbstract >> with: aSymbolUrlStringOrClass [
+	^ (self basicNewFor: Hub) // aSymbolUrlStringOrClass
 ]

@@ -26,5 +26,5 @@ Class class >> / aStringable [
 Class class >> // aClassNameOrClass [
 	"Class // . aka double dispatch"
 
-	^ Hub startDoubleDispatchFromClassClass: self with: aClassNameOrClass
+	^ Hub current startDoubleSlashFromClassClass: self with: aClassNameOrClass
 ]
