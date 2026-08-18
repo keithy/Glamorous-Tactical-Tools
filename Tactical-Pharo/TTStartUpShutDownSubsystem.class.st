@@ -69,7 +69,7 @@ TTStartUpShutDownSubsystem class >> mustBeClassSide: pragma [
 { #category : 'environment' }
 TTStartUpShutDownSubsystem class >> open [
 
-	^ TTHubCodeBrowser newBrowsing: self
+	^ TTHubBrowser newBrowsing: self
 ]
 
 { #category : 'environment' }

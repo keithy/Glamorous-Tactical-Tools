@@ -46,7 +46,7 @@ TTDictionaryBackedByCli class >> exampleLsProjectDir [
 	
 	^ (self newLsProjectDir) 
 			initialize 
-			initializeReadingConfig: vault config;
+			initializeReadingWith: vault config;
 			yourself
 ]
 
@@ -122,12 +122,12 @@ TTDictionaryBackedByCli >> gtFileReferencePathFor: aView [
 ]
 
 { #category : 'accessing' }
-TTDictionaryBackedByCli >> initializeReadingConfig: config [
+TTDictionaryBackedByCli >> initializeReadingWith: topTierConfigToReferToIfNeeded [
 	
   self readSourceTooSoon ifTrue: [ ^ self ].
 	
 	self vars do: [ :key |
-		config at: key ifPresent: [ :v | self epb setEnv: key value: v ]. 
+		topTierConfigToReferToIfNeeded at: key ifPresent: [ :v | self epb setEnv: key value: v ]. 
 	].
 
 	self readSource.

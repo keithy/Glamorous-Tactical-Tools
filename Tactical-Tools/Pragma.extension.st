@@ -5,7 +5,7 @@ Pragma class >> // aClassNameOrClass [
 
 	"experimental"
 
-	^ Hub startDoubleDispatchfromPragmaClass: self with: aClassNameOrClass
+	^ Hub startDoubleSlashfromPragmaClass: self with: aClassNameOrClass
 ]
 
 { #category : '*Tactical-Tools' }
@@ -13,7 +13,7 @@ Pragma >> // aClassNameOrClass [
 
 	"experimental"
 
-	^ Hub startDoubleDispatchfromPragma: self with: aClassNameOrClass
+	^ Hub startDoubleSlashfromPragma: self with: aClassNameOrClass
 ]
 
 { #category : '*Tactical-Tools' }
@@ -47,7 +47,7 @@ Pragma class >> ttItemsWithActionFor: aView context: theContext [
 		column: 'Item'
 			text: [ :eachItem | eachItem gtDisplayText ];
 		column: 'Comment'
-			text: [ :eachItem | eachItem method comment ifNil: '' ];
+			text: [ :eachItem | eachItem arguments at: 1 ifAbsent: [ eachItem method comment ifNil: ''] ];
 			
 		column: 'Execute' translated
 			stencil: [ :each | 

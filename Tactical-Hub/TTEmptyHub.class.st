@@ -19,13 +19,13 @@ TTEmptyHub class >> isHub [
 { #category : 'as yet unclassified' }
 TTEmptyHub class >> openHubBrowser [
 
-^ (Hub getClass: #TTHubCodeBrowser) newBrowsing: self
+^ (Hub getClass: #TTHubBrowser) newBrowsing: self
 			
 ]
 
 { #category : 'as yet unclassified' }
 TTEmptyHub class >> openHubCodeBrowser [
 
-^ (Hub getClass: #TTHubBrowser) newBrowsing: self
+^ (Hub getClass: #TTHubCodeBrowser) newBrowsing: self
 			
 ]

@@ -2,6 +2,10 @@ Extension { #name : 'SessionManager' }
 
 { #category : '*Tactical-Fixes' }
 SessionManager >> gtViewShutdownListFor: aView [
+
+	"Fix - typo"
+	
+	<gtFix>
 	<gtView>
 	
 	^ aView columnedList 

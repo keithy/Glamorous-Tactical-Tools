@@ -26,9 +26,8 @@ TTDictionaryBacked class >> makeAsTierWithKey: aKey source: aSource [
 
 	<gtExample>
 
-	^  (TTDictionaryTiered newWithKey: aKey) 
-			setDictionary: (self newSource:aSource) ;
-			yourself
+	^ (self newSource:aSource) asTier tierKey: aKey; yourself
+		 
 ]
 
 { #category : 'accessing' }
@@ -77,7 +76,7 @@ TTDictionaryBacked >> initialize [
 ]
 
 { #category : 'accessing' }
-TTDictionaryBacked >> initializeReadingConfig: config [
+TTDictionaryBacked >> initializeReadingWith: topTierConfigToReferToIfNeeded [
 
   self readSourceTooSoon ifTrue: [ ^ self ].
 	self readSource.

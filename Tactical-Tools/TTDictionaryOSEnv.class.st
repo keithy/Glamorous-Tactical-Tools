@@ -17,7 +17,7 @@ TTDictionaryOSEnv class >> makeAsTier [
 { #category : 'as yet unclassified' }
 TTDictionaryOSEnv class >> new [
 
- 	"super new initiizes the dictionary, 
+ 	"super new initializes the dictionary, 
  	 topTier runs our own #initialize after all tiers have been composed"
 
 	^ (super new)

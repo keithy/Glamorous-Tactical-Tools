@@ -3,7 +3,8 @@ Extension { #name : 'SmalltalkImage' }
 { #category : '*Tactical-Fixes' }
 SmalltalkImage >> allClasses [
 
-  "IT RETURNS TRAITS TOO"
+  "Annotation - mark as avoid"
+  <ttFix>
 	<ttQuirk>
   <ttAvoid>
       

@@ -3,9 +3,9 @@ Class {
 	#superclass : 'TTEmptyHub',
 	#traits : 'T2Namespace',
 	#classTraits : 'T2Namespace classTrait',
-	#category : 'Tactical-Tools-Hub',
-	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#category : 'Tactical-Hub-Browser',
+	#package : 'Tactical-Hub',
+	#tag : 'Browser'
 }
 
 { #category : 'as yet unclassified' }
@@ -21,7 +21,7 @@ TTTacticalToolsHub class >> currentVault [
 { #category : 'as yet unclassified' }
 TTTacticalToolsHub class >> healthCheckExamples [
 
-	"Tactical-Tools health check methods <ttHealthCheck>"
+	"Tactical-Tools - Run health check methods <ttHealthCheck>"
 	
 	<ttSpoke>
 	
@@ -88,39 +88,60 @@ TTTacticalToolsHub class >> pragmasAll_ttClient [
 
 ]
 
-{ #category : 'as yet unclassified' }
-TTTacticalToolsHub class >> pragmasAll_ttShutDownStartUp [
+{ #category : 'spokes' }
+TTTacticalToolsHub class >> pragmasAll_ttFix [
 
-	"Tactical-Tools <ttShutDown>/<ttStartUp>"
+	"All of the <ttFix>... in the world"
 	
 	<ttSpoke>
 	
-	^ TTStartUpShutDownAtSystemPriority pragmasAll_ttShutDown, (TTStartUpShutDownAtSystemPriority pragmasAll_ttStartUp)
-	  
+	^ Hub sortByComment: ((Pragma allNamed: #ttFix),(Pragma allNamed: #ttFix:))
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'spokes' }
+TTTacticalToolsHub class >> pragmasAll_ttHealthy [
+
+	"Environment health checks"
+	
+	<ttSpoke>
+	
+	^ #ttHealthCheck gtPragmas
+	
+
+]
+
+{ #category : 'spokes' }
+TTTacticalToolsHub class >> pragmasAll_ttQuirk [
+
+	"All of the <ttQuirk>... in the world"
+	
+	<ttSpoke>
+	
+	^ Hub sortByComment: (Pragma allNamed: #ttQuirk)
+	
+]
+
+{ #category : 'spokes' }
 TTTacticalToolsHub class >> pragmasAll_ttUtility [
 
-	"Tactical-Tools utility methods <ttUtility>"
+	"All of the <ttUtility>... in the world"
 	
 	<ttSpoke>
 	
-	^ Pragma allNamed: #ttUtility
+	^ Hub sortByComment: (Pragma allNamed: #ttUtility)
 	
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'spokes' }
 TTTacticalToolsHub class >> pragmasAll_ttWall [
 
-	"Tactical-Tools wall methods <ttWall>"
+	"All of the <ttWall>... in the world"
 	
 	<ttSpoke>
 	
-	^ Pragma allNamed: #ttWall
+	^ Hub sortByComment: (Pragma allNamed: #ttWall)
 	
-
 ]
 
 { #category : 'as yet unclassified' }
@@ -133,30 +154,6 @@ TTTacticalToolsHub class >> pragmasAll_ttWhoAmI [
 	^ Pragma allNamed: #ttWhoAmI
 	
 
-]
-
-{ #category : 'as yet unclassified' }
-TTTacticalToolsHub class >> pragmasShutDownStartUp [
-
-	"Tactical-Tools <ttShutDown>/<ttStartUp> (validated)"
-	
-	<ttSpoke>
-	
-	^ TTStartUpShutDownAtSystemPriority pragmasShutDown, (TTStartUpShutDownAtSystemPriority pragmasStartUp)
-	  
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTTacticalToolsHub class >> shutDownStartUpTTDryRun [
-
-	"Tactical Tools shutDown/startUp methods - Dry Run"
-	
-	"The idea is to sanity test startUp/shutDown methods without the risk of breaking the image"
-		
-	<ttSpoke>
-	
-	^ (TTStartUpShutDownAtSystemPriority shutDownDryRun),(TTStartUpShutDownAtSystemPriority startUpDryRun)
 ]
 
 { #category : 'as yet unclassified' }

@@ -65,6 +65,29 @@ TTNotifyingHubAbstract class >> during: aBlock use: substituteValue for: methodS
 		]
 ]
 
+{ #category : 'wall' }
+TTNotifyingHubAbstract class >> fileReferenceFrom: aThing [
+ 
+	"The best file reference provider... in the world"
+ 
+  	<ttWall>
+
+  	"This allows other classes to play, but we start
+  	by going via the current platform-resolved Hub"
+  	
+ 	^ aThing fileReferenceFrom: self current
+ 	
+ 	
+]
+
+{ #category : 'instance creation' }
+TTNotifyingHubAbstract class >> fileReferenceFromString: aThing [
+ 
+ 	^ self subclassResponsibility
+ 	
+ 	
+]
+
 { #category : 'testing' }
 TTNotifyingHubAbstract class >> for: selector respondWith: substituteValue during: aBlock [
 	
@@ -132,7 +155,7 @@ TTNotifyingHubAbstract class >> getClass: circumflexAndClassName search: aList [
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClassSearchPath [
 	^ (self namespaceSearchPath
-		collect: [ :ea | self getEnv: ea ]
+		collect: [ :ea | (ea first = $$) ifTrue: [self getEnv: ea] ifFalse: [ ea] ]
 		thenSelect: #notNil) asArray
 ]
 
@@ -414,7 +437,6 @@ TTNotifyingHubAbstract class >> tt [
 	"Tactical Tools"
 	
 	<ttHub>
-	<ttSpoke>
 		
   ^  Hub getClass:#TTTacticalToolsHub 
 		  
@@ -528,10 +550,6 @@ TTNotifyingHubAbstract >> defaultAction [
 { #category : 'environment' }
 TTNotifyingHubAbstract >> getVault [
 
-	"Vicarious Vault (Current)"
-	
-	<ttSpoke>
-	
 	^ TTVault currentVault
 ]
 

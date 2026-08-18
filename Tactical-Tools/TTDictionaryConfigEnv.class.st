@@ -11,9 +11,7 @@ TTDictionaryConfigEnv class >> makeAsTier [
 	"our test show it all"
 
 	<gtExample>
-	
 	| firstTier newTier |
-	
 	self searchPath
 		do: [ :assoc | 
 			| tierKey file |
@@ -57,14 +55,12 @@ TTDictionaryConfigEnv class >> searchPath [
 TTDictionaryConfigEnv class >> searchPathFor: whoami [
 	"Prefer / (a,'.env) over / a , 'env' " 
 
-	| vmId hubId userId projectId |
+	| vmId hubId |
 	
 	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identity' ].
 	
 	vmId := whoami vmId asLowercase.
 	hubId := whoami hubId asLowercase.
-	projectId := whoami projectId asLowercase. "$PROJECT_ID"
-	userId := whoami userId asLowercase.
 
 	^ {
 		#cwd     -> ((hubId , '.env') asFileReference).

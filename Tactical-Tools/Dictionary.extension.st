@@ -1,6 +1,14 @@
 Extension { #name : 'Dictionary' }
 
 { #category : '*Tactical-Tools' }
+Dictionary >> asTier [
+
+	 ^ TTDictionaryTiered new
+	 		setDictionary: self;
+	 		yourself
+]
+
+{ #category : '*Tactical-Tools' }
 Dictionary >> associationsSortedByKey [
 
 	<ttExtension>
@@ -14,4 +22,14 @@ Dictionary >> associationsSortedByKeyInsensitively [
 	<ttExtension>
 	
 	^ self associations asSortedCollection sortBlock: [ :a :b | a key asLowercase <= b key asLowercase ] 
+]
+
+{ #category : '*Tactical-Tools' }
+Dictionary class >> makeAsTierWithKey: aKey [  
+
+	<gtExample>
+
+	^  (TTDictionaryTiered newWithKey: aKey) 
+			setDictionary: self new  ;
+			yourself
 ]

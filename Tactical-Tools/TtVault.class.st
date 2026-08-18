@@ -7,72 +7,15 @@ Class {
 }
 
 { #category : 'instance creation' }
-TTVault class >> makeDictionaryDotEnvFile: file [
-
-	^ TTDictionaryConfigEnv new
-				setValueWriter: TTVaultValueWriter new;
-				setSource: file;
-				yourself
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeDictionaryFrom: streamable [
-
-
-]
-
-{ #category : 'instance creation' }
 TTVault class >> makeDictionaryMiseFor: projectDirectory [
 
-	^ TTDictionaryMiseEnv new
-				setValueWriter: TTVaultValueWriter new;
-				setSource: projectDirectory;
-				yourself
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeDictionaryOSEnv [
-
-	^ TTDictionaryOSEnv new
-				setSource: Hub;
-				setValueWriter: TTVaultValueWriter new;
-				yourself
+	^ TTDictionaryMiseEnv  newSource: projectDirectory
+				 
 ]
 
 { #category : 'instance creation' }
 TTVault class >> makeDictionaryWithAll: collection [
 	^ collection asDictionary
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeTierConfig [
-	"our test show it all"
-
-	<gtExample>
-	
-	| firstTier newTier|
-	
-	(self searchPathFor: Hub currentTestable) 
-	
-			do: [ :assoc | 
-				
-				| tierKey file |
-				tierKey := assoc key.
-				file := assoc value.
-				
-				FileLookedForNotification signal:file.
-				
-				file exists ifTrue: [
-				  newTier := self makeTierWithKey: tierKey. 
-					
-					newTier setDictionary: (self makeDictionaryDotEnvFile: file) .
-														
-					firstTier ifNil: [ firstTier := newTier ]
-		  							ifNotNil: [ firstTier tierAppend: newTier ].
-		  	]
-			].
-
-	^ firstTier
 ]
 
 { #category : 'instance creation' }
@@ -87,30 +30,12 @@ TTVault class >> makeTierMiseFor: project [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> makeTierOSEnv [
-
-	<gtExample>
-
-	^ TTDictionaryOSEnv makeAsTier 
-			 
-]
-
-{ #category : 'instance creation' }
 TTVault class >> makeTierRW [
+	<gtExample>
+	^ Dictionary new asTier
+				tierKey: #rw;
+				yourself
 	
-		<gtExample>
-	
-	^ self makeTierWithKey:#rw
-
-]
-
-{ #category : 'instance creation' }
-TTVault class >> makeTierWithKey: key [
-	
-		<gtExample>
-	
-	^ TTDictionaryTiered newWithKey: key
-
 ]
 
 { #category : 'instance creation' }
@@ -122,7 +47,7 @@ TTVault class >> makeValueWriter [
 { #category : 'instance creation' }
 TTVault class >> new [ 
 
-	^ self newWithRW
+	^ self newWithTierRW
 		
 ]
 
@@ -142,17 +67,6 @@ TTVault class >> newEmpty [
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newWithRW [ 
-
- <gtExample>
-
- ^ self basicNew
-		setConfig: self makeTierRW
-		yourself
-		
-]
-
-{ #category : 'instance creation' }
 TTVault class >> newWithRWConfigOSEnv [
 
  <gtExample>
@@ -160,14 +74,22 @@ TTVault class >> newWithRWConfigOSEnv [
  | firstTier |
  
  firstTier := (self makeTierRW)
- 									tierAppend: self makeTierConfig;
-									 tierAppend:self makeTierOSEnv;
+ 									tierAppend: TTDictionaryConfigEnv makeAsTier;
+									 tierAppend: TTDictionaryOSEnv makeAsTier ;
 									 yourself.
   					 
  ^ (self basicNew)
 		setConfig: firstTier;
 		initialize
 		
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newWithTierRW [
+	<gtExample>
+	^ self basicNew
+		setConfig: self makeTierRW;
+		yourself
 ]
 
 { #category : 'accessing' }

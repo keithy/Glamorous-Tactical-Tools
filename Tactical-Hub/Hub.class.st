@@ -34,19 +34,31 @@ Hub class >> classHttpClient [
 	^ self getClass: #ˆGuzzler
 ]
 
-{ #category : 'wall' }
-Hub class >> fileReferenceFrom: aThing [
- 
-	"The best file reference provider... in the world"
- 
-  	<ttWall>
+{ #category : 'browsing' }
+Hub class >> fileReferenceFromString: aString [
 
-  	"This allows other classes to play, but we start
-  	by going via the current platform-resolved Hub"
-  	
- 	^ aThing fileReferenceFrom: self current
- 	
- 	
+  <ttWall>
+
+	"Should be subclass responsibility - but if Hub current is = Hub there is a problem"
+
+	| namedDirectories regex dirName path |
+	
+	
+	(Hub current == Hub) ifTrue: [ Transcript crShow: 'Hub>>#fileReferenceFromString: reports that - Hub current == Hub' ].
+
+	namedDirectories := self namedFileLocations. 
+	
+	regex := '\{([a-zA-Z]+)\}(.*)' asRegex.
+	
+	^ (regex matches: aString) 
+			ifFalse: [ aString asFileReference ]
+			ifTrue: [ 
+				dirName := regex subexpression: 2.
+				path := regex subexpression: 3.
+				namedDirectories at: dirName
+					ifPresent: [ :locator | path ifEmpty: [ locator resolve ] ifNotEmpty: [ locator resolve resolve: path allButFirst ] ]
+					ifAbsent: [ self error: 'Unknown directory: ', dirName printString ] ]
+	
 ]
 
 { #category : 'environment' }
@@ -64,6 +76,7 @@ Hub class >> gt [
 Hub class >> hubHome [
 
 	<ttHub>
+	"Home Hub"
 	
 	^ self getClass: 'ˆHomeHub'
 ]
@@ -72,6 +85,7 @@ Hub class >> hubHome [
 Hub class >> hubWork [
 
 	<ttHub>
+	"Work Hub"
 	
 	^ self getClass: 'ˆWorkHub'
 ]
@@ -145,72 +159,6 @@ Hub class >> open [
 		  
 ]
 
-{ #category : 'spokes' }
-Hub class >> pragmasAll_ttHealthy [
-
-	"Environment health checks"
-	
-	<ttSpoke>
-	
-	^ #ttHealthCheck gtPragmas
-	
-
-]
-
-{ #category : 'spokes' }
-Hub class >> pragmasAll_ttHub [
-
-	"All of the hubs... in the world"
-	
-	^ Hub sortByComment: (Pragma allNamed: #ttHub)
-	
-]
-
-{ #category : 'spokes' }
-Hub class >> pragmasAll_ttQuirk [
-
-	"All of the <ttQuirk>... in the world"
-	
-	<ttSpoke>
-	
-	^ Hub sortByComment: (Pragma allNamed: #ttQuirk)
-	
-]
-
-{ #category : 'spokes' }
-Hub class >> pragmasAll_ttUtility [
-
-	"All of the <ttUtility>... in the world"
-	
-	<ttSpoke>
-	
-	^ Hub sortByComment: (Pragma allNamed: #ttUtility)
-	
-]
-
-{ #category : 'spokes' }
-Hub class >> pragmasAll_ttWall [
-
-	"All of the <ttWall>... in the world"
-	
-	<ttSpoke>
-	
-	^ Hub sortByComment: (Pragma allNamed: #ttWall)
-	
-]
-
-{ #category : 'comparing' }
-Hub class >> startDoubleDispatchfromPragma: anObject with: aClassNameOrClass [
-
-	"So experimental do not know what this is for yet"
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleDispatchfromPragmaClass: anObject with: aClassNameOrClass [ 
-
-	"So experimental, do not know what it is for yet"
-]
-
 { #category : 'as yet unclassified' }
 Hub class >> startDoubleSlashFromAFileReference: aFileReference with: aClassNameOrClass [
 
@@ -279,4 +227,16 @@ Hub class >> startDoubleSlashFromHub: receiverHub to: aThing [
 Hub class >> startDoubleSlashFromString: aClassNameOrString with: it [ 
 
 	^(self getClass: aClassNameOrString) // it
+]
+
+{ #category : 'comparing' }
+Hub class >> startDoubleSlashfromPragma: anObject with: aClassNameOrClass [
+
+	"So experimental do not know what this is for yet"
+]
+
+{ #category : 'as yet unclassified' }
+Hub class >> startDoubleSlashfromPragmaClass: anObject with: aClassNameOrClass [ 
+
+	"So experimental, do not know what it is for yet"
 ]

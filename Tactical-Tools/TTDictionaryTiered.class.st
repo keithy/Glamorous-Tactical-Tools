@@ -166,14 +166,14 @@ TTDictionaryTiered >> initializeReading [
   "top tier only - take responsibility for inviting the tiers to 
    read from their backing stores"
   
-	self tiers do: [ :tier | tier initializeReadingConfig: self].
+	self tiers do: [ :tier | tier initializeReadingWith: self].
 	
 ]
 
 { #category : 'initialization' }
-TTDictionaryTiered >> initializeReadingConfig: config [
+TTDictionaryTiered >> initializeReadingWith: topTierConfigToReferToIfNeeded [
 	
-	(dict respondsTo: #initializeReadingConfig:) ifTrue: [ dict initializeReadingConfig: config ].
+	(dict respondsTo: #initializeReadingWith:) ifTrue: [ dict initializeReadingWith: topTierConfigToReferToIfNeeded ].
 	
 ]
 
@@ -284,6 +284,8 @@ TTDictionaryTiered >> tierInsert: aTier after: thisTierKey [
 	 
 	 | last |
 	 
+	 aTier ifNil: [ ^ nil ].
+	 
 	 self tiers do: [ :tier | 
 	 
 	 	tier == aTier ifTrue: [ self error: 'Circular linked lists are a bad idea' ].
@@ -295,8 +297,8 @@ TTDictionaryTiered >> tierInsert: aTier after: thisTierKey [
 	  
 	  thisTierKey ifNotNil: [ KeyNotFound signalFor: thisTierKey ].
 	  
-	  "appending"
-	 ^ last tierInsert: aTier 
+	  "nil = appending"
+	 ^ last tierInsert: aTier after: last tierKey
 ]
 
 { #category : 'tier management' }
