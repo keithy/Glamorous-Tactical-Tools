@@ -12,5 +12,5 @@ PlatformResolver >> code [
 { #category : '*Tactical-Tools' }
 PlatformResolver >> project [
 
-	^ Hub current projectDir
+	^ self resolveString: Hub current projectDir
 ]

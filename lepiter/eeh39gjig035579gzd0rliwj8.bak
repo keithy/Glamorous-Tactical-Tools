@@ -71,7 +71,7 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-18T07:21:11.990794+01:00"
+									"dateAndTimeString" : "2026-08-18T09:49:06.038689+01:00"
 								}
 							},
 							"uid" : {
@@ -81,7 +81,7 @@
 							"paragraphStyle" : {
 								"__type" : "textStyle"
 							},
-							"string" : "### Why?\nThere are three reasons for setting up the environment at this early stage.\n1. to provide new useful, configurable, FileReference origins, like `#code` and `#project`\n2. to establish all the parameters for the configuration phase search path, prior to reading the configuration: {{gtExample:TTDictionaryConfigEnv class>>traceCurrentSearchPath|noCode}}  \n3. To ready the values of  {{gtMethod:Hub class>>namespacedSearchPath}}  used by Tactical-Tools opt-in Namespaced Classes system (experimental)."
+							"string" : "### Why?\nThere are three reasons for setting up the environment at this early stage.\n1. to provide new useful, configurable, FileReference origins, like `#code` and `#project`\n2. to establish all the parameters for the configuration phase search path, prior to reading the configuration into the  environment  `currentVault`:  {{gtMethod:TTDictionaryConfigEnv class>>traceCurrentSearchPath|show=utton}}  \n3. To ready the values of  {{gtMethod:Hub class>>namespacedSearchPath}}  used by Tactical-Tools opt-in Namespaced Classes system (experimental).   {{gtMethod:Hub class>>namespacedSearchPath}}  "
 						},
 						{
 							"__type" : "pharoSnippet",
@@ -172,7 +172,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T06:30:11.221138+01:00"
+						"dateAndTimeString" : "2026-08-18T09:30:58.193185+01:00"
 					}
 				},
 				"uid" : {
@@ -182,7 +182,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "# Early\nTactical-Tools do not require explicit registration in the [[StartUp/ShutDown Process]]  a simplified pragma based facility is provided.  \n\nOne of the users of this facility {{gtMethod:TTFixUpOSEnvironment class>>startUpAtSystemPriority:}} implements a {{gtPragma:ttOSEnvironment}}   lookup for methods that wish to adjust the environment early in the startup process. \n• {{gtClass:TTFixUpOSEnvironment}} is extensible, or you can make a copy for your own project."
+				"string" : "# Early\nTactical-Tools do not require explicit registration in the [[StartUp/ShutDown Process]]  a simplified pragma based facility is provided.  \n\nOne of the users of this facility {{gtMethod:TTFixUpOSEnvironment class>>startUpAtSystemPriority:}} implements a {{gtPragma:ttOSEnvironment}}   lookup for methods that wish to adjust the environment early in the startup process. \n• {{gtClass:TTFixUpOSEnvironment}} is extensible, or you can make a copy of this class for your own project that will also self register for invocation at startUp."
 			},
 			{
 				"__type" : "textSnippet",
