@@ -28,9 +28,9 @@ TTFixUpOSEnvironment class >> fixUpProject [
 	
 	OSEnvironment current in: [ :env |
 	
-		env at: #PROJECT_ID ifAbsentPut: [ 'Xanadu' ].
-		env at: #PROJECT_DIR ifAbsentPut: [ (File // #code / 'xanadu') fullName ].
-		env at: #PROJECT_NAME ifAbsentPut: [ 'Xanadu'  ]
+		env at: #projectId ifAbsentPut: [ 'Xanadu' ].
+		env at: #projectDir ifAbsentPut: [ (File // #code / 'xanadu') fullName ].
+		env at: #projectName ifAbsentPut: [ 'Xanadu'  ]
  
 	]
 ]
@@ -40,14 +40,15 @@ TTFixUpOSEnvironment class >> fixUpWhoAmI [
 	
 	<ttOSEnvironment>
 	
-	"Fixing it up makes sense to pass no to other tools"
+	"Since we are more likely to be passing on an environment to
+	 other tools, fixing it up makes sense"
 	
 	OSEnvironment current in: [ :env |
 	
 		"May there always be a #USER - (windows)"
 		env at: #USER ifAbsentPut: [ env at: #USERNAME ifAbsent: 'Nemo' ].
-		env at: #NICKNAME ifAbsentPut: [ (env at: #USER) capitalized ].
-		env at: #PLATFORM_ID ifAbsentPut: [  OSPlatform current family  ]
+		env at: #userId ifAbsentPut: [ (env at: #USER) capitalized ].
+		env at: #platformId ifAbsentPut: [  OSPlatform current family  ]
 	]
 ]
 

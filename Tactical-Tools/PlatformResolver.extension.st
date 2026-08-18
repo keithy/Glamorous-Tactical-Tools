@@ -4,8 +4,8 @@ Extension { #name : 'PlatformResolver' }
 PlatformResolver >> code [
 	<origin>
 	
-		Transcript crShow: (thisContext method printString).
-	
+		thisContext logMe.
+			
 	^  self home / 'code'
 ]
 

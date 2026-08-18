@@ -27,7 +27,11 @@ BaselineOfTacticalTools >> baseline: spec [
 		for: #common
 		do: [ spec
 				package: 'Tactical-Tools'
-				with: [ spec requires: #('Tactical-Hub').
-					spec requires: #('Tactical-Fixes') ].
-			spec package: 'Tactical-Pharo' with: [ spec requires: #('Tactical-Hub') ] ]
+				with: [ 
+				
+				  spec requires: #('Tactical-Hub').
+					spec requires: #('Tactical-Fixes') .
+					spec requires: #('Tactical-Pharo') .
+        ].
+		]
 ]

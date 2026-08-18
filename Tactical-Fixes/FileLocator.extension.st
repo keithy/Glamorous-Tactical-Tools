@@ -1,6 +1,13 @@
 Extension { #name : 'FileLocator' }
 
 { #category : '*Tactical-Fixes' }
+FileLocator >> gtDisplayText [
+
+	<ttFix:'display with path in namedFileLocations'>
+	^ (super gtDisplayText) , (' » ' , (self fullName)) asRopedText
+]
+
+{ #category : '*Tactical-Fixes' }
 FileLocator class >> gtLocations [
 	^ self supportedOrigins 
 		collect: [ :aSelector | self origin: aSelector ]
