@@ -4,9 +4,9 @@ Class {
 	#classVars : [
 		'WinningHubClass'
 	],
-	#category : 'Tactical-Tools-Hub',
-	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#category : 'Tactical-Hub-Entrypoint',
+	#package : 'Tactical-Hub',
+	#tag : 'Entrypoint'
 }
 
 { #category : 'accessing' }

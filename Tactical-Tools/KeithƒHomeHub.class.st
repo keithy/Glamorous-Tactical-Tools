@@ -1,6 +1,6 @@
 Class {
 	#name : 'KeithƒHomeHub',
-	#superclass : 'TTBareHub',
+	#superclass : 'TTEmptyHub',
 	#traits : 'TNamespaced',
 	#classTraits : 'TNamespaced classTrait',
 	#category : 'Tactical-Tools-Hub',

@@ -17,15 +17,17 @@ TNamespaced classSide >> ttFullName [
 
 { #category : 'namespace' }
 TNamespaced classSide >> ttLocalName [
-	
-	^ (self name copyFrom: (self ttPrefixSize + 1) to: self name size) asSymbol
+	^ (self isNamespaced
+		ifTrue: [ self name copyFrom: self ttPrefixSize + 1 to: self name size ]
+		ifFalse: [ self name withoutPrefix: (self askFor: #ttNamespaceDefault ifAbsent: '') ])
+		asSymbol
 ]
 
 { #category : 'namespace' }
 TNamespaced classSide >> ttNamespace [
     ^ (self isNamespaced
      	ifTrue: [ self name copyFrom: 1 to: (self ttPrefixSize - 1) ]
-     	ifFalse: '') asSymbol
+     	ifFalse: [ self askFor: #ttNamespaceDefault ifAbsent: '' ]) asSymbol
 ]
 
 { #category : 'namespace' }

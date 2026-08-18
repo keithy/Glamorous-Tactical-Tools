@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTTacticalToolsHub',
-	#superclass : 'TTBareHub',
+	#superclass : 'TTEmptyHub',
 	#traits : 'T2Namespace',
 	#classTraits : 'T2Namespace classTrait',
 	#category : 'Tactical-Tools-Hub',

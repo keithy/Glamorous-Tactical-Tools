@@ -1,18 +1,18 @@
 Class {
-	#name : 'TTHubBrowser',
+	#name : 'TTHubCodeBrowser',
 	#superclass : 'Object',
-	#traits : 'T2Namespace',
-	#classTraits : 'T2Namespace classTrait',
+	#traits : 'TNamespaced',
+	#classTraits : 'TNamespaced classTrait',
 	#instVars : [
 		'browsing'
 	],
-	#category : 'Tactical-Tools-Hub',
-	#package : 'Tactical-Tools',
-	#tag : 'Hub'
+	#category : 'Tactical-Hub-Browser',
+	#package : 'Tactical-Hub',
+	#tag : 'Browser'
 }
 
 { #category : 'instance creation' }
-TTHubBrowser class >> newBrowsing: aClass [ 
+TTHubCodeBrowser class >> newBrowsing: aClass [ 
 
 ^ self basicNew
 		readFrom: aClass;
@@ -22,7 +22,7 @@ TTHubBrowser class >> newBrowsing: aClass [
 ]
 
 { #category : 'as yet unclassified' }
-TTHubBrowser class >> pragmasAll_ttIsHub [
+TTHubCodeBrowser class >> pragmasAll_ttIsHub [
 
 	"Hub Classes"
 	
@@ -33,8 +33,12 @@ TTHubBrowser class >> pragmasAll_ttIsHub [
 
 ]
 
+{ #category : 'instance creation' }
+TTHubCodeBrowser class >> ttNamespaceDefault [ ^ 'TT'
+]
+
 { #category : 'browsing' }
-TTHubBrowser >> getSpokeFromPragma: aPragma [
+TTHubCodeBrowser >> getSpokeFromPragma: aPragma [
 
 	| aMethod aClass | 
 	
@@ -52,7 +56,7 @@ TTHubBrowser >> getSpokeFromPragma: aPragma [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> gtAllHubsFor: aView [  
+TTHubCodeBrowser >> gtAllHubsFor: aView [  
 	<gtView>
 	
 		^ aView columnedList
@@ -107,7 +111,7 @@ TTHubBrowser >> gtAllHubsFor: aView [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> gtHubsFor: aView [  
+TTHubCodeBrowser >> gtHubsFor: aView [  
 	<gtView>
 	
 	self hubs ifEmpty: [ ^ aView empty ].
@@ -175,7 +179,7 @@ TTHubBrowser >> gtHubsFor: aView [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> gtHubsMajorFor: aView [  
+TTHubCodeBrowser >> gtHubsMajorFor: aView [  
 	<gtView>
 	
 	self hubs ifEmpty: [ ^ aView empty ].
@@ -239,12 +243,12 @@ TTHubBrowser >> gtHubsMajorFor: aView [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> gtInspectorTitleString [ 
+TTHubCodeBrowser >> gtInspectorTitleString [ 
     ^ (self class ttPrettyName),' (' ,(browsing gtDisplayString) , ')' 
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> gtSpokesFor: aView [
+TTHubCodeBrowser >> gtSpokesFor: aView [
 	<gtView>
 	self spokes ifEmpty: [ ^ aView empty ].
 
@@ -289,7 +293,7 @@ TTHubBrowser >> gtSpokesFor: aView [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> hubs [
+TTHubCodeBrowser >> hubs [
 
 	^ Hub sortByComment: 
 		((Hub pragmasClassSideNamed: #ttHub in: browsing) 
@@ -298,7 +302,7 @@ TTHubBrowser >> hubs [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> hubsAll [
+TTHubCodeBrowser >> hubsAll [
 	
 	| deDup allHubs |
 	
@@ -311,21 +315,21 @@ TTHubBrowser >> hubsAll [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> hubsMajor [
+TTHubCodeBrowser >> hubsMajor [
  
 	^ Hub sortByComment: (self class pragmasAll_ttIsHub)
 	 
 ]
 
 { #category : 'initializing' }
-TTHubBrowser >> readFrom: aHubClass [
+TTHubCodeBrowser >> readFrom: aHubClass [
  
   browsing := aHubClass.
 
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> spokes [
+TTHubCodeBrowser >> spokes [
 
 	^ Hub sortByComment: (
 		(Hub  pragmasClassSideNamed: #ttSpoke in: browsing), 
@@ -335,7 +339,7 @@ TTHubBrowser >> spokes [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> utils [
+TTHubCodeBrowser >> utils [
 
 	^ Hub current pragmasClassSideNamed: #ttUtility in: browsing
 	
@@ -344,7 +348,7 @@ TTHubBrowser >> utils [
 ]
 
 { #category : 'browsing' }
-TTHubBrowser >> wall [
+TTHubCodeBrowser >> wall [
 
 	^ Hub current pragmasClassSideNamed: #ttWall in: browsing
  
