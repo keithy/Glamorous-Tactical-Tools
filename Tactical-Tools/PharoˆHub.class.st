@@ -143,7 +143,7 @@ PharoˆHub >> namedFileLocations [
 ]
 
 { #category : 'as yet unclassified' }
-PharoˆHub >> namespaceSearchPath [
+PharoˆHub >> namespacedSearchPath [
 
 	^ #(Pharo)
 ]

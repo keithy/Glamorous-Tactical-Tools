@@ -181,7 +181,7 @@ TTTacticalToolsHub class >> theVaultSearchPath [
 	
 	<ttSpoke>
 	
-	^ (FileLookedForNotification collectDuring: [ TTVault newWithRWConfigOSEnv ])  
+	^ (FileNotification collectDuring: [ TTVault newWithRWConfigOSEnv ])  
 ]
 
 { #category : 'as yet unclassified' }

@@ -31,6 +31,14 @@ TTNotifyingHubAbstract class >> current [
 ]
 
 { #category : 'instance creation' }
+TTNotifyingHubAbstract class >> currentClassSearchPath [
+
+	<gtExample>
+
+	^  self current getClassSearchPath
+]
+
+{ #category : 'instance creation' }
 TTNotifyingHubAbstract class >> currentTestable [
 	
 	^ self signalAuto
@@ -154,7 +162,8 @@ TTNotifyingHubAbstract class >> getClass: circumflexAndClassName search: aList [
 
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClassSearchPath [
-	^ (self namespaceSearchPath
+ 
+	^ (self namespacedSearchPath
 		collect: [ :ea | (ea first = $$) ifTrue: [self getEnv: ea] ifFalse: [ ea] ]
 		thenSelect: #notNil) asArray
 ]
@@ -256,9 +265,9 @@ TTNotifyingHubAbstract class >> namedFileLocations [
 ]
 
 { #category : 'instance creation' }
-TTNotifyingHubAbstract class >> namespaceSearchPath [
+TTNotifyingHubAbstract class >> namespacedSearchPath [
 
-	self subclassResponsibility
+	^ #()
 ]
 
 { #category : 'instance creation' }

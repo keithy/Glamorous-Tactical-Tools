@@ -1,5 +1,5 @@
 Class {
-	#name : 'FileLookedForNotification',
+	#name : 'FileNotification',
 	#superclass : 'Notification',
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-FileLookedForNotification class >> signal: fileReference [
+FileNotification class >> signal: fileReference [
 
 	^ super signal: fileReference asFileReference fullName 
 ]

@@ -4,7 +4,7 @@ Extension { #name : 'UnixResolver' }
 UnixResolver >> config [
 
 	"Unified origin for all OSes"
-	
+	<ttFix:'useful origin for all platforms'>
 	<origin>
 	
 	^ self preferences

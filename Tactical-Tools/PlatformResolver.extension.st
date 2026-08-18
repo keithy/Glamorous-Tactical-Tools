@@ -3,6 +3,9 @@ Extension { #name : 'PlatformResolver' }
 { #category : '*Tactical-Tools' }
 PlatformResolver >> code [
 	<origin>
+	
+		Transcript crShow: (thisContext method printString).
+	
 	^  self home / 'code'
 ]
 

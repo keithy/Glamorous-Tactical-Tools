@@ -11,7 +11,7 @@ GtPragmaType >> gtPragmasBetterFor: aView [
 		column: 'Selector' text: [:each | each method selector];
 		
 		"Added Comment"
-		column: 'Comment' text: [:each | each method comment ifNil: '' ]
+		column: 'Comment' text: [:each | each arguments at: 1 ifAbsent: [ each method comment ifNil: '' ] ]
 ]
 
 { #category : '*Tactical-Tools' }

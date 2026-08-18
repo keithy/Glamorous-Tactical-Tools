@@ -100,7 +100,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-16T08:12:04.894441+01:00"
+						"dateAndTimeString" : "2026-08-18T07:18:18.930207+01:00"
 					}
 				},
 				"uid" : {
@@ -110,7 +110,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Supporting Namespaces\nAnother objective of this Subsystem is to support the lookup of target classes, via the namespace search mechanism. Ths holds the key to contextual configuration. {{gtMethod:Hub class>>namespaceSearchPath}} }"
+				"string" : "### Supporting Namespaces\nAnother objective of this Subsystem is to support the lookup of target classes, via the namespace search mechanism. Ths holds the key to contextual configuration. {{gtMethod:Hub class>>namespacedSearchPath}} }"
 			}
 		]
 	},

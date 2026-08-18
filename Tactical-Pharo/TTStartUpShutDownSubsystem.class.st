@@ -24,6 +24,8 @@ TTStartUpShutDownSubsystem class >> dryRunAll [
 
 { #category : 'environment' }
 TTStartUpShutDownSubsystem class >> initialize [
+
+	thisContext logMe.
 	
 	self config do: [ :ea | self perform: ('initialize', ea) asSymbol ]
 ]

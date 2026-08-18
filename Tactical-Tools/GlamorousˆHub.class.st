@@ -115,9 +115,9 @@ GlamorousˆHub class >> lepiterReload [
 ]
 
 { #category : 'environment' }
-GlamorousˆHub class >> namespaceSearchPath [
+GlamorousˆHub class >> namespacedSearchPath [
 
-	^ #(Glam Pharo)
+	^ #(Glamorous Glam) copyWithAll: (super namespacedSearchPath)  
 ]
 
 { #category : 'environment' }

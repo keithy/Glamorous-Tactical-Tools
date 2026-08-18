@@ -18,7 +18,7 @@ TTDictionaryConfigEnv class >> makeAsTier [
 			tierKey := assoc key.
 			file := assoc value.
 
-			FileLookedForNotification signal: file.
+			FileNotification signal: file.
 
 			file exists
 				ifTrue: [ newTier := self makeAsTierWithKey: tierKey source: file.
@@ -77,7 +77,7 @@ TTDictionaryConfigEnv class >> traceCurrentSearchPath [
 	
 	<gtExample>
 	
-	^ FileLookedForNotification collectDuring: [ self makeAsTier ]
+	^ FileNotification collectDuring: [ self makeAsTier ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -93,6 +93,7 @@ TTDictionaryConfigEnv >> gtFileReferencePathFor: aView [
 { #category : 'as yet unclassified' }
 TTDictionaryConfigEnv >> readFromStream: aStream [
 
+	"A little rudimentary"
 	[ [ aStream atEnd ]
 		whileFalse: [ | line key value |
 			line := aStream nextLine readStream.

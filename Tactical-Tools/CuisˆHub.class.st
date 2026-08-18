@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-CuisˆHub >> namespaceSearchPath [
+CuisˆHub >> namespacedSearchPath [
 
 	^ #(Cuis)
 ]

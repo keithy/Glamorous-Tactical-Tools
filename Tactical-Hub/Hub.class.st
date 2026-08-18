@@ -137,9 +137,9 @@ Hub class >> mapVarsInto: entry [
 ]
 
 { #category : 'as yet unclassified' }
-Hub class >> namespaceSearchPath [
+Hub class >> namespacedSearchPath [
 
-	^ #(Pharo '${NICKNAME}' '${LOCATION}' '${COMPANY}' '${PROJECT}' '${PLATFORM}') 
+	^ #('${NICKNAME}' '${LOCATION_ID}' '${COMPANY_ID}' '${PROJECT_ID}' '${PLATFORM_ID}') 
 ]
 
 { #category : 'environment' }
