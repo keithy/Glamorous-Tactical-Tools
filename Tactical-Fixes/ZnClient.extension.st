@@ -3,9 +3,7 @@ Extension { #name : 'ZnClient' }
 { #category : '*Tactical-Fixes' }
 ZnClient >> curl [
 
-	<ttFix>
-	
-	"Fix - quote arguments so that command is usable"
+	<ttPharoFix:'quote args so that command is usable'>
 	
 	"Create and return a curl command line invocation equivalent to the current request."
 	"ZnClient new url: 'http://zn.stfx.eu/zn/small.html'; method: #GET; curl."

@@ -3,7 +3,7 @@ Extension { #name : 'SystemResolver' }
 { #category : '*Tactical-Tools' }
 SystemResolver >> ramdisk [
 	
-	<ttFix>
+	<ttPharoFix:'useful as origin'>
 	<origin>
 	
 	^ MemoryStore currentFileSystem root

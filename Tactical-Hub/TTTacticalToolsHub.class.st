@@ -95,7 +95,7 @@ TTTacticalToolsHub class >> pragmasAll_ttFix [
 	
 	<ttSpoke>
 	
-	^ Hub sortByComment: ((Pragma allNamed: #ttFix),(Pragma allNamed: #ttFix:))
+	^ Hub sortByComment: ((Pragma allNamed: #ttFix),(Pragma allNamed: #ttFix:), (Pragma allNamed: #ttPharoFix:))
 	
 ]
 

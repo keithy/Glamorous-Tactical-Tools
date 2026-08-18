@@ -4,7 +4,7 @@ Extension { #name : 'Class' }
 Class >> withAllSubclassesDo: aBlock [
 
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
-	<ttFix>
+	<ttPharoFix:'see #gtWithAllSubclassesDo'>
 	
 	aBlock value: self.
 	self subclassesDo: [ :each | each withAllSubclassesDo: aBlock ]

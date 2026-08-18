@@ -96,7 +96,7 @@ GtHomeToolsSection >> newTranscriptButtonStencil [
 { #category : '*Tactical-Tools' }
 GtHomeToolsSection class >> openCoder: from [
 
-	<ttFix>
+	<ttFix:'convenience'>
 	
 	^ self
 		showSpaceWithIcon: BrGlamorousVectorIcons emphasizedBrowse

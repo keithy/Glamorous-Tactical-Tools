@@ -19,7 +19,7 @@ String >> fileReferenceFrom: aHub [
 { #category : '*Tactical-Tools' }
 String >> gtCloneGithubRepository [
 
-	<ttFix>
+	<ttFix:'was misparsing organisation as https'>
 	
 	| remote |
 	remote := IceGitRemote url: self.
