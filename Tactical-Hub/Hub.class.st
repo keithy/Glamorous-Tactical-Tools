@@ -23,6 +23,33 @@ Hub class >> // it [
 	^  Hub current startDoubleSlashFromHub: self to: it
 ]
 
+{ #category : 'usl-schemes' }
+Hub class >> class: aClassOrName [
+
+	"Better #asClass"
+
+	<ttWall>
+	
+	"Better: handles nil, class already passthrough,
+	 and fall back through namespace lookup"
+	 
+	"Returning nil when not found allows the user to implement
+	 ifAbsent/ifPresent using ifNil:ifNotNil:"
+
+   aClassOrName ifNil: [ ^ nil ].
+   aClassOrName isClass ifTrue: [ ^ aClassOrName ].
+   Smalltalk at: aClassOrName asSymbol ifPresent: [ :c | ^c ].
+   
+   "This is a circumflex"
+   (aClassOrName first = $ˆ) ifTrue: [ 
+   		(self current getClass: aClassOrName 
+   				 search: self classSearchPath)
+   				 ifNotNil: [ :found | ^ found ]
+   ].
+   
+   ^ nil
+]
+
 { #category : 'as yet unclassified' }
 Hub class >> classHttpClient [
 
@@ -34,31 +61,51 @@ Hub class >> classHttpClient [
 	^ self getClass: #ˆGuzzler
 ]
 
+{ #category : 'usl-schemes' }
+Hub class >> client: aClassOrName [
+ 
+  ^ ((self class: aClassOrName) basicNewFor: self current) initialize
+	
+	
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> factory: aClassOrName [
+ 
+  ^ ((self class: aClassOrName) basicNewFor: self current) initialize
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> file: anOriginClassOrString [
+ 
+	^ (TTFileResourceLocator newStart: anOriginClassOrString) next
+	
+	
+]
+
 { #category : 'browsing' }
 Hub class >> fileReferenceFromString: aString [
 
   <ttWall>
 
-	"Should be subclass responsibility - but if Hub current is = Hub there is a problem"
+  "prefer #file: // aThing"
+	^ TTFileResourceLocator fileReferenceFromString: aString
+	
+]
 
-	| namedDirectories regex dirName path |
-	
-	
-	(Hub current == Hub) ifTrue: [ Transcript crShow: 'Hub>>#fileReferenceFromString: reports that - Hub current == Hub' ].
+{ #category : 'usl-schemes' }
+Hub class >> fileY: anOriginClassOrString [
 
-	namedDirectories := self namedFileLocations. 
+	| aClass |
 	
-	regex := '\{([a-zA-Z]+)\}(.*)' asRegex.
-	
-	^ (regex matches: aString) 
-			ifFalse: [ aString asFileReference ]
-			ifTrue: [ 
-				dirName := regex subexpression: 2.
-				path := regex subexpression: 3.
-				namedDirectories at: dirName
-					ifPresent: [ :locator | path ifEmpty: [ locator resolve ] ifNotEmpty: [ locator resolve resolve: path allButFirst ] ]
-					ifAbsent: [ self error: 'Unknown directory: ', dirName printString ] ]
-	
+	"Handle known origin SYMBOLS (cache?)"
+	(FileLocator supportedOrigins includes: anOriginClassOrString)
+		ifTrue: [ ^ FileLocator origin: anOriginClassOrString ].
+ 
+  "are we a class"
+   anOriginClassOrString isClass ifTrue: [ ^ self fileReferenceFrom: anOriginClassOrString ].
+
+	^ aClass fileReferenceFrom: anOriginClassOrString
 ]
 
 { #category : 'environment' }
@@ -70,6 +117,18 @@ Hub class >> gt [
 		
   ^  GlamorousˆHub 
 		  
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> http: aClassOrName [
+ 
+  ^ ((self class: aClassOrName) basicNewFor: self current) beHttp initialize
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> https: aClassOrName [
+ 
+  ^ ((self class: aClassOrName) basicNewFor: self current) initialize
 ]
 
 { #category : 'browsing' }
@@ -159,60 +218,8 @@ Hub class >> open [
 		  
 ]
 
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromAFileReference: aFileReference with: aClassNameOrClass [
-
-	^ (self getClass: aClassNameOrClass) doubleDispatchFromAFileReference: aFileReference andCH: (self)
-
-
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromClassClass: theClass with: aClassNameOrClass [
-	"No need to dd in this case"
-
-	aClassNameOrClass == Class
-		ifTrue: [ ^ self error: 'avoiding infinite recursion here' ].
-
-	^ self current getClass: aClassNameOrClass
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromClientClass: aClientClass with: aSymbolUrlStringOrClass [
-	"Hub is vaultable"
-
-	^ aClientClass doubleDispatchWithCH: self to: aSymbolUrlStringOrClass  
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromFactoryClass: aFactory to: aClassNameOrClass [ 
-
-"Options:
-	string - instanciate or report on supporters of a particular vaultAppId
-	class - Ask the class to instanciate itself via that particualar factory
-	        (e.g. Http/Http) Project Factories for project configured variants
-"
- 
- ^ ( self getClass: aClassNameOrClass) doubleSlashFromFactoryClass: aFactory andCH: self  
-
-	
-
-
-
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromFileClass: theFileClass with: aClassNameOrClassOrOrigin [
-	| aClass |
-	"Handle known origin symbols (rather then dd to Symbol)"
-	(FileLocator supportedOrigins includes: aClassNameOrClassOrOrigin)
-		ifTrue: [ ^ FileLocator origin: aClassNameOrClassOrOrigin ].
- 
-	aClass := self
-			getClass: aClassNameOrClassOrOrigin
-			ifAbsent: [ ^ self fileReferenceFrom: aClassNameOrClassOrOrigin ].
-
-	^ aClass fileReferenceFrom: aClassNameOrClassOrOrigin
+{ #category : 'usl-schemes' }
+Hub class >> pragma: aClassNameOrClass [
 ]
 
 { #category : 'as yet unclassified' }
@@ -221,12 +228,6 @@ Hub class >> startDoubleSlashFromHub: receiverHub to: aThing [
 "aHub is the original reciever of //, (self is aHub current)"
 "stack overflow = problem!  (Hub//File)"
 	^ aThing doubleSlashFromHub: receiverHub to: aThing andCH: self
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromString: aClassNameOrString with: it [ 
-
-	^(self getClass: aClassNameOrString) // it
 ]
 
 { #category : 'comparing' }

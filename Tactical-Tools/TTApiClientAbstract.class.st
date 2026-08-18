@@ -110,6 +110,14 @@ TTApiClientAbstract >> applyHeadersTo: request [
 ]
 
 { #category : 'accessing' }
+TTApiClientAbstract >> beHttp [
+
+	"not sure if this will do the right thing"
+	hostUrl := hostUrl copyWithoutFirst: $s
+
+]
+
+{ #category : 'accessing' }
 TTApiClientAbstract >> contentType [
 
 	^ contentType ifNil: 'application/json'

@@ -9,14 +9,6 @@ String >> // it [
 ]
 
 { #category : '*Tactical-Tools' }
-String >> fileReferenceFrom: aHub [
-	
-	"double dispatch"
-	^ aHub fileReferenceFromString: self
-	
-]
-
-{ #category : '*Tactical-Tools' }
 String >> gtCloneGithubRepository [
 
 	<ttFix:'was misparsing organisation as https'>

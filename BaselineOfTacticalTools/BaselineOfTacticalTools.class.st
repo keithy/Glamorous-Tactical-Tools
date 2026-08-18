@@ -6,6 +6,33 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+BaselineOfTacticalTools class >> initializeAll [
+	"url -> usl - universal smalltalk locator"
+
+	(Class // #TTStartUpShutDownSubsystem) initialize.
+	(Class // #TTNotifyingHubAbstract) initialize.
+	(Class // #TTImageStoreResolver) initialize
+]
+
+{ #category : 'as yet unclassified' }
+BaselineOfTacticalTools class >> initializeAllVersion1 [
+	"url -> usl - universal smalltalk locator"
+
+	(Class // #TTStartUpShutDownSubsystem) initialize.
+	(Class // #TTNotifyingHubAbstract) initialize.
+	(Class // #TTImageStoreResolver) initialize
+]
+
+{ #category : 'as yet unclassified' }
+BaselineOfTacticalTools class >> initializeAllVersion2 [
+	"url -> usl - universal smalltalk locator"
+
+	(#class: // #TTStartUpShutDownSubsystem) initialize.
+	(#class: // #TTNotifyingHubAbstract) initialize.
+	(#class: // #TTImageStoreResolver) initialize
+]
+
+{ #category : 'as yet unclassified' }
 BaselineOfTacticalTools class >> loadLepiter [
 	IceRepository registry  
 		detect: [ :aRepository |

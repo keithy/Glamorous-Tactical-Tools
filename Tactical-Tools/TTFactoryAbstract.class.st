@@ -87,7 +87,7 @@ TTFactoryAbstract >> askAll: aClassOrName [
 
 	| aNewClass |
 	
-	aNewClass := Hub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := #class: // aClassOrName.
 	
 	^ aNewClass withAllSubclassesCollectSuccessfulVaultsFor: vault.
  

@@ -10,27 +10,25 @@ Class {
 TTDictionaryProjectEnv class >> searchPathFor: whoami [
 	"Prefer / (a,'.env) over / a , 'env' " 
 
-	| vmId hubId userId projectId |
-	
-	(whoami askFor: #isWhoAmI) ifFalse: [ self error: 'Must provide identity' ].
-	
-	vmId := whoami vmId asLowercase.
+	| hubId projectId |
+ 
 	hubId := whoami hubId asLowercase.
-	projectId := whoami projectId asLowercase. "$PROJECT_ID"
-	userId := whoami userId asLowercase.
-	
-	"(#project is $PROJECT_DIR)"
+	projectId := whoami projectId asLowercase.  
+ 
+	"#project origin is Hub current projectDir ($PROJECT_DIR)"
 	
 	^ {
 
-		"Project origin defined by $PROJECT"
-		#'project-override' -> (File // #project / '.env') resolve. "gitignored"
-		#'project' -> (File // #project / (projectId, '.env')) resolve.
-		#'project-config' -> (File // #project / 'config'/ (projectId, '.env')) resolve.
-		#'project-platform' -> (File // #project / (hubId, '.env')) resolve.
- 	 #'project-platform-config' -> (File // #project / 'config' / (hubId , '.env')) resolve.
+		#'project-env-override' -> (File // #project / '.env') resolve. "gitignored"
+		#'project-local-override' -> (#file: // #project / 'local.env') resolve. "gitignored"
+		
+		#'project' -> (#file: // #project / (projectId, '.env')) resolve.
+		#'project-config' -> (#file: // #project / 'config'/ (projectId, '.env')) resolve.
+		
+		#'project-platform' -> (#file: // #project / (hubId, '.env')) resolve.
+ 	 #'project-config-platform-' -> (#file: // #project / 'config' / (hubId , '.env')) resolve.
 
-		#'user-project' -> (File // #config / projectId / (hubId , '.env')) resolve.
-	  #'user-project-prefs' -> (File // #preferences / (projectId, '.', hubId , '.env') ) resolve.	   
+		#'user-project' -> (#file: // #config / projectId /  'config.env') resolve.
+	  #'user-project-prefs' -> (#file: // #preferences / (projectId, '.env') ) resolve.	   
 	}
 ]

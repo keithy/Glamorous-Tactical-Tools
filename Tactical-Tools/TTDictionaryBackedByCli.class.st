@@ -14,7 +14,7 @@ Class {
 { #category : 'accessing' }
 TTDictionaryBackedByCli class >> asFile: pathString [
 
-	^ Hub fileReferenceFrom: pathString
+	^ #file: // pathString
 
 	 
 ]

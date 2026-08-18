@@ -9,5 +9,11 @@ TTNotifyingHubAbstract class >> projectDir [
 { #category : '*Tactical-Project' }
 TTNotifyingHubAbstract class >> projectId [
 
-	^ self osEnvironment at: 'PROJECT_ID' ifAbsent: 'Xanadu' 
+	^ self osEnvironment at: 'PROJECT_ID' ifAbsent: 'Xandadu'
+]
+
+{ #category : '*Tactical-Project' }
+TTNotifyingHubAbstract class >> projectName [
+
+	^ self osEnvironment at: 'PROJECT_NAME' ifAbsent: [ self projectId]
 ]

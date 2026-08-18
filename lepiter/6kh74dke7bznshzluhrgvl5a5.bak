@@ -335,14 +335,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-17T07:32:23.216895+01:00"
+						"dateAndTimeString" : "2026-08-17T08:39:14.916039+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "yS1XWW1rTEOfgH+Wq8x8/Q=="
 				},
-				"code" : "Https // TTWorldClockClient @@ 'WorldClock' @ #default"
+				"code" : "Https // TTWorldClockClient  "
 			},
 			{
 				"__type" : "textSnippet",
@@ -402,12 +402,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-01T05:51:21.901604+01:00"
+			"dateAndTimeString" : "2026-08-18T15:48:39.404994+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Demo"
+		"title" : "Universal Smalltalk Locator (idea)"
 	},
 	"uid" : {
 		"__type" : "uuid",

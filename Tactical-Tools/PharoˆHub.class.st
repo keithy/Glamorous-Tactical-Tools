@@ -13,7 +13,7 @@ PharoˆHub class >> fileLocatorFrom: aString [
 
 	"Answer a  FileLocator from the supplied string"
 
-	^ FileLocator fromPath: (self fileReferenceFrom: aString) path ifNone: [ self error: '?' ]
+	^ FileLocator fromPath: (#file: // aString) path ifNone: [ self error: '?' ]
 	
 ]
 

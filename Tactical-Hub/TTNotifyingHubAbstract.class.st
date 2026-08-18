@@ -4,6 +4,9 @@ Class {
 	#classVars : [
 		'WinningHubClass'
 	],
+	#classInstVars : [
+		'classSearchPath'
+	],
 	#category : 'Tactical-Hub-Entrypoint',
 	#package : 'Tactical-Hub',
 	#tag : 'Entrypoint'
@@ -22,6 +25,11 @@ TTNotifyingHubAbstract class >> allIdentifyingAsClasses [
 TTNotifyingHubAbstract class >> allIdentifyingAsTraits [
       ^ Smalltalk allClasses select: [ :c | c isTrait ]
 
+]
+
+{ #category : 'instance creation' }
+TTNotifyingHubAbstract class >> classSearchPath [
+	^ classSearchPath ifNil: [ classSearchPath := self getClassSearchPath ]
 ]
 
 { #category : 'instance creation' }
@@ -73,21 +81,6 @@ TTNotifyingHubAbstract class >> during: aBlock use: substituteValue for: methodS
 		]
 ]
 
-{ #category : 'wall' }
-TTNotifyingHubAbstract class >> fileReferenceFrom: aThing [
- 
-	"The best file reference provider... in the world"
- 
-  	<ttWall>
-
-  	"This allows other classes to play, but we start
-  	by going via the current platform-resolved Hub"
-  	
- 	^ aThing fileReferenceFrom: self current
- 	
- 	
-]
-
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> fileReferenceFromString: aThing [
  
@@ -128,7 +121,7 @@ TTNotifyingHubAbstract class >> getClass: aClassOrName ifAbsent: aBlock [
 
 	 <ttWall>
 	 
-	"Better, handles nil, class already passthrough,
+	"Better: handles nil, class already passthrough,
 	 and fall back through namespace lookup"
 	 
    aClassOrName ifNil: [ ^ aBlock value ].
@@ -162,10 +155,9 @@ TTNotifyingHubAbstract class >> getClass: circumflexAndClassName search: aList [
 
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClassSearchPath [
- 
 	^ (self namespacedSearchPath
-		collect: [ :ea | (ea first = $$) ifTrue: [self getEnv: ea] ifFalse: [ ea] ]
-		thenSelect: #notNil) asArray
+					collect: [ :ea | ea first = $$ ifTrue: [ self getEnv: ea ] ifFalse: [ ea ] ]
+					thenSelect: #notNil) asArray
 ]
 
 { #category : 'instance creation' }
@@ -205,6 +197,34 @@ TTNotifyingHubAbstract class >> hubId [
 	"The Hub"
 	
 	^ self current ttNamespace 
+]
+
+{ #category : 'environment' }
+TTNotifyingHubAbstract class >> initialize [
+	
+	<ttStartUp>
+	
+	| max bid |
+	
+	self withAllSubclassesDo: #reset.
+	
+	WinningHubClass := self. 
+	
+	max := 0.
+	self allSubclassesDo: [ :hubClass | 
+	
+		bid := hubClass onStartUpBidToBeCurrent.
+		
+		bid > max ifTrue: [
+				
+				WinningHubClass := hubClass. 
+				max := bid.
+				
+		]
+	].
+	
+	^ WinningHubClass
+	
 ]
 
 { #category : 'environment' }
@@ -320,12 +340,6 @@ TTNotifyingHubAbstract class >> pragmasNamed: aSymbol in: aClass [
 		toButExcluding: Object  
 ]
 
-{ #category : 'whoami' }
-TTNotifyingHubAbstract class >> projectName [
-
-	^ self osEnvironment at: 'PROJECT_NAME' ifAbsent: 'Xanadu' 
-]
-
 { #category : 'as yet unclassified' }
 TTNotifyingHubAbstract class >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
 	self subclassResponsibility
@@ -334,6 +348,14 @@ TTNotifyingHubAbstract class >> recategorizeSelector: selector from: oldProtocol
 { #category : 'as yet unclassified' }
 TTNotifyingHubAbstract class >> removeFromComposition: aTrait [
 	self subclassResponsibility
+]
+
+{ #category : 'environment' }
+TTNotifyingHubAbstract class >> reset [
+	
+	classSearchPath := nil.
+	
+ 
 ]
 
 { #category : 'environment' }
@@ -388,22 +410,7 @@ TTNotifyingHubAbstract class >> startUpAtSystemPriority: isImageStarting [
 	
 	<ttStartUp>
 	
-	| max bid |
-	
-	WinningHubClass := self. 
-	
-	max := 0.
-	self allSubclassesDo: [ :hubClass | 
-	
-		bid := hubClass onStartUpBidToBeCurrent.
-		
-		bid > max ifTrue: [
-				
-				WinningHubClass := hubClass. 
-				max := bid.
-				
-		]
-	].
+	self initialize
 	
 ]
 

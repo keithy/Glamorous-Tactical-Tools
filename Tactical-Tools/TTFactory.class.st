@@ -7,6 +7,12 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTFactory >> // aClassOrAppKeyString [
+
+  ^ self askAll: aClassOrAppKeyString
+]
+
+{ #category : 'as yet unclassified' }
 TTFactory >> name [
 
 	^ 'tt'

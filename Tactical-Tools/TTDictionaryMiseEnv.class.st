@@ -33,7 +33,7 @@ TTDictionaryMiseEnv class >> getExecutableFrom: osEnvironmentLike [
 	
 		| fr |
 	
-		fr := Hub fileReferenceFrom: fullName.
+		fr := #file: // fullName.
 	
 		fr exists ifTrue: [ ^ fr  ]
 	

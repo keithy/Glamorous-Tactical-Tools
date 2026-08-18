@@ -124,12 +124,6 @@ TTClientAbstract class >> doubleDispatchFromFileClass: fileClass [
 ]
 
 { #category : 'as yet unclassified' }
-TTClientAbstract class >> doubleDispatchWithCH: hub to: aSymbolUrlStringOrClass [
-   
-	^ (self basicNewFor: hub) initialize // aSymbolUrlStringOrClass
-]
-
-{ #category : 'as yet unclassified' }
 TTClientAbstract class >> doubleSlashFromFactoryClass: aFactory andCH: hub [
 
 	^ aFactory new askAll: self
@@ -283,7 +277,7 @@ TTClientAbstract class >> withAllSubclassesDetectSuccessfulMakeFor: aVaultable [
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> workingDirectory [ 
 
-^ Hub fileReferenceFrom: ('./', self ttLocalName)
+^ #file: //('./', self ttLocalName)
 ]
 
 { #category : 'initialization' }
