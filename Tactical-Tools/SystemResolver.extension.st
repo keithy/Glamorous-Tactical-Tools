@@ -8,9 +8,3 @@ SystemResolver >> ramdisk [
 	
 	^ MemoryStore currentFileSystem root
 ]
-
-{ #category : '*Tactical-Tools' }
-SystemResolver >> vmBinary [
-	<origin>
-	^ self resolveString: Smalltalk vm fullPath
-]

@@ -8,9 +8,3 @@ PlatformResolver >> code [
 			
 	^  self home / 'code'
 ]
-
-{ #category : '*Tactical-Tools' }
-PlatformResolver >> project [
-
-	^ self resolveString: Hub current projectDir
-]

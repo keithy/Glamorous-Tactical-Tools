@@ -321,18 +321,6 @@ TTNotifyingHubAbstract class >> pragmasNamed: aSymbol in: aClass [
 ]
 
 { #category : 'whoami' }
-TTNotifyingHubAbstract class >> projectDir [
-
-	^ self osEnvironment at: 'PROJECT_DIR' ifAbsent: 'xanadu' 
-]
-
-{ #category : 'whoami' }
-TTNotifyingHubAbstract class >> projectId [
-
-	^ self osEnvironment at: 'PROJECT_ID' ifAbsent: 'Xanadu' 
-]
-
-{ #category : 'whoami' }
 TTNotifyingHubAbstract class >> projectName [
 
 	^ self osEnvironment at: 'PROJECT_NAME' ifAbsent: 'Xanadu' 

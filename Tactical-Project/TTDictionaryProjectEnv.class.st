@@ -1,9 +1,9 @@
 Class {
 	#name : 'TTDictionaryProjectEnv',
 	#superclass : 'TTDictionaryConfigEnv',
-	#category : 'Tactical-Tools-Vault',
-	#package : 'Tactical-Tools',
-	#tag : 'Vault'
+	#category : 'Tactical-Project-Example',
+	#package : 'Tactical-Project',
+	#tag : 'Example'
 }
 
 { #category : 'as yet unclassified' }
