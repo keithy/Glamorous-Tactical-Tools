@@ -1,0 +1,150 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T18:59:22.310216+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T19:15:32.834137+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "+cT49nq3RbaNlgJtqoydRw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "Glamorous Toolkit is developed by very clever people to solve very difficult software problems.\n\nThe Tactical Toolkit, is intended to cover a broader audience, helping those of us who aspire to be clever solve normal day to day problems, bringing the advantages of a dynamic programmable workbench back to everyday use; to party like it is Xerox Parc in 1980.\n\nThe Tactical Toolkit is aiming to be the Excel of the programming world, it is unashamedly a solution looking for a problem – but once it has found one problem, it is guarenteed that there are 100 more that will follow. If you work for a bank you could no doubt afford a SaaS solution for each one, and then you would need Tactical-Tools to keep track of them all."
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T19:15:36.085633+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T19:30:12.133159+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "j0GIWvFFSC+J4Y8eaEmG+g=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "### Example problems\nHow many seat licences do we have left of that SaaS tool, which users are inactive?\nHow many accounts do we in XY or Z tool, that have that have non-managed passwords?\nIs my website up; Is everything I need online and working today?\nAre all my GitHub action pipelines working, can I stop it from emailing me?\nWhen are my cars' MOT due? You have more than one?\nI want to use this software package, what other things have been written by the same author."
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T19:24:02.710071+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T19:40:44.414197+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "CJN/GAFUSFKuzycPqt+f7g=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## It's not SaaS its not webhosted, Its a Real Application\nBuild it yourself, they are your problems after all, you are the expert on your stuff.\n\n## And AI\nGT comes with AI/LLM integration, and together with Tactical-Tools  a much higher level of abstraction to work with, it can find better examples to learn from, bringing everything together within a single coherant environment.\n## Glamorous Toolkit for Dummies?\nTactical-Tools runs within Glamorous Toolkit, and so nothing is missing, you have the full power of GT at your disposal. TT, makes some basic things more accessible, and streamlines their use. \n\nTT is GT with batteries included."
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-19T18:59:08.40452+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-19T19:08:48.434666+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "Introduction - The Tactical Toolkit"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "f783892b-6881-4c66-a1ef-7b2be679369a"
+	}
+}
