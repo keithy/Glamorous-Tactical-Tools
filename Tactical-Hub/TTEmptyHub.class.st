@@ -1,8 +1,6 @@
 Class {
 	#name : 'TTEmptyHub',
 	#superclass : 'Object',
-	#traits : 'T2Namespace',
-	#classTraits : 'T2Namespace classTrait',
 	#category : 'Tactical-Hub-Browser',
 	#package : 'Tactical-Hub',
 	#tag : 'Browser'

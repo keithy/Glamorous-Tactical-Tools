@@ -10,8 +10,6 @@ Values are obtained from the surrounding image context via a resumable notificat
 Class {
 	#name : 'Hub',
 	#superclass : 'TTNotifyingHubAbstract',
-	#traits : 'TNamespaced',
-	#classTraits : 'TNamespaced classTrait',
 	#category : 'Tactical-Hub-Entrypoint',
 	#package : 'Tactical-Hub',
 	#tag : 'Entrypoint'

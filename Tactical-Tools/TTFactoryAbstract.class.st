@@ -22,6 +22,13 @@ TTFactoryAbstract class >> isAbstract [
 ]
 
 { #category : 'as yet unclassified' }
+TTFactoryAbstract class >> isNamespaced [
+  <namespaced>
+	<namespaced:'TT'> 
+	^ true
+]
+
+{ #category : 'as yet unclassified' }
 TTFactoryAbstract class >> makeNetworkErrorHandler [
 
 ^ [ :err |

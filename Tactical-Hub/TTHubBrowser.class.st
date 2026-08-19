@@ -1,8 +1,6 @@
 Class {
 	#name : 'TTHubBrowser',
 	#superclass : 'Object',
-	#traits : 'T2Namespace',
-	#classTraits : 'T2Namespace classTrait',
 	#instVars : [
 		'browsing'
 	],
@@ -10,6 +8,14 @@ Class {
 	#package : 'Tactical-Hub',
 	#tag : 'Browser'
 }
+
+{ #category : 'instance creation' }
+TTHubBrowser class >> isNamespaced [
+
+	<namespaced>
+	<namespaced:'TT'>
+	^true
+]
 
 { #category : 'instance creation' }
 TTHubBrowser class >> newBrowsing: aClass [ 

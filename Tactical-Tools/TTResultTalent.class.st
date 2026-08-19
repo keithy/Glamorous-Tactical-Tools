@@ -22,6 +22,13 @@ TTResultTalent class >> doesNotUnderstand: aMessage [
 		
 ]
 
+{ #category : 'as yet unclassified' }
+TTResultTalent class >> isNamespaced [
+  <namespaced>
+	<namespaced:'TT'> 
+	^ true
+]
+
 { #category : 'accessing' }
 TTResultTalent >> applyTo: aResult [
 	

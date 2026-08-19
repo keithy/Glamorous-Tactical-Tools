@@ -20,6 +20,13 @@ TTRequestAbstract class >> isAbstract [
 	^ self == TTRequestAbstract
 ]
 
+{ #category : 'testing' }
+TTRequestAbstract class >> isNamespaced [
+  <namespaced>
+	<namespaced:'TT'> 
+	^ true
+]
+
 { #category : 'accessing' }
 TTRequestAbstract >> client [
 	^ client

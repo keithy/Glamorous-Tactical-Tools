@@ -108,14 +108,22 @@ TTNamespaces class >> sizerFromPragma: pragma forName: aClassName [
 	option isInteger ifTrue: [ ^ option -> 0 ].
 	option isCharacter ifTrue: [ ^ self sizerFor: aClassName splitOn: option ].
 
-	self error: 'Missing datatype?'
+	self error: 'Missing annotation type?'
 ]
 
 { #category : 'as yet unclassified' }
 TTNamespaces class >> splitAutomatically: aClassName [
 	| found |
+
+  aClassName size == 1 ifTrue:[ ^ 0 ->0 ].
+  
+  (aClassName second isLowercase and: [ 
+  		(aClassName count: [ :ea | ea isUppercase ]) == 1 ]) ifTrue: [ ^ 0 -> 0 ].
+  
+  (aClassName includes: $ˆ) ifTrue: [ ^ self splitOnCircumflex: aClassName ].
+
 	found := self automaticNamespaces
-				detect: [ :prefix | aClassName beginsWith: prefix ]
+			detect: [ :prefix | aClassName beginsWith: prefix ]
 			ifNone: [ ^ 0 -> 0 ].
 
 	^ found size -> 0

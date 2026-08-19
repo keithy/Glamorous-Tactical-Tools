@@ -1,8 +1,6 @@
 Class {
 	#name : 'TTClientAbstract',
 	#superclass : 'Object',
-	#traits : 'T2Namespace',
-	#classTraits : 'T2Namespace classTrait',
 	#instVars : [
 		'vault',
 		'result',
@@ -148,6 +146,13 @@ TTClientAbstract class >> fromClassClass: theClass [
 TTClientAbstract class >> isAbstract [
 
 	^ self == TTClientAbstract
+]
+
+{ #category : 'namespace' }
+TTClientAbstract class >> isNamespaced [
+  <namespaced>
+	<namespaced:'TT'> 
+	^ true
 ]
 
 { #category : 'accessing' }

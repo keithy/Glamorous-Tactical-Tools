@@ -1,8 +1,6 @@
 Class {
 	#name : 'KeithƒHomeHub',
 	#superclass : 'TTEmptyHub',
-	#traits : 'TNamespaced',
-	#classTraits : 'TNamespaced classTrait',
 	#category : 'Tactical-Tools-Hub',
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
@@ -10,6 +8,7 @@ Class {
 
 { #category : 'namespace' }
 KeithƒHomeHub class >> isNamespaced [
+	<namespaced>
 	<namespaced:$ƒ>
 	^ true
 ]
