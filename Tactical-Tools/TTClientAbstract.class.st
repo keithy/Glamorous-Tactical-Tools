@@ -277,13 +277,13 @@ TTClientAbstract class >> withAllSubclassesDetectSuccessfulMakeFor: aVaultable [
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> workingDirectory [ 
 
-^ #file: //('./', self ttLocalName)
+^ #file: //('./', ((#namespaced: // self) value))
 ]
 
 { #category : 'initialization' }
 TTClientAbstract >> @ option [
 	
-	vault @ option
+	self getVault @ option
 ]
 
 { #category : 'as yet unclassified' }

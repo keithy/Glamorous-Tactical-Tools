@@ -23,33 +23,6 @@ Hub class >> // it [
 	^  Hub current startDoubleSlashFromHub: self to: it
 ]
 
-{ #category : 'usl-schemes' }
-Hub class >> class: aClassOrName [
-
-	"Better #asClass"
-
-	<ttWall>
-	
-	"Better: handles nil, class already passthrough,
-	 and fall back through namespace lookup"
-	 
-	"Returning nil when not found allows the user to implement
-	 ifAbsent/ifPresent using ifNil:ifNotNil:"
-
-   aClassOrName ifNil: [ ^ nil ].
-   aClassOrName isClass ifTrue: [ ^ aClassOrName ].
-   Smalltalk at: aClassOrName asSymbol ifPresent: [ :c | ^c ].
-   
-   "This is a circumflex"
-   (aClassOrName first = $ˆ) ifTrue: [ 
-   		(self current getClass: aClassOrName 
-   				 search: self classSearchPath)
-   				 ifNotNil: [ :found | ^ found ]
-   ].
-   
-   ^ nil
-]
-
 { #category : 'as yet unclassified' }
 Hub class >> classHttpClient [
 
@@ -94,8 +67,9 @@ Hub class >> fileReferenceFromString: aString [
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> fileY: anOriginClassOrString [
+Hub class >> fileX: anOriginClassOrString [
 
+	"previous implementation"
 	| aClass |
 	
 	"Handle known origin SYMBOLS (cache?)"
@@ -157,6 +131,12 @@ Hub class >> hubs [
 
 ]
 
+{ #category : 'usl-schemes' }
+Hub class >> localname: aClassOrName [
+
+	^ (self namespaced: aClassOrName) value
+]
+
 { #category : 'as yet unclassified' }
 Hub class >> makeNetworkErrorHandler [
 
@@ -195,10 +175,25 @@ Hub class >> mapVarsInto: entry [
 	^ value
 ]
 
+{ #category : 'usl-schemes' }
+Hub class >> namespace: aClassOrName [
+ 
+	^ (self namespaced: aClassOrName) key
+]
+
 { #category : 'as yet unclassified' }
 Hub class >> namespacedSearchPath [
 
 	^ #('${NICKNAME}' '${LOCATION_ID}' '${COMPANY_ID}' '${PROJECT_ID}' '${PLATFORM_ID}') 
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> new: aThing [
+
+ "not sure about this one"
+ 
+	^ (self class: aThing) new
+	
 ]
 
 { #category : 'environment' }
@@ -220,6 +215,12 @@ Hub class >> open [
 
 { #category : 'usl-schemes' }
 Hub class >> pragma: aClassNameOrClass [
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> pretty: aClassOrName [
+
+	^ ((self namespaced: aClassOrName) value ifNil: [ ^'' ]) splitCamelCase joinUsing: ' '
 ]
 
 { #category : 'as yet unclassified' }

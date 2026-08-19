@@ -27,6 +27,32 @@ TTNotifyingHubAbstract class >> allIdentifyingAsTraits [
 
 ]
 
+{ #category : 'usl-schemes' }
+TTNotifyingHubAbstract class >> class: aClassOrName [
+
+	"Better #asClass"
+
+	<ttWall>
+	
+	"Better: handles nil, class already passthrough,
+	 and fall back through namespace lookup"
+	 
+	"Returning nil when not found allows the user to implement
+	 ifAbsent/ifPresent using ifNil:ifNotNil:"
+
+   aClassOrName ifNil: [ ^ nil ].
+   aClassOrName isClass ifTrue: [ ^ aClassOrName ].
+   Smalltalk at: aClassOrName asSymbol ifPresent: [ :c | ^c ].
+   
+   "This is a circumflex"
+   (aClassOrName first = $ˆ) ifTrue: [ 
+   		(self current searchClass: aClassOrName)
+   				 ifNotNil: [ :found | ^ found ]
+   ].
+   
+   ^ nil
+]
+
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> classSearchPath [
 	^ classSearchPath ifNil: [ classSearchPath := self getClassSearchPath ]
@@ -110,33 +136,25 @@ TTNotifyingHubAbstract class >> getClass: aClassOrName [
 	 "Better, handles nil quietly, class already passthrough,
 	 and fall back through namespace lookup"
    
-   ^ self getClass: aClassOrName ifAbsent: [ KeyNotFound signalFor: aClassOrName ]
+   ^ #class://aClassOrName  ifNil: [  KeyNotFound signalFor: aClassOrName ]
    
 ]
 
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClass: aClassOrName ifAbsent: aBlock [
+	"Better #asClass"
 
-	 "Better #asClass"
-
-	 <ttWall>
-	 
 	"Better: handles nil, class already passthrough,
 	 and fall back through namespace lookup"
-	 
-   aClassOrName ifNil: [ ^ aBlock value ].
-   
-   aClassOrName isClass ifTrue: [ ^ aClassOrName ].
-   
-   "This is a circumflex"
-   (aClassOrName first = $ˆ) ifTrue: [ 
-   		(self getClass: aClassOrName 
-   				 search: self getClassSearchPath)
-   				 ifNotNil: [ :found | ^ found ]
-   ].
-   
-   ^ Smalltalk at: aClassOrName asSymbol ifAbsent: aBlock
-   
+
+	<ttWall>
+	aClassOrName ifNil: [ ^ aBlock value ].
+
+	aClassOrName isClass ifTrue: [ ^ aClassOrName ].	"This is a circumflex"
+	aClassOrName first = $ˆ
+		ifTrue: [ self current searchClass aClassOrName ifNotNil: [ :found | ^ found ] ].
+
+	^ Smalltalk at: aClassOrName asSymbol ifAbsent: aBlock
 ]
 
 { #category : 'instance creation' }
@@ -195,8 +213,8 @@ TTNotifyingHubAbstract class >> globalAt: aName ifAbsent: aBlock [
 TTNotifyingHubAbstract class >> hubId [
 
 	"The Hub"
-	
-	^ self current ttNamespace 
+	 
+	^ (self namespaced: self current) key
 ]
 
 { #category : 'environment' }
@@ -284,6 +302,12 @@ TTNotifyingHubAbstract class >> namedFileLocations [
 	^ self current signalAuto
 ]
 
+{ #category : 'usl-schemes' }
+TTNotifyingHubAbstract class >> namespaced: aClassOrName [
+ 
+  ^ TTNamespacesRegistry namespaced: (self class: aClassOrName)
+]
+
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> namespacedSearchPath [
 
@@ -356,6 +380,20 @@ TTNotifyingHubAbstract class >> reset [
 	classSearchPath := nil.
 	
  
+]
+
+{ #category : 'instance creation' }
+TTNotifyingHubAbstract class >> searchClass: circumflexAndClassName [ 
+	self classSearchPath
+		do: [ :ea | 
+			| namespace |
+			namespace := (ea first = $$) ifFalse: [ ea ] ifTrue: [ self getEnv: ea ].
+
+			namespace
+				ifNotNil: [ (self getClass: namespace , circumflexAndClassName)
+						ifNotNil: [ :found | ^ found ] ] ].
+
+	^ self getClass: (circumflexAndClassName copyWithoutFirst)
 ]
 
 { #category : 'environment' }

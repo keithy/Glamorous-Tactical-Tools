@@ -1,25 +1,17 @@
 Extension { #name : 'Class' }
 
 { #category : '*Tactical-Tools' }
-Class class >> * aStringable [
-
-	"experiment"
-
-	^ Hub getClass: aStringable
-]
-
-{ #category : '*Tactical-Tools' }
-Class class >> ** aStringable [
-
-	^ Hub getClass: aStringable
-]
-
-{ #category : '*Tactical-Tools' }
 Class class >> / aStringable [
 
-	"experiment"
+	"#class:/ #Person "
 
-	^ (Hub getClass: aStringable) new / aStringable
+	^ (#class://aStringable ) new 
+]
+
+{ #category : '*Tactical-Tools' }
+Class >> / this [
+
+	^ (TTHoldem newStart: this) applySlashTo: self
 ]
 
 { #category : '*Tactical-Tools' }

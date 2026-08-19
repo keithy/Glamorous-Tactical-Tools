@@ -1,8 +1,8 @@
 Class {
 	#name : 'TTHubBrowser',
 	#superclass : 'Object',
-	#traits : 'TNamespaced',
-	#classTraits : 'TNamespaced classTrait',
+	#traits : 'T2Namespace',
+	#classTraits : 'T2Namespace classTrait',
 	#instVars : [
 		'browsing'
 	],

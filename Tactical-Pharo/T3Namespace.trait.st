@@ -7,51 +7,12 @@ Trait {
 
 { #category : 'namespace' }
 T3Namespace classSide >> isNamespaced [
+	<nsSize:#hint3:>
 	^ true
-]
-
-{ #category : 'namespace' }
-T3Namespace classSide >> ttFullName [
-	^ self name
-]
-
-{ #category : 'namespace' }
-T3Namespace classSide >> ttLocalName [
-	^ (self name copyFrom: 4 to: self name size) asSymbol
-]
-
-{ #category : 'namespace' }
-T3Namespace classSide >> ttNamespace [
-	^ (self name copyFrom: 1 to: 3) asSymbol
-]
-
-{ #category : 'namespace' }
-T3Namespace classSide >> ttPrefixSize [
-	^ 3
-]
-
-{ #category : 'namespace' }
-T3Namespace classSide >> ttPrettyName [
-	^ self ttLocalName splitCamelCase joinUsing: ' '
-]
-
-{ #category : 'namespace' }
-T3Namespace >> isNamespaced [
-	^ self class isNamespaced
 ]
 
 { #category : 'namespace' }
 T3Namespace >> printOn: aStream [
 	aStream nextPutAll: 'a '.
-	self ttDisplayName printOn: aStream
-]
-
-{ #category : 'namespace' }
-T3Namespace >> ttDisplayName [
-	^ self class ttLocalName
-]
-
-{ #category : 'namespace' }
-T3Namespace >> ttFullName [
-	^ self class ttFullName
+	(#namespaced: //self class) value printOn: aStream
 ]

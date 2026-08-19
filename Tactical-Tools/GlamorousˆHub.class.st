@@ -122,11 +122,9 @@ GlamorousˆHub class >> namespacedSearchPath [
 
 { #category : 'environment' }
 GlamorousˆHub class >> onStartUpBidToBeCurrent [
-	
 	"Determine if we are based on GT or Pharo (better ways?)"
-	(self getClass: #GtImage ifAbsent: [ ^ 0 ]).
-	
-	^ 20 
+
+	^ #class: // #GtImage ifNil: 0 ifNotNil: 20
 ]
 
 { #category : 'environment' }

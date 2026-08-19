@@ -30,7 +30,7 @@ TTVaultAbstract class >> basicNew [
 
 { #category : 'instance creation' }
 TTVaultAbstract class >> currentVault [
-	^ currentVault ifNil: [ currentVault := Hub current vaultUpdate:(self newDefaultVault) ]
+	^ currentVault ifNil: [ currentVault := self newDefaultVault ]
 ]
 
 { #category : 'accessing' }

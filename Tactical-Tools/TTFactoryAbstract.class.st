@@ -190,7 +190,7 @@ TTFactoryAbstract >> make: aClassOrName andConfigure: configureBlock [
 
 	| aNewClass aNewInstance |
 	
-	aNewClass := Hub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := #class://aClassOrName  ifNil: [ ^nil ].
 	
 	aNewInstance := aNewClass basicNewForPotential: self .
 
@@ -257,7 +257,7 @@ TTFactoryAbstract >> tryAll: aClassOrName [
 
 	| aNewClass |
 	
-	aNewClass := Hub getClass: aClassOrName ifAbsent: [ ^ nil ].
+	aNewClass := #class://aClassOrName  ifNil: [ ^nil ].
 	
 	^ aNewClass withAllSubclassesDetectSuccessfulMakeFor: vault.
 

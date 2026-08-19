@@ -77,8 +77,8 @@ TTDictionaryConfigEnv class >> searchPathFor: whoami [
 		#cwd     -> ((hubId , '.env') asFileReference).
 		
 		"per user"
-		#'user-config' -> (File // #config / vmId / (hubId , '.env')) resolve.
-	  #'user-prefs' -> (File // #preferences / (vmId,'.', hubId , '.env') ) resolve.
+		#'user-config' -> (#file: // #config / vmId / (hubId , '.env')) resolve.
+	  #'user-prefs' -> (#file: // #preferences / (vmId,'.', hubId , '.env') ) resolve.
 	   
 	}
 ]

@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T15:51:52.84515+01:00"
+						"dateAndTimeString" : "2026-08-18T18:16:35.420634+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "This second ide looks better and more efficient than the first, we get directly to where we want to go. we want to go."
+				"string" : "This second idea looks better and more efficient than the first, we get directly to where we want to go. "
 			},
 			{
 				"__type" : "textSnippet",
@@ -103,14 +103,82 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T15:50:14.655098+01:00"
+						"dateAndTimeString" : "2026-08-18T18:18:11.625971+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "DqeP85z2S+2G0s8eh+QMkA=="
 				},
-				"code" : "#class: // #Object"
+				"code" : "(#class:// Object) == (#class: // #Object)"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-18T18:16:49.149907+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-18T18:42:44.180908+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "iVmKCyhiTNKcWLPPODjqLQ=="
+				},
+				"code" : "(#class:// #ˆHub)"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-18T18:43:07.725439+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-18T19:10:15.243004+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "YFOm4J70SbmEzFmqjQ0qcg=="
+				},
+				"code" : "(#client:// #TTWorldClockClient) @ #default"
 			}
 		]
 	},
@@ -133,12 +201,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-18T15:49:06.426604+01:00"
+			"dateAndTimeString" : "2026-08-18T15:52:08.271476+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Universal Smalltalk Locator (better idea)"
+		"title" : "Universal Smalltalk Resource Locator (better idea)"
 	},
 	"uid" : {
 		"__type" : "uuid",
