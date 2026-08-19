@@ -1,22 +1,6 @@
 Extension { #name : 'Pragma' }
 
 { #category : '*Tactical-Tools' }
-Pragma class >> // aClassNameOrClass [
-
-	"experimental"
-
-	^ Hub startDoubleSlashfromPragmaClass: self with: aClassNameOrClass
-]
-
-{ #category : '*Tactical-Tools' }
-Pragma >> // aClassNameOrClass [
-
-	"experimental"
-
-	^ Hub startDoubleSlashfromPragma: self with: aClassNameOrClass
-]
-
-{ #category : '*Tactical-Tools' }
 Pragma >> = aPragma [
 
 	self == aPragma ifTrue: [^true].

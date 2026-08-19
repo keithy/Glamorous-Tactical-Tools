@@ -18,12 +18,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Hub class >> // it [
-
-	^  Hub current startDoubleSlashFromHub: self to: it
-]
-
-{ #category : 'as yet unclassified' }
 Hub class >> classHttpClient [
 
 	<ttWall>

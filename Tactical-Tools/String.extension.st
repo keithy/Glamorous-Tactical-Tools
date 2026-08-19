@@ -1,14 +1,6 @@
 Extension { #name : 'String' }
 
 { #category : '*Tactical-Tools' }
-String >> // it [
-
-"start of // aka double dispatch"
-
-^ Hub current startDoubleSlashFromString: self with: it 
-]
-
-{ #category : '*Tactical-Tools' }
 String >> gtCloneGithubRepository [
 
 	<ttFix:'was misparsing organisation as https'>

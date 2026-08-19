@@ -71,7 +71,7 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-18T18:14:51.920372+01:00"
+									"dateAndTimeString" : "2026-08-19T06:57:52.924595+01:00"
 								}
 							},
 							"uid" : {
@@ -108,14 +108,14 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-18T11:23:55.792287+01:00"
+									"dateAndTimeString" : "2026-08-19T06:57:01.815806+01:00"
 								}
 							},
 							"uid" : {
 								"__type" : "uid",
 								"uidString" : "SqtHV9SqSbiTfFVj/nbFoA=="
 							},
-							"code" : "Hub current namespacedSearchPath\rHub"
+							"code" : "Hub current classSearchPath"
 						},
 						{
 							"__type" : "pharoSnippet",
@@ -243,7 +243,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T07:08:31.748153+01:00"
+						"dateAndTimeString" : "2026-08-19T06:56:27.733809+01:00"
 					}
 				},
 				"uid" : {
@@ -253,7 +253,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Persistent File Stores\nGo developers frequently embed file resources into their compiled binaries. Subclass {{gtClass:ImageStore}} to add a MemoryStore that is persisted along with the image for each of your projects. The new class nominates the origin name, using an annotation{{gtPragma:origin}}."
+				"string" : "### Persistent File Stores\nGo developers frequently embed file resources into their compiled binaries. Subclass {{gtClass:ImageStore}} to add a MemoryStore that is persisted along with the image for each of your projects. The new class nominates the origin name, using an annotation{{gtPragma:origin}}"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -280,14 +280,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T07:03:20.852927+01:00"
+						"dateAndTimeString" : "2026-08-19T06:58:23.664286+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "D+vZp1jZTuCHJi9VPNProQ=="
 				},
-				"code" : "File//#imageStore "
+				"code" : "#file://#imageStore "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T06:58:31.729719+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T06:58:33.409201+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "WweckQr4SK2Br+XsTwTiVA=="
+				},
+				"code" : "File"
 			},
 			{
 				"__type" : "textSnippet",

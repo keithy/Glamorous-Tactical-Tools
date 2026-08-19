@@ -71,7 +71,7 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-18T18:14:30.816448+01:00"
+									"dateAndTimeString" : "2026-08-19T06:57:52.924595+01:00"
 								}
 							},
 							"uid" : {
@@ -81,7 +81,7 @@
 							"paragraphStyle" : {
 								"__type" : "textStyle"
 							},
-							"string" : "### Why?\nThere are three reasons for setting up the environment at this early stage.\n1. to provide new, useful, and configurable, FileReference origins, like `#code` and `#project`. (add as many as you need).\n2. To ensure that all the parameters for the configuration phase search path, prior to reading the configuration into the  environment  `currentVault`:  {{gtMethod:TTDictionaryConfigEnv class>>traceCurrentSearchPath|show=button}}  \n3. To ready the values of  {{gtMethod:Hub class>>namespacedSearchPath}}  used by Tactical-Tools opt-in Namespaced Classes system (experimental).   {{gtMethod:Hub class>>namespacedSearchPath}}  "
+							"string" : "### Why?\nThere are three reasons for setting up the environment at this early stage.\n1. to provide new, useful, and configurable, FileReference origins, like `#code` and `#project`. (add as many as you need).\n2. To ensure that all the parameters are available for the configuration phase search path, prior to reading `currentVault`:  {{gtMethod:TTDictionaryConfigEnv class>>traceCurrentSearchPath|show=button}}  \n3. To ready the values of  {{gtMethod:Hub class>>namespacedSearchPath}}  used by Tactical-Tools opt-in Namespaced Classes system (experimental).   {{gtMethod:Hub class>>namespacedSearchPath}}  "
 						},
 						{
 							"__type" : "pharoSnippet",
@@ -108,14 +108,14 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-18T11:23:55.792287+01:00"
+									"dateAndTimeString" : "2026-08-19T06:57:01.815806+01:00"
 								}
 							},
 							"uid" : {
 								"__type" : "uid",
 								"uidString" : "SqtHV9SqSbiTfFVj/nbFoA=="
 							},
-							"code" : "Hub current namespacedSearchPath\rHub"
+							"code" : "Hub current classSearchPath"
 						},
 						{
 							"__type" : "pharoSnippet",
@@ -243,7 +243,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T07:08:31.748153+01:00"
+						"dateAndTimeString" : "2026-08-19T06:56:27.733809+01:00"
 					}
 				},
 				"uid" : {
@@ -253,7 +253,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Persistent File Stores\nGo developers frequently embed file resources into their compiled binaries. Subclass {{gtClass:ImageStore}} to add a MemoryStore that is persisted along with the image for each of your projects. The new class nominates the origin name, using an annotation{{gtPragma:origin}}."
+				"string" : "### Persistent File Stores\nGo developers frequently embed file resources into their compiled binaries. Subclass {{gtClass:ImageStore}} to add a MemoryStore that is persisted along with the image for each of your projects. The new class nominates the origin name, using an annotation{{gtPragma:origin}}"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -280,14 +280,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T07:03:20.852927+01:00"
+						"dateAndTimeString" : "2026-08-19T06:58:23.664286+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "D+vZp1jZTuCHJi9VPNProQ=="
 				},
-				"code" : "File//#imageStore "
+				"code" : "#file://#imageStore "
 			},
 			{
 				"__type" : "textSnippet",

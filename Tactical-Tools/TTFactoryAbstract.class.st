@@ -10,13 +10,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTFactoryAbstract class >> // aClassNameOrClass [
-
-^ Hub current startDoubleSlashFromFactoryClass: self to: aClassNameOrClass
-
-]
-
-{ #category : 'as yet unclassified' }
 TTFactoryAbstract class >> factoryId [
 
 	^ ((self name withoutPrefix: 'TT') withoutSuffix: 'Factory') asLowercase
