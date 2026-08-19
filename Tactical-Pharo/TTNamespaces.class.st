@@ -22,6 +22,14 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTNamespaces class >> automaticNamespaces [
+
+	"Sorted by size"
+	
+	^ #(GtCSS GtCS Gt4 GtL Gt GT Br Bl)
+]
+
+{ #category : 'as yet unclassified' }
 TTNamespaces class >> hintAuto: aClassName [
 	| found |
 	found := self knownNamespacesSortedBySize
@@ -29,13 +37,6 @@ TTNamespaces class >> hintAuto: aClassName [
 			ifNone: [ ^ 0 -> 0 ].
 
 	^ found size -> 0
-]
-
-{ #category : 'as yet unclassified' }
-TTNamespaces class >> knownNamespacesSortedBySize [
-	"until we have some form of registration"
-
-	^ self someNamespaces
 ]
 
 { #category : 'as yet unclassified' }
@@ -111,16 +112,10 @@ TTNamespaces class >> sizerFromPragma: pragma forName: aClassName [
 ]
 
 { #category : 'as yet unclassified' }
-TTNamespaces class >> someNamespaces [
-
-	^ #(GtCSS GtCS Gt4 GtL Gt GT Br Bl)
-]
-
-{ #category : 'as yet unclassified' }
 TTNamespaces class >> splitAutomatically: aClassName [
 	| found |
-	found := self knownNamespacesSortedBySize
-			detect: [ :prefix | aClassName beginsWith: prefix ]
+	found := self automaticNamespaces
+				detect: [ :prefix | aClassName beginsWith: prefix ]
 			ifNone: [ ^ 0 -> 0 ].
 
 	^ found size -> 0
