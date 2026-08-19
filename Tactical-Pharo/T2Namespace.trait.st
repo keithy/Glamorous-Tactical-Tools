@@ -7,7 +7,7 @@ Trait {
 
 { #category : 'namespace' }
 T2Namespace classSide >> isNamespaced [
-	<nsSize:#hint2:>
+	<namespaced:2>
 	^ true
 ]
 

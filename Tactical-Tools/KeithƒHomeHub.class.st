@@ -7,3 +7,9 @@ Class {
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
+
+{ #category : 'namespace' }
+KeithƒHomeHub class >> isNamespaced [
+	<namespaced:$ƒ>
+	^ true
+]

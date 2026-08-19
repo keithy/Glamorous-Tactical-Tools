@@ -7,7 +7,7 @@ Trait {
 
 { #category : 'namespace' }
 T3Namespace classSide >> isNamespaced [
-	<nsSize:#hint3:>
+	<namespaced:3>
 	^ true
 ]
 

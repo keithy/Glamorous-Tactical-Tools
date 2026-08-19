@@ -305,7 +305,7 @@ TTNotifyingHubAbstract class >> namedFileLocations [
 { #category : 'usl-schemes' }
 TTNotifyingHubAbstract class >> namespaced: aClassOrName [
  
-  ^ TTNamespacesRegistry namespaced: (self class: aClassOrName)
+  ^ TTNamespaces namespaced: (self class: aClassOrName)
 ]
 
 { #category : 'instance creation' }

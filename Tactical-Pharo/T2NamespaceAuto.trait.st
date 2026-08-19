@@ -7,6 +7,8 @@ Trait {
 
 { #category : 'namespace' }
 T2NamespaceAuto classSide >> isNamespaced [
+  <namespaced:#splitAutomatically:>
+  
 	^ true
 ]
 

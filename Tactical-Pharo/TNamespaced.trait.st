@@ -7,7 +7,7 @@ Trait {
 
 { #category : 'namespace' }
 TNamespaced classSide >> isNamespaced [
-	<nsSize: #hintCircumflex:>
+	<namespaced:#splitOnCircumflex:>
 	^ true
 ]
 

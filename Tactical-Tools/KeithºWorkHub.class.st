@@ -7,3 +7,9 @@ Class {
 	#package : 'Tactical-Tools',
 	#tag : 'Hub'
 }
+
+{ #category : 'namespace' }
+KeithºWorkHub class >> isNamespaced [
+	<namespaced:$º>
+	^ true
+]
