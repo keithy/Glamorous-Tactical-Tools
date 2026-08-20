@@ -18,43 +18,6 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T15:51:10.641384+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-18T18:16:35.420634+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "mk2m7XBKRsCOLZFNgwLJjg=="
-				},
-				"paragraphStyle" : {
-					"__type" : "textStyle"
-				},
-				"string" : "This second idea looks better and more efficient than the first, we get directly to where we want to go. "
-			},
-			{
-				"__type" : "textSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2026-08-18T15:49:55.715294+01:00"
 					}
 				},
@@ -242,14 +205,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:36:42.452468+01:00"
+						"dateAndTimeString" : "2026-08-20T19:45:30.262574+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "ADkQ1dFDQdyKTn1Rb6GJiQ=="
 				},
-				"code" : "#file://#preferences"
+				"code" : "(#file://#config) fullName"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -276,14 +239,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:38:19.378352+01:00"
+						"dateAndTimeString" : "2026-08-20T19:44:19.510783+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "PgLvgsdRTB6h0Po8hmC9zA=="
 				},
-				"code" : "#file://#home / 'test' "
+				"code" : "#file://'{config}/mine/${NICKNAME}' "
 			},
 			{
 				"__type" : "textSnippet",
@@ -588,14 +551,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:54:21.838472+01:00"
+						"dateAndTimeString" : "2026-08-20T19:40:27.485655+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "4e6SwLgvRX684Jse5Rnvjg=="
 				},
-				"code" : ""
+				"code" : "#file:// '{home}/.config/${NICKNAME}.env'"
 			}
 		]
 	},

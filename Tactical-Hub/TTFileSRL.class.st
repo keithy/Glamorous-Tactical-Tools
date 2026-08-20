@@ -135,7 +135,7 @@ TTFileSRL class >> startUpAtSystemPriority: isImageStarting [
 { #category : 'accessing' }
 TTFileSRL >> asFileReference [
 	 
-	 ^ self class fileReferenceFromString: (theTemplate templateResolveUsing: theHub getVault)  
+	 ^ fileReference ifNil: [ self class fileReferenceFromString: (theTemplate templateResolveUsing: theHub getVault) ]
 
 ]
 

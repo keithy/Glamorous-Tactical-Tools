@@ -242,14 +242,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:36:42.452468+01:00"
+						"dateAndTimeString" : "2026-08-20T19:45:30.262574+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "ADkQ1dFDQdyKTn1Rb6GJiQ=="
 				},
-				"code" : "#file://#preferences"
+				"code" : "(#file://#config) fullName"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -276,14 +276,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:38:19.378352+01:00"
+						"dateAndTimeString" : "2026-08-20T19:44:19.510783+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "PgLvgsdRTB6h0Po8hmC9zA=="
 				},
-				"code" : "#file://#home / 'test' "
+				"code" : "#file://'{config}/mine/${NICKNAME}' "
 			},
 			{
 				"__type" : "textSnippet",
@@ -588,14 +588,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:33:20.241349+01:00"
+						"dateAndTimeString" : "2026-08-20T19:40:27.485655+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "4e6SwLgvRX684Jse5Rnvjg=="
 				},
-				"code" : "#namespaced:// #TTWorldClockClient"
+				"code" : "#file:// '{home}/.config/${NICKNAME}.env'"
 			}
 		]
 	},
