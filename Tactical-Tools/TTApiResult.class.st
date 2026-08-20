@@ -12,7 +12,7 @@ Class {
 { #category : 'as yet unclassified' }
 TTApiResult >> client [
 
-	^ client
+	^ parent
 
 ]
 
@@ -45,8 +45,9 @@ TTApiResult >> getOutput [
 TTApiResult >> setRequest: aRequest [
 
 	super setRequest: aRequest.
+	handlers := request client handlers.
 
-	^ request
+	 
 ]
 
 { #category : 'as yet unclassified' }

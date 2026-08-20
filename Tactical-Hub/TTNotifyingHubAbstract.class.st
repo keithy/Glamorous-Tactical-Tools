@@ -136,7 +136,7 @@ TTNotifyingHubAbstract class >> getClass: aClassOrName [
 	 "Better, handles nil quietly, class already passthrough,
 	 and fall back through namespace lookup"
    
-   ^ #class://aClassOrName  ifNil: [  KeyNotFound signalFor: aClassOrName ]
+   ^ #class://aClassOrName  
    
 ]
 

@@ -27,6 +27,14 @@ TTRequestAbstract class >> isNamespaced [
 	^ true
 ]
 
+{ #category : 'initialization' }
+TTRequestAbstract >> begin [
+
+	client beginRequest: self.
+	
+	
+]
+
 { #category : 'accessing' }
 TTRequestAbstract >> client [
 	^ client
@@ -34,10 +42,9 @@ TTRequestAbstract >> client [
 
 { #category : 'initialization' }
 TTRequestAbstract >> initialize [
-
-	client makeInitializeRequest: self.
-	
-	
+	"Initialise as a pair, this may not do anything now as
+	the functionality has moved to #begin"
+	result initialize
 ]
 
 { #category : 'accessing' }
@@ -86,7 +93,8 @@ TTRequestAbstract >> setClient: anObject [
 
 { #category : 'initialization' }
 TTRequestAbstract >> setResult: anObject [
-	result := anObject
+	result := anObject.
+	result setRequest: self.
 ]
 
 { #category : 'accessing' }

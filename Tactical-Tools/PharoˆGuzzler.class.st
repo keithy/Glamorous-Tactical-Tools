@@ -13,9 +13,35 @@ Class {
 }
 
 { #category : 'instance creation' }
+PharoˆGuzzler class >> classApiRequest [
+
+	^ TTZincApiRequest
+]
+
+{ #category : 'as yet unclassified' }
+PharoˆGuzzler class >> http: aUrl [
+	| url |
+
+		url := (aUrl includesSubstring: 'http://')
+			ifFalse: [ 'http://' , aUrl ]
+			ifTrue: [ aUrl ].
+	^ self newForUrl: aUrl
+
+]
+
+{ #category : 'as yet unclassified' }
+PharoˆGuzzler class >> https: aUrl [
+	| url |
+	url := (aUrl includesSubstring: 'https://')
+			ifFalse: [ 'https://' , aUrl ]
+			ifTrue: [ aUrl ].
+	^ self newForUrl: url
+]
+
+{ #category : 'instance creation' }
 PharoˆGuzzler class >> makeZnClient [ 
 
-  ^ (Hub getClass: #ZnClient) new
+  ^ (#class: //#ZnClient) new
 ]
 
 { #category : 'instance creation' }
@@ -35,11 +61,19 @@ PharoˆGuzzler class >> newForScheme: aScheme [
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> newForUrl: aUrl [ 
+PharoˆGuzzler class >> newForScheme: aScheme url: aUrl [ 
 
   "In this case we have a chance to work OUR magic"
   
 	^ (self newForScheme: (aUrl copyUpTo: $:)) url: aUrl
+]
+
+{ #category : 'instance creation' }
+PharoˆGuzzler class >> newForUrl: aUrl [ 
+
+  "In this case we have a chance to work OUR magic"
+  
+	^ self newForScheme: (aUrl copyUpTo: $:) url: aUrl
 ]
 
 { #category : 'instance creation' }

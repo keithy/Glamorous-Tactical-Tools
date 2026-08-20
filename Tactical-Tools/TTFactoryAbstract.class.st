@@ -269,6 +269,6 @@ TTFactoryAbstract >> use: aNewInstance andConfigure: configureBlock [
 
 	aNewInstance ifNil: [ ^ nil ].
 
-	^ (configureBlock value: aNewInstance) initializeFor: self  
+	^ (configureBlock value: aNewInstance) initialize 
 																		
 ]

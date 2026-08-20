@@ -139,13 +139,6 @@ TTResult >> mapping: actionBlockSymbolArrayOrNil [
       mappers add: actionBlockSymbolArrayOrNil
 ]
 
-{ #category : 'accessing' }
-TTResult >> newRequest [
-
-	^ self request: self class requestClass new.	
-
-]
-
 { #category : 'as yet unclassified' }
 TTResult >> parse: actionBlockSymbolArrayOrNil [
 

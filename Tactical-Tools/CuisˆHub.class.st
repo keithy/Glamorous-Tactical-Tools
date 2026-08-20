@@ -9,5 +9,5 @@ Class {
 { #category : 'as yet unclassified' }
 CuisˆHub >> namespacedSearchPath [
 
-	^ #(Cuis)
+	^ #(Cuis) copyWithAll: (super namespacedSearchPath)
 ]

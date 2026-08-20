@@ -92,9 +92,11 @@ Hub class >> http: aClassOrName [
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> https: aClassOrName [
- 
-  ^ ((self class: aClassOrName) basicNewFor: self current) initialize
+Hub class >> https: aUrlOrClassSymbol [
+
+	^ ((#class:// #TTApiClient ) newFor: self) // aUrlOrClassSymbol
+ 	
+    
 ]
 
 { #category : 'browsing' }

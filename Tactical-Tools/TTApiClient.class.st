@@ -1,5 +1,5 @@
 Class {
-	#name : 'TTApiClientAbstract',
+	#name : 'TTApiClient',
 	#superclass : 'TTClientAbstract',
 	#instVars : [
 		'accept',
@@ -12,19 +12,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTApiClientAbstract class >> / endPoint [
+TTApiClient class >> / endPoint [
 
 	^ self new /  endPoint
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClientAbstract class >> > selector [ 
+TTApiClient class >> // aUrl [
+
+	^ self new //  aUrl
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClient class >> > selector [ 
 
 ^ self perform: selector
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClientAbstract class >> basicNewFor: aVaultable [  
+TTApiClient class >> basicNewFor: aVaultable [  
 
 	| basicNewClient |
 	
@@ -38,13 +44,7 @@ TTApiClientAbstract class >> basicNewFor: aVaultable [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClientAbstract class >> makeBasicResult [
-
-	^ TTApiResult basicNew
-]
-
-{ #category : 'as yet unclassified' }
-TTApiClientAbstract class >> makeOpenApiBrowser: aStreamable [
+TTApiClient class >> makeOpenApiBrowser: aStreamable [
 
 	^ (#GtOpenApiParser asClassIfAbsent: [ ^ nil ])  
 			readString: aStreamable
@@ -52,26 +52,32 @@ TTApiClientAbstract class >> makeOpenApiBrowser: aStreamable [
 	
 ]
 
+{ #category : 'as yet unclassified' }
+TTApiClient class >> makeResult [
+
+	^ TTApiResult new
+]
+
 { #category : 'accessing' }
-TTApiClientAbstract >> / anEndpoint [
+TTApiClient >> / anEndpoint [
 
 	^ self // self hostUrl / anEndpoint
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> // aUrl [
+TTApiClient >> // aUrl [
 
-	^ self newRequest //  aUrl
+	^ self makeRequest //  aUrl
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> applyAcceptTo: anApiRequest [
+TTApiClient >> applyAcceptTo: anApiRequest [
 
 	anApiRequest accept: accept  
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> applyAuthApiKeyTo: anApiRequest [
+TTApiClient >> applyAuthApiKeyTo: anApiRequest [
 
 	(vault at: #api_key) ifNotNil: [ :apiKey | 
 			
@@ -81,14 +87,14 @@ TTApiClientAbstract >> applyAuthApiKeyTo: anApiRequest [
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> applyAuthBasicTo: anApiRequest [
+TTApiClient >> applyAuthBasicTo: anApiRequest [
 
 	anApiRequest username: (vault at: #user) password: (vault at: #pass)
 	
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> applyAuthTo: anApiRequest [
+TTApiClient >> applyAuthTo: anApiRequest [
 
 	(vault at: #api_key)	
 			ifNotNil: [ self applyAuthApiKeyTo: anApiRequest ]
@@ -96,12 +102,12 @@ TTApiClientAbstract >> applyAuthTo: anApiRequest [
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> applyContentType: anApiRequest [
+TTApiClient >> applyContentType: anApiRequest [
 	anApiRequest headerAt: 'Content-Type' put: self contentType
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> applyHeadersTo: request [
+TTApiClient >> applyHeadersTo: request [
 	
 	self applyContentType: request.
 	self applyAcceptTo: request.
@@ -110,7 +116,7 @@ TTApiClientAbstract >> applyHeadersTo: request [
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> beHttp [
+TTApiClient >> beHttp [
 
 	"not sure if this will do the right thing"
 	hostUrl := hostUrl copyWithoutFirst: $s
@@ -118,67 +124,64 @@ TTApiClientAbstract >> beHttp [
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> contentType [
-
-	^ contentType ifNil: 'application/json'
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract >> delete: endpoint [  
-
-	^ (self /endpoint) useDELETE request
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract >> get: endpoint [  
-
-	^ (self / endpoint) useGET request
-]
-
-{ #category : 'openapi' }
-TTApiClientAbstract >> getIsAliveCheck [ 
+TTApiClient >> beginRequest: aRequest [
 	
-	^ false
-]
-
-{ #category : 'openapi' }
-TTApiClientAbstract >> getMyself [ 
-
-	^ nil
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract >> hostScheme [
-
-	^ self hostUrl copyUpTo: $:
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract >> hostUrl [
-
-	^ hostUrl ifNil: [ hostUrl := vault url ]
-]
-
-{ #category : 'openapi' }
-TTApiClientAbstract >> makeBasicRequestFor: aResult [
-
-	^ (super makeBasicRequestFor: aResult)
-				setScheme: self hostScheme;
-				yourself
-
-]
-
-{ #category : 'accessing' }
-TTApiClientAbstract >> makeInitializeRequest: aRequest [
-	
-	super makeInitializeRequest: aRequest.
+	super beginRequest: aRequest.
 	
 	self applyHeadersTo: aRequest
 	
 ]
 
+{ #category : 'accessing' }
+TTApiClient >> contentType [
+
+	^ contentType ifNil: 'application/json'
+]
+
+{ #category : 'accessing' }
+TTApiClient >> delete: endpoint [  
+
+	^ (self /endpoint) useDELETE request
+]
+
+{ #category : 'accessing' }
+TTApiClient >> get: endpoint [  
+
+	^ (self / endpoint) useGET request
+]
+
 { #category : 'openapi' }
-TTApiClientAbstract >> openApiBrowser [
+TTApiClient >> getIsAliveCheck [ 
+	
+	^ false
+]
+
+{ #category : 'openapi' }
+TTApiClient >> getMyself [ 
+
+	^ nil
+]
+
+{ #category : 'accessing' }
+TTApiClient >> handlers [
+
+^ nil
+]
+
+{ #category : 'accessing' }
+TTApiClient >> hostScheme [
+
+	^ self hostUrl copyUpTo: $:
+]
+
+{ #category : 'accessing' }
+TTApiClient >> hostUrl [
+
+	^ hostUrl ifNil: [ hostUrl := vault url ]
+]
+
+{ #category : 'openapi' }
+TTApiClient >> openApiBrowser [
 
    
   	^ self class makeOpenApiBrowser:self openApiFile
@@ -186,7 +189,7 @@ TTApiClientAbstract >> openApiBrowser [
 ]
 
 { #category : 'openapi' }
-TTApiClientAbstract >> openApiJson [
+TTApiClient >> openApiJson [
 
   | jsonFile url |
   
@@ -200,49 +203,49 @@ TTApiClientAbstract >> openApiJson [
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> useDELETE: endpoint [  
+TTApiClient >> useDELETE: endpoint [  
 
 	^ (self / endpoint) useDELETE request
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> useEndpoint: anEndpoint [
+TTApiClient >> useEndpoint: anEndpoint [
 
 	^ self // self hostUrl / anEndpoint
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> useGET: endpoint [  
+TTApiClient >> useGET: endpoint [  
 
 	^ (self / endpoint) useGET request
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> usePATCH: endpoint [  
+TTApiClient >> usePATCH: endpoint [  
 
 	^ (self /endpoint) usePATCH request
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> usePOST: endpoint [  
+TTApiClient >> usePOST: endpoint [  
 
 	^ (self /endpoint) usePOST request
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> usePUT: endpoint [  
+TTApiClient >> usePUT: endpoint [  
 
 	^ (self /endpoint) usePUT request
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> useUrl: aUrl [
+TTApiClient >> useUrl: aUrl [
 
 	^ self // aUrl 
 ]
 
 { #category : 'accessing' }
-TTApiClientAbstract >> vLatest [
+TTApiClient >> vLatest [
 
 	^ self // self hostUrl / 'api'
 ]

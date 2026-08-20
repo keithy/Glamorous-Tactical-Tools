@@ -104,6 +104,12 @@ PharoˆHub class >> iceRepositoryNamed: aString [
 	 
 ]
 
+{ #category : 'as yet unclassified' }
+PharoˆHub class >> namespacedSearchPath [
+
+	^ #(Pharo) copyWithAll: (super namespacedSearchPath)
+]
+
 { #category : 'environment' }
 PharoˆHub class >> openFileBrowser [
 
@@ -140,12 +146,6 @@ PharoˆHub >> namedFileLocations [
 
  	^ FileLocator  namedFileLocations
 	
-]
-
-{ #category : 'as yet unclassified' }
-PharoˆHub >> namespacedSearchPath [
-
-	^ #(Pharo)
 ]
 
 { #category : 'wall' }

@@ -1,0 +1,151 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T20:56:55.435593+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T20:56:57.445546+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Z6kIbooHTF2QCBgbB3GS4g=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "Glamorous Toolkit allows you to work with REST APIs out of the box.\n\nHere, we take a look at how we can play with the GitHub REST API. Although the case study is specific to GitHub, the approach is essentially the same when working with other REST APIs.\n\nIf you prefer a video introduction, have a look at [[Exploring the GitHub REST API in 7']] on YouTube."
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [
+						{
+							"__type" : "textSnippet",
+							"children" : {
+								"__type" : "snippets",
+								"items" : [ ]
+							},
+							"createEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"createTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2026-08-19T20:55:53.058776+01:00"
+								}
+							},
+							"editEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"editTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2026-08-19T20:57:25.927531+01:00"
+								}
+							},
+							"uid" : {
+								"__type" : "uid",
+								"uidString" : "nJK7sqVxQl2g50gbk5WZUQ=="
+							},
+							"paragraphStyle" : {
+								"__type" : "textStyle"
+							},
+							"string" : "A REST API allows you to download information about a software system in some format, typically JSON. The raw data is interesting, but cumbersome to work with. The *moldable development* approach in GT for turning this data into an “explainable system” is to *model the domain* by taking the raw data and wrapping it into domain entities. Then, we iteratively add tiny, contextual tools to these entities (*i.e.,* contextual views, actions, and searches) that make the domain entities into a *live, explorable model* answering questions about the domain — an *explainable system*.\n\nIn the case of the GitHub REST API, we obtain raw JSON data about an *organization* in GitHub (such as feenk), about its *repos*, their *contributors*, their commit *events*, and so on. We turn each of these into live, explorable domain entities by wrapping the raw data and adding contextual tools.\n\nLet's see this in action..."
+						}
+					]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T20:57:25.895877+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-19T20:57:25.895877+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "YZO/wgqLQumzEJKpsRq1Ig=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "# Overview of the approach"
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-19T20:54:26.273184+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-19T20:58:17.723442+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "Exploring the GitHub REST API - Old"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "17456bb5-2c48-4b47-a36a-e37bf8cb2a1c"
+	}
+}

@@ -14,16 +14,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTClientAbstract class >> // aClassNameOrClass [
-
-"Simplifies To: 
-(self basicNewFor: Hub current) initialize // aSymbolUrlStringOrClass
-"
-
-^ Hub current startDoubleSlashFromClientClass: self with: aClassNameOrClass
-]
-
-{ #category : 'as yet unclassified' }
 TTClientAbstract class >> asHub [
 	
 	"Any Client class can be a hub on its own resources"
@@ -66,29 +56,6 @@ TTClientAbstract class >> checkNewVault: aVaultable [
 TTClientAbstract class >> checkPotentialVault: aVault [
 
 	^ self subclassResponsibility
-]
-
-{ #category : 'factory' }
-TTClientAbstract class >> checkVault: aVaultable [  
-	
-	"the failblock pattern allows subclasses to inherit the whole method
-	 and build upon what we have here, rather than replace it"
-
-	| myVault |
-	
-	 (self checkPotentialVault: aVaultable ) ifFalse: [ ^ nil ].
-	
-	 myVault := (aVaultable getVault copy) 
-									appKey: self vaultAppKey;
-									optionsSelect: #default;
-									refresh;
-									yourself.
-								
-   (self checkMyNewVault: aVaultable ) ifFalse: [  ^ nil ].
-				
- 	^ myVault
-
-
 ]
 
 { #category : 'as yet unclassified' }
@@ -161,30 +128,6 @@ TTClientAbstract class >> makeBasicResult [
 	^ TTResult basicNew
 ]
 
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> makeBasicResultForClient: aClient [
-
-  ^ (self makeBasicResult) 
-  			basicSetupForClient: aClient
-  			yourself
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> makeBasicResultForModel: aClient [
-
-  ^ (self makeBasicResult) 
-  			basicSetupForModel: aClient
-  			yourself
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> makeBasicResultForResult: aClient [
-
-  ^ (self makeBasicResult) 
-  			basicSetupForResult: aClient
-  			yourself
-]
-
 { #category : 'factory' }
 TTClientAbstract class >> makeNewVaultFor: aVaultable [  
 	
@@ -231,10 +174,24 @@ TTClientAbstract class >> makeNewVaultsForAllOptionsOf: aVaultable [
 
 ]
 
+{ #category : 'accessing' }
+TTClientAbstract class >> makeResult [
+
+	^ TTResult new
+]
+
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> makeVaultEmpty [
 
 ^ TTVault newEmpty
+]
+
+{ #category : 'factory' }
+TTClientAbstract class >> newFor: aVaultable [
+	
+ 	^ (self basicNewFor:aVaultable ) initialize
+					 
+
 ]
 
 { #category : 'accessing' }
@@ -291,6 +248,12 @@ TTClientAbstract >> @ option [
 	self getVault @ option
 ]
 
+{ #category : 'factory' }
+TTClientAbstract >> beginRequest: aRequest [
+
+	aRequest isAuthRequired: self isAuthRequired  
+]
+
 { #category : 'as yet unclassified' }
 TTClientAbstract >> getUser [
 
@@ -323,48 +286,31 @@ TTClientAbstract >> gtVaultViewFor: aView [
 ]
 
 { #category : 'factory' }
-TTClientAbstract >> initializeFor: aVaultable [  
-
-	^ self initialize
-
-
-]
-
-{ #category : 'factory' }
-TTClientAbstract >> initializeFor: aVaultable ifFail: fBlock [
-
-	^ self initialize
-
-
-]
-
-{ #category : 'factory' }
 TTClientAbstract >> isAuthRequired [
 
 	^ false
 ]
 
 { #category : 'accessing' }
-TTClientAbstract >> makeBasicRequestFor: aResult [
+TTClientAbstract >> makeBasicRequest [ 
 
-	^ classTool ttClassApiRequest new
+	^ (classTool classApiRequest basicNew)
+			client: self;
+			initialize
 	
 ]
 
-{ #category : 'factory' }
-TTClientAbstract >> makeInitializeRequest: aRequest [
+{ #category : 'instance creation' }
+TTClientAbstract >> makeRequest [
 
-	aRequest isAuthRequired: self isAuthRequired  
+	 ^ (classTool classApiRequest basicNew)
+				setClient: self;
+				setResult: (self makeResult);
+		 	 initialize
 ]
 
 { #category : 'instance creation' }
-TTClientAbstract >> newRequest [
-
-	 ^ self newResult newRequest
-]
-
-{ #category : 'instance creation' }
-TTClientAbstract >> newResult [
+TTClientAbstract >> makeResult [
 
 	"The client keeps the last result context as convenience for the user.
 	This is multi-threaded unsafe etc.
@@ -374,7 +320,7 @@ TTClientAbstract >> newResult [
 	Each result-request pair keeps a reference to the client, so that it is
 	easy to make further api calls of its own"
 
-	^ result := self class makeBasicResultForClient: self
+	^ result := self class makeResult 
 ]
 
 { #category : 'accessing' }

@@ -6,7 +6,6 @@ Class {
 		'stdout',
 		'stderr',
 		'output',
-		'client',
 		'handlers'
 	],
 	#category : 'Tactical-Tools-Request-Result',
@@ -27,28 +26,11 @@ TTResultAbstract >> apply: aBoltOn [
 ]
 
 { #category : 'accessing' }
-TTResultAbstract >> basicSetupForClient: aClient [
-
-	client := aClient.
-	handlers := aClient handlers.
-]
-
-{ #category : 'accessing' }
-TTResultAbstract >> basicSetupForModel: aModel [
-
-	client := aModel
-]
-
-{ #category : 'accessing' }
-TTResultAbstract >> basicSetupForResult: aResult [
-
-	client := aResult
-]
-
-{ #category : 'accessing' }
 TTResultAbstract >> client [
-
-	^ client
+	"Have removed the need for an instance slot for client/parent
+	 assuming that we always have a request, 
+	 this may not be the case"
+	^ request client
 ]
 
 { #category : 'as yet unclassified' }
@@ -109,15 +91,11 @@ TTResultAbstract >> handlersOnStatus: sStatus do: aBlockReturningBool [
 ]
 
 { #category : 'accessing' }
-TTResultAbstract >> newRequest [
-
-	^ (self setRequest: (client makeBasicRequestFor: self)) initialize
-
-]
-
-{ #category : 'accessing' }
 TTResultAbstract >> parent [
-	^ client
+	"Have removed the need for an instance slot for client/parent
+	 assuming that we always have a request, 
+	 this may not be the case"
+	^ request client
 ]
 
 { #category : 'accessing' }
@@ -163,9 +141,8 @@ TTResultAbstract >> requestUsing: aBlock [
 TTResultAbstract >> setRequest: aRequest [
 
 	request := aRequest.	
-	request setResult: self.
-	
-	^ request
+	 
+	 
 ]
 
 { #category : 'as yet unclassified' }
@@ -192,7 +169,7 @@ TTResultAbstract >> statusVerify [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> stderrAppend: aMessage [
 	 
-	 stderr := String streamingContents: 
+	 stderr := String streamContents: 
 	 
 	 	[ :str | (str << (stderr ifNil: '') << aMessage) cr ]
 ]

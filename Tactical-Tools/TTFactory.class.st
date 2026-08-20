@@ -7,9 +7,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTFactory >> // aClassOrAppKeyString [
+TTFactory class >> // aClassOrAppKeyString [
 
   ^ self askAll: aClassOrAppKeyString
+]
+
+{ #category : 'as yet unclassified' }
+TTFactory >> // aClassOrAppKeyString [
+
+  ^ self new askAll: aClassOrAppKeyString
 ]
 
 { #category : 'as yet unclassified' }

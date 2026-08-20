@@ -45,7 +45,15 @@ TTApiRequest >> / aPath [
 { #category : 'construction' }
 TTApiRequest >> // uri [
 	
-	self uri: uri
+	(self uri: uri) begin
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> begin [
+
+  guzzler := self class makeHttpClientForScheme: scheme.
+   
+  super begin 
 ]
 
 { #category : 'accessing' }
@@ -54,14 +62,6 @@ TTApiRequest >> fullUrl [
 	^ String streamContents: [ :stream | stream << scheme << ':' << url ]
 			
 		 	
-]
-
-{ #category : 'as yet unclassified' }
-TTApiRequest >> initialize [
-
-  guzzler := self class makeHttpClientForScheme: scheme.
-   
-  super initialize 
 ]
 
 { #category : 'accessing' }
@@ -131,12 +131,9 @@ TTApiRequest >> type [
 
 { #category : 'accessing' }
 TTApiRequest >> uri: aUri [
-
-	"scheme was given at the earliest opportunity,
-	we should already have it, there is some opportunity
-	for confusion between then and now."
-
-	url := aUri copyAfter: $:
+ 
+  scheme := aUri copyUpTo: $:.
+	url := aUri copyAfter: $:.
 ]
 
 { #category : 'accessing' }

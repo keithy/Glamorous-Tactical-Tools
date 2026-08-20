@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTOneJobManySuppliers',
-	#superclass : 'TTApiClientAbstract',
+	#superclass : 'TTApiClient',
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
 	#tag : 'Request-Result'
