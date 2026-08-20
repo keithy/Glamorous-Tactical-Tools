@@ -83,7 +83,7 @@ TTRequestAbstract >> parameters [
 
 { #category : 'accessing' }
 TTRequestAbstract >> result [
-	^ result
+	^ result ifNil: [ self ]
 ]
 
 { #category : 'initialization' }
@@ -94,7 +94,7 @@ TTRequestAbstract >> setClient: anObject [
 { #category : 'initialization' }
 TTRequestAbstract >> setResult: anObject [
 	result := anObject.
-	result setRequest: self.
+ 
 ]
 
 { #category : 'accessing' }

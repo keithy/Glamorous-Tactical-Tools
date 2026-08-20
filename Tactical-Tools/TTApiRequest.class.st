@@ -45,7 +45,7 @@ TTApiRequest >> / aPath [
 { #category : 'construction' }
 TTApiRequest >> // uri [
 	
-	(self uri: uri) begin
+	(self setUri: uri) begin
 ]
 
 { #category : 'as yet unclassified' }
@@ -101,11 +101,19 @@ TTApiRequest >> prepareQuery [
 ]
 
 { #category : 'accessing' }
+TTApiRequest >> request [
+
+	^ self
+]
+
+{ #category : 'accessing' }
 TTApiRequest >> send [
 
 	self prepare.
  
-	^ guzzler execute 
+	guzzler execute.
+	
+	^ self
 ]
 
 { #category : 'initialization' }
@@ -130,13 +138,6 @@ TTApiRequest >> type [
 ]
 
 { #category : 'accessing' }
-TTApiRequest >> uri: aUri [
- 
-  scheme := aUri copyUpTo: $:.
-	url := aUri copyAfter: $:.
-]
-
-{ #category : 'accessing' }
 TTApiRequest >> useDELETE [
 
 	type := #DELETE.
@@ -149,7 +150,7 @@ TTApiRequest >> useGET [
 
 	type := #GET.
 	
-	^ result
+	^ self result
 ]
 
 { #category : 'accessing' }

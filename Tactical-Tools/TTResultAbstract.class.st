@@ -53,8 +53,6 @@ TTResultAbstract >> getOutput [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> getStderr [
 
-	stderr ifNil: [ ^ stderr ].
-	
 	stderr := self getOutput stderr.
 	
 	^ stderr 
@@ -141,7 +139,7 @@ TTResultAbstract >> requestUsing: aBlock [
 TTResultAbstract >> setRequest: aRequest [
 
 	request := aRequest.	
-	 
+  request setResult: self.
 	 
 ]
 

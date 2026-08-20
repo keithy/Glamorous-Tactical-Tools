@@ -29,7 +29,7 @@ Hub class >> classHttpClient [
 { #category : 'usl-schemes' }
 Hub class >> client: aClassOrName [
  
-  ^ ((self class: aClassOrName) basicNewFor: self current) initialize
+  ^ ((self class: aClassOrName) newFor: self current)  
 	
 	
 ]
@@ -93,8 +93,10 @@ Hub class >> http: aClassOrName [
 
 { #category : 'usl-schemes' }
 Hub class >> https: aUrlOrClassSymbol [
-
-	^ ((#class:// #TTApiClient ) newFor: self) // aUrlOrClassSymbol
+		
+	aUrlOrClassSymbol isSymbol ifTrue: [ ^ self client: aUrlOrClassSymbol ].
+	
+	^ ((self class: #TTApiClient ) newFor: self) // aUrlOrClassSymbol
  	
     
 ]

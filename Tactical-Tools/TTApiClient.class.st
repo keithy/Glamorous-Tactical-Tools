@@ -14,13 +14,13 @@ Class {
 { #category : 'as yet unclassified' }
 TTApiClient class >> / endPoint [
 
-	^ self new /  endPoint
+	^ (self basicNewFor: Hub current) /  endPoint
 ]
 
 { #category : 'as yet unclassified' }
 TTApiClient class >> // aUrl [
 
-	^ self new //  aUrl
+	^ (self basicNewFor: Hub current) //  aUrl
 ]
 
 { #category : 'as yet unclassified' }
@@ -67,13 +67,13 @@ TTApiClient >> / anEndpoint [
 { #category : 'accessing' }
 TTApiClient >> // aUrl [
 
-	^ self makeRequest //  aUrl
+	^ self makeResult request //  aUrl
 ]
 
 { #category : 'accessing' }
 TTApiClient >> applyAcceptTo: anApiRequest [
 
-	anApiRequest accept: accept  
+	accept ifNotNil: [ anApiRequest accept:  accept ]
 ]
 
 { #category : 'accessing' }

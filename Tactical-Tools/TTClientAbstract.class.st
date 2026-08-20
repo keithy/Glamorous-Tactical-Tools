@@ -122,10 +122,10 @@ TTClientAbstract class >> isNamespaced [
 	^ true
 ]
 
-{ #category : 'accessing' }
-TTClientAbstract class >> makeBasicResult [
+{ #category : 'as yet unclassified' }
+TTClientAbstract class >> isThin [
 
-	^ TTResult basicNew
+	^false
 ]
 
 { #category : 'factory' }
@@ -291,27 +291,15 @@ TTClientAbstract >> isAuthRequired [
 	^ false
 ]
 
-{ #category : 'accessing' }
-TTClientAbstract >> makeBasicRequest [ 
-
-	^ (classTool classApiRequest basicNew)
-			client: self;
-			initialize
-	
-]
-
 { #category : 'instance creation' }
 TTClientAbstract >> makeRequest [
-
-	 ^ (classTool classApiRequest basicNew)
-				setClient: self;
-				setResult: (self makeResult);
-		 	 initialize
+	^ classTool classApiRequest basicNew
+		setClient: self;
+		initialize
 ]
 
 { #category : 'instance creation' }
 TTClientAbstract >> makeResult [
-
 	"The client keeps the last result context as convenience for the user.
 	This is multi-threaded unsafe etc.
 	
@@ -320,7 +308,19 @@ TTClientAbstract >> makeResult [
 	Each result-request pair keeps a reference to the client, so that it is
 	easy to make further api calls of its own"
 
-	^ result := self class makeResult 
+	self class isThin ifTrue: [ ^ self makeResultThin ].
+	
+	^ result := self class makeResult
+			setRequest: self makeRequest;
+			initialize
+]
+
+{ #category : 'accessing' }
+TTClientAbstract >> makeResultThin [
+	result := self makeRequest.
+	result setResult: result.
+	^ result
+
 ]
 
 { #category : 'accessing' }

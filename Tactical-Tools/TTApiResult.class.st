@@ -12,7 +12,7 @@ Class {
 { #category : 'as yet unclassified' }
 TTApiResult >> client [
 
-	^ parent
+	^ request client
 
 ]
 
@@ -39,6 +39,12 @@ TTApiResult >> getOutput [
 	self statusVerify ifFalse: [ self error: 'Unhandled API Error' ].  
 	
 	^ output
+]
+
+{ #category : 'as yet unclassified' }
+TTApiResult >> getStderr [
+
+	^ stderr ifNil: ''
 ]
 
 { #category : 'as yet unclassified' }

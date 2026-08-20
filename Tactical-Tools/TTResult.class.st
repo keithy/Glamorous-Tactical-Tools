@@ -208,10 +208,3 @@ TTResult >> request [
 TTResult >> request: anObject [
 	request := anObject
 ]
-
-{ #category : 'as yet unclassified' }
-TTResult >> ˆmap: actionBlockSymbolArrayOrNil [
-
-	"synonym"
-	self mapping: actionBlockSymbolArrayOrNil
-]
