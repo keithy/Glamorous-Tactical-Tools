@@ -135,9 +135,8 @@ TTFileSRL class >> startUpAtSystemPriority: isImageStarting [
 { #category : 'accessing' }
 TTFileSRL >> asFileReference [
 	 
-	self resolve.
-	
-	^ fileReference
+	 ^ self class fileReferenceFromString: (theTemplate templateResolveUsing: theHub getVault)  
+
 ]
 
 { #category : 'accessing' }
@@ -146,13 +145,19 @@ TTFileSRL >> fileReference: anObject [
 ]
 
 { #category : 'accessing' }
+TTFileSRL >> printOn: str [
+
+	self asFileReference printOn: str
+
+]
+
+{ #category : 'accessing' }
 TTFileSRL >> resolve [
+	
 	"early bound resolution"
 
-	fileReference
-		ifNil: [ fileReference := self class
-					fileReferenceFromString: (theTemplate templateResolveUsing: theHub getVault) ].
-	^ fileReference
+	^ fileReference ifNil: [ fileReference := self asFileReference ]
+ 
 ]
 
 { #category : 'accessing' }

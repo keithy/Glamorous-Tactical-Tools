@@ -86,6 +86,12 @@ TTStringTemplate >> setTemplate: anObject [
 	template := anObject
 ]
 
+{ #category : 'printing' }
+TTStringTemplate >> size [ 
+
+	^ template size
+]
+
 { #category : 'accessing' }
 TTStringTemplate >> template [
 	^ template
@@ -103,4 +109,10 @@ TTStringTemplate >> templateResolveUsing: aVault [
 				whileFalse: [ | var |
 					var := in upTo: $}.
 					out nextPutAll: ((aVault lookup: var) ifNil: [ var ]) ] ]
+]
+
+{ #category : 'printing' }
+TTStringTemplate >> value [ 
+
+	^ template 
 ]
