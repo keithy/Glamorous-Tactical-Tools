@@ -27,9 +27,9 @@ Hub class >> classHttpClient [
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> client: aClassOrName [
+Hub class >> client: aClassNameOrSymbol [
  
-  ^ ((self class: aClassOrName) newFor: self current)  
+  ^ ((self class: aClassNameOrSymbol) newFor: self current)  
 	
 	
 ]
@@ -41,10 +41,9 @@ Hub class >> factory: aClassOrName [
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> file: anOriginClassOrString [
+Hub class >> file: aThing [
  
-	^ (TTFileResourceLocator newStart: anOriginClassOrString) next
-	
+	^ (self fileSRL: aThing) asFileReference
 	
 ]
 
@@ -54,24 +53,17 @@ Hub class >> fileReferenceFromString: aString [
   <ttWall>
 
   "prefer #file: // aThing"
-	^ TTFileResourceLocator fileReferenceFromString: aString
+	^ TTFileSRL fileReferenceFromString: aString
 	
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> fileX: anOriginClassOrString [
-
-	"previous implementation"
-	| aClass |
-	
-	"Handle known origin SYMBOLS (cache?)"
-	(FileLocator supportedOrigins includes: anOriginClassOrString)
-		ifTrue: [ ^ FileLocator origin: anOriginClassOrString ].
+Hub class >> fileSRL: aThing [
  
-  "are we a class"
-   anOriginClassOrString isClass ifTrue: [ ^ self fileReferenceFrom: anOriginClassOrString ].
-
-	^ aClass fileReferenceFrom: anOriginClassOrString
+  "as file: but late bound to environment"
+	^ TTFileSRL fromHub: self current fileWith: aThing
+	
+	
 ]
 
 { #category : 'environment' }
@@ -86,19 +78,19 @@ Hub class >> gt [
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> http: aClassOrName [
- 
-  ^ ((self class: aClassOrName) basicNewFor: self current) beHttp initialize
+Hub class >> http: aThing [
+	(aThing isClass or: [ aThing isSymbol])
+		ifTrue: [ ^ TTClassSRL fromHub: self current httpWithClass: aThing ].
+
+	^ (self http: TTApiThinClient) // aThing	"string or Symbol"
 ]
 
 { #category : 'usl-schemes' }
-Hub class >> https: aUrlOrClassSymbol [
-		
-	aUrlOrClassSymbol isSymbol ifTrue: [ ^ self client: aUrlOrClassSymbol ].
-	
-	^ ((self class: #TTApiClient ) newFor: self) // aUrlOrClassSymbol
- 	
-    
+Hub class >> https: aThing [
+	(aThing isClass or: [ aThing isSymbol])
+		ifTrue: [ ^ TTClassSRL fromHub: self current httpsWithClass: aThing ].
+
+	^ (self https: TTApiThinClient) // aThing	"string or Symbol"
 ]
 
 { #category : 'browsing' }
@@ -237,4 +229,15 @@ Hub class >> startDoubleSlashfromPragma: anObject with: aClassNameOrClass [
 Hub class >> startDoubleSlashfromPragmaClass: anObject with: aClassNameOrClass [ 
 
 	"So experimental, do not know what it is for yet"
+]
+
+{ #category : 'usl-schemes' }
+Hub class >> url: aThing [
+
+	"opportunity to defer decision to a class goes via SRL"
+	(aThing isClass or: [ aThing isSymbol])
+		ifTrue: [ ^ TTClassSRL fromHub: self current urlWithClass: aThing ].
+
+  "direct action policy determined locally by the hub"
+	^ (self url: TTApiThinClient) // aThing	"string"
 ]

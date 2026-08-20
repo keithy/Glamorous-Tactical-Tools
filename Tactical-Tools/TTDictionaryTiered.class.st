@@ -74,7 +74,7 @@ TTDictionaryTiered >> at: aKey ifPresent: pBlock [
 	
 	"bottleneck method that allows us to act as a dictionary, for lookup at least"
 	
-	^ self tiersCollect: [ :t | t wrappedDictionary at: aKey ifPresent: [ :v | ^v ]
+	^ self tiersCollect: [ :t | t wrappedDictionary at: aKey ifPresent: [ :v | ^ pBlock value: v ]
 	] on: OrderedCollection new
 
 ]

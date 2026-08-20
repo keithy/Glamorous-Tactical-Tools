@@ -31,29 +31,8 @@ TTVaultValueWriter >> dict: theDict at: aKeyWithSuffix write: aValue [
 ]
 
 { #category : 'accessing' }
-TTVaultValueWriter >> selectorFor: aKey [
-	self class suffixReaderMap
-		do: [ :assoc | 
-			| suffix selector |
-			suffix := assoc key.
-			selector := assoc value.
-
-			(aKey asUppercase endsWith: suffix)
-				ifTrue: [ ^ selector -> (self trimKey: aKey removing: suffix) ] ].
-
-	^ #valueAsSame: -> aKey
-]
-
-{ #category : 'accessing' }
 TTVaultValueWriter >> suffixFor: aKey [
 	^ self class suffixMap detect: [ :suffix | aKey endsWith: suffix ] ifNone: ''
-]
-
-{ #category : 'accessing' }
-TTVaultValueWriter >> trimKey: key removing: suffix [
-	^ (self class suffixesToRemove includes: suffix)
-		ifTrue: [ key copyFrom: 1 to: key size - suffix size ]
-		ifFalse: [ key ]
 ]
 
 { #category : 'as yet unclassified' }

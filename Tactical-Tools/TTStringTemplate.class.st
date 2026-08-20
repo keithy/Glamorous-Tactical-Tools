@@ -10,6 +10,15 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTStringTemplate class >> example [
+
+  ^ (self newFrom: 'This is a test for ${NICKNAME} and the ${HOME} team') templateResolveUsing: Hub current getVault 
+ 
+ 
+
+]
+
+{ #category : 'as yet unclassified' }
 TTStringTemplate class >> newFrom: aString [
 
 	"'*${*}*' match: 'h${ello}'"
@@ -84,13 +93,14 @@ TTStringTemplate >> template [
 
 { #category : 'printing' }
 TTStringTemplate >> templateResolveUsing: aVault [
+	| in |
+	in := template readStream.
 
-	| simpler |
-	
-	simpler := template replaceAll: '${' with: '}'.
-	
- ^ '' join:	((simpler splitOn: '}') pairsCollect: [ :a :b | a , (aVault lookup: b) ])
-	
-	
-
+	^ String
+		streamContents: [ :out | 
+			[ out nextPutAll: (in upToAll: '${').
+			in atEnd ]
+				whileFalse: [ | var |
+					var := in upTo: $}.
+					out nextPutAll: ((aVault lookup: var) ifNil: [ var ]) ] ]
 ]

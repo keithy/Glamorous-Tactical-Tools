@@ -525,11 +525,11 @@ TTVaultAbstract >> lookup: aKey [
 
 { #category : 'accessing' }
 TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
-  ^ self lookup: aKey ifPresentDontResolve: [ :v | ^ pBlock value: (v templateResolveUsing: self) ] 
+  ^ self lookup: aKey ifPresentBasic: [ :v | ^ pBlock value: (v templateResolveUsing: self) ] 
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> lookup: aKey ifPresentDontResolve: pBlock [
+TTVaultAbstract >> lookup: aKey ifPresentBasic: pBlock [
 	"
 	search = #( #(options default) #(config) )
 	attempt1, receiver is self (theVault)
@@ -542,10 +542,12 @@ TTVaultAbstract >> lookup: aKey ifPresentDontResolve: pBlock [
 
 	self search
 		do: [ :attempt | 
-			(attempt inject: start into: [ :target :each | target at: each ])
-				at: aKey
-				ifPresent: [ :v | ^ pBlock value: v ] ].
-
+			| found |
+			found := attempt inject: start into: [ :target :each | target at: each ifAbsent:  [ nil ] ].
+			
+			found ifNotNil: [ :dict | dict at: aKey ifPresent: [ :v | ^ pBlock value: v  ]].
+    ].
+  
 	^ nil
 ]
 
@@ -572,10 +574,6 @@ TTVaultAbstract >> lookupStart [
 			at: #config put: self config;
 			at: #options put: self options;
 			yourself.
- 
-	 
-	
-	
 ]
 
 { #category : 'accessing' }

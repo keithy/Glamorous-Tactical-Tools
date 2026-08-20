@@ -69,6 +69,10 @@ TTHoldem >> / aThing [
 ]
 
 { #category : 'accessing' }
+TTHoldem >> // anotherThing [ 
+]
+
+{ #category : 'accessing' }
 TTHoldem >> applySlashTo: aClass [
 
 self isSymbol ifTrue: [ ^ aClass new perform: givenSymbolClassOrString ]
