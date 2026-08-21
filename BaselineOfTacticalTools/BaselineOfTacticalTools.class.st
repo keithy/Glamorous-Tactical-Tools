@@ -9,10 +9,10 @@ Class {
 BaselineOfTacticalTools class >> initializeAll [
 	"url -> usl - universal smalltalk locator"
 
-	(#class: // #TTStartUpShutDownSubsystem) initialize.
-	(#class: // #TTNotifyingHubAbstract) initialize.
-	(#class: // #TTImageStoreResolver) initialize.
-	(#class: // #Hub) initialize.
+	(#class:// #TTStartUpShutDownSubsystem) initialize.
+	(#class:// #TTNotifyingHubAbstract) initialize.
+	(#class:// #TTImageStoreResolver) initialize.
+	(#class:// #Hub) initialize.
 ]
 
 { #category : 'as yet unclassified' }

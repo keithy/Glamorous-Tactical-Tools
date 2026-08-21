@@ -1,14 +1,6 @@
 Extension { #name : 'Class' }
 
 { #category : '*Tactical-Tools' }
-Class class >> / aStringable [
-
-	"#class:/ #Person "
-
-	^ (#class://aStringable ) new 
-]
-
-{ #category : '*Tactical-Tools' }
 Class >> / this [
 
 	^ (TTHoldem newStart: this) applySlashTo: self

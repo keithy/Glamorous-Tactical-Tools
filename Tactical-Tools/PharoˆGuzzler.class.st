@@ -41,7 +41,7 @@ PharoˆGuzzler class >> https: aUrl [
 { #category : 'instance creation' }
 PharoˆGuzzler class >> makeZnClient [ 
 
-  ^ (#class: //#ZnClient) new
+  ^ (#class://#ZnClient) new
 ]
 
 { #category : 'instance creation' }

@@ -158,23 +158,9 @@ TTNotifyingHubAbstract class >> getClass: aClassOrName ifAbsent: aBlock [
 ]
 
 { #category : 'instance creation' }
-TTNotifyingHubAbstract class >> getClass: circumflexAndClassName search: aList [
-	aList
-		do: [ :ea | 
-			| namespace |
-			namespace := (ea first = $$) ifFalse: [ ea ] ifTrue: [ self getEnv: ea ].
-
-			namespace
-				ifNotNil: [ (self getClass: namespace , circumflexAndClassName)
-						ifNotNil: [ :found | ^ found ] ] ].
-
-	^ self getClass: (circumflexAndClassName copyWithoutFirst)
-]
-
-{ #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClassSearchPath [
 	^ (self namespacedSearchPath
-					collect: [ :ea | ea first = $$ ifTrue: [ self getEnv: ea ] ifFalse: [ ea ] ]
+					collect: [ :ea | ea first = $$ ifTrue: [ #env://ea ] ifFalse: [ ea ] ]
 					thenSelect: #notNil) asArray
 ]
 

@@ -1,6 +1,6 @@
 Class {
-	#name : 'TTFileSRL',
-	#superclass : 'Object',
+	#name : 'SRLFile',
+	#superclass : 'SRLRouter',
 	#instVars : [
 		'fileReference',
 		'theHub',
@@ -11,37 +11,44 @@ Class {
 		'NamedLocations',
 		'OriginRegex'
 	],
-	#category : 'Tactical-Hub-Browser',
-	#package : 'Tactical-Hub',
-	#tag : 'Browser'
+	#category : 'Tactical-SRL-Schemes',
+	#package : 'Tactical-SRL',
+	#tag : 'Schemes'
 }
 
 { #category : 'accessing' }
-TTFileSRL class >> exampleEnvVar [
+SRLFile class >> canRoute: aSymbol [
 
-	<gtExample>
-	
-	^ #fileSRL:// '{home}/.config/${NICKNAME}.env'
+	^ aSymbol == #file:
+
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> exampleHome [
+SRLFile class >> exampleEnvVar [
 
 	<gtExample>
 	
-	^ #file:// '{home}/.config'
+	^ #file:/ '{home}/.config/${NICKNAME}.env'
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> exampleNamedLocation [
+SRLFile class >> exampleHome [
 
 	<gtExample>
 	
-	^ #file://  #home / '.config' 
+	^ #file:/ '{home}/.config'
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> fileReferenceFromString: aString [
+SRLFile class >> exampleNamedLocation [
+
+	<gtExample>
+	
+	^ #file:/  #home / '.config' 
+]
+
+{ #category : 'accessing' }
+SRLFile class >> fileReferenceFromString: aString [
 	
 	<ttWall>
 	
@@ -65,7 +72,7 @@ TTFileSRL class >> fileReferenceFromString: aString [
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> fileReferenceFromSymbol: aSymbol [
+SRLFile class >> fileReferenceFromSymbol: aSymbol [
 	
 	<ttWall>
 	
@@ -74,7 +81,7 @@ TTFileSRL class >> fileReferenceFromSymbol: aSymbol [
 ]
 
 { #category : 'usl-schemes' }
-TTFileSRL class >> fromHub: aHub fileWith: aThing [ 
+SRLFile class >> fromHub: aHub fileWith: aThing [ 
 
  	aThing isClass
 			ifTrue: [ ^ self fromHub: aHub fileWithClass: aThing ].
@@ -89,7 +96,7 @@ TTFileSRL class >> fromHub: aHub fileWith: aThing [
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> fromHub: aHub fileWithClass: aClass [
+SRLFile class >> fromHub: aHub fileWithClass: aClass [
 	^ self basicNew
 		theHub: aHub;
 		theClass: aClass;
@@ -97,7 +104,7 @@ TTFileSRL class >> fromHub: aHub fileWithClass: aClass [
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> fromHub: aHub fileWithString: aString [
+SRLFile class >> fromHub: aHub fileWithString: aString [
 	^ self basicNew
 		theHub: aHub;
 		theTemplate: (TTStringTemplate newFrom: aString);
@@ -105,7 +112,7 @@ TTFileSRL class >> fromHub: aHub fileWithString: aString [
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> fromHub: aHub fileWithSymbol: aSymbol [
+SRLFile class >> fromHub: aHub fileWithSymbol: aSymbol [
 	^ self basicNew
 		theHub: aHub;
 		setFileReference: (self fileReferenceFromSymbol: aSymbol);
@@ -113,13 +120,13 @@ TTFileSRL class >> fromHub: aHub fileWithSymbol: aSymbol [
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> namedLocations [
+SRLFile class >> namedLocations [
 
 	^ NamedLocations ifNil: [ NamedLocations := FileLocator  namedFileLocations ]
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> reset [
+SRLFile class >> reset [
 
 	  NamedLocations := nil.
 	  OriginRegex := '\{([a-zA-Z]+)\}(.*)' asRegex.
@@ -127,32 +134,32 @@ TTFileSRL class >> reset [
 ]
 
 { #category : 'accessing' }
-TTFileSRL class >> startUpAtSystemPriority: isImageStarting [
+SRLFile class >> startUpAtSystemPriority: isImageStarting [
 	<ttStartUp>
 	self reset
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> asFileReference [
+SRLFile >> asFileReference [
 	 
 	 ^ fileReference ifNil: [ self class fileReferenceFromString: (theTemplate templateResolveUsing: theHub getVault) ]
 
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> fileReference: anObject [
+SRLFile >> fileReference: anObject [
 	fileReference := anObject
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> printOn: str [
+SRLFile >> printOn: str [
 
 	self asFileReference printOn: str
 
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> resolve [
+SRLFile >> resolve [
 	
 	"early bound resolution"
 
@@ -161,16 +168,16 @@ TTFileSRL >> resolve [
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> setFileReference: anObject [
+SRLFile >> setFileReference: anObject [
 	fileReference := anObject
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> theHub: aHub [
+SRLFile >> theHub: aHub [
 	theHub := aHub
 ]
 
 { #category : 'accessing' }
-TTFileSRL >> theTemplate: aTemplateOrString [ 
+SRLFile >> theTemplate: aTemplateOrString [ 
 	theTemplate := aTemplateOrString
 ]

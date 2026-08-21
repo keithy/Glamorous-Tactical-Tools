@@ -8,9 +8,9 @@ Class {
 		'NamedLocations',
 		'Regex'
 	],
-	#category : 'Tactical-Hub-Browser',
-	#package : 'Tactical-Hub',
-	#tag : 'Browser'
+	#category : 'Tactical-SRL-Misc',
+	#package : 'Tactical-SRL',
+	#tag : 'Misc'
 }
 
 { #category : 'accessing' }

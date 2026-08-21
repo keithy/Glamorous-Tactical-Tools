@@ -29,7 +29,7 @@ Hub class >> classHttpClient [
 { #category : 'usl-schemes' }
 Hub class >> client: aClassNameOrSymbol [
  
-  ^ ((self class: aClassNameOrSymbol) newFor: self current)  
+  ^ ((#class:// aClassNameOrSymbol) newFor: self current)  
 	
 	
 ]
@@ -37,7 +37,7 @@ Hub class >> client: aClassNameOrSymbol [
 { #category : 'usl-schemes' }
 Hub class >> factory: aClassOrName [
  
-  ^ ((self class: aClassOrName) basicNewFor: self current) initialize
+  ^ ((#class://aClassOrName) basicNewFor: self current) initialize
 ]
 
 { #category : 'usl-schemes' }
@@ -53,7 +53,7 @@ Hub class >> fileReferenceFromString: aString [
   <ttWall>
 
   "prefer #file: // aThing"
-	^ TTFileSRL fileReferenceFromString: aString
+	^ SRLFile fileReferenceFromString: aString
 	
 ]
 
@@ -61,7 +61,7 @@ Hub class >> fileReferenceFromString: aString [
 Hub class >> fileSRL: aThing [
  
   "as file: but late bound to environment"
-	^ TTFileSRL fromHub: self current fileWith: aThing
+	^ SRLFile fromHub: self current fileWith: aThing
 	
 	
 ]
@@ -80,7 +80,7 @@ Hub class >> gt [
 { #category : 'usl-schemes' }
 Hub class >> http: aThing [
 	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ ^ TTClassSRL fromHub: self current httpWithClass: aThing ].
+		ifTrue: [ ^ SRLOldClassHolder fromHub: self current httpWithClass: aThing ].
 
 	^ (self http: TTApiThinClient) // aThing	"string or Symbol"
 ]
@@ -88,7 +88,7 @@ Hub class >> http: aThing [
 { #category : 'usl-schemes' }
 Hub class >> https: aThing [
 	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ ^ TTClassSRL fromHub: self current httpsWithClass: aThing ].
+		ifTrue: [ ^ SRLOldClassHolder fromHub: self current httpsWithClass: aThing ].
 
 	^ (self https: TTApiThinClient) // aThing	"string or Symbol"
 ]
@@ -117,12 +117,6 @@ Hub class >> hubs [
 	^ self openBrowser hubs
 	
 
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> localname: aClassOrName [
-
-	^ (self namespaced: aClassOrName) value
 ]
 
 { #category : 'as yet unclassified' }
@@ -163,25 +157,10 @@ Hub class >> mapVarsInto: entry [
 	^ value
 ]
 
-{ #category : 'usl-schemes' }
-Hub class >> namespace: aClassOrName [
- 
-	^ (self namespaced: aClassOrName) key
-]
-
 { #category : 'as yet unclassified' }
 Hub class >> namespacedSearchPath [
 
 	^ #('${NICKNAME}' '${LOCATION_ID}' '${COMPANY_ID}' '${PROJECT_ID}' '${PLATFORM_ID}') 
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> new: aThing [
-
- "not sure about this one"
- 
-	^ (self class: aThing) new
-	
 ]
 
 { #category : 'environment' }
@@ -203,12 +182,6 @@ Hub class >> open [
 
 { #category : 'usl-schemes' }
 Hub class >> pragma: aClassNameOrClass [
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> pretty: aClassOrName [
-
-	^ ((self namespaced: aClassOrName) value ifNil: [ ^'' ]) splitCamelCase joinUsing: ' '
 ]
 
 { #category : 'as yet unclassified' }
@@ -236,7 +209,7 @@ Hub class >> url: aThing [
 
 	"opportunity to defer decision to a class goes via SRL"
 	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ ^ TTClassSRL fromHub: self current urlWithClass: aThing ].
+		ifTrue: [ ^ SRLOldClassHolder fromHub: self current urlWithClass: aThing ].
 
   "direct action policy determined locally by the hub"
 	^ (self url: TTApiThinClient) // aThing	"string"
