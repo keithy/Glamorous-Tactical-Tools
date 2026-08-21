@@ -17,15 +17,23 @@ TTEmptyHub class >> isHub [
 ]
 
 { #category : 'as yet unclassified' }
+TTEmptyHub class >> open [
+	"subclasses choose their preferred view"
+	
+^ self openHubCodeBrowser
+
+]
+
+{ #category : 'as yet unclassified' }
 TTEmptyHub class >> openHubBrowser [
 
-^ (Hub getClass: #TTHubBrowser) newBrowsing: self
+^ (#class:// #TTHubBrowser) newBrowsing: self
 			
 ]
 
 { #category : 'as yet unclassified' }
 TTEmptyHub class >> openHubCodeBrowser [
 
-^ (Hub getClass: #TTHubCodeBrowser) newBrowsing: self
+^ (#class:// #TTHubCodeBrowser) newBrowsing: self
 			
 ]

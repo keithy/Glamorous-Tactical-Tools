@@ -179,9 +179,17 @@ TTNotifyingHubAbstract class >> namespacedSearchPath [
 ]
 
 { #category : 'instance creation' }
+TTNotifyingHubAbstract class >> open [ 
+
+	^ self openHubCodeBrowser
+	 
+		  
+]
+
+{ #category : 'instance creation' }
 TTNotifyingHubAbstract class >> openHubBrowser [
 
-^ (self getClass: #TTHubBrowser) newBrowsing: self
+^ (#class:// #TTHubBrowser) newBrowsing: self
 			
 	 
 		  
@@ -190,7 +198,7 @@ TTNotifyingHubAbstract class >> openHubBrowser [
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> openHubCodeBrowser [
 
-^ (self getClass: #TTHubCodeBrowser) newBrowsing: self
+^ (#class:// #TTHubCodeBrowser) newBrowsing: self
 			
 	 
 		  

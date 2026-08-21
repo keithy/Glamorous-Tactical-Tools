@@ -265,7 +265,7 @@ TTHubBrowser >> gtHubsMajorFor: aView [
 
 { #category : 'browsing' }
 TTHubBrowser >> gtInspectorTitleString [ 
-    ^ (self class ttPrettyName),' (' ,(browsing gtDisplayString) , ')' 
+    ^ (#pretty://self class),' (' ,(browsing gtDisplayString) , ')' 
 ]
 
 { #category : 'browsing' }
