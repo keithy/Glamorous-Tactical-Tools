@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-14T02:08:53.897462+01:00"
+						"dateAndTimeString" : "2026-08-21T17:00:31.498341+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "<https://github.com/keithy/Glamorous-Tactical-Tools>\n## TheHub\n{{gtClass:TheHub}}\n## TheVault\n{{gtClass:TTVault}}\n## TheFactory\n\n{{gtClass:TTFactory}}\n## The Clients\n## TheResults\n## TheRiddle"
+				"string" : "<https://github.com/keithy/Glamorous-Tactical-Tools>\n## TheHub - Lets see what we've got\n{{gtClass:Hub}}\n##SRL\n## TheVault\n{{gtClass:TTVault}}\n## TheFactory\n\n{{gtClass:TTFactory}}\n## The Clients\n## TheResults\n## TheRiddle"
 			}
 		]
 	},

@@ -211,7 +211,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T18:40:45.582881+01:00"
+						"dateAndTimeString" : "2026-08-21T17:01:43.372368+01:00"
 					}
 				},
 				"uid" : {
@@ -221,7 +221,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "Fortuitously Hub also handles the specific implementation of [[Universal Smalltalk Resource Locator Schemes]]   enabling the following constructs."
+				"string" : "Fortuitously Hub also handles the specific implementation of [[Symbolic Resource Locators]]   enabling the following constructs."
 			},
 			{
 				"__type" : "pharoSnippet",

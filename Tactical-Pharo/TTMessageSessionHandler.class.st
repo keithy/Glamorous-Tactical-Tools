@@ -25,7 +25,7 @@ TTMessageSessionHandler >> handledId [
 
 { #category : 'handlers' }
 TTMessageSessionHandler >> registeredClass [
-	^ Hub getClass: registeredClassName
+	^ #class:// registeredClassName
 ]
 
 { #category : 'accessing' }

@@ -29,7 +29,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:55:59.776756+01:00"
+						"dateAndTimeString" : "2026-08-21T17:01:43.384329+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +39,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "**The following notes have been superceeded with [[Universal Smalltalk Resource Locator Schemes]]**"
+				"string" : "**The following notes have been superceeded with [[Symbolic Resource Locators]]**"
 			},
 			{
 				"__type" : "textSnippet",

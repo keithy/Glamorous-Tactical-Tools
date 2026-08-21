@@ -239,14 +239,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-21T15:07:28.812051+01:00"
+						"dateAndTimeString" : "2026-08-21T15:42:03.411449+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "PgLvgsdRTB6h0Po8hmC9zA=="
 				},
-				"code" : "#file:/'{config}/mine/${NICKNAME}' "
+				"code" : "#file://'{config}/mine/${NICKNAME}' "
 			},
 			{
 				"__type" : "textSnippet",
@@ -412,7 +412,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:44:30.050468+01:00"
+						"dateAndTimeString" : "2026-08-21T17:04:29.758962+01:00"
 					}
 				},
 				"uid" : {
@@ -422,7 +422,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "## https: guzzler\nAn http client wrapper with extensible schemes."
+				"string" : "## https: guzzler\nAn http client wrapper (also with extensible schemes)."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -449,14 +449,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:41:10.389135+01:00"
+						"dateAndTimeString" : "2026-08-21T17:06:04.254919+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "VHWvM2aKRUSy9UqZ6QyyEQ=="
 				},
-				"code" : "#https://'www.gtoolkit.com'   \"not there yet\""
+				"code" : "(#url://'mock:Faker/endpoint/etc') asString"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -483,14 +483,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:41:16.752939+01:00"
+						"dateAndTimeString" : "2026-08-21T17:04:36.098783+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "UdHeZPz5TBm1EWXfcStySQ=="
 				},
-				"code" : "#http:// 'www.gtoolkit.com' \"not there yet\""
+				"code" : "(#url: //  'mock://httpbin.org/json') asDictionary"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -525,40 +525,6 @@
 					"uidString" : "YFOm4J70SbmEzFmqjQ0qcg=="
 				},
 				"code" : "(#client:// #TTWorldClockClient) @  #default"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-19T06:32:47.089733+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-20T19:40:27.485655+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "4e6SwLgvRX684Jse5Rnvjg=="
-				},
-				"code" : "#file:// '{home}/.config/${NICKNAME}.env'"
 			}
 		]
 	},
@@ -581,12 +547,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-19T06:35:28.101446+01:00"
+			"dateAndTimeString" : "2026-08-21T17:01:43.362769+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Universal Smalltalk Resource Locator Schemes"
+		"title" : "Symbolic Resource Locators"
 	},
 	"uid" : {
 		"__type" : "uuid",
