@@ -1,12 +1,6 @@
 Class {
 	#name : 'SRLFile',
 	#superclass : 'SRLRouter',
-	#instVars : [
-		'fileReference',
-		'theHub',
-		'theTemplate',
-		'theClass'
-	],
 	#classVars : [
 		'NamedLocations',
 		'OriginRegex'
@@ -44,7 +38,15 @@ SRLFile class >> exampleNamedLocation [
 
 	<gtExample>
 	
-	^ #file:/  #home / '.config' 
+	^ #file:/  #home 
+]
+
+{ #category : 'accessing' }
+SRLFile class >> examplesResolved [
+
+	<gtExample>
+	
+	^ { self exampleHome. self exampleEnvVar. self exampleNamedLocation } collect: #resolve
 ]
 
 { #category : 'accessing' }
@@ -80,45 +82,6 @@ SRLFile class >> fileReferenceFromSymbol: aSymbol [
  
 ]
 
-{ #category : 'usl-schemes' }
-SRLFile class >> fromHub: aHub fileWith: aThing [ 
-
- 	aThing isClass
-			ifTrue: [ ^ self fromHub: aHub fileWithClass: aThing ].
-		
-	 aThing isSymbol
-			ifTrue: [ ^ self fromHub: aHub fileWithSymbol: aThing ].
-				
-	 aThing isString
-			ifTrue: [ ^ self fromHub: aHub fileWithString: aThing ].
-				
-	^ self error: 'other?'
-]
-
-{ #category : 'accessing' }
-SRLFile class >> fromHub: aHub fileWithClass: aClass [
-	^ self basicNew
-		theHub: aHub;
-		theClass: aClass;
-		initialize	 
-]
-
-{ #category : 'accessing' }
-SRLFile class >> fromHub: aHub fileWithString: aString [
-	^ self basicNew
-		theHub: aHub;
-		theTemplate: (TTStringTemplate newFrom: aString);
-		initialize
-]
-
-{ #category : 'accessing' }
-SRLFile class >> fromHub: aHub fileWithSymbol: aSymbol [
-	^ self basicNew
-		theHub: aHub;
-		setFileReference: (self fileReferenceFromSymbol: aSymbol);
-		initialize	"theScheme: #file"
-]
-
 { #category : 'accessing' }
 SRLFile class >> namedLocations [
 
@@ -140,44 +103,25 @@ SRLFile class >> startUpAtSystemPriority: isImageStarting [
 ]
 
 { #category : 'accessing' }
-SRLFile >> asFileReference [
-	 
-	 ^ fileReference ifNil: [ self class fileReferenceFromString: (theTemplate templateResolveUsing: theHub getVault) ]
+SRLFile >> fileReferenceFromString: aString [
 
-]
-
-{ #category : 'accessing' }
-SRLFile >> fileReference: anObject [
-	fileReference := anObject
+	^ self class fileReferenceFromString: (aString templateResolveUsing: self vault)
 ]
 
 { #category : 'accessing' }
 SRLFile >> printOn: str [
 
-	self asFileReference printOn: str
+	(subject ifNil: [ thing ]) printOn: str
 
 ]
 
 { #category : 'accessing' }
-SRLFile >> resolve [
-	
+SRLFile >> resolve: aThing [
 	"early bound resolution"
 
-	^ fileReference ifNil: [ fileReference := self asFileReference ]
- 
-]
+	aThing isSymbol
+		ifTrue: [ subject := self class fileReferenceFromSymbol: aThing ]
+		ifFalse: [ subject := self fileReferenceFromString: aThing ].
 
-{ #category : 'accessing' }
-SRLFile >> setFileReference: anObject [
-	fileReference := anObject
-]
-
-{ #category : 'accessing' }
-SRLFile >> theHub: aHub [
-	theHub := aHub
-]
-
-{ #category : 'accessing' }
-SRLFile >> theTemplate: aTemplateOrString [ 
-	theTemplate := aTemplateOrString
+	^ subject
 ]

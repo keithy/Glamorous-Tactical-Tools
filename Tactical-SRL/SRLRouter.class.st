@@ -129,5 +129,5 @@ SRLRouter >> thing: anObject [
 { #category : 'accessing' }
 SRLRouter >> vault [
 
-	^ Hub current getVault
+	^ self hub getVault
 ]

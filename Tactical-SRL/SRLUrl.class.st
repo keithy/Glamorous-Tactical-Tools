@@ -9,7 +9,7 @@ Class {
 { #category : 'as yet unclassified' }
 SRLUrl class >> canRoute: aSymbol [
  
-	^ #(url: http: https:) includes: aSymbol
+	^ #(url: http: https: #client:) includes: aSymbol
 ]
 
 { #category : 'as yet unclassified' }
@@ -56,15 +56,18 @@ SRLUrl >> asString [
 ]
 
 { #category : 'accessing' }
-SRLUrl >> resolve: aThing [ 
-	
-	"decision to a client class"
-	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ subject := aThing. thing:= ''.  ^self ].
+SRLUrl >> resolve: aThing [
+	"defer decision to a client class"
 
-  "Resolve a string to myself, pending next action"
-  thing := aThing.
+	"Resolve a string to myself, pending next action"
+	thing := aThing.
 	subject := #TTApiThinClient.
+
+	(aThing isClass or: [ aThing isSymbol ])
+		ifTrue: [ 
+			subject := SRLClass class: aThing.
+			thing := ''.
+		].	
 	
 	^ self
 ]
