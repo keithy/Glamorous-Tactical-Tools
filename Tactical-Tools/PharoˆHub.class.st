@@ -18,34 +18,6 @@ PharoˆHub class >> fileLocatorFrom: aString [
 ]
 
 { #category : 'wall' }
-PharoˆHub class >> fileReferenceFromString: aString [
-
-  <ttWall>
-
-	"Answer a FileReference or FileLocator from the supplied string.
-	FileLocator origins are available as formatted strings, e.g.
-		{home}/lepiter
-	is the equivalent of
-		FileLocator home / 'lepiter'"
-
-	| namedDirectories regex dirName path |
-
-	namedDirectories := self namedFileLocations. 
-	
-	regex := '\{([a-zA-Z]+)\}(.*)' asRegex.
-	
-	^ (regex matches: aString) 
-			ifFalse: [ aString asFileReference ]
-			ifTrue: [ 
-				dirName := regex subexpression: 2.
-				path := regex subexpression: 3.
-				namedDirectories at: dirName
-					ifPresent: [ :locator | path ifEmpty: [ locator resolve ] ifNotEmpty: [ locator resolve resolve: path allButFirst ] ]
-					ifAbsent: [ self error: 'Unknown directory: ', dirName printString ] ]
-	
-]
-
-{ #category : 'wall' }
 PharoˆHub class >> httpClientMaximumEntitySize [
 
 	<ttWall>
@@ -135,17 +107,6 @@ PharoˆHub class >> platform [
 PharoˆHub >> httpClientMaximumEntitySize [
 	
 	^ ZnCurrentOptions at: #maximumEntitySize
-]
-
-{ #category : 'environment' }
-PharoˆHub >> namedFileLocations [
- 
-   "Named file locations"
-
-   <ttSpoke>
-
- 	^ FileLocator  namedFileLocations
-	
 ]
 
 { #category : 'wall' }

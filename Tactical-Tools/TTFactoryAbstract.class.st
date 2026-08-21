@@ -87,7 +87,7 @@ TTFactoryAbstract >> askAll: aClassOrName [
 
 	| aNewClass |
 	
-	aNewClass := #class: // aClassOrName.
+	aNewClass := #class:// aClassOrName.
 	
 	^ aNewClass withAllSubclassesCollectSuccessfulVaultsFor: vault.
  

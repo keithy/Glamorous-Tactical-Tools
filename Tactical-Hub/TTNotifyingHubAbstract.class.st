@@ -27,32 +27,6 @@ TTNotifyingHubAbstract class >> allIdentifyingAsTraits [
 
 ]
 
-{ #category : 'usl-schemes' }
-TTNotifyingHubAbstract class >> class: aClassOrName [
-
-	"Better #asClass"
-
-	<ttWall>
-	
-	"Better: handles nil, class already passthrough,
-	 and fall back through namespace lookup"
-	 
-	"Returning nil when not found allows the user to implement
-	 ifAbsent/ifPresent using ifNil:ifNotNil:"
-
-   aClassOrName ifNil: [ ^ nil ].
-   aClassOrName isClass ifTrue: [ ^ aClassOrName ].
-   Smalltalk at: aClassOrName asSymbol ifPresent: [ :c | ^c ].
-   
-   "This is a circumflex"
-   (aClassOrName first = $ˆ) ifTrue: [ 
-   		(self current searchClass: aClassOrName)
-   				 ifNotNil: [ :found | ^ found ]
-   ].
-   
-   ^ nil
-]
-
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> classSearchPath [
 	^ classSearchPath ifNil: [ classSearchPath := self getClassSearchPath ]
@@ -91,30 +65,6 @@ TTNotifyingHubAbstract class >> currentVaultUpdated: incomingNewVault [
  
 ]
 
-{ #category : 'as yet unclassified' }
-TTNotifyingHubAbstract class >> doRebuildMethodDictionary [
-	self subclassResponsibility
-]
-
-{ #category : 'testing' }
-TTNotifyingHubAbstract class >> during: aBlock use: substituteValue for: methodSelector [
-	
-	^ aBlock on: self current do: [  :ex | 
-	
-			ex tag == methodSelector
-				ifTrue: [ ex resume: substituteValue ] 
-				ifFalse: [ ex pass ]
-		]
-]
-
-{ #category : 'instance creation' }
-TTNotifyingHubAbstract class >> fileReferenceFromString: aThing [
- 
- 	^ self subclassResponsibility
- 	
- 	
-]
-
 { #category : 'testing' }
 TTNotifyingHubAbstract class >> for: selector respondWith: substituteValue during: aBlock [
 	
@@ -127,62 +77,16 @@ TTNotifyingHubAbstract class >> for: selector respondWith: substituteValue durin
 ]
 
 { #category : 'instance creation' }
-TTNotifyingHubAbstract class >> getClass: aClassOrName [
-
-	 "A Better #asClass"
-
-	 <ttWall>
-	 
-	 "Better, handles nil quietly, class already passthrough,
-	 and fall back through namespace lookup"
-   
-   ^ #class://aClassOrName  
-   
-]
-
-{ #category : 'instance creation' }
-TTNotifyingHubAbstract class >> getClass: aClassOrName ifAbsent: aBlock [
-	"Better #asClass"
-
-	"Better: handles nil, class already passthrough,
-	 and fall back through namespace lookup"
-
-	<ttWall>
-	aClassOrName ifNil: [ ^ aBlock value ].
-
-	aClassOrName isClass ifTrue: [ ^ aClassOrName ].	"This is a circumflex"
-	aClassOrName first = $ˆ
-		ifTrue: [ self current searchClass aClassOrName ifNotNil: [ :found | ^ found ] ].
-
-	^ Smalltalk at: aClassOrName asSymbol ifAbsent: aBlock
-]
-
-{ #category : 'instance creation' }
 TTNotifyingHubAbstract class >> getClassSearchPath [
 	^ (self namespacedSearchPath
 					collect: [ :ea | ea first = $$ ifTrue: [ #env://ea ] ifFalse: [ ea ] ]
 					thenSelect: #notNil) asArray
 ]
 
-{ #category : 'instance creation' }
-TTNotifyingHubAbstract class >> getEnv: varNameWithDollar [
-
-	"go via vault later"
-	
-	| varName |
-	
-	varName := varNameWithDollar withoutPrefix: '${'.
-	varName := varName withoutSuffix: '}'.
-	
-	^ self osEnvironment at: (varName asSymbol) ifAbsent: nil
-		
-
-]
-
 { #category : 'environment' }
 TTNotifyingHubAbstract class >> getVault [
 	
-	^ self signalAuto
+	^ TTVault currentVault
 ]
 
 { #category : 'wall' }
@@ -206,28 +110,7 @@ TTNotifyingHubAbstract class >> hubId [
 { #category : 'environment' }
 TTNotifyingHubAbstract class >> initialize [
 	
-	<ttStartUp>
-	
-	| max bid |
-	
 	self withAllSubclassesDo: #reset.
-	
-	WinningHubClass := self. 
-	
-	max := 0.
-	self allSubclassesDo: [ :hubClass | 
-	
-		bid := hubClass onStartUpBidToBeCurrent.
-		
-		bid > max ifTrue: [
-				
-				WinningHubClass := hubClass. 
-				max := bid.
-				
-		]
-	].
-	
-	^ WinningHubClass
 	
 ]
 
@@ -245,11 +128,6 @@ TTNotifyingHubAbstract class >> isHub [
 	"The Hub"
 	
 	^ true
-]
-
-{ #category : 'namespace' }
-TTNotifyingHubAbstract class >> isNamespaced [
-	self subclassResponsibility
 ]
 
 { #category : 'handling' }
@@ -350,36 +228,12 @@ TTNotifyingHubAbstract class >> pragmasNamed: aSymbol in: aClass [
 		toButExcluding: Object  
 ]
 
-{ #category : 'as yet unclassified' }
-TTNotifyingHubAbstract class >> recategorizeSelector: selector from: oldProtocol to: newProtocol [
-	self subclassResponsibility
-]
-
-{ #category : 'as yet unclassified' }
-TTNotifyingHubAbstract class >> removeFromComposition: aTrait [
-	self subclassResponsibility
-]
-
 { #category : 'environment' }
 TTNotifyingHubAbstract class >> reset [
 	
 	classSearchPath := nil.
-	
+	WinningHubClass := nil.
  
-]
-
-{ #category : 'instance creation' }
-TTNotifyingHubAbstract class >> searchClass: circumflexAndClassName [ 
-	self classSearchPath
-		do: [ :ea | 
-			| namespace |
-			namespace := (ea first = $$) ifFalse: [ ea ] ifTrue: [ self getEnv: ea ].
-
-			namespace
-				ifNotNil: [ (self getClass: namespace , circumflexAndClassName)
-						ifNotNil: [ :found | ^ found ] ] ].
-
-	^ self getClass: (circumflexAndClassName copyWithoutFirst)
 ]
 
 { #category : 'environment' }
@@ -417,7 +271,7 @@ TTNotifyingHubAbstract class >> sortByComment: pragmas [
 { #category : 'browsing' }
 TTNotifyingHubAbstract class >> spokes [
 
-^  self openBrowser spokes
+^  self openHubBrowser spokes
 		 
  
 ]
@@ -445,18 +299,8 @@ TTNotifyingHubAbstract class >> theCuriousity [
 	
 	<ttHub>
 		
-  ^  TheCuriousity 
+  ^  #class://#TheCuriousity 
 		  
-]
-
-{ #category : 'as yet unclassified' }
-TTNotifyingHubAbstract class >> traitComposition: aComposition [
-	self subclassResponsibility
-]
-
-{ #category : 'as yet unclassified' }
-TTNotifyingHubAbstract class >> traitUsers [
-	self subclassResponsibility
 ]
 
 { #category : 'environment' }
@@ -466,23 +310,8 @@ TTNotifyingHubAbstract class >> tt [
 	
 	<ttHub>
 		
-  ^  Hub getClass:#TTTacticalToolsHub 
+  ^  #class://#TTTacticalToolsHub 
 		  
-]
-
-{ #category : 'namespace' }
-TTNotifyingHubAbstract class >> ttFullName [
-	self subclassResponsibility
-]
-
-{ #category : 'namespace' }
-TTNotifyingHubAbstract class >> ttNamespace [
-	self subclassResponsibility
-]
-
-{ #category : 'namespace' }
-TTNotifyingHubAbstract class >> ttPrefixSize [
-	self subclassResponsibility
 ]
 
 { #category : 'environment' }
@@ -505,7 +334,7 @@ TTNotifyingHubAbstract class >> userId [
 { #category : 'as yet unclassified' }
 TTNotifyingHubAbstract class >> utils [
 
-	^ self openBrowser utils
+	^ self openHubCodeBrowser utils
 	
 
 ]
@@ -531,7 +360,25 @@ TTNotifyingHubAbstract class >> whoAmI [
 { #category : 'accessing' }
 TTNotifyingHubAbstract class >> winningHubClass [
 	
-	^ WinningHubClass ifNil: [ WinningHubClass := self ]
+	| max |
+	
+	WinningHubClass ifNotNil: [ :hub | ^ hub ].
+	
+	max := 0.
+	self allSubclassesDo: [ :hubClass | 
+	
+		| bid |
+		bid := hubClass onStartUpBidToBeCurrent.
+		
+		bid > max ifTrue: [
+				
+				WinningHubClass := hubClass. 
+				max := bid.
+				
+		]
+	].
+	
+	^ WinningHubClass
 ]
 
 { #category : 'environment' }
@@ -543,14 +390,6 @@ TTNotifyingHubAbstract class >> wip [
 		
   ^  #WipHub asClass 
 		  
-]
-
-{ #category : 'environment' }
-TTNotifyingHubAbstract >> current [
-
-	^ self class current 
-	
-
 ]
 
 { #category : 'environment' }
@@ -566,7 +405,7 @@ TTNotifyingHubAbstract >> currentVault [
 	
 	<ttSpoke>
 	
-	^ TTVault currentVault
+	^ self class getVault
 ]
 
 { #category : 'handling' }
@@ -576,14 +415,14 @@ TTNotifyingHubAbstract >> defaultAction [
 ]
 
 { #category : 'environment' }
-TTNotifyingHubAbstract >> getVault [
+TTNotifyingHubAbstract >> namedFileLocations [
+ 
+   "Named file locations"
 
-	^ TTVault currentVault
-]
+   <ttSpoke>
 
-{ #category : 'namespace' }
-TTNotifyingHubAbstract >> isNamespaced [
-	self subclassResponsibility
+ 	^ SRLFile namedLocations
+	
 ]
 
 { #category : 'environment' }
@@ -604,18 +443,8 @@ TTNotifyingHubAbstract >> sessionManager [
 	^ SessionManager default
 ]
 
-{ #category : 'namespace' }
-TTNotifyingHubAbstract >> ttDisplayName [
-	self subclassResponsibility
-]
-
-{ #category : 'namespace' }
-TTNotifyingHubAbstract >> ttFullName [
-	self subclassResponsibility
-]
-
 { #category : 'whoami' }
 TTNotifyingHubAbstract >> whoAmI [
 
-	^ Hub currentVault
+	^ self getVault
 ]

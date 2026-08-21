@@ -37,7 +37,7 @@ TTApiClient class >> basicNewFor: aVaultable [
 	basicNewClient := (super basicNewFor: aVaultable) ifNil: [ ^nil ].  
 	 
 	^ basicNewClient
-			setClassTool: Hub classHttpClient;
+			setClassTool: #class://#ˆGuzzler;
 			setRequestErrorHandler: Hub makeNetworkErrorHandler;
 			yourself
 

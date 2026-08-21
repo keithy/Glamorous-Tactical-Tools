@@ -16,7 +16,7 @@ TTApiRequest class >> makeHttpClientForScheme: aScheme [
 
 	"used in #initialize"
 	
-	^ (Hub classHttpClient) newForScheme: (aScheme ifNil: 'none').
+	^ (#class://#ˆGuzzler) newForScheme: (aScheme ifNil: 'none').
  
 ]
 

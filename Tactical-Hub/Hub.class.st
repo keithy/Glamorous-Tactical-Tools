@@ -15,57 +15,6 @@ Class {
 	#tag : 'Entrypoint'
 }
 
-{ #category : 'as yet unclassified' }
-Hub class >> classHttpClient [
-
-	<ttWall>
-	
-	"not all environments have ZnClient,this ˆ means, 
-	 apply TheHub current ensureClassNamespaceSearchPath"
-	 
-	^ self getClass: #ˆGuzzler
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> client: aClassNameOrSymbol [
- 
-  ^ ((#class:// aClassNameOrSymbol) newFor: self current)  
-	
-	
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> factory: aClassOrName [
- 
-  ^ ((#class://aClassOrName) basicNewFor: self current) initialize
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> file: aThing [
- 
-	^ (self fileSRL: aThing) asFileReference
-	
-]
-
-{ #category : 'browsing' }
-Hub class >> fileReferenceFromString: aString [
-
-  <ttWall>
-
-  "prefer #file: // aThing"
-	^ SRLFile fileReferenceFromString: aString
-	
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> fileSRL: aThing [
- 
-  "as file: but late bound to environment"
-	^ SRLFile fromHub: self current fileWith: aThing
-	
-	
-]
-
 { #category : 'environment' }
 Hub class >> gt [
 
@@ -73,24 +22,8 @@ Hub class >> gt [
 	
 	<ttHub>
 		
-  ^  GlamorousˆHub 
+  ^  #class://#GlamorousˆHub 
 		  
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> http: aThing [
-	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ ^ SRLOldClassHolder fromHub: self current httpWithClass: aThing ].
-
-	^ (self http: TTApiThinClient) // aThing	"string or Symbol"
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> https: aThing [
-	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ ^ SRLOldClassHolder fromHub: self current httpsWithClass: aThing ].
-
-	^ (self https: TTApiThinClient) // aThing	"string or Symbol"
 ]
 
 { #category : 'browsing' }
@@ -99,7 +32,7 @@ Hub class >> hubHome [
 	<ttHub>
 	"Home Hub"
 	
-	^ self getClass: 'ˆHomeHub'
+	^ #class:// 'ˆHomeHub'
 ]
 
 { #category : 'browsing' }
@@ -108,13 +41,13 @@ Hub class >> hubWork [
 	<ttHub>
 	"Work Hub"
 	
-	^ self getClass: 'ˆWorkHub'
+	^ #class:// 'ˆWorkHub'
 ]
 
 { #category : 'browsing' }
 Hub class >> hubs [
 
-	^ self openBrowser hubs
+	^ self openHubBrowser hubs
 	
 
 ]
@@ -138,25 +71,6 @@ Hub class >> makeNetworkErrorHandler [
 		  
 ]
 
-{ #category : 'browsing' }
-Hub class >> mapVarsInto: entry [
-	| value env |
-	
-	value := entry.
-	
-	(entry allRangesOfRegexMatches: '\$\{[^}]*\}')
-		do: [ :r | 
-			env := entry copyFrom: r first + 2 to: r last - 1.	"lookup - not logged"	"self _at: env ifPresent: [ :v | value := value copyReplaceAll: ('${', env, '}') with: v ]"	"lookup - logged"
-			self
-				assocAt: env
-				ifPresent: [ :assoc | value := value copyReplaceAll: '${' , env , '}' with: assoc value ].	"subst env vars"
-			self osEnvironment
-				at: env
-				ifPresent: [ :v | value := value copyReplaceAll: '${' , env , '}' with: v ] ].
-
-	^ value
-]
-
 { #category : 'as yet unclassified' }
 Hub class >> namespacedSearchPath [
 
@@ -178,39 +92,4 @@ Hub class >> open [
 			
 	 
 		  
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> pragma: aClassNameOrClass [
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashFromHub: receiverHub to: aThing [ 
-
-"aHub is the original reciever of //, (self is aHub current)"
-"stack overflow = problem!  (Hub//File)"
-	^ aThing doubleSlashFromHub: receiverHub to: aThing andCH: self
-]
-
-{ #category : 'comparing' }
-Hub class >> startDoubleSlashfromPragma: anObject with: aClassNameOrClass [
-
-	"So experimental do not know what this is for yet"
-]
-
-{ #category : 'as yet unclassified' }
-Hub class >> startDoubleSlashfromPragmaClass: anObject with: aClassNameOrClass [ 
-
-	"So experimental, do not know what it is for yet"
-]
-
-{ #category : 'usl-schemes' }
-Hub class >> url: aThing [
-
-	"opportunity to defer decision to a class goes via SRL"
-	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ ^ SRLOldClassHolder fromHub: self current urlWithClass: aThing ].
-
-  "direct action policy determined locally by the hub"
-	^ (self url: TTApiThinClient) // aThing	"string"
 ]

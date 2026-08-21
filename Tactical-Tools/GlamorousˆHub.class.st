@@ -6,12 +6,6 @@ Class {
 	#tag : 'Hub'
 }
 
-{ #category : 'environment' }
-GlamorousˆHub class >> _hubId [
-
-	^ 'gt'
-]
-
 { #category : 'external-process' }
 GlamorousˆHub class >> execBash: script [
  
@@ -67,7 +61,7 @@ GlamorousˆHub class >> gtImageStats [
 	
 	<ttSpoke>
 	
-	^ GtImage stats
+	^ #class://#GtImage stats
 ]
 
 { #category : 'environment' }
@@ -77,7 +71,7 @@ GlamorousˆHub class >> homeTools [
 	
 	<ttHub>
 		
-  ^  GtHomeToolsSection 
+  ^  #class://#GtHomeToolsSection 
 		  
 ]
 
@@ -134,7 +128,7 @@ GlamorousˆHub class >> openGettingStartedSection [
 	
 	<ttSpoke>
 
-	^ GtHomeMultiCardGetStartedSection new
+	^ #class:// #GtHomeMultiCardGetStartedSection new
 ]
 
 { #category : 'environment' }
@@ -230,7 +224,7 @@ GlamorousˆHub class >> shortCutRegistry [
 
    <ttSpoke>
  	
- 	^ BlShortcutKeymapRegistry default
+ 	^ #class:// #BlShortcutKeymapRegistry default
 	 
 	 
 	
@@ -321,5 +315,5 @@ GlamorousˆHub >> lepiter [
  	
  	<ttSpoke>
  	
-	^ LeDatabasesRegistry defaultLogicalDatabase
+	^ #class://#LeDatabasesRegistry defaultLogicalDatabase
 ]
