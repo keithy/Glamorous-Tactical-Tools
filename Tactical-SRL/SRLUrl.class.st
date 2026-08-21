@@ -28,6 +28,20 @@ SRLUrl class >> url: aVarName [
 ]
 
 { #category : 'accessing' }
+SRLUrl >> / anEndpoint [
+
+	^ (SRLClass class: subject) / anEndpoint 
+	
+]
+
+{ #category : 'accessing' }
+SRLUrl >> // aHostUrl [
+
+	^ (SRLClass class: subject) // aHostUrl 
+	
+]
+
+{ #category : 'accessing' }
 SRLUrl >> asDictionary [
 
 	^ ((SRLClass class: subject) // thing) asDictionary

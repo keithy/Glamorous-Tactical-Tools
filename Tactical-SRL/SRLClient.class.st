@@ -1,15 +1,15 @@
 Class {
 	#name : 'SRLClient',
-	#superclass : 'SRLClass',
-	#category : 'Tactical-SRL-Schemes',
+	#superclass : 'SRLRouter',
+	#category : 'Tactical-SRL-Misc',
 	#package : 'Tactical-SRL',
-	#tag : 'Schemes'
+	#tag : 'Misc'
 }
 
 { #category : 'as yet unclassified' }
 SRLClient class >> canRoute: aSymbol [
  
-	^ aSymbol == #client:
+	^ false "aSymbol == #client:"
 ]
 
 { #category : 'as yet unclassified' }
@@ -54,15 +54,18 @@ SRLClient >> asString [
 ]
 
 { #category : 'accessing' }
-SRLClient >> resolve: aThing [ 
-	
+SRLClient >> resolve: aThing [
 	"defer decision to a client class"
-	(aThing isClass or: [ aThing isSymbol])
-		ifTrue: [ subject := (super resolve: aThing). thing:= ''.  ^self ].
 
-  "Resolve a string to myself, pending next action"
-  thing := aThing.
+	"Resolve a string to myself, pending next action"
+	thing := aThing.
 	subject := #TTApiThinClient.
+
+	(aThing isClass or: [ aThing isSymbol ])
+		ifTrue: [ 
+			subject := SRLClass class: aThing.
+			thing := ''.
+		].	
 	
 	^ self
 ]

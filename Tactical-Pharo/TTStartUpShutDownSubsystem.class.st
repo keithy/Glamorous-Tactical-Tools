@@ -139,7 +139,9 @@ TTStartUpShutDownSubsystem class >> sessionManager [
 	"Session Manager"
 
 	<ttSpoke>
-	^ Hub sessionManager
+	"^ Hub sessionManager"
+	
+	^ SessionManager default
 ]
 
 { #category : 'environment' }
