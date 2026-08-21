@@ -239,14 +239,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-21T14:06:52.588388+01:00"
+						"dateAndTimeString" : "2026-08-21T14:26:20.942179+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "PgLvgsdRTB6h0Po8hmC9zA=="
 				},
-				"code" : "#file://'{config}/mine/${NICKNAME}' "
+				"code" : "#file:/'{config}/mine/${NICKNAME}' "
 			},
 			{
 				"__type" : "textSnippet",

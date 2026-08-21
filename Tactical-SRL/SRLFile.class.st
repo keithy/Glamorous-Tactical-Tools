@@ -107,7 +107,7 @@ SRLFile class >> startUpAtSystemPriority: isImageStarting [
 { #category : 'accessing' }
 SRLFile >> fileReferenceFromString: aString [
 
-	^ self class fileReferenceFromString: (aString templateResolveUsing: self vault)
+	^ self class fileReferenceFromString: (aString envSubstUsing: self vault)
 ]
 
 { #category : 'accessing' }

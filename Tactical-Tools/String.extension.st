@@ -12,9 +12,3 @@ String >> gtCloneGithubRepository [
 		   location: IceLibgitRepository repositoriesLocation / remote owner / remote projectName;
 		   createRepository)
 ]
-
-{ #category : '*Tactical-Tools' }
-String >> templateResolveUsing: aVault [
-
-	^ self
-]

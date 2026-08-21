@@ -72,13 +72,6 @@ TTVaultValueWriter >> valueAsString: aString [
 ]
 
 { #category : 'as yet unclassified' }
-TTVaultValueWriter >> valueAsTemplate: aString [
-
-	^ TTStringTemplate newFrom: aString
- 
-]
-
-{ #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAs_APIKEY: aString [
 	^ self valueAsObfuscated: aString
 ]
@@ -120,9 +113,4 @@ TTVaultValueWriter >> valueAs_PASS: aString [
 { #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAs_PASSWORD: aString [
 	^ self valueAsObfuscated: aString
-]
-
-{ #category : 'as yet unclassified' }
-TTVaultValueWriter >> valueAs_TEMPLATE_: aString [
-	^ self valueAsTemplate: aString
 ]

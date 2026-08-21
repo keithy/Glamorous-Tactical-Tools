@@ -148,6 +148,19 @@ TTVaultAbstract >> at: aKey [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> at: aKey ifAbsent: aBlock [
+
+ "convenience: this is only implemented for users who wish to use
+  aVault interchangably with aDictionary since the semantics of 
+  #at: are different (returns nil rather than error when absent)
+  this behaves the same"
+
+  ^ (self lookup: aKey) ifNil: aBlock
+
+
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> at: aKey ifPresent: pBlock [
 
  "convenience: this is only implemented for users who wish to use
@@ -525,7 +538,7 @@ TTVaultAbstract >> lookup: aKey [
 
 { #category : 'accessing' }
 TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
-  ^ self lookup: aKey ifPresentBasic: [ :v | ^ pBlock value: (v templateResolveUsing: self) ] 
+  ^ self lookup: aKey ifPresentBasic: [ :v | ^ pBlock value: (v envSubstUsing: self) ] 
 ]
 
 { #category : 'accessing' }
