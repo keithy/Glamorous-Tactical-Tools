@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'thing',
 		'scheme',
-		'subject'
+		'resolved'
 	],
 	#category : 'Tactical-SRL-Schemes',
 	#package : 'Tactical-SRL',
@@ -46,15 +46,18 @@ SRLRouter class >> new: aSymbol [
 
 { #category : 'as yet unclassified' }
 SRLRouter class >> newRoute: aSymbol [
-	
- 	^ self new: aSymbol
+	"an additional step of indirection, allowing
+	 subclasses to override and reroute to another class"
+
+	  	^ self new: aSymbol
 ]
 
 { #category : 'as yet unclassified' }
 SRLRouter >> / aThing [
 
-	"initilize unresolved"
+	resolved ifNotNil: [ :r | r +/ aThing ].
 	
+	"initilize unresolved"
 	thing := aThing.
 
 	^ self initialize
@@ -63,6 +66,8 @@ SRLRouter >> / aThing [
 { #category : 'as yet unclassified' }
 SRLRouter >> // aThing [
 
+	resolved ifNotNil: [ :r | r +// aThing ].
+	
 	"resolved"
 	
 	^ (self / aThing) resolve
@@ -77,7 +82,7 @@ SRLRouter >> hub [
 { #category : 'as yet unclassified' }
 SRLRouter >> resolve [
 
-	^ self resolve: thing
+	^ resolved := self resolve: thing
 ]
 
 { #category : 'as yet unclassified' }
@@ -108,12 +113,12 @@ SRLRouter >> scheme: anObject [
 
 { #category : 'accessing' }
 SRLRouter >> subject [
-	^ subject
+	^ resolved
 ]
 
 { #category : 'accessing' }
 SRLRouter >> subject: anObject [
-	subject := anObject
+	resolved := anObject
 ]
 
 { #category : 'accessing' }

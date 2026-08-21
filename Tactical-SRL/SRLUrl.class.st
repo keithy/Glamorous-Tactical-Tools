@@ -28,46 +28,66 @@ SRLUrl class >> url: aVarName [
 ]
 
 { #category : 'accessing' }
-SRLUrl >> / anEndpoint [
-
-	^ (SRLClass class: subject) / anEndpoint 
+SRLUrl >> +/ anEndpoint [
+	
+	"deferred #url:// ClientClass / anEndpoint"
+	^ self clientClass/ anEndpoint 
 	
 ]
 
 { #category : 'accessing' }
-SRLUrl >> // aHostUrl [
-
-	^ (SRLClass class: subject) // aHostUrl 
+SRLUrl >> +// aHostUrl [
+ 	
+ 	"deferred #url:// ClientClass // anEndpoint"
+	^ self clientClass// aHostUrl 
 	
 ]
 
 { #category : 'accessing' }
 SRLUrl >> asDictionary [
 
-	^ ((SRLClass class: subject) // thing) asDictionary
+	^ (self clientClass // self clientArgString) asDictionary
 	
 ]
 
 { #category : 'accessing' }
 SRLUrl >> asString [
 
-	^ ((SRLClass class: subject) // thing) asString
+	^ (self clientClass // self clientArgString) asString
 	
 ]
 
 { #category : 'accessing' }
+SRLUrl >> clientArgString [
+
+	^ resolved value
+]
+
+{ #category : 'accessing' }
+SRLUrl >> clientClass [
+
+	^ resolved key
+]
+
+{ #category : 'accessing' }
+SRLUrl >> resolve [
+
+	resolved := self resolve: thing.
+	
+	"returns self for deferred action"
+	^ self 
+]
+
+{ #category : 'accessing' }
 SRLUrl >> resolve: aThing [
-	"defer decision to a client class"
 
-	"Resolve a string to myself, pending next action"
-	thing := aThing.
-	subject := #TTApiThinClient.
-
+	"returns class and string for #resolve"
+	
 	(aThing isClass or: [ aThing isSymbol ])
 		ifTrue: [ 
-			subject := SRLClass class: aThing.
-			thing := ''.
+			^ (SRLClass class: aThing) -> ''
 		].	
 	
-	^ self
+	^ (SRLClass class: #TTApiThinClient) -> aThing
+
 ]

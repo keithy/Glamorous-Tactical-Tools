@@ -59,7 +59,7 @@ SRLNamespaced >> pretty: aClassOrName [
 { #category : 'accessing' }
 SRLNamespaced >> resolve [
 
-	^ self resolve: (SRLClass class:thing)
+	^ resolved := self resolve: (SRLClass class:thing)
 
 	 
 ]

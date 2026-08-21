@@ -54,7 +54,7 @@ SRLFile class >> fileReferenceFromString: aString [
 	
 	<ttWall>
 	
-	"Prefer #file: // aString"
+	"Prefer #file:// aString"
 	
 	| regex dirName path |
 	regex := OriginRegex copy.
@@ -77,6 +77,8 @@ SRLFile class >> fileReferenceFromString: aString [
 SRLFile class >> fileReferenceFromSymbol: aSymbol [
 	
 	<ttWall>
+	
+	"Prefer #file:// #home"
 	
 	^ self namedLocations at: aSymbol
  
@@ -109,9 +111,20 @@ SRLFile >> fileReferenceFromString: aString [
 ]
 
 { #category : 'accessing' }
+SRLFile >> gtPrintFor: aView [
+	<gtView>
+	^ aView textEditor
+		title: 'Print';
+		priority: 110;
+		aptitude: BrGlamorousCodeEditorAptitude;
+		text: [ self printString asRopedText ];
+		actionUpdateButton
+]
+
+{ #category : 'accessing' }
 SRLFile >> printOn: str [
 
-	(subject ifNil: [ thing ]) printOn: str
+	(resolved ifNil: [ thing ]) printOn: str
 
 ]
 
@@ -119,9 +132,8 @@ SRLFile >> printOn: str [
 SRLFile >> resolve: aThing [
 	"early bound resolution"
 
-	aThing isSymbol
-		ifTrue: [ subject := self class fileReferenceFromSymbol: aThing ]
-		ifFalse: [ subject := self fileReferenceFromString: aThing ].
+	^ aThing isSymbol
+		ifTrue: [ self class fileReferenceFromSymbol: aThing ]
+		ifFalse: [ self fileReferenceFromString: aThing ].
 
-	^ subject
 ]

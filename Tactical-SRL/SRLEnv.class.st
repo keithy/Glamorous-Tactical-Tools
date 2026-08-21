@@ -54,7 +54,7 @@ SRLEnv >> resolve [
 	varName := thing withoutPrefix: '${'.
 	varName := varName withoutSuffix: '}'.
 	
-	^ self resolve: varName
+	^ resolved := self resolve: varName
 	 
 	 
 ]
