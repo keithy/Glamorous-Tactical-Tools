@@ -224,7 +224,7 @@ PharoˆGuzzler >> executeMock [
 	
 	theRest := urlStr upToEnd.
 	
-	aMocker := Hub getClass: classNameFromUrl.
+	aMocker := #class:// classNameFromUrl.
 	
 	contents :=  aMocker perform: methodFromUrl with: theRest
 	

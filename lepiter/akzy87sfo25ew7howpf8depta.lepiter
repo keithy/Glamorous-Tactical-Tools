@@ -224,7 +224,7 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-20T14:08:25.712737+01:00"
+									"dateAndTimeString" : "2026-08-22T05:20:44.320405+01:00"
 								}
 							},
 							"uid" : {
@@ -234,7 +234,7 @@
 							"paragraphStyle" : {
 								"__type" : "textStyle"
 							},
-							"string" : "The original was using baby steps to introduce the theory. Tactical-Tools starts at a higher level of abstracion, with more tools pre-written.\n\nShortcut to retrieve that JSON programmatically:"
+							"string" : "The original was using baby steps to introduce the theory. Tactical-Tools starts at a higher level of abstraction, with more tools pre-written.\n\nShortcut to retrieve that JSON programmatically:"
 						},
 						{
 							"__type" : "pharoSnippet",

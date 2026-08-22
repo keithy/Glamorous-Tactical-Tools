@@ -17,6 +17,16 @@ TheCuriousity class >> baselines [
 ]
 
 { #category : 'as yet unclassified' }
+TheCuriousity class >> chicken [
+
+  "The Chicken?"
+
+	<ttSpoke>
+	
+	^ BlChicken bouncingChicken
+]
+
+{ #category : 'as yet unclassified' }
 TheCuriousity class >> classesThatAreUniqueIds [
 
   "Classes that dont do a lot - unique ids"
