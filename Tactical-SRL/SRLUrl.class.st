@@ -31,7 +31,7 @@ SRLUrl class >> url: aVarName [
 SRLUrl >> +/ anEndpoint [
 	
 	"deferred #url:// ClientClass / anEndpoint"
-	^ self clientClass/ anEndpoint 
+	^ (self clientClass // self clientArgString) / anEndpoint 
 	
 ]
 
@@ -88,6 +88,6 @@ SRLUrl >> resolve: aThing [
 			^ (SRLClass class: aThing) -> ''
 		].	
 	
-	^ (SRLClass class: #TTApiThinClient) -> aThing
+	^ (SRLClass class: #TTApiClient) -> aThing
 
 ]

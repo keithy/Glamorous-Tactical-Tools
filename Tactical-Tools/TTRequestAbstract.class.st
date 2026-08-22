@@ -40,6 +40,11 @@ TTRequestAbstract >> client [
 	^ client
 ]
 
+{ #category : 'accessing' }
+TTRequestAbstract >> getResult [
+	^ result ifNil: [ result := client makeResultForRequest: self ]
+]
+
 { #category : 'initialization' }
 TTRequestAbstract >> initialize [
 	"Initialise as a pair, this may not do anything now as

@@ -8,20 +8,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 TTZincApiRequest >> accept: mimeType [
- self error.
+  self error.
 	guzzler request setAccept: mimeType
-]
-
-{ #category : 'as yet unclassified' }
-TTZincApiRequest >> asDictionary [
-  "convenience - replace with better"
-	^ STONJSON fromString: self get
-]
-
-{ #category : 'as yet unclassified' }
-TTZincApiRequest >> asString [
-  "convenience - replace with better"
-	^ self get
 ]
 
 { #category : 'as yet unclassified' }
@@ -36,30 +24,29 @@ TTZincApiRequest >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'as yet unclassified' }
-TTZincApiRequest >> get [
-
-	^ self useGET getContents
-]
-
-{ #category : 'as yet unclassified' }
-TTZincApiRequest >> getContents [
-	"thin client only"
-	^ self send response contents
-]
-
-{ #category : 'as yet unclassified' }
-TTZincApiRequest >> makeResultThin [
-
-	client makeResultThin
-]
-
-{ #category : 'as yet unclassified' }
 TTZincApiRequest >> output [
 
 	^ guzzler response
 ]
 
-{ #category : 'as yet unclassified' }
-TTZincApiRequest >> timeout: n [
-	guzzler timeout: n
+{ #category : 'accessing' }
+TTZincApiRequest >> prepareQuery [
+
+	self parameters ifEmpty: [ ^ self ].
+	
+	guzzler entity: (ZnEntity text: (STON toJsonString: self parameters));
+											contentType: ZnMimeType applicationJson
+											
+											
+	
+]
+
+{ #category : 'accessing' }
+TTZincApiRequest >> withSTON: jsonable [
+
+	super withSTON: jsonable.
+	self entity: (ZnEntity text: text);
+		  contentType: ZnMimeType applicationJson.
+
+	^ text
 ]

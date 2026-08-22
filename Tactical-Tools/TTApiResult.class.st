@@ -51,7 +51,7 @@ TTApiResult >> getStderr [
 TTApiResult >> setRequest: aRequest [
 
 	super setRequest: aRequest.
-	handlers := request client handlers.
+	handlers := aRequest client handlers.
 
 	 
 ]

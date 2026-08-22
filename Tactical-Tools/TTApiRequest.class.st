@@ -49,6 +49,18 @@ TTApiRequest >> // uri [
 ]
 
 { #category : 'as yet unclassified' }
+TTApiRequest >> asDictionary [
+  "convenience - replace with better"
+	^ STONJSON fromString: self getContents
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> asString [
+  "convenience - replace with better"
+	^ self getContents
+]
+
+{ #category : 'as yet unclassified' }
 TTApiRequest >> begin [
 
   guzzler := self class makeHttpClientForScheme: scheme.
@@ -62,6 +74,12 @@ TTApiRequest >> fullUrl [
 	^ String streamContents: [ :stream | stream << scheme << ':' << url ]
 			
 		 	
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> getContents [
+	"thin client only"
+	^ self send response contents
 ]
 
 { #category : 'accessing' }
@@ -86,18 +104,6 @@ TTApiRequest >> prepare [
 	self isGET	
 		ifTrue: [ guzzler queryAddAll: self parameters ]
   	ifFalse: [ self prepareQuery ].
-]
-
-{ #category : 'accessing' }
-TTApiRequest >> prepareQuery [
-
-	self parameters ifEmpty: [ ^ self ].
-	
-	guzzler entity: (ZnEntity text: (STON toJsonString: self parameters));
-											contentType: ZnMimeType applicationJson
-											
-											
-	
 ]
 
 { #category : 'accessing' }
@@ -131,6 +137,11 @@ TTApiRequest >> setUri: aUri [
 	url := aUri copyAfter: $:
 ]
 
+{ #category : 'as yet unclassified' }
+TTApiRequest >> timeout: n [
+	guzzler timeout: n
+]
+
 { #category : 'accessing' }
 TTApiRequest >> type [
 	
@@ -142,7 +153,7 @@ TTApiRequest >> useDELETE [
 
 	type := #DELETE.
 	
-	^ result
+	^ self getResult
 ]
 
 { #category : 'accessing' }
@@ -150,7 +161,7 @@ TTApiRequest >> useGET [
 
 	type := #GET.
 	
-	^ self result
+	^ self getResult
 ]
 
 { #category : 'accessing' }
@@ -158,7 +169,7 @@ TTApiRequest >> usePATCH [
 
 	type := #PATCH.
 	
-	^ result
+	^ self getResult
 ]
 
 { #category : 'accessing' }
@@ -166,7 +177,7 @@ TTApiRequest >> usePOST [
 
 	type := #POST.
 	
-	^ result
+	^ self getResult
 ]
 
 { #category : 'accessing' }
@@ -174,17 +185,7 @@ TTApiRequest >> usePUT [
 
 	type := #PUT.
 	
-	^ result
-]
-
-{ #category : 'accessing' }
-TTApiRequest >> withSTON: jsonable [
-
-	super withSTON: jsonable.
-	self entity: (ZnEntity text: text);
-		  contentType: ZnMimeType applicationJson.
-
-	^ text
+	^ self getResult
 ]
 
 { #category : 'accessing' }

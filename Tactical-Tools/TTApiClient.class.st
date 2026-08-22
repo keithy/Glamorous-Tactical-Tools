@@ -67,7 +67,7 @@ TTApiClient >> / anEndpoint [
 { #category : 'accessing' }
 TTApiClient >> // aUrl [
 
-	^ self makeResult request //  aUrl
+	^ self makeRequest //  aUrl
 ]
 
 { #category : 'accessing' }

@@ -139,8 +139,7 @@ TTResultAbstract >> requestUsing: aBlock [
 TTResultAbstract >> setRequest: aRequest [
 
 	request := aRequest.	
-  request setResult: self.
-	 
+
 ]
 
 { #category : 'as yet unclassified' }

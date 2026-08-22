@@ -24,7 +24,7 @@ SRLClient class >> client: aVarName [
 { #category : 'as yet unclassified' }
 SRLClient class >> example [
 	<gtExample>
-	^ #client: //  #TTApiThinClient
+	^ #client: //  #TTApiClient
 ]
 
 { #category : 'as yet unclassified' }
@@ -36,7 +36,7 @@ SRLClient class >> exampleGetUrl [
 { #category : 'as yet unclassified' }
 SRLClient class >> exampleUrl [
 	<gtExample>
-	^ (#client: //  #TTApiThinClient) // 'https://httpbin.org/json'
+	^ (#client: //  #TTApiClient) // 'https://httpbin.org/json'
 ]
 
 { #category : 'accessing' }

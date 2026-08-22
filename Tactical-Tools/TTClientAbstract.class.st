@@ -122,12 +122,6 @@ TTClientAbstract class >> isNamespaced [
 	^ true
 ]
 
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> isThin [
-
-	^false
-]
-
 { #category : 'factory' }
 TTClientAbstract class >> makeNewVaultFor: aVaultable [  
 	
@@ -293,13 +287,16 @@ TTClientAbstract >> isAuthRequired [
 
 { #category : 'instance creation' }
 TTClientAbstract >> makeRequest [
-	^ classTool classApiRequest basicNew
-		setClient: self;
-		initialize
+	"initially the request doubles as the result"
+	"The client keeps the last result context as convenience for the user.
+	Not thread safe."
+	^ result := classTool classApiRequest basicNew
+			setClient: self;
+			initialize
 ]
 
 { #category : 'instance creation' }
-TTClientAbstract >> makeResult [
+TTClientAbstract >> makeResultForRequest: request [
 	"The client keeps the last result context as convenience for the user.
 	This is multi-threaded unsafe etc.
 	
@@ -307,20 +304,10 @@ TTClientAbstract >> makeResult [
 	
 	Each result-request pair keeps a reference to the client, so that it is
 	easy to make further api calls of its own"
-
-	self class isThin ifTrue: [ ^ self makeResultThin ].
 	
 	^ result := self class makeResult
-			setRequest: self makeRequest;
+			setRequest: request;
 			initialize
-]
-
-{ #category : 'accessing' }
-TTClientAbstract >> makeResultThin [
-	result := self makeRequest.
-	result setResult: result.
-	^ result
-
 ]
 
 { #category : 'accessing' }
