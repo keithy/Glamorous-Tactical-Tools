@@ -1,6 +1,6 @@
 Class {
 	#name : 'SRLFile',
-	#superclass : 'SRLRouter',
+	#superclass : 'SRLRequestAbstract',
 	#classVars : [
 		'NamedLocations',
 		'OriginRegex'
@@ -111,6 +111,17 @@ SRLFile >> fileReferenceFromString: aString [
 ]
 
 { #category : 'accessing' }
+SRLFile >> gtNamedLocationsFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Origins';
+		priority: 110;
+		object: [ self class namedLocations ];
+		view: #gtItemsFor:
+		
+]
+
+{ #category : 'accessing' }
 SRLFile >> gtPrintFor: aView [
 	<gtView>
 	^ aView textEditor
@@ -136,4 +147,10 @@ SRLFile >> resolve: aThing [
 		ifTrue: [ self class fileReferenceFromSymbol: aThing ]
 		ifFalse: [ self fileReferenceFromString: aThing ].
 
+]
+
+{ #category : 'accessing' }
+SRLFile >> stdout [
+
+	^ self resolve contents
 ]

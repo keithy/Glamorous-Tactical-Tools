@@ -38,3 +38,34 @@ AnObsoleteSRLClient class >> exampleUrl [
 	<gtExample>
 	^ (#client: //  #TTApiThinClient) // 'https://httpbin.org/json'
 ]
+
+{ #category : 'accessing' }
+AnObsoleteSRLClient >> asDictionary [
+
+	^ ((SRLClass class: subject) // thing) asDictionary
+	
+]
+
+{ #category : 'accessing' }
+AnObsoleteSRLClient >> asString [
+
+	^ ((SRLClass class: subject) // thing) asString
+	
+]
+
+{ #category : 'accessing' }
+AnObsoleteSRLClient >> resolve: aThing [
+	"defer decision to a client class"
+
+	"Resolve a string to myself, pending next action"
+	thing := aThing.
+	subject := #TTApiThinClient.
+
+	(aThing isClass or: [ aThing isSymbol ])
+		ifTrue: [ 
+			subject := SRLClass class: aThing.
+			thing := ''.
+		].	
+	
+	^ self
+]

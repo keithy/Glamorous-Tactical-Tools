@@ -15,7 +15,7 @@ TTTimeZoneDB class >> fileOpenApiSpec [
 	
 	"AI created this one"
 	
-	^ './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json'
+	^ (#url://'file:///Users/keith/code/GlamorousToolkit-MacOS-x86_64-v1.1.554/pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json')  asString
 
 
 ]

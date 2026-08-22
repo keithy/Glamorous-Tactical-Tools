@@ -171,7 +171,7 @@ TTToolRequest >> buildShell [
 ]
 
 { #category : 'as yet unclassified' }
-TTToolRequest >> getOutput [
+TTToolRequest >> getOutputProvider [
 
 	output ifNil: [ output := request 
 										ifNotNil: [ :req | req output ] 
@@ -183,7 +183,7 @@ TTToolRequest >> getOutput [
 { #category : 'as yet unclassified' }
 TTToolRequest >> getPayload [
 
-	thePayload ifNil: [ thePayload := self getStdout ].
+	thePayload ifNil: [ thePayload := self getVerifiedContents ].
 	
 	^ thePayload 
 ]
@@ -197,9 +197,9 @@ TTToolRequest >> getStderr [
 ]
 
 { #category : 'as yet unclassified' }
-TTToolRequest >> getStdout [
+TTToolRequest >> getVerifiedContents [
 
-	stdout ifNil: [ stdout := self getOutput stdout ].
+	stdout ifNil: [ stdout := self getOutputProvider stdout ].
 	
 	^ output 
 ]
@@ -207,7 +207,7 @@ TTToolRequest >> getStdout [
 { #category : 'as yet unclassified' }
 TTToolRequest >> payload: actionBlockSymbolArrayOrNil [
 	readPayloadUsing := Array
-			with: (readPayloadUsing ifNil: #getStdout)
+			with: (readPayloadUsing ifNil: #getVerifiedContents)
 			with: actionBlockSymbolArrayOrNil
 ]
 

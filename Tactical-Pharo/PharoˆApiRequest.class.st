@@ -1,19 +1,25 @@
 Class {
-	#name : 'TTZincApiRequest',
+	#name : 'PharoˆApiRequest',
 	#superclass : 'TTApiRequest',
-	#category : 'Tactical-Tools-Request-Result',
-	#package : 'Tactical-Tools',
-	#tag : 'Request-Result'
+	#category : 'Tactical-Pharo-Guzzler',
+	#package : 'Tactical-Pharo',
+	#tag : 'Guzzler'
 }
 
 { #category : 'as yet unclassified' }
-TTZincApiRequest >> accept: mimeType [
+PharoˆApiRequest >> accept: mimeType [
   self error.
 	guzzler request setAccept: mimeType
 ]
 
+{ #category : 'accessing' }
+PharoˆApiRequest >> contentType: aZnMimeType [
+	"although dnu would handle this the code parsers prefer it to be real"
+	guzzler contentType: aZnMimeType
+]
+
 { #category : 'as yet unclassified' }
-TTZincApiRequest >> doesNotUnderstand: aMessage [
+PharoˆApiRequest >> doesNotUnderstand: aMessage [
 
   "Creating Guzzler has taken on most/all of this classes funciton,
    roll up into TTAPiRequest?"
@@ -23,14 +29,14 @@ TTZincApiRequest >> doesNotUnderstand: aMessage [
 	^ aMessage sendTo: guzzler
 ]
 
-{ #category : 'as yet unclassified' }
-TTZincApiRequest >> output [
-
-	^ guzzler response
+{ #category : 'accessing' }
+PharoˆApiRequest >> entity: anEntity [
+	"although dnu would handle this the code parsers prefer it to be real"
+	guzzler entity: anEntity
 ]
 
 { #category : 'accessing' }
-TTZincApiRequest >> prepareQuery [
+PharoˆApiRequest >> prepareQuery [
 
 	self parameters ifEmpty: [ ^ self ].
 	
@@ -42,7 +48,7 @@ TTZincApiRequest >> prepareQuery [
 ]
 
 { #category : 'accessing' }
-TTZincApiRequest >> withSTON: jsonable [
+PharoˆApiRequest >> withSTON: jsonable [
 
 	super withSTON: jsonable.
 	self entity: (ZnEntity text: text);

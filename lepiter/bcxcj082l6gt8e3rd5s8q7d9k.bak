@@ -483,14 +483,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-21T17:04:36.098783+01:00"
+						"dateAndTimeString" : "2026-08-21T17:06:37.057881+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "UdHeZPz5TBm1EWXfcStySQ=="
 				},
-				"code" : "(#url: //  'mock://httpbin.org/json') asDictionary"
+				"code" : "(#url: //  'https://httpbin.org/json') asDictionary"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -525,6 +525,40 @@
 					"uidString" : "YFOm4J70SbmEzFmqjQ0qcg=="
 				},
 				"code" : "(#client:// #TTWorldClockClient) @  #default"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-22T12:06:35.537891+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-22T12:07:44.90533+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "TDOLsrt7QzSPRF0HEIXFvA=="
+				},
+				"code" : "(#url: //  'file:///Users/keith/code/GlamorousToolkit-MacOS-x86_64-v1.1.554/pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json')  asString"
 			}
 		]
 	},

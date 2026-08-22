@@ -74,7 +74,7 @@ TTResult >> getParsingInput [
    "do not be tempted to refactor this method away, 
     it may be customized by subclasses"
 
-  ^ self getStdout
+  ^ self getVerifiedContents
 ]
 
 { #category : 'as yet unclassified' }
@@ -94,7 +94,7 @@ TTResult >> getPayloadStart [
    "do not be tempted to refactor this method away, 
     it may be customized by subclasses"
 
-   ^ self getStdout
+   ^ self getVerifiedContents
 ]
 
 { #category : 'accessing' }

@@ -1,5 +1,5 @@
 Class {
-	#name : 'PharoˆGuzzler',
+	#name : 'Guzzler',
 	#superclass : 'Object',
 	#instVars : [
 		'executeSelector',
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> classApiRequest [
+Guzzler class >> classApiRequest [
 
-	^ TTZincApiRequest
+	^ #class://#'ˆApiRequest'
 ]
 
 { #category : 'as yet unclassified' }
-PharoˆGuzzler class >> http: aUrl [
+Guzzler class >> http: aUrl [
 	| url |
 
 		url := (aUrl includesSubstring: 'http://')
@@ -30,7 +30,7 @@ PharoˆGuzzler class >> http: aUrl [
 ]
 
 { #category : 'as yet unclassified' }
-PharoˆGuzzler class >> https: aUrl [
+Guzzler class >> https: aUrl [
 	| url |
 	url := (aUrl includesSubstring: 'https://')
 			ifFalse: [ 'https://' , aUrl ]
@@ -39,13 +39,19 @@ PharoˆGuzzler class >> https: aUrl [
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> makeZnClient [ 
+Guzzler class >> makeFileClient [ 
 
-  ^ (#class://#ZnClient) new
+  ^ (#class://'ˆFileClient') new
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new [ 
+Guzzler class >> makeHttpClient [ 
+
+  ^ (#class://#'ˆHttpClient') new
+]
+
+{ #category : 'instance creation' }
+Guzzler class >> new [ 
 
   "Normally we are a stand in for Zinc"
   
@@ -53,7 +59,7 @@ PharoˆGuzzler class >> new [
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> newForScheme: aScheme [ 
+Guzzler class >> newForScheme: aScheme [ 
 
   "In this case we have a chance to work OUR magic"
   
@@ -61,7 +67,7 @@ PharoˆGuzzler class >> newForScheme: aScheme [
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> newForScheme: aScheme url: aUrl [ 
+Guzzler class >> newForScheme: aScheme url: aUrl [ 
 
   "In this case we have a chance to work OUR magic"
   
@@ -69,97 +75,97 @@ PharoˆGuzzler class >> newForScheme: aScheme url: aUrl [
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> newForUrl: aUrl [ 
+Guzzler class >> newForUrl: aUrl [ 
 
   "In this case we have a chance to work OUR magic"
   
-	^ self newForScheme: (aUrl copyUpTo: $:) url: aUrl
+	^ (self newForScheme: (aUrl copyUpTo: $:)) url: aUrl
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_L1http [
+Guzzler class >> new_L1http [
 
-	^ self makeZnClient logLevel: 1
+	^ self makeHttpClient logLevel: 1
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_L2http [
+Guzzler class >> new_L2http [
 
-	^ self makeZnClient logLevel: 2
+	^ self makeHttpClient logLevel: 2
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_L3http [
+Guzzler class >> new_L3http [
 
-	^ self makeZnClient logLevel: 3
+	^ self makeHttpClient logLevel: 3
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_T1http [
+Guzzler class >> new_T1http [
 
-	^ self makeZnClient logToTranscript; logLevel: 1
+	^ self makeHttpClient logToTranscript; logLevel: 1
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_T2http [
+Guzzler class >> new_T2http [
 
-	^ self makeZnClient logToTranscript; logLevel: 2
+	^ self makeHttpClient logToTranscript; logLevel: 2
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_T3http [
+Guzzler class >> new_T3http [
 
-	^ self makeZnClient logToTranscript; logLevel: 3
+	^ self makeHttpClient logToTranscript; logLevel: 3
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_echo [
+Guzzler class >> new_echo [
 
 	^ (self basicNew)
-	    setHttpClient: (self makeZnClient);
+	    setHttpClient: (self makeHttpClient);
 			setExecuteSelector: #echo
 			initialize
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_file [
+Guzzler class >> new_file [
 
-	^ self makeZnClient
+	^ self makeHttpClient
 
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_headers [
+Guzzler class >> new_headers [
 
 	^ (self basicNew)
-	    setHttpClient: (self makeZnClient);
+	    setHttpClient: (self makeHttpClient);
 			setExecuteSelector: #executeHeaders
 			initialize
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_http [
+Guzzler class >> new_http [
 
-	^ self makeZnClient loggingOff
+	^ self makeHttpClient loggingOff
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_https [
+Guzzler class >> new_https [
 
-	^ self makeZnClient loggingOff
+	^ self makeHttpClient loggingOff
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_mock [
+Guzzler class >> new_mock [
 
 	^ (self basicNew)
-	    setHttpClient: (self makeZnClient);
+	    setHttpClient: (self makeHttpClient);
 			setExecuteSelector: #executeMock
 			initialize
 ]
 
 { #category : 'instance creation' }
-PharoˆGuzzler class >> new_unhttps [
+Guzzler class >> new_unhttps [
  
 "todo:
 	Unified Http(s)
@@ -170,19 +176,19 @@ PharoˆGuzzler class >> new_unhttps [
 	The merged payload concept may also be useful when adopting non http transports.
 "
 	^ (self basicNew)
-	    setHttpClient: (self makeZnClient);
+	    setHttpClient: (self makeHttpClient);
 			setExecuteSelector: #executeUnified
 			initialize
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> contents [ 
+Guzzler >> contents [ 
 
 	^ contents ifNil: [ httpClient contents ]
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> doesNotUnderstand: aMessage [
+Guzzler >> doesNotUnderstand: aMessage [
 
 	"delegation"
 	
@@ -190,19 +196,19 @@ PharoˆGuzzler >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> execute [
+Guzzler >> execute [
 
 	self perform: executeSelector
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> executeEcho [
+Guzzler >> executeEcho [
 
 	contents := httpClient url readStream skipTo: $:; upToEnd. 
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> executeHeaders [
+Guzzler >> executeHeaders [
 
 	data := httpClient request headers headers.
 	
@@ -210,7 +216,7 @@ PharoˆGuzzler >> executeHeaders [
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> executeMock [
+Guzzler >> executeMock [
 
 	| classNameFromUrl aMocker urlStr methodFromUrl theRest |
 	
@@ -231,11 +237,17 @@ PharoˆGuzzler >> executeMock [
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> setExecuteSelector: anObject [
+Guzzler >> response [ 
+
+	^  httpClient response  
+]
+
+{ #category : 'accessing' }
+Guzzler >> setExecuteSelector: anObject [
 	executeSelector := anObject
 ]
 
 { #category : 'accessing' }
-PharoˆGuzzler >> setHttpClient: anObject [
+Guzzler >> setHttpClient: anObject [
 	httpClient := anObject
 ]

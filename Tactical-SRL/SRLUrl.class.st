@@ -1,6 +1,6 @@
 Class {
 	#name : 'SRLUrl',
-	#superclass : 'SRLRouter',
+	#superclass : 'SRLRequestAbstract',
 	#category : 'Tactical-SRL-Schemes',
 	#package : 'Tactical-SRL',
 	#tag : 'Schemes'
@@ -15,7 +15,25 @@ SRLUrl class >> canRoute: aSymbol [
 { #category : 'as yet unclassified' }
 SRLUrl class >> example [
 	<gtExample>
-	^ (#url: //  'https://httpbin.org/json') asDictionary
+	
+	| unresolved resolved output contents parsed|
+	unresolved :=  #url: //  'https://httpbin.org/json'. 
+	resolved := unresolved resolve.
+	
+	"it doesnt resolve untl used"
+	self assert: [ resolved == unresolved ].
+	
+	output := resolved output.
+	
+	"SRLUrl is its own output object"
+	self assert: [ output == resolved ].
+	
+	contents := resolved getVerifiedContents.
+	
+	self assert: [ contents first == ${ ].
+	parsed := resolved asDictionary.
+	
+	self assert: [ parsed size = 1 ].
 ]
 
 { #category : 'as yet unclassified' }
@@ -46,15 +64,7 @@ SRLUrl >> +// aHostUrl [
 { #category : 'accessing' }
 SRLUrl >> asDictionary [
 
-	^ (self clientClass // self clientArgString) asDictionary
-	
-]
-
-{ #category : 'accessing' }
-SRLUrl >> asString [
-
-	^ (self clientClass // self clientArgString) asString
-	
+	^ self getOutputProvider asDictionary
 ]
 
 { #category : 'accessing' }
@@ -67,6 +77,13 @@ SRLUrl >> clientArgString [
 SRLUrl >> clientClass [
 
 	^ resolved key
+]
+
+{ #category : 'accessing' }
+SRLUrl >> getOutputProvider [
+
+	^ self clientClass // self clientArgString
+	
 ]
 
 { #category : 'accessing' }
@@ -90,4 +107,11 @@ SRLUrl >> resolve: aThing [
 	
 	^ (SRLClass class: #TTApiClient) -> aThing
 
+]
+
+{ #category : 'accessing' }
+SRLUrl >> stdout [
+
+	^ self getOutputProvider contents
+	
 ]

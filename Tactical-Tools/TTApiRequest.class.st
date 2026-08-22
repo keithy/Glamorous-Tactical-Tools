@@ -51,13 +51,13 @@ TTApiRequest >> // uri [
 { #category : 'as yet unclassified' }
 TTApiRequest >> asDictionary [
   "convenience - replace with better"
-	^ STONJSON fromString: self getContents
+	^ STONJSON fromString: self getVerifiedContents
 ]
 
 { #category : 'as yet unclassified' }
 TTApiRequest >> asString [
   "convenience - replace with better"
-	^ self getContents
+	^ self getStdOut
 ]
 
 { #category : 'as yet unclassified' }
@@ -77,9 +77,27 @@ TTApiRequest >> fullUrl [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiRequest >> getContents [
+TTApiRequest >> getOutputProvider [
+
+	 self send.
+	 
+	 "only valid after send"
+	^ guzzler response
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> getRawContents [
+
+	"likely coming from a ZnResponse"
 	"thin client only"
-	^ self send response contents
+	^ self getOutputProvider contents
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> getVerifiedContents [
+	"likely coming from a ZnResponse"
+	"thin client only"
+	^ self getRawContents
 ]
 
 { #category : 'accessing' }
@@ -88,28 +106,33 @@ TTApiRequest >> isGET [
 	^ self type == #GET
 ]
 
-{ #category : 'accessing' }
-TTApiRequest >> isGet [
+{ #category : 'as yet unclassified' }
+TTApiRequest >> output [
 
-	^ self type == #GET
+	^ guzzler response
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> prepare [
 
-	guzzler
-		method: self type;
-		url: self fullUrl.
+	guzzler url: self fullUrl.
+	
+	guzzler isHttp ifTrue: [
+	
+		guzzler method: self type.
 		
-	self isGET	
-		ifTrue: [ guzzler queryAddAll: self parameters ]
-  	ifFalse: [ self prepareQuery ].
+		self isGET	
+			ifTrue: [ guzzler queryAddAll: self parameters ]
+	  	ifFalse: [ self prepareQuery ].
+	].
 ]
 
 { #category : 'accessing' }
-TTApiRequest >> request [
+TTApiRequest >> response [
 
-	^ self
+	^ guzzler response
+	
+
 ]
 
 { #category : 'accessing' }
@@ -137,6 +160,13 @@ TTApiRequest >> setUri: aUri [
 	url := aUri copyAfter: $:
 ]
 
+{ #category : 'accessing' }
+TTApiRequest >> stdout [
+
+	^ self getOutputProvider contents
+
+]
+
 { #category : 'as yet unclassified' }
 TTApiRequest >> timeout: n [
 	guzzler timeout: n
@@ -149,43 +179,41 @@ TTApiRequest >> type [
 ]
 
 { #category : 'accessing' }
-TTApiRequest >> useDELETE [
+TTApiRequest >> use: aType [
 
-	type := #DELETE.
+	type := aType.
 	
 	^ self getResult
+]
+
+{ #category : 'accessing' }
+TTApiRequest >> useDELETE [
+
+	^ (self use: #DELETE) getResult
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> useGET [
 
-	type := #GET.
-	
-	^ self getResult
+		^ (self use: #GET) getResult
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> usePATCH [
 
-	type := #PATCH.
-	
-	^ self getResult
+		^ (self use: #PATCH) getResult
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> usePOST [
 
-	type := #POST.
-	
-	^ self getResult
+		^ (self use: #POST) getResult
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> usePUT [
 
-	type := #PUT.
-	
-	^ self getResult
+		^ (self use: #PUT) getResult
 ]
 
 { #category : 'accessing' }

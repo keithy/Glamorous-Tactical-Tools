@@ -37,7 +37,7 @@ TTApiClient class >> basicNewFor: aVaultable [
 	basicNewClient := (super basicNewFor: aVaultable) ifNil: [ ^nil ].  
 	 
 	^ basicNewClient
-			setClassTool: #class://#ˆGuzzler;
+			setClassTool: #class://#Guzzler;
 			setRequestErrorHandler: Hub makeNetworkErrorHandler;
 			yourself
 
@@ -132,6 +132,11 @@ TTApiClient >> beginRequest: aRequest [
 	
 ]
 
+{ #category : 'instance creation' }
+TTApiClient >> classTool [
+	classTool ifNil: [ self class ]
+]
+
 { #category : 'accessing' }
 TTApiClient >> contentType [
 
@@ -203,15 +208,15 @@ TTApiClient >> openApiJson [
 ]
 
 { #category : 'accessing' }
-TTApiClient >> useDELETE: endpoint [  
+TTApiClient >> use: method withEndpoint: endpoint [  
 
-	^ (self / endpoint) useDELETE request
+	^ ((self / endpoint) use: method) request
 ]
 
 { #category : 'accessing' }
-TTApiClient >> useEndpoint: anEndpoint [
+TTApiClient >> useDELETE: endpoint [  
 
-	^ self // self hostUrl / anEndpoint
+	^ (self / endpoint) useDELETE request
 ]
 
 { #category : 'accessing' }
@@ -239,13 +244,19 @@ TTApiClient >> usePUT: endpoint [
 ]
 
 { #category : 'accessing' }
-TTApiClient >> useUrl: aUrl [
-
-	^ self // aUrl 
-]
-
-{ #category : 'accessing' }
 TTApiClient >> vLatest [
 
 	^ self // self hostUrl / 'api'
+]
+
+{ #category : 'accessing' }
+TTApiClient >> withEndpoint: anEndpoint [
+
+	^ self // self hostUrl / anEndpoint
+]
+
+{ #category : 'accessing' }
+TTApiClient >> withUrl: aUrl [
+
+	^ self // aUrl 
 ]

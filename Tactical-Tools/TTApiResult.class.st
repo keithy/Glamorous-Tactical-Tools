@@ -25,12 +25,7 @@ TTApiResult >> error: aMessage [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiResult >> getContents [
-	^ self getOutput contents
-]
-
-{ #category : 'as yet unclassified' }
-TTApiResult >> getOutput [
+TTApiResult >> getOutputProvider [
 
 	output ifNotNil: [ ^ output ].
 	
@@ -39,6 +34,12 @@ TTApiResult >> getOutput [
 	self statusVerify ifFalse: [ self error: 'Unhandled API Error' ].  
 	
 	^ output
+]
+
+{ #category : 'as yet unclassified' }
+TTApiResult >> getRawContents [
+	"likely coming from a ZnResponse"
+	^ self getOutputProvider contents
 ]
 
 { #category : 'as yet unclassified' }

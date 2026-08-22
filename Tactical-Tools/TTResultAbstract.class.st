@@ -25,6 +25,18 @@ TTResultAbstract >> apply: aBoltOn [
 	aBoltOn applyTo: self
 ]
 
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> asDictionary [
+  "convenience - replace with better"
+	^ STONJSON fromString: self getStdOut
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> asString [
+  "convenience - replace with better"
+	^ self getStdOut
+]
+
 { #category : 'accessing' }
 TTResultAbstract >> client [
 	"Have removed the need for an instance slot for client/parent
@@ -34,12 +46,7 @@ TTResultAbstract >> client [
 ]
 
 { #category : 'as yet unclassified' }
-TTResultAbstract >> getContents [
-	^ self getOutput stdout
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> getOutput [
+TTResultAbstract >> getOutputProvider [
 
 	output ifNotNil: [ ^ output ].
 	
@@ -51,18 +58,24 @@ TTResultAbstract >> getOutput [
 ]
 
 { #category : 'as yet unclassified' }
+TTResultAbstract >> getRawContents [
+	"likely coming from a executables 'output'"
+	^ self getOutputProvider stdout
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract >> getStderr [
 
-	stderr := self getOutput stderr.
+	stderr := self getOutputProvider stderr.
 	
 	^ stderr 
 ]
 
 { #category : 'as yet unclassified' }
-TTResultAbstract >> getStdout [
+TTResultAbstract >> getVerifiedContents [
 	stdout ifNotNil: [ ^ stdout ].
 
-	stdout := [ [ self getContents ]
+	stdout := [ [ self getRawContents ]
 			onErrorDo: [ :ex | 
 				self stderrAppend: ex messageText.
 				ex pass ] ] onErrorDo: self client requestErrorHandler.
