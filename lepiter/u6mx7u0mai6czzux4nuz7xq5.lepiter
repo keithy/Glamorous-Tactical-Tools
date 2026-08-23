@@ -18,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T04:59:51.335472+01:00"
+						"dateAndTimeString" : "2026-08-23T16:44:08.073098+01:00"
 					}
 				},
 				"editEmail" : {
@@ -29,7 +29,363 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T04:59:51.335472+01:00"
+						"dateAndTimeString" : "2026-08-23T16:57:58.83784+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "OUBU+cvsR2Gvj+E7+OGWMg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "**Immediately Resolved SRLs**\nMany SRLs help locate items directly, and some implement additional features.  The #class: SRL directly returns the class requested. An additional feature of `SRLClass` is that it may also perform a search for additional classes on the current namespace searchpath."
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:48:46.021801+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:49:08.015704+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "2piiHOpSRX6y8X3v+qIhNw=="
+				},
+				"code" : "Hub current namespacedSearchPath"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:47:56.534042+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:48:36.915553+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "n/h0DjiARv6KRQfWripv7Q=="
+				},
+				"code" : "Hub current classSearchPath"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:51:35.347781+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:40:28.201133+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "zLCov7DaRFiid0oG1jQZ7g=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "None of the other class resolution patterns have been changed to use namespace search paths. The use of namespaced features is an entirely opt-in pattern:"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:44:42.496412+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:45:07.183964+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "C0ONcowhRDqFZQR+4b+bLg=="
+				},
+				"code" : "#class://#ˆHub"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:58:49.630044+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:45:23.953042+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Yu+zpSfDTK6x/eFydv77UA=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "**Files**\n`SRLFile` is also blessed with additional features, including the ability to resolve both named origins and environment variables."
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [
+						{
+							"__type" : "pictureSnippet",
+							"children" : {
+								"__type" : "snippets",
+								"items" : [ ]
+							},
+							"createEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"createTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2026-08-23T17:05:00.159368+01:00"
+								}
+							},
+							"editEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"editTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2026-08-23T17:31:26.173338+01:00"
+								}
+							},
+							"uid" : {
+								"__type" : "uid",
+								"uidString" : "GMqNYM+iRs61rkkziVi3vA=="
+							},
+							"url" : "attachments/66o4pnmg757q5tuvofli5fa9w/fileref_to_ramdisk.png",
+							"caption" : "",
+							"previewHeight" : 97.62286376953125,
+							"reference" : "ramdisk_file"
+						}
+					]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:59:35.040132+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:39:37.639965+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "6R+E6iqLSiKWa4iXxq/LDQ=="
+				},
+				"code" : "#file://'{ramdisk}/${USER}.env'"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:41:27.372563+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:50:22.118438+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Av9yKjtlSDKCo9/22q1zRQ=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "SRLs come in a resolved and unresolved form. Some resolve immediately, others resolve automatically when used. `SRLFile` currently resolves immediately to a fileReference `#file:#//`, but for some uses the unresolved resource locator `#file:/` provides more capabilities, a FileReference can't do this:"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T05:37:50.100857+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:51:05.153226+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "qsl16cMuRXmYUGcDXMbWGA=="
+				},
+				"code" : "(#file:/'{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json') asDictionary"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T16:31:54.52078+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:56:11.404904+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +395,78 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : ""
+				"string" : "**URLs - even better:**\nThe {{gtClass:SRLUrl}} Symbolic Resource Locator `#url://`, is handled by {{gtClass:Guzzler}} an HttpClient that is a thin wrapper around the native HttpClient ({{gtClass:ZnClient}}); `Guzzler` handles custom schemes.\n\nSchemes that `Guzzler` does not handle are then put out to tender to {{gtClass:SRLRouter}} to find a handler, and we end up with an {{gtClass:SRLUrl}} whose virtual httpClient is {{gtClass:SRLFile}}.\n\nSRLFile normally handles substitution of both named file origins, and environment variables."
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T15:55:03.794865+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:57:23.720112+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "wuRjxZPiRZqb/kWSq4h6FA=="
+				},
+				"code" : " (#url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json' ) contents"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T17:58:32.537434+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T18:02:06.338707+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "B45OgoGERwyEAivHotZPVQ=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "**Adding more SRLs**\nAdding more \"http\" schemes to Guzzler, is as simple as adding additional SRL classes eg. {{gtClass:SRLJira}} {{gtClass:SRLSnow}} , {{gtClass:Wikipedia}} {{gtClass:ISBN}} {{gtClass:"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -66,7 +493,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T05:55:52.818611+01:00"
+						"dateAndTimeString" : "2026-08-23T16:22:01.836034+01:00"
 					}
 				},
 				"uid" : {
@@ -134,14 +561,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T06:00:14.062971+01:00"
+						"dateAndTimeString" : "2026-08-23T15:55:50.114243+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "kWqTjVUyQqiMpfl+IuGsWg=="
 				},
-				"code" : "Dictionary // (a:= #url://'https://httpbin.org/json')"
+				"code" : "Dictionary // a"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -157,7 +584,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T05:37:50.100857+01:00"
+						"dateAndTimeString" : "2026-08-23T16:22:25.911665+01:00"
 					}
 				},
 				"editEmail" : {
@@ -168,48 +595,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T05:56:35.220264+01:00"
+						"dateAndTimeString" : "2026-08-23T16:22:28.795342+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "qsl16cMuRXmYUGcDXMbWGA=="
+					"uidString" : "g46cmyW7SPytoVRdXygR8A=="
 				},
-				"code" : "b := #file://'{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json'"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T05:56:36.72505+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T06:00:38.786917+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "Lp5DVbOHR8W7l/SJgfOTqg=="
-				},
-				"code" : "Dictionary// b"
+				"code" : "b contents"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -236,48 +629,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T06:01:23.97522+01:00"
+						"dateAndTimeString" : "2026-08-23T15:57:56.856444+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "scbwMfy6SHe5BxAjXswwFg=="
 				},
-				"code" : "result := TTResult // (#url://'https://httpbin.org/json'). "
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T05:20:04.342508+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T06:24:14.862829+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "CPYf3FY9T/GVkyvS1y1a0w=="
-				},
-				"code" : " (#url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json' ) contents   "
+				"code" : "result := TTResult // b."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -338,14 +697,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T07:55:38.22845+01:00"
+						"dateAndTimeString" : "2026-08-23T12:42:34.799663+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "cfDI7Z4fRjutomhEbsz3mQ=="
 				},
-				"code" : "result payload: [ :pl | pl at: 'slideshow' ].\r\rresult getPayload"
+				"code" : "result initialize.\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult apply: (TTToolOutputParser parseAsSTON).\rresult getParsed"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T13:16:00.830479+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T13:16:06.122061+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "UaVpjnqEQ2+kf1HwxItsRQ=="
+				},
+				"code" : "result getPayload"
 			}
 		]
 	},
@@ -368,12 +761,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-23T05:00:10.716457+01:00"
+			"dateAndTimeString" : "2026-08-23T16:49:41.762146+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "Result From SRL "
+		"title" : "SRLs Primer "
 	},
 	"uid" : {
 		"__type" : "uuid",

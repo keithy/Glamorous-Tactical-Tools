@@ -64,7 +64,9 @@ TTApiRequest >> asString [
 TTApiRequest >> begin [
 
   guzzler := self class makeHttpClientForScheme: scheme.
-   
+  
+  guzzler url: self fullUrl.
+  
   guzzler isHttpClient ifTrue: [
 		client beginRequest: self.
 	].
@@ -82,8 +84,8 @@ TTApiRequest >> fullUrl [
 
 { #category : 'as yet unclassified' }
 TTApiRequest >> getOutputProvider [
-
-	 ^ self notify send response
+	^ self response ifNil: [ self notify send response ].
+ 
 ]
 
 { #category : 'as yet unclassified' }
@@ -110,7 +112,7 @@ TTApiRequest >> isGET [
 { #category : 'as yet unclassified' }
 TTApiRequest >> output [
 
-	^ guzzler response
+	^ self getOutputProvider
 ]
 
 { #category : 'accessing' }
@@ -159,6 +161,13 @@ TTApiRequest >> setUri: aUri [
 	
 	scheme := aUri copyUpTo: $:.
 	url := aUri copyAfter: $:
+]
+
+{ #category : 'accessing' }
+TTApiRequest >> stderr [
+
+	^ self getOutputProvider status
+
 ]
 
 { #category : 'accessing' }

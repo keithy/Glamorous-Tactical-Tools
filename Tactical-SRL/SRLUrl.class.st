@@ -1,6 +1,9 @@
 Class {
 	#name : 'SRLUrl',
 	#superclass : 'SRLRouter',
+	#instVars : [
+		'output'
+	],
 	#category : 'Tactical-SRL-Schemes',
 	#package : 'Tactical-SRL',
 	#tag : 'Schemes'
@@ -105,18 +108,26 @@ SRLUrl >> contents [
 ]
 
 { #category : 'accessing' }
+SRLUrl >> getResult [
+
+	^ self output getResult
+]
+
+{ #category : 'accessing' }
 SRLUrl >> output [
 	"the object responsible for providing output"
-	^ (self clientClass) // (self clientArgString)
+	 resolved ifNil: [ self resolve ].
+	 
+	^ output ifNil: [ output := (self clientClass) // (self clientArgString) ]
 	
 ]
 
 { #category : 'accessing' }
 SRLUrl >> resolve [
 
-	resolved := self resolve: thing.
+	super resolve.
 	
-	"returns self for deferred action"
+	"returns self enforcing deferred action"
 	^ self 
 ]
 

@@ -127,7 +127,7 @@ SRLFile >> asResult [
 { #category : 'accessing' }
 SRLFile >> contents [
 
-	^ self stdout
+	^ self resolve contents
 	
 ]
 
@@ -157,13 +157,6 @@ SRLFile >> gtPrintFor: aView [
 		aptitude: BrGlamorousCodeEditorAptitude;
 		text: [ self printString asRopedText ];
 		actionUpdateButton
-]
-
-{ #category : 'accessing' }
-SRLFile >> printOnX: str [
-
-	(resolved ifNil: [ thing ]) printOn: str
-
 ]
 
 { #category : 'accessing' }

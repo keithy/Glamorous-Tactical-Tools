@@ -9,7 +9,8 @@ Class {
 		'mappers',
 		'payloadTailReducers',
 		'payloadReducers',
-		'parsers'
+		'parsers',
+		'parsed'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -70,6 +71,16 @@ TTResult >> getMappingInput [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> getParsed [
+
+	parsed ifNotNil: [ ^ parsed ].
+
+	parsed := self inject: (self getParsingInput) into: parsers.
+	
+ ^ parsed
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> getParsingInput [
  
    "do not be tempted to refactor this method away, 
@@ -84,7 +95,7 @@ TTResult >> getPayload [
 	thePayload ifNotNil: [ ^ thePayload ].
   
 	self payload: payloadTailReducers.
-	thePayload := self inject: nil into: (payloadReducers ifNil: #getPayloadStart).
+	thePayload := self inject: (self getPayloadStart) into: payloadReducers.
 	
  ^ thePayload
 ]
@@ -95,7 +106,23 @@ TTResult >> getPayloadStart [
    "do not be tempted to refactor this method away, 
     it may be customized by subclasses"
 
-   ^ self getVerifiedContents
+   ^ self getParsed
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> initialize [
+	
+	super initialize.
+	payloadReducers := nil.
+	payloadTailReducers := nil.
+	thePayload := nil.
+  mappers := nil.	
+  mapped := nil.
+	formatters := nil.
+	formatted := nil.
+	parsers := nil.
+	parsed := nil.
+	
 ]
 
 { #category : 'accessing' }
@@ -151,7 +178,7 @@ TTResult >> parse: actionBlockSymbolArrayOrNil [
 TTResult >> parsing: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      parsers ifNil: [ parsers := Array with: #getParsingInput ].
+      parsers ifNil: [ parsers := Array new ].
       parsers := parsers copyWith: actionBlockSymbolArrayOrNil
 ]
 
@@ -159,7 +186,7 @@ TTResult >> parsing: actionBlockSymbolArrayOrNil [
 TTResult >> payload: actionBlockSymbolArrayOrNil [
  
  		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      payloadReducers ifNil: [ payloadReducers := Array with: #getPayloadStart ].
+      payloadReducers ifNil: [ payloadReducers := Array new ].
       payloadReducers := payloadReducers copyWith: actionBlockSymbolArrayOrNil
 ]
 
@@ -196,8 +223,8 @@ TTResult >> payloadDo: aBlock [
 TTResult >> payloadFinalize: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      payloadTailReducers ifNil: [ payloadTailReducers := OrderedCollection new ].
-      payloadTailReducers add: actionBlockSymbolArrayOrNil
+      payloadTailReducers ifNil: [ payloadTailReducers := Array new ].
+      payloadTailReducers := payloadTailReducers copyWith: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'accessing' }
@@ -208,4 +235,22 @@ TTResult >> request [
 { #category : 'accessing' }
 TTResult >> request: anObject [
 	request := anObject
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> reset [
+
+	super reset.
+	thePayload := nil.
+	formatted := nil.
+	mapped := nil.
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> resetAll [
+
+	self reset.
+	thePayload := nil.
+	formatted := nil.
+	mapped := nil.
 ]

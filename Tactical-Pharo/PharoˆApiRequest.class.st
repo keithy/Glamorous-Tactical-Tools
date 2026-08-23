@@ -48,6 +48,13 @@ PharoˆApiRequest >> prepareQuery [
 ]
 
 { #category : 'accessing' }
+PharoˆApiRequest >> stderr [
+	^ String streamContents: [ :out | self response statusLine writeOn: out ] 
+	 
+
+]
+
+{ #category : 'accessing' }
 PharoˆApiRequest >> withSTON: jsonable [
 
 	super withSTON: jsonable.

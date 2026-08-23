@@ -34,6 +34,10 @@ TTResultAbstract class >> isAbstract [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract class >> newFromSRL: anSRL [
+
+	"if we ask the srl we get a result class 
+	 from the request's nominated client"
+
 	^ anSRL output getResult
 
   
@@ -119,6 +123,15 @@ TTResultAbstract >> handlersOnStatus: sStatus do: aBlockReturningBool [
 	self handlers at: sStatus put: aBlockReturningBool
 ]
 
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> initialize [
+
+	stdout := nil.
+	stderr := nil.
+	output := nil.
+	
+]
+
 { #category : 'accessing' }
 TTResultAbstract >> parent [
 	"Have removed the need for an instance slot for client/parent
@@ -164,6 +177,22 @@ TTResultAbstract >> requestUsing: aBlock [
 	aBlock value: request.
 	
 	^ self
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> reset [
+
+stdout := nil.
+stderr := nil.
+
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> resetAll [
+
+	self reset.
+	output := nil.
+
 ]
 
 { #category : 'accessing' }
