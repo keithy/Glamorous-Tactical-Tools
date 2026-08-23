@@ -174,6 +174,10 @@ TTApiClient >> handlers [
 ]
 
 { #category : 'accessing' }
+TTApiClient >> headerAt: a put: b [
+]
+
+{ #category : 'accessing' }
 TTApiClient >> hostScheme [
 
 	^ self hostUrl copyUpTo: $:

@@ -25,7 +25,8 @@ SRLRouter class >> fromSymbol: aSymbol [
 		(sc canRoute: aSymbol) ifTrue: [ ^ sc newRoute: aSymbol ]
 	
 	].
-	self error: 'Unknown scheme'
+	
+	^ nil
  	
 ]
 
@@ -73,10 +74,24 @@ SRLRouter >> // aThing [
 	^ (self / aThing) resolve
 ]
 
+{ #category : 'guzzler-compat' }
+SRLRouter >> execute [
+]
+
+{ #category : 'guzzler-compat' }
+SRLRouter >> headerAt: a put: b [
+]
+
 { #category : 'accessing' }
 SRLRouter >> hub [
 
 	^ Hub current
+]
+
+{ #category : 'guzzler-compat' }
+SRLRouter >> isHttp [
+
+	^ false
 ]
 
 { #category : 'as yet unclassified' }
@@ -90,6 +105,10 @@ SRLRouter >> resolve: aThing [
 
 	^ self subclassResponsibility
 		
+]
+
+{ #category : 'guzzler-compat' }
+SRLRouter >> response [
 ]
 
 { #category : 'accessing' }
@@ -120,6 +139,13 @@ SRLRouter >> thing [
 { #category : 'accessing' }
 SRLRouter >> thing: anObject [
 	thing := anObject
+]
+
+{ #category : 'guzzler-compat' }
+SRLRouter >> url: aUrl [
+
+^ self / (aUrl readString upToAll: '://') upToEnd
+   
 ]
 
 { #category : 'accessing' }

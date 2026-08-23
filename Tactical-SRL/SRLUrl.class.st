@@ -55,15 +55,6 @@ SRLUrl class >> makeResult [
 	^ TTApiResult new
 ]
 
-{ #category : 'as yet unclassified' }
-SRLUrl class >> url: aVarName [
-
-	"local shortcut"
-	^ self new resolve: aVarName
-   
-    
-]
-
 { #category : 'accessing' }
 SRLUrl >> +/ anEndpoint [
 	

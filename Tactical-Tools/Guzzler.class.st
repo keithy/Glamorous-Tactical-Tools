@@ -69,7 +69,9 @@ Guzzler class >> new [
 Guzzler class >> newForScheme: aScheme [ 
 
   "In this case we have a chance to work OUR magic"
-  
+   
+   (SRLRouter fromSymbol: (aScheme,':') asSymbol) ifNotNil: [:srl | ^ srl ].
+
 	^ self askFor:('new_', aScheme) asSymbol ifAbsent: [ self error: 'unknown scheme ', aScheme ]
 ]
 
@@ -124,13 +126,6 @@ Guzzler class >> new_echo [
 	    setHttpClient: (self makeHttpClient);
 			setExecuteSelector: #echo
 			initialize
-]
-
-{ #category : 'instance creation' }
-Guzzler class >> new_file [
-
-	^ self makeHttpClient
-
 ]
 
 { #category : 'instance creation' }

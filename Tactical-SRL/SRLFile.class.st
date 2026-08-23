@@ -85,6 +85,12 @@ SRLFile class >> fileReferenceFromSymbol: aSymbol [
 ]
 
 { #category : 'accessing' }
+SRLFile class >> isHttp [
+
+	^ false
+]
+
+{ #category : 'accessing' }
 SRLFile class >> namedLocations [
 
 	^ NamedLocations ifNil: [ NamedLocations := FileLocator  namedFileLocations ]
@@ -154,7 +160,7 @@ SRLFile >> gtPrintFor: aView [
 ]
 
 { #category : 'accessing' }
-SRLFile >> printOn: str [
+SRLFile >> printOnX: str [
 
 	(resolved ifNil: [ thing ]) printOn: str
 
@@ -174,4 +180,11 @@ SRLFile >> resolve: aThing [
 SRLFile >> stdout [
 
 	^ self resolve contents
+]
+
+{ #category : 'accessing' }
+SRLFile >> url: aUrl [
+
+^ self / (aUrl withoutPrefix: 'file:///')
+   
 ]
