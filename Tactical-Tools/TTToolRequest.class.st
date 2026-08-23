@@ -17,15 +17,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTToolRequest class >> @ workingDirectory [
-
-	^ self new 
-			workingDirectory: workingDirectory;
-			yourself
- 
-]
-
-{ #category : 'as yet unclassified' }
 TTToolRequest class >> findExecutable [
 	^ (self findExecutable: self toolName) output stdout
 ]

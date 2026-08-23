@@ -76,10 +76,10 @@ SRLRouter >> // aThing [
 
 { #category : 'guzzler-compat' }
 SRLRouter >> execute [
-]
 
-{ #category : 'guzzler-compat' }
-SRLRouter >> headerAt: a put: b [
+	"If we were an Http Client this is our call to action,
+	 we are ready already"
+	
 ]
 
 { #category : 'accessing' }
@@ -89,7 +89,7 @@ SRLRouter >> hub [
 ]
 
 { #category : 'guzzler-compat' }
-SRLRouter >> isHttp [
+SRLRouter >> isHttpClient [
 
 	^ false
 ]
@@ -109,6 +109,10 @@ SRLRouter >> resolve: aThing [
 
 { #category : 'guzzler-compat' }
 SRLRouter >> response [
+
+	"If we were an Http Client this is where we prepare a response,
+	we are that response"
+	
 ]
 
 { #category : 'accessing' }
@@ -144,7 +148,8 @@ SRLRouter >> thing: anObject [
 { #category : 'guzzler-compat' }
 SRLRouter >> url: aUrl [
 
-^ self / (aUrl readString upToAll: '://') upToEnd
+	self subclassResponsibilty
+"^ self / (aUrl readStream upToAll: '://'; upToEnd)"
    
 ]
 

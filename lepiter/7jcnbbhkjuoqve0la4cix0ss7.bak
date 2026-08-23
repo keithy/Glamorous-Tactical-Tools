@@ -1,0 +1,147 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T11:24:35.720366+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T11:48:54.795107+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "BHp7xuOYTaeB3APDD6dKxw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "Thinking about Software Architectures and integration of tools. Marcel Weiher muses that we have programming languages for the boxes, but not for the arrows. Although Objective-S is making strides for an implementation language which embodies these ideas, the average developer is not at that stage yet.\n\nThis where our idea of being the Excel, the dynamic workbench for programers problem solving comes in. Bringing all of the boxes on to the table, through Tactical-Tools, the user has the ability to interact and build dynamic scripts using them. \n\nThe Moldable Development ethos that is inherant to all of these components, gives the user a high level of visibility of both code and data in these workflows. \n\nShould a production optimised implementation of a pipeline be needed, the prototype would be fully worked out in the dynamic workbench, with a view to implementation in Objective-S downstream.\n\n(i.e. Objective-S and GT interop is on he Roadmap)\n\n\n"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T08:13:03.085231+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T11:29:54.54555+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "3TEPrKRrRjCy/EB0n+ZFPg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "Loving the ideas presented by <https://objective.st/About> is not enough.\nGood presentation <https://www.youtube.com/watch?v=vrD3TrVuiV0>\nGarlan et al <https://john.cs.olemiss.edu/~hcc/csci658/notes/localcopy/ArchitecturalMismatch.pdf>\nfllowup <https://repository.upenn.edu/server/api/core/bitstreams/f20376b9-f992-4bd9-9c5c-ace580c14898/content> STUK talk <https://www.youtube.com/watch?v=IlTWe-eVjVQ&t=1283s>\nAdditional tweaks to the compiler <https://github.com/dvmason/Pharo-Functional>\nPresentation <https://archive.esug.org/ESUG2022/03Wednesday/04-dmason.pdf>\nFirst time I read the phrase <https://blog.metaobject.com/2019/>"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T10:00:05.720563+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T11:10:41.775005+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "WjaR8daMQBClJqQy7DUKpQ=="
+				},
+				"code" : ""
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-23T08:11:41.12589+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-23T11:24:19.070133+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "Architecture Oriented Metaprogramming"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "b79a99a7-d915-4e37-bc45-fc0ec76b517f"
+	}
+}

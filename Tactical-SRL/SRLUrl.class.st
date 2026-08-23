@@ -140,3 +140,10 @@ SRLUrl >> stdout [
 	^ self output  stdout
 	
 ]
+
+{ #category : 'accessing' }
+SRLUrl >> url: aUrl [
+
+^ self / aUrl  
+
+]

@@ -65,7 +65,11 @@ TTApiRequest >> begin [
 
   guzzler := self class makeHttpClientForScheme: scheme.
    
-  super begin 
+  guzzler isHttpClient ifTrue: [
+		client beginRequest: self.
+	].
+	
+	super begin
 ]
 
 { #category : 'accessing' }
@@ -114,7 +118,7 @@ TTApiRequest >> prepare [
 
 	guzzler url: self fullUrl.
 	
-	guzzler isHttp ifTrue: [
+	guzzler isHttpClient ifTrue: [
 	
 		guzzler method: self type.
 		

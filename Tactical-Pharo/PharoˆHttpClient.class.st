@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-PharoˆHttpClient >> isHttp [
+PharoˆHttpClient >> isHttpClient [
 
 ^ true
 ]

@@ -8,7 +8,8 @@ Class {
 		'mapped',
 		'mappers',
 		'payloadTailReducers',
-		'payloadReducers'
+		'payloadReducers',
+		'parsers'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -26,8 +27,8 @@ TTResult >> format: actionBlockSymbolArrayOrNil [
 TTResult >> formatting: actionBlockSymbolArrayOrNil [
  
  		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      formatters ifNil: [ formatters := OrderedCollection with: #getFormatStart ].
-      formatters add: actionBlockSymbolArrayOrNil
+      formatters ifNil: [ formatters := Array with: #getFormatStart ].
+      formatters := formatters copyWith: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
@@ -135,8 +136,8 @@ TTResult >> mapTo: aModelCollectionPrototype of: aModelPrototype [
 TTResult >> mapping: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      mappers ifNil: [ mappers := OrderedCollection with: #getMappingInput ].
-      mappers add: actionBlockSymbolArrayOrNil
+      mappers ifNil: [ mappers := Array with: #getMappingInput ].
+      mappers := mappers copyWith: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
@@ -150,16 +151,16 @@ TTResult >> parse: actionBlockSymbolArrayOrNil [
 TTResult >> parsing: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      parsers ifNil: [ parsers := OrderedCollection with: #getParsingInput ].
-      parsers add: actionBlockSymbolArrayOrNil
+      parsers ifNil: [ parsers := Array with: #getParsingInput ].
+      parsers := parsers copyWith: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
 TTResult >> payload: actionBlockSymbolArrayOrNil [
  
  		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      payloadReducers ifNil: [ payloadReducers := OrderedCollection with: #getPayloadStart ].
-      payloadReducers add: actionBlockSymbolArrayOrNil
+      payloadReducers ifNil: [ payloadReducers := Array with: #getPayloadStart ].
+      payloadReducers := payloadReducers copyWith: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }

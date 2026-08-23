@@ -270,14 +270,82 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T06:03:24.741501+01:00"
+						"dateAndTimeString" : "2026-08-23T06:24:14.862829+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "CPYf3FY9T/GVkyvS1y1a0w=="
 				},
-				"code" : "(#url://'https://httpbin.org/json') asString"
+				"code" : " (#url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json' ) contents   "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T11:52:44.238825+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T11:52:50.816888+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "uOZYtlotRs2CvRVI3N2W3w=="
+				},
+				"code" : "result getPayload"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T07:54:42.181036+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-23T07:55:38.22845+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "cfDI7Z4fRjutomhEbsz3mQ=="
+				},
+				"code" : "result payload: [ :pl | pl at: 'slideshow' ].\r\rresult getPayload"
 			}
 		]
 	},

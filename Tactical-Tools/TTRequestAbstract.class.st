@@ -30,8 +30,7 @@ TTRequestAbstract class >> isNamespaced [
 { #category : 'initialization' }
 TTRequestAbstract >> begin [
 
-	client beginRequest: self.
-	
+	^ self
 	
 ]
 

@@ -85,7 +85,7 @@ SRLFile class >> fileReferenceFromSymbol: aSymbol [
 ]
 
 { #category : 'accessing' }
-SRLFile class >> isHttp [
+SRLFile class >> isHttpClient [
 
 	^ false
 ]

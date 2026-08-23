@@ -70,9 +70,8 @@ Guzzler class >> newForScheme: aScheme [
 
   "In this case we have a chance to work OUR magic"
    
-   (SRLRouter fromSymbol: (aScheme,':') asSymbol) ifNotNil: [:srl | ^ srl ].
-
-	^ self askFor:('new_', aScheme) asSymbol ifAbsent: [ self error: 'unknown scheme ', aScheme ]
+  
+	^ self askFor:('new_', aScheme) asSymbol ifAbsent: [ self srlForScheme: aScheme ]
 ]
 
 { #category : 'instance creation' }
@@ -173,6 +172,14 @@ Guzzler class >> new_unhttps [
 	    setHttpClient: (self makeHttpClient);
 			setExecuteSelector: #executeUnified
 			initialize
+]
+
+{ #category : 'instance creation' }
+Guzzler class >> srlForScheme: aScheme [ 
+
+   ^ SRLRouter fromSymbol: (aScheme,':') asSymbol 
+
+ 
 ]
 
 { #category : 'accessing' }
