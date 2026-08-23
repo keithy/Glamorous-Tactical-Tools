@@ -14,16 +14,29 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTResultAbstract class >> // anSRL [
+
+	^ self newFromSRL: anSRL
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract class >> fromSRL: anSRL [
 	^ anSRL getOutputProvider getResult
-	
- 
+
+  
 ]
 
 { #category : 'as yet unclassified' }
 TTResultAbstract class >> isAbstract [
 
 	^ self == TTResultAbstract
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract class >> newFromSRL: anSRL [
+	^ anSRL output getResult
+
+  
 ]
 
 { #category : 'as yet unclassified' }
@@ -35,7 +48,7 @@ TTResultAbstract >> apply: aBoltOn [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> asDictionary [
   "convenience - replace with better"
-	^ STONJSON fromString: self getStdOut
+	^ STONJSON fromString: self getStdout
 ]
 
 { #category : 'as yet unclassified' }

@@ -1,6 +1,18 @@
 Extension { #name : 'Dictionary' }
 
 { #category : '*Tactical-Tools' }
+Dictionary class >> // anSRL [
+
+	^ self newFromSRL: anSRL
+]
+
+{ #category : '*Tactical-Tools' }
+Dictionary class >> <@ anSRL [
+
+	^ self newFromSRL: anSRL
+]
+
+{ #category : '*Tactical-Tools' }
 Dictionary >> asTier [
 
 	 ^ TTDictionaryTiered new
@@ -32,4 +44,10 @@ Dictionary class >> makeAsTierWithKey: aKey [
 	^  (TTDictionaryTiered newWithKey: aKey) 
 			setDictionary: self new  ;
 			yourself
+]
+
+{ #category : '*Tactical-Tools' }
+Dictionary class >> newFromSRL: anSRL [
+  "convenience - replace with better"
+	^ STONJSON fromString: anSRL contents
 ]

@@ -1,6 +1,6 @@
 Class {
 	#name : 'SRLFile',
-	#superclass : 'SRLRequestAbstract',
+	#superclass : 'SRLRouter',
 	#classVars : [
 		'NamedLocations',
 		'OriginRegex'
@@ -102,6 +102,27 @@ SRLFile class >> reset [
 SRLFile class >> startUpAtSystemPriority: isImageStarting [
 	<ttStartUp>
 	self reset
+]
+
+{ #category : 'accessing' }
+SRLFile >> asDictionary [
+
+	^ Dictionary // self 
+	
+]
+
+{ #category : 'accessing' }
+SRLFile >> asResult [
+
+	^ TTResult // self
+	
+]
+
+{ #category : 'accessing' }
+SRLFile >> contents [
+
+	^ self stdout
+	
 ]
 
 { #category : 'accessing' }

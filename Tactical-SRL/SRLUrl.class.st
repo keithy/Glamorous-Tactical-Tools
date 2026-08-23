@@ -1,6 +1,6 @@
 Class {
 	#name : 'SRLUrl',
-	#superclass : 'SRLRequestAbstract',
+	#superclass : 'SRLRouter',
 	#category : 'Tactical-SRL-Schemes',
 	#package : 'Tactical-SRL',
 	#tag : 'Schemes'
@@ -83,7 +83,15 @@ SRLUrl >> +// aHostUrl [
 { #category : 'accessing' }
 SRLUrl >> asDictionary [
 
-	^ self getOutputProvider asDictionary
+	^ Dictionary // self 
+	
+]
+
+{ #category : 'accessing' }
+SRLUrl >> asResult [
+
+	^ TTResult // self
+	
 ]
 
 { #category : 'accessing' }
@@ -99,7 +107,14 @@ SRLUrl >> clientClass [
 ]
 
 { #category : 'accessing' }
-SRLUrl >> getOutputProvider [
+SRLUrl >> contents [
+
+	^ self stdout
+	
+]
+
+{ #category : 'accessing' }
+SRLUrl >> output [
 	"the object responsible for providing output"
 	^ (self clientClass) // (self clientArgString)
 	
@@ -131,6 +146,6 @@ SRLUrl >> resolve: aThing [
 { #category : 'accessing' }
 SRLUrl >> stdout [
 
-	^ self getOutputProvider prepare contents
+	^ self output  stdout
 	
 ]
