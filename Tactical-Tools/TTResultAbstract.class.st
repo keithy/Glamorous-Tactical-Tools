@@ -14,6 +14,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTResultAbstract class >> fromSRL: anSRL [
+	^ anSRL getOutputProvider getResult
+	
+ 
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract class >> isAbstract [
 
 	^ self == TTResultAbstract
@@ -51,8 +58,6 @@ TTResultAbstract >> getOutputProvider [
 	output ifNotNil: [ ^ output ].
 	
 	output := request output.
-		
-	self statusVerify ifFalse: [ self error: 'Unhandled Exit Status' ].  
 
 	^ output 
 ]

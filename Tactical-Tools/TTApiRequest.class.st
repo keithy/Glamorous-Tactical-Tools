@@ -79,10 +79,7 @@ TTApiRequest >> fullUrl [
 { #category : 'as yet unclassified' }
 TTApiRequest >> getOutputProvider [
 
-	 self send.
-	 
-	 "only valid after send"
-	^ guzzler response
+	 ^ self notify send response
 ]
 
 { #category : 'as yet unclassified' }

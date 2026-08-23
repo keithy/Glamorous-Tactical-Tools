@@ -29,7 +29,7 @@ TTApiResult >> getOutputProvider [
 
 	output ifNotNil: [ ^ output ].
 	
-	output := request notify send response.
+	output := request getOutputProvider.
 	
 	self statusVerify ifFalse: [ self error: 'Unhandled API Error' ].  
 	

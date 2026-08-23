@@ -12,6 +12,13 @@ Class {
 	#tag : 'Request-Result'
 }
 
+{ #category : 'as yet unclassified' }
+Guzzler class >> // aUrl [
+	 
+	^ self newForUrl: aUrl
+
+]
+
 { #category : 'instance creation' }
 Guzzler class >> classApiRequest [
 
@@ -64,14 +71,6 @@ Guzzler class >> newForScheme: aScheme [
   "In this case we have a chance to work OUR magic"
   
 	^ self askFor:('new_', aScheme) asSymbol ifAbsent: [ self error: 'unknown scheme ', aScheme ]
-]
-
-{ #category : 'instance creation' }
-Guzzler class >> newForScheme: aScheme url: aUrl [ 
-
-  "In this case we have a chance to work OUR magic"
-  
-	^ (self newForScheme: (aUrl copyUpTo: $:)) url: aUrl
 ]
 
 { #category : 'instance creation' }

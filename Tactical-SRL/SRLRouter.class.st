@@ -88,17 +88,8 @@ SRLRouter >> resolve [
 { #category : 'as yet unclassified' }
 SRLRouter >> resolve: aThing [
 
-	"Univeral Smalltalk Resource Location"
-	
-	"explicit list enables method drill down"
-	scheme == #class: ifTrue: [ ^ Hub class: aThing ].
-	scheme == #file: ifTrue: [ ^ Hub file: aThing ].
-	scheme == #url: ifTrue: [ ^ Hub url: aThing ].
-	scheme == #https: ifTrue: [ ^ Hub https: aThing ].
-	scheme == #http: ifTrue: [ ^ Hub http: aThing ].
-	scheme == #client: ifTrue: [ ^ Hub client: aThing ].
-
-	^ Hub  perform: scheme with: aThing
+	^ self subclassResponsibility
+		
 ]
 
 { #category : 'accessing' }

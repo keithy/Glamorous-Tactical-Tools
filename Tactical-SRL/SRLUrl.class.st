@@ -37,6 +37,25 @@ SRLUrl class >> example [
 ]
 
 { #category : 'as yet unclassified' }
+SRLUrl class >> exampleWithResult [
+	<gtExample>
+		
+	| srl request result |
+	srl :=  #url: //  'https://httpbin.org/json'. 
+	
+	result := 	srl getResult.
+	
+	self assert: [ (srl getRawContents) = (result getRawContents) ].
+ 
+]
+
+{ #category : 'as yet unclassified' }
+SRLUrl class >> makeResult [
+
+	^ TTApiResult new
+]
+
+{ #category : 'as yet unclassified' }
 SRLUrl class >> url: aVarName [
 
 	"local shortcut"
@@ -81,8 +100,8 @@ SRLUrl >> clientClass [
 
 { #category : 'accessing' }
 SRLUrl >> getOutputProvider [
-
-	^ self clientClass // self clientArgString
+	"the object responsible for providing output"
+	^ (self clientClass) // (self clientArgString)
 	
 ]
 
@@ -112,6 +131,6 @@ SRLUrl >> resolve: aThing [
 { #category : 'accessing' }
 SRLUrl >> stdout [
 
-	^ self getOutputProvider contents
+	^ self getOutputProvider prepare contents
 	
 ]

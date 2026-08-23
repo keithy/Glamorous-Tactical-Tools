@@ -40,6 +40,13 @@ SRLRequestAbstract >> asDictionary [
 ]
 
 { #category : 'accessing' }
+SRLRequestAbstract >> asResult [
+
+	^ self getResult.
+	
+]
+
+{ #category : 'accessing' }
 SRLRequestAbstract >> asString [
 
 	^ self getVerifiedContents
@@ -71,13 +78,19 @@ SRLRequestAbstract >> getRawContents [
 
 { #category : 'as yet unclassified' }
 SRLRequestAbstract >> getResult [
-	^ result ifNil: [ result := self client makeResultForRequest: self ]
+	^ result ifNil: [ result := self getOutputProvider getResult ]
 ]
 
 { #category : 'accessing' }
 SRLRequestAbstract >> getVerifiedContents [
 	"take the raw contents possibly adjust, verify status errors etc."
 	^ self getRawContents
+]
+
+{ #category : 'accessing' }
+SRLRequestAbstract >> in: aBlock [
+
+	aBlock value: self getResult	
 ]
 
 { #category : 'as yet unclassified' }
@@ -100,8 +113,23 @@ SRLRequestAbstract >> result [
 	^ result ifNil: [ self ]
 ]
 
+{ #category : 'accessing' }
+SRLRequestAbstract >> result: aBlock [
+
+	aBlock value: self getResult.
+	
+	^ result
+]
+
 { #category : 'as yet unclassified' }
 SRLRequestAbstract >> stdout [
 
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+SRLRequestAbstract >> useGET [
+
+	^ self getResult.
+	
 ]
