@@ -2,7 +2,6 @@ Class {
 	#name : 'TTResult',
 	#superclass : 'TTResultAbstract',
 	#instVars : [
-		'thePayload',
 		'formatted',
 		'formatters',
 		'mapped',
@@ -10,7 +9,8 @@ Class {
 		'payloadTailReducers',
 		'payloadReducers',
 		'parsers',
-		'parsed'
+		'parsed',
+		'payload'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -31,88 +31,21 @@ TTResult >> format: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> formatting: actionBlockSymbolArrayOrNil [
- 
- 		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      formatters ifNil: [ formatters := Array with: #getFormatStart ].
-      formatters := formatters copyWith: actionBlockSymbolArrayOrNil
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getFormatStart [
- 
-   "do not be tempted to refactor this method away, 
-    it may be customized by subclasses"
-   
-	 ^ self getMapped
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getFormatted [
+TTResult >> formatted [
 
   formatted ifNotNil: [ ^ formatted ].
   
-	formatted := self inject: nil into: (formatters ifNil: #getFormatStart).
+	formatted := self inject: nil into: (formatters ifNil: #formatStart).
 	
 	^ formatted 
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> getMapped [
-
-  mapped ifNotNil: [ ^ mapped ]. 
-  
-	mapped := self inject: nil into: (mappers ifNil: #getMappingInput).
-	
-	^ mapped
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getMappingInput [
+TTResult >> formatting: actionBlockSymbolArrayOrNil [
  
-   "do not be tempted to refactor this method away, 
-    it may be customized by subclasses"
-
-   ^ self getPayload
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getParsed [
-
-	parsed ifNotNil: [ ^ parsed ].
-
-	parsed := self inject: (self getParsingInput) into: parsers.
-	
- ^ parsed
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getParsingInput [
- 
-   "do not be tempted to refactor this method away, 
-    it may be customized by subclasses"
-
-  ^ self getVerifiedContents
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getPayload [
-
-	thePayload ifNotNil: [ ^ thePayload ].
-  
-	self payload: payloadTailReducers.
-	thePayload := self inject: (self getPayloadStart) into: payloadReducers.
-	
- ^ thePayload
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> getPayloadStart [
- 
-   "do not be tempted to refactor this method away, 
-    it may be customized by subclasses"
-
-   ^ self getParsed
+ 		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
+      formatters ifNil: [ formatters := Array with: #formatStart ].
+      formatters := formatters copyWith: actionBlockSymbolArrayOrNil
 ]
 
 { #category : 'as yet unclassified' }
@@ -121,7 +54,7 @@ TTResult >> initialize [
 	super initialize.
 	payloadReducers := nil.
 	payloadTailReducers := nil.
-	thePayload := nil.
+	payload := nil.
   mappers := nil.	
   mapped := nil.
 	formatters := nil.
@@ -175,11 +108,30 @@ TTResult >> mapTo: aModelCollectionPrototype of: aModelPrototype [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> mapped [
+
+  mapped ifNotNil: [ ^ mapped ]. 
+  
+	mapped := self inject: nil into: (mappers ifNil: #getMappingInput).
+	
+	^ mapped
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> mapping: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       mappers ifNil: [ mappers := Array with: #getMappingInput ].
       mappers := mappers copyWith: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> mappingInput [
+ 
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
+
+   ^ self payload
 ]
 
 { #category : 'as yet unclassified' }
@@ -190,11 +142,41 @@ TTResult >> parse: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> parsed [
+
+	parsed ifNotNil: [ ^ parsed ].
+
+	parsed := self inject: (self parsingInput) into: parsers.
+	
+ ^ parsed
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> parsing: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
       parsers ifNil: [ parsers := Array new ].
       parsers := parsers copyWith: actionBlockSymbolArrayOrNil
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> parsingInput [
+ 
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
+
+  ^ self verifiedContents
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payload [
+
+	payload ifNotNil: [ ^ payload ].
+  
+	self payload: payloadTailReducers.
+	payload := self inject: (self payloadStart) into: payloadReducers.
+	
+ ^ payload
 ]
 
 { #category : 'as yet unclassified' }
@@ -242,6 +224,15 @@ TTResult >> payloadFinalize: actionBlockSymbolArrayOrNil [
       payloadTailReducers := payloadTailReducers copyWith: actionBlockSymbolArrayOrNil
 ]
 
+{ #category : 'as yet unclassified' }
+TTResult >> payloadStart [
+ 
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
+
+   ^ self getParsed
+]
+
 { #category : 'accessing' }
 TTResult >> request [
 	^ request
@@ -256,7 +247,7 @@ TTResult >> request: anObject [
 TTResult >> resetOutputChain [
 
 	super resetOutputChain.
-	thePayload := nil.
+	payload := nil.
 	formatted := nil.
 	mapped := nil.
 ]

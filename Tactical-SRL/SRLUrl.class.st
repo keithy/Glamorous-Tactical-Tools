@@ -31,7 +31,7 @@ SRLUrl class >> example [
 	"SRLUrl is its own output object"
 	self assert: [ output == resolved ].
 	
-	contents := resolved getVerifiedContents.
+	contents := resolved verifiedContents.
 	
 	self assert: [ contents first == ${ ].
 	parsed := resolved asDictionary.
@@ -48,7 +48,7 @@ SRLUrl class >> exampleWithResult [
 	
 	result := 	srl getResult.
 	
-	self assert: [ (srl getRawContents) = (result getRawContents) ].
+	self assert: [ (srl rawContents) = (result rawContents) ].
  
 ]
 

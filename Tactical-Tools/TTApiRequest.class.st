@@ -51,7 +51,7 @@ TTApiRequest >> // uri [
 { #category : 'as yet unclassified' }
 TTApiRequest >> asDictionary [
   "convenience - replace with better"
-	^ STONJSON fromString: self getVerifiedContents
+	^ STONJSON fromString: self verifiedContents
 ]
 
 { #category : 'as yet unclassified' }
@@ -82,27 +82,6 @@ TTApiRequest >> fullUrl [
 		 	
 ]
 
-{ #category : 'as yet unclassified' }
-TTApiRequest >> getOutputProvider [
-	^ self response ifNil: [ self notify send response ].
- 
-]
-
-{ #category : 'as yet unclassified' }
-TTApiRequest >> getRawContents [
-
-	"likely coming from a ZnResponse"
-	"thin client only"
-	^ self getOutputProvider contents
-]
-
-{ #category : 'as yet unclassified' }
-TTApiRequest >> getVerifiedContents [
-	"likely coming from a ZnResponse"
-	"thin client only"
-	^ self getRawContents
-]
-
 { #category : 'accessing' }
 TTApiRequest >> isGET [
 
@@ -110,9 +89,9 @@ TTApiRequest >> isGET [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiRequest >> output [
+TTApiRequest >> outputProvider [
 
-	^ self getOutputProvider
+	^ self response ifNil: [ self notify send response ].
 ]
 
 { #category : 'accessing' }
@@ -128,6 +107,14 @@ TTApiRequest >> prepare [
 			ifTrue: [ guzzler queryAddAll: self parameters ]
 	  	ifFalse: [ self prepareQuery ].
 	].
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> rawContents [
+
+	"likely coming from a ZnResponse"
+	"thin client only"
+	^ self outputProvider contents
 ]
 
 { #category : 'accessing' }
@@ -166,14 +153,14 @@ TTApiRequest >> setUri: aUri [
 { #category : 'accessing' }
 TTApiRequest >> stderr [
 
-	^ self getOutputProvider status
+	^ self outputProvider status
 
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> stdout [
 
-	^ self getOutputProvider contents
+	^ self putputProvider contents
 
 ]
 
@@ -224,6 +211,13 @@ TTApiRequest >> usePOST [
 TTApiRequest >> usePUT [
 
 		^ (self use: #PUT) getResult
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> verifiedContents [
+	"likely coming from a ZnResponse"
+	"thin client only"
+	^ self rawContents
 ]
 
 { #category : 'accessing' }

@@ -15,6 +15,7 @@ TTTimeZoneDB class >> fileOpenApiSpec [
 { #category : 'as yet unclassified' }
 TTTimeZoneDB class >> urlDownloadDbCsv [
 
+	"Timezone database (csv)"
 	<ttSpoke>
 	
 ^ 'https://timezonedb.com/files/TimeZoneDB.csv.zip'
@@ -40,6 +41,19 @@ TTTimeZoneDB class >> urlHostApi [
 ]
 
 { #category : 'as yet unclassified' }
+TTTimeZoneDB >> apiListTimeZones [
+
+	^ (self vLatest / 'list-time-zone') useGet
+						
+]
+
+{ #category : 'as yet unclassified' }
 TTTimeZoneDB >> minDelay [
 	^ 1
+]
+
+{ #category : 'as yet unclassified' }
+TTTimeZoneDB >> urlHostApi [
+
+   ^ 'https://api.timezonedb.com/v2.1/'
 ]

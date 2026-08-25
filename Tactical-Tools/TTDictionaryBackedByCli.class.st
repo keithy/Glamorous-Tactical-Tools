@@ -148,6 +148,15 @@ TTDictionaryBackedByCli >> output [
 ]
 
 { #category : 'accessing' }
+TTDictionaryBackedByCli >> outputProvider [
+
+	self loadEnvironment.
+	
+	^ epb outputProvider
+	 
+]
+
+{ #category : 'accessing' }
 TTDictionaryBackedByCli >> readFromStream: aStreamable [
 	
 		[ aStreamable atEnd ] whileFalse: [ 

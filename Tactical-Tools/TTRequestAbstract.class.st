@@ -47,7 +47,7 @@ TTRequestAbstract >> errorHandler [
 
 { #category : 'as yet unclassified' }
 TTRequestAbstract >> getRawContents [
-	^ self getVerifiedContents
+	^ self verifiedContents
 ]
 
 { #category : 'accessing' }
@@ -92,6 +92,12 @@ TTRequestAbstract >> notify [
 
 { #category : 'accessing' }
 TTRequestAbstract >> output [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> outputProvider [
 
 	^ self subclassResponsibility
 ]

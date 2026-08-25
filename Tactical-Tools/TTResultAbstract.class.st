@@ -5,8 +5,8 @@ Class {
 		'request',
 		'stdout',
 		'stderr',
-		'output',
-		'handlers'
+		'handlers',
+		'outputProvider'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -72,13 +72,13 @@ TTResultAbstract >> apply: aBoltOn [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> asDictionary [
   "convenience - replace with better"
-	^ STONJSON fromString: self getStdout
+	^ STONJSON fromString: self verifiedContents
 ]
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> asString [
   "convenience - replace with better"
-	^ self getStdOut
+	^ self verifiedContents
 ]
 
 { #category : 'accessing' }
@@ -87,42 +87,6 @@ TTResultAbstract >> client [
 	 assuming that we always have a request, 
 	 this may not be the case"
 	^ request client
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> getOutputProvider [
-
-	output ifNotNil: [ ^ output ].
-	
-	output := request output.
-
-	^ output 
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> getRawContents [
-	"likely coming from a executables 'output'"
-	^ self getOutputProvider stdout
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> getStderr [
-
-	stderr := self getOutputProvider stderr.
-	
-	^ stderr 
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> getVerifiedContents [
-	stdout ifNotNil: [ ^ stdout ].
-
-	stdout := [ [ self getRawContents ]
-			onErrorDo: [ :ex | 
-				self stderrAppend: ex messageText.
-				ex pass ] ] onErrorDo: self request errorHandler.
-
-	^ stdout
 ]
 
 { #category : 'accessing' }
@@ -148,8 +112,18 @@ TTResultAbstract >> initialize [
 
 	stdout := nil.
 	stderr := nil.
-	output := nil.
+	outputProvider := nil.
 	
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> outputProvider [
+
+	outputProvider ifNotNil: [ ^ outputProvider ].
+	
+	outputProvider := request outputProvider.
+
+	^ outputProvider 
 ]
 
 { #category : 'accessing' }
@@ -158,6 +132,12 @@ TTResultAbstract >> parent [
 	 assuming that we always have a request, 
 	 this may not be the case"
 	^ request client
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> rawContents [
+	"likely coming from a executables 'output'"
+	^ self outputProvider stdout
 ]
 
 { #category : 'accessing' }
@@ -224,7 +204,7 @@ TTResultAbstract >> setRequest: aRequest [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> status [ 
 
-	^ output ifNotNil: [ :out | [ out status code ] ifError: [ nil ] ]
+	^ outputProvider ifNotNil: [ :out | [ out status code ] ifError: [ nil ] ]
 ]
 
 { #category : 'accessing' }
@@ -243,9 +223,35 @@ TTResultAbstract >> statusVerify [
 ]
 
 { #category : 'as yet unclassified' }
+TTResultAbstract >> stderr [
+
+	stderr := self outputProvider stderr.
+	
+	^ stderr 
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract >> stderrAppend: aMessage [
 	 
 	 stderr := String streamContents: 
 	 
 	 	[ :str | (str << (stderr ifNil: '') << aMessage) cr ]
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> stdout [
+	"likely coming from a executables 'output'"
+	^ self outputProvider stdout
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> verifiedContents [
+	stdout ifNotNil: [ ^ stdout ].
+
+	stdout := [ [ self rawContents ]
+			onErrorDo: [ :ex | 
+				self stderrAppend: ex messageText.
+				ex pass ] ] onErrorDo: self request errorHandler.
+
+	^ stdout
 ]
