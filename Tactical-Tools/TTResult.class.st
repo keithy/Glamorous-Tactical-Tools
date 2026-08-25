@@ -135,6 +135,12 @@ TTResult >> mappingInput [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> output [
+
+	^ self formatted 
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> parse: actionBlockSymbolArrayOrNil [
 
 	"synonym"
@@ -146,7 +152,7 @@ TTResult >> parsed [
 
 	parsed ifNotNil: [ ^ parsed ].
 
-	parsed := self inject: (self parsingInput) into: parsers.
+	parsed := self inject: (self parsingInput) into: parsers .
 	
  ^ parsed
 ]

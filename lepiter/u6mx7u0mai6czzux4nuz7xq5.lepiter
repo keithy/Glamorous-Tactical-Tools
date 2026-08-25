@@ -629,14 +629,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T11:52:50.816888+01:00"
+						"dateAndTimeString" : "2026-08-25T16:10:03.573064+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "uOZYtlotRs2CvRVI3N2W3w=="
 				},
-				"code" : "result getPayload"
+				"code" : "result payload"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -663,14 +663,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T13:20:52.427731+01:00"
+						"dateAndTimeString" : "2026-08-25T16:10:07.921245+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "cfDI7Z4fRjutomhEbsz3mQ=="
 				},
-				"code" : "result initialize.\rresult apply: (TTToolOutputParser parseAsSTON).\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult getParsed"
+				"code" : "result initialize.\rresult apply: (TTToolOutputParser parseAsSTON).\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult parsed"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -697,14 +697,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T13:16:06.122061+01:00"
+						"dateAndTimeString" : "2026-08-25T16:10:11.297834+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "UaVpjnqEQ2+kf1HwxItsRQ=="
 				},
-				"code" : "result getPayload"
+				"code" : "result payload"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -731,14 +731,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T14:25:14.022434+01:00"
+						"dateAndTimeString" : "2026-08-25T16:10:17.931398+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "bI+c073gReKtD0nRWdpuWA=="
 				},
-				"code" : "result getMapped"
+				"code" : "result mapped"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -765,14 +765,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T14:23:47.58433+01:00"
+						"dateAndTimeString" : "2026-08-25T16:10:21.895713+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "COe1ZXRyTXmc1VrhS78epw=="
 				},
-				"code" : "result getFormatted"
+				"code" : "result formatted"
 			}
 		]
 	},

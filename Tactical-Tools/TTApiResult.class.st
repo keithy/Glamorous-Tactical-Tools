@@ -13,36 +13,11 @@ TTApiResult class >> configureDefault: aResult [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiResult >> client [
-
-	^ request client
-
-]
-
-{ #category : 'as yet unclassified' }
 TTApiResult >> error: aMessage [
 	
 	self stderrAppend: aMessage.
 
 	^ super error: aMessage
-]
-
-{ #category : 'as yet unclassified' }
-TTApiResult >> outputProvider [
-
-	outputProvider ifNotNil: [ ^ outputProvider ].
-	
-	outputProvider := request outputProvider.
-	
-	self statusVerify ifFalse: [ self error: 'Unhandled API Error' ].  
-	
-	^ outputProvider
-]
-
-{ #category : 'as yet unclassified' }
-TTApiResult >> rawContents [
-	"likely coming from a ZnResponse"
-	^ self outputProvider contents
 ]
 
 { #category : 'as yet unclassified' }
@@ -57,7 +32,7 @@ TTApiResult >> setRequest: aRequest [
 { #category : 'as yet unclassified' }
 TTApiResult >> status [
 
-	 ^  [ outputProvider status ] ifError: [ nil ]
+	 ^  [ inputProvider status ] ifError: [ nil ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -92,13 +67,7 @@ TTApiResult >> statusVerify [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiResult >> stderr [
+TTApiResult >> stderrX [
 
 	^ stderr ifNil: ''
-]
-
-{ #category : 'as yet unclassified' }
-TTApiResult >> timeout [
-
- ^ 5
 ]

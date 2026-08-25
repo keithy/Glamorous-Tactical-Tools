@@ -160,7 +160,7 @@ TTApiRequest >> stderr [
 { #category : 'accessing' }
 TTApiRequest >> stdout [
 
-	^ self putputProvider contents
+	^ self outputProvider contents
 
 ]
 

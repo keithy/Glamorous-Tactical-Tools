@@ -6,7 +6,7 @@ Class {
 		'stdout',
 		'stderr',
 		'handlers',
-		'outputProvider'
+		'inputProvider'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -72,13 +72,13 @@ TTResultAbstract >> apply: aBoltOn [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> asDictionary [
   "convenience - replace with better"
-	^ STONJSON fromString: self verifiedContents
+	^ STONJSON fromString: self output
 ]
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> asString [
   "convenience - replace with better"
-	^ self verifiedContents
+	^ self output
 ]
 
 { #category : 'accessing' }
@@ -112,18 +112,26 @@ TTResultAbstract >> initialize [
 
 	stdout := nil.
 	stderr := nil.
-	outputProvider := nil.
+	inputProvider := nil.
 	
 ]
 
 { #category : 'as yet unclassified' }
-TTResultAbstract >> outputProvider [
+TTResultAbstract >> inputProvider [
 
-	outputProvider ifNotNil: [ ^ outputProvider ].
+	inputProvider ifNotNil: [ ^ inputProvider ].
 	
-	outputProvider := request outputProvider.
+	inputProvider := request outputProvider.
+	
+	self statusVerify ifFalse: [ self error: 'Unhandled API Error' ].  
+	
+	^ inputProvider
+]
 
-	^ outputProvider 
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> output [
+
+	^ self verifiedContents
 ]
 
 { #category : 'accessing' }
@@ -137,7 +145,7 @@ TTResultAbstract >> parent [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> rawContents [
 	"likely coming from a executables 'output'"
-	^ self outputProvider stdout
+	^ self inputProvider stdout
 ]
 
 { #category : 'accessing' }
@@ -204,7 +212,7 @@ TTResultAbstract >> setRequest: aRequest [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> status [ 
 
-	^ outputProvider ifNotNil: [ :out | [ out status code ] ifError: [ nil ] ]
+	^ inputProvider ifNotNil: [ :out | [ out status code ] ifError: [ nil ] ]
 ]
 
 { #category : 'accessing' }
@@ -225,9 +233,9 @@ TTResultAbstract >> statusVerify [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> stderr [
 
-	stderr := self outputProvider stderr.
+	^ stderr := (self inputProvider stderr) ifNil: ''
 	
-	^ stderr 
+
 ]
 
 { #category : 'as yet unclassified' }

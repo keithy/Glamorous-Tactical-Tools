@@ -70,5 +70,7 @@ TTToolOutputParser >> passAsStream [
 TTToolOutputParser >> passAsString [
 	
 		result initializeParsers.
-		result parsing: [ :toolOutputStringOrData | toolOutputStringOrData asString ]
+		
+		"default behaviour"
+		"result parsing: [ :toolOutputStringOrData | toolOutputStringOrData asString ]"
 ]
