@@ -52,12 +52,6 @@ TTApiClient class >> makeOpenApiBrowser: aStreamable [
 	
 ]
 
-{ #category : 'as yet unclassified' }
-TTApiClient class >> makeResult [
-
-	^ TTApiResult new
-]
-
 { #category : 'accessing' }
 TTApiClient >> / anEndpoint [
 
@@ -135,6 +129,13 @@ TTApiClient >> beginRequest: aRequest [
 { #category : 'instance creation' }
 TTApiClient >> classTool [
 	classTool ifNil: [ self class ]
+]
+
+{ #category : 'accessing' }
+TTApiClient >> configureResult: aResult [
+
+	^ aResult apply: TTToolOutputParser parseAsSTON.
+
 ]
 
 { #category : 'accessing' }

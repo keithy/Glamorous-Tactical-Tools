@@ -20,6 +20,12 @@ TTResultAbstract class >> // anSRL [
 ]
 
 { #category : 'as yet unclassified' }
+TTResultAbstract class >> configureDefault: aResult [
+
+^ aResult 
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract class >> fromSRL: anSRL [
 	^ anSRL getOutputProvider getResult
 
@@ -33,20 +39,34 @@ TTResultAbstract class >> isAbstract [
 ]
 
 { #category : 'as yet unclassified' }
+TTResultAbstract class >> newForRequest: request [
+	"Each result-request pair represents an atomic query.
+	
+	Each result-request pair keeps a reference to the client, so that it is
+	easy to make further api calls of its own"
+
+	^ self
+		configureDefault: (self basicNew
+				setRequest: request;
+				initialize)
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract class >> newFromSRL: anSRL [
 
 	"if we ask the srl we get a result class 
 	 from the request's nominated client"
 
-	^ anSRL output getResult
-
-  
+	^ self newForRequest:anSRL 
+	
 ]
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> apply: aBoltOn [
 
-	aBoltOn applyTo: self
+	aBoltOn applyTo: self.
+	
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
@@ -100,7 +120,7 @@ TTResultAbstract >> getVerifiedContents [
 	stdout := [ [ self getRawContents ]
 			onErrorDo: [ :ex | 
 				self stderrAppend: ex messageText.
-				ex pass ] ] onErrorDo: self client requestErrorHandler.
+				ex pass ] ] onErrorDo: self request errorHandler.
 
 	^ stdout
 ]
@@ -181,17 +201,16 @@ TTResultAbstract >> requestUsing: aBlock [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> reset [
-
-stdout := nil.
-stderr := nil.
+	"convenience abbreviation."
+	self resetOutputChain
 
 ]
 
 { #category : 'as yet unclassified' }
-TTResultAbstract >> resetAll [
+TTResultAbstract >> resetOutputChain [
 
-	self reset.
-	output := nil.
+stdout := nil.
+stderr := nil.
 
 ]
 

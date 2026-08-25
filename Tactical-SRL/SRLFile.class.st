@@ -160,6 +160,12 @@ SRLFile >> gtPrintFor: aView [
 ]
 
 { #category : 'accessing' }
+SRLFile >> output [
+
+	^ self  
+]
+
+{ #category : 'accessing' }
 SRLFile >> resolve: aThing [
 	"early bound resolution"
 

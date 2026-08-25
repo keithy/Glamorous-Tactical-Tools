@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTFixerUpper',
-	#superclass : 'TTResultTalent',
+	#superclass : 'TTResultBoltOn',
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
 	#tag : 'Request-Result'

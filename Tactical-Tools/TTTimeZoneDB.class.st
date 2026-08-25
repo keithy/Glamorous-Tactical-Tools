@@ -8,16 +8,8 @@ Class {
 
 { #category : 'as yet unclassified' }
 TTTimeZoneDB class >> fileOpenApiSpec [
-
-  "TimeZoneDB - OpenApi Spec (example)"
-  
-	<ttSpoke>
-	
-	"AI created this one"
-	
-	^ (#url://'file:///Users/keith/code/GlamorousToolkit-MacOS-x86_64-v1.1.554/pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json')  asString
-
-
+  "TimeZoneDB - OpenApi Spec"
+	^ #url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json'
 ]
 
 { #category : 'as yet unclassified' }

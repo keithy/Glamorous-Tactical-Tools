@@ -17,6 +17,12 @@ Class {
 	#tag : 'Request-Result'
 }
 
+{ #category : 'accessing' }
+TTResult class >> configureDefault: aResult [
+		aResult apply: TTToolOutputParser passAsString.
+^ aResult 
+]
+
 { #category : 'as yet unclassified' }
 TTResult >> format: actionBlockSymbolArrayOrNil [
 
@@ -44,7 +50,7 @@ TTResult >> getFormatStart [
 { #category : 'as yet unclassified' }
 TTResult >> getFormatted [
 
-  formatted ifNil: [ ^ formatted ].
+  formatted ifNotNil: [ ^ formatted ].
   
 	formatted := self inject: nil into: (formatters ifNil: #getFormatStart).
 	
@@ -120,8 +126,17 @@ TTResult >> initialize [
   mapped := nil.
 	formatters := nil.
 	formatted := nil.
+	self initializeParsers.
+   
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> initializeParsers [
+	
 	parsers := nil.
 	parsed := nil.
+   
 	
 ]
 
@@ -238,18 +253,9 @@ TTResult >> request: anObject [
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> reset [
+TTResult >> resetOutputChain [
 
-	super reset.
-	thePayload := nil.
-	formatted := nil.
-	mapped := nil.
-]
-
-{ #category : 'as yet unclassified' }
-TTResult >> resetAll [
-
-	self reset.
+	super resetOutputChain.
 	thePayload := nil.
 	formatted := nil.
 	mapped := nil.

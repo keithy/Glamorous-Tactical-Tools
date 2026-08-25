@@ -280,14 +280,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T17:39:37.639965+01:00"
+						"dateAndTimeString" : "2026-08-24T02:00:26.684805+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "6R+E6iqLSiKWa4iXxq/LDQ=="
 				},
-				"code" : "#file://'{ramdisk}/${USER}.env'"
+				"code" : "#file:/'{config}/${USER}.env'"
 			},
 			{
 				"__type" : "textSnippet",
@@ -456,7 +456,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T18:01:43.633295+01:00"
+						"dateAndTimeString" : "2026-08-23T18:02:06.338707+01:00"
 					}
 				},
 				"uid" : {
@@ -466,7 +466,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "**Adding more SRLs**\nAdding more \"http\" schemes to Guzzler, is as simple as adding additional SRL classes eg. {{gtClass:SRLJira}} {{gtClass:SRLSnow}} , {{gtClass:SRLWikipedia}} {{gtClass:SRL_ISBN}} {{gtClass:"
+				"string" : "**Adding more SRLs**\nAdding more \"http\" schemes to Guzzler, is as simple as adding additional SRL classes eg. {{gtClass:SRLJira}} {{gtClass:SRLSnow}} , {{gtClass:Wikipedia}} {{gtClass:ISBN}} {{gtClass:"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -493,14 +493,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T16:22:01.836034+01:00"
+						"dateAndTimeString" : "2026-08-25T09:57:17.233178+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "OJ64DKUXTFma9qodg5utPg=="
 				},
-				"code" : "a := #url://'https://httpbin.org/json'"
+				"code" : "a := #url:/'https://httpbin.org/json'.\rb := #file:/'{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json'"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -527,14 +527,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T05:55:57.7459+01:00"
+						"dateAndTimeString" : "2026-08-25T09:57:32.278541+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "7NdQyBMbScOyf3OUfBDhtg=="
 				},
-				"code" : "a contents"
+				"code" : "b contents"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -561,7 +561,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T15:55:50.114243+01:00"
+						"dateAndTimeString" : "2026-08-25T08:35:43.813179+01:00"
 					}
 				},
 				"uid" : {
@@ -569,40 +569,6 @@
 					"uidString" : "kWqTjVUyQqiMpfl+IuGsWg=="
 				},
 				"code" : "Dictionary // a"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T16:22:25.911665+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T16:22:28.795342+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "g46cmyW7SPytoVRdXygR8A=="
-				},
-				"code" : "b contents"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -697,14 +663,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T12:42:34.799663+01:00"
+						"dateAndTimeString" : "2026-08-25T13:20:52.427731+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "cfDI7Z4fRjutomhEbsz3mQ=="
 				},
-				"code" : "result initialize.\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult apply: (TTToolOutputParser parseAsSTON).\rresult getParsed"
+				"code" : "result initialize.\rresult apply: (TTToolOutputParser parseAsSTON).\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult getParsed"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -739,6 +705,40 @@
 					"uidString" : "UaVpjnqEQ2+kf1HwxItsRQ=="
 				},
 				"code" : "result getPayload"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-25T13:21:02.707315+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-25T14:23:47.58433+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "COe1ZXRyTXmc1VrhS78epw=="
+				},
+				"code" : "result getFormatted"
 			}
 		]
 	},

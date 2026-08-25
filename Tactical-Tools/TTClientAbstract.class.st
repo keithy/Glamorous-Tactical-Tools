@@ -58,6 +58,12 @@ TTClientAbstract class >> checkPotentialVault: aVault [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+TTClientAbstract class >> classResult [
+
+	^ TTResult 
+]
+
 { #category : 'as yet unclassified' }
 TTClientAbstract class >> clientId [
 
@@ -70,6 +76,13 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 	^ (aVaultable 
 		appKey: self vaultAppKey
 		refresh) options keys
+
+]
+
+{ #category : 'instance creation' }
+TTClientAbstract class >> configureResult: aResult [
+
+	^ aResult apply: TTToolOutputParser passAsString.
 
 ]
 
@@ -168,10 +181,20 @@ TTClientAbstract class >> makeNewVaultsForAllOptionsOf: aVaultable [
 
 ]
 
-{ #category : 'accessing' }
-TTClientAbstract class >> makeResult [
-
-	^ TTResult new
+{ #category : 'instance creation' }
+TTClientAbstract class >> makeResultForRequest: request [
+	"The client keeps the last result context as convenience for the user.
+	This is multi-threaded unsafe etc.
+	
+	Each result-request pair represents an atomic query.
+	
+	Each result-request pair keeps a reference to the client, so that it is
+	easy to make further api calls of its own"
+	
+	^ self configureResult: 
+						(self classResult new
+								setRequest: request;
+								initialize)
 ]
 
 { #category : 'as yet unclassified' }
@@ -292,21 +315,6 @@ TTClientAbstract >> makeRequest [
 	Not thread safe."
 	^ result := classTool classApiRequest basicNew
 			setClient: self;
-			initialize
-]
-
-{ #category : 'instance creation' }
-TTClientAbstract >> makeResultForRequest: request [
-	"The client keeps the last result context as convenience for the user.
-	This is multi-threaded unsafe etc.
-	
-	Each result-request pair represents an atomic query.
-	
-	Each result-request pair keeps a reference to the client, so that it is
-	easy to make further api calls of its own"
-	
-	^ result := self class makeResult
-			setRequest: request;
 			initialize
 ]
 

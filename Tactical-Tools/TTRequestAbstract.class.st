@@ -40,13 +40,19 @@ TTRequestAbstract >> client [
 ]
 
 { #category : 'as yet unclassified' }
+TTRequestAbstract >> errorHandler [
+
+	^ self client requestErrorHandler
+]
+
+{ #category : 'as yet unclassified' }
 TTRequestAbstract >> getRawContents [
 	^ self getVerifiedContents
 ]
 
 { #category : 'accessing' }
 TTRequestAbstract >> getResult [
-	^ result ifNil: [ result := self client makeResultForRequest: self ]
+	^ result ifNil: [ result := self client class makeResultForRequest: self ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -106,6 +112,12 @@ TTRequestAbstract >> parameters [
 TTRequestAbstract >> request [
 
 	^ self
+]
+
+{ #category : 'as yet unclassified' }
+TTRequestAbstract >> requestErrorHandler [
+
+	^ self client requestErrorHandler
 ]
 
 { #category : 'accessing' }

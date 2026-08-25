@@ -75,6 +75,12 @@ SRLRouter >> // aThing [
 ]
 
 { #category : 'guzzler-compat' }
+SRLRouter >> errorHandler [
+
+	^ [ :err | err pass ] 
+]
+
+{ #category : 'guzzler-compat' }
 SRLRouter >> execute [
 
 	"If we were an Http Client this is our call to action,

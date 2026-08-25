@@ -7,12 +7,6 @@ Dictionary class >> // anSRL [
 ]
 
 { #category : '*Tactical-Tools' }
-Dictionary class >> <@ anSRL [
-
-	^ self newFromSRL: anSRL
-]
-
-{ #category : '*Tactical-Tools' }
 Dictionary >> asTier [
 
 	 ^ TTDictionaryTiered new

@@ -1,13 +1,16 @@
 Class {
 	#name : 'TTApiResult',
 	#superclass : 'TTResult',
-	#instVars : [
-		'httpStatusHandlers'
-	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
 	#tag : 'Request-Result'
 }
+
+{ #category : 'as yet unclassified' }
+TTApiResult class >> configureDefault: aResult [
+		aResult apply: TTToolOutputParser parseAsSTON.
+^ aResult 
+]
 
 { #category : 'as yet unclassified' }
 TTApiResult >> client [

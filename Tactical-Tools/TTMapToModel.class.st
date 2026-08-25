@@ -1,6 +1,6 @@
 Class {
 	#name : 'TTMapToModel',
-	#superclass : 'TTResultTalent',
+	#superclass : 'TTResultBoltOn',
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
 	#tag : 'Request-Result'
