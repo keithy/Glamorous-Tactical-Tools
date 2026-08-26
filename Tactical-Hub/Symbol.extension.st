@@ -14,5 +14,7 @@ Symbol >> // anObject [
 	
 	(SRLRouter fromSymbol: self) ifNotNil: [ :srl | ^ srl // anObject ].
 	
-	self error: 'Unknown scheme', self 
+	(self last == $:) ifFalse: [ self error: 'Scheme missing : (',   ('scheme:', self ,')' ) ].
+	
+	self error: 'Unknown scheme', self.
 ]

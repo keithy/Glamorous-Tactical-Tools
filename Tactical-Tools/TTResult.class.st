@@ -180,7 +180,7 @@ TTResult >> parsingInput [
    "do not be tempted to refactor this method away, 
     it may be customized by subclasses"
 
-  ^ self verifiedContents
+  ^ self responseContentsVerified
 ]
 
 { #category : 'as yet unclassified' }

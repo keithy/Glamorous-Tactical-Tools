@@ -7,17 +7,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-TTDictionaryConfigEnv class >> makeAllAsTiers [
-
- <gtExample>
-	^ self allSubclasses
-		inject: self makeAsTier
-		into: [ :topTier :eaClass | 
-			topTier tierAppend: eaClass makeAsTier.
-			topTier ]
-]
-
-{ #category : 'instance creation' }
 TTDictionaryConfigEnv class >> makeAsTier [
 	"our test show it all"
 

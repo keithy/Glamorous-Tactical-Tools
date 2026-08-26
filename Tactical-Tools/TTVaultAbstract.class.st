@@ -222,12 +222,13 @@ TTVaultAbstract >> configNormalized [
 
 { #category : 'accessing' }
 TTVaultAbstract >> configRefresh [
- 
-  "don't everyone do this"
-  
-  self config askFor: #refreshReading.
-  apps := nil.
-  options := nil.
+	"don't everyone do this"
+
+	<gtExample>
+	^ FileNotification
+		collectDuring: [ self config askFor: #refreshReading.
+			apps := nil.
+			options := nil ]
 ]
 
 { #category : 'accessing' }
@@ -398,24 +399,42 @@ TTVaultAbstract >> gtAppsConfigFor: aView [
 { #category : 'gt-views' }
 TTVaultAbstract >> gtConfigFor: aView [
 	<gtView>
-	
 	^ aView forward
 		title: 'Config';
 		priority: 1;
-		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons "save" restart 
-												id: GtPhlowViewRefreshContentButtonId
-												tooltip: 'Re-read Configuration'
-												action: [ :aButton :aTab | 
-														self configRefresh.
-														aTab phlow fireViewUpdateWish ]];
-														
-		in: [ :view | view actionButtonIcon: BrGlamorousVectorIcons search 
-												id: GtPhlowViewRefreshContentButtonId
-												tooltip: 'Search Path'
-												action: [ :aButton :aTab | 
-														self configRefresh.
-														aButton phlow spawnObject: self class traceCurrentSearchPath ]];														
-														
+		in: [ :view | 
+			| toolTip |
+			toolTip := self isCurrent
+					ifTrue: [ 'Re-read Current Environment Vault' ]
+					ifFalse: [ 'Re-read This Vault' ].
+
+			view
+				actionButtonIcon: BrGlamorousVectorIcons restart
+				id: GtPhlowViewRefreshContentButtonId
+				tooltip: toolTip
+				action: [ :aButton :aTab | 
+					self isCurrent
+						ifTrue: [ aTab phlow selectObject: (self class reset currentVault)  ]
+						ifFalse: [ 
+						  self configRefresh.
+							aTab phlow fireViewUpdateWish ] ]	"save" ];
+		in: [ :view | 
+			view
+				actionButtonIcon: BrGlamorousVectorIcons search
+				id: GtPhlowViewRefreshContentButtonId
+				tooltip: 'Search Path'
+				action: [ :aButton :aTab | 
+					self configRefresh.
+					aButton phlow spawnObject: self class traceCurrentSearchPath ] ];
+		in: [ :view | 
+			false
+				ifTrue: [ view
+						actionButtonIcon: BrGlamorousVectorIcons search
+						id: GtPhlowViewRefreshContentButtonId
+						tooltip: 'Search Path'
+						action: [ :aButton :aTab | 
+							self configRefresh.
+							aButton phlow spawnObject: self class traceCurrentSearchPath ] ] ];
 		actionUpdateButtonTooltip: 'Update item list';
 		object: [ config ];
 		view: #gtItemsFor:
@@ -513,8 +532,8 @@ TTVaultAbstract >> gtReadersFor: aView [
 	 
 		title: 'Readers';
 		priority: 30;
-		object: [ self class readerClasses collect: [:ea | #class // ea ] ];
-		view: #gtLinksFor:
+		object: [ (self class readerClasses flatCollect: [:ea | (#class: // ea) gtExamples]) ];
+		view: #gtItemsFor:
 ]
 
 { #category : 'accessing' }
@@ -534,6 +553,12 @@ TTVaultAbstract >> initialize [
 	self config initialize.
 	 
 	
+]
+
+{ #category : 'testing' }
+TTVaultAbstract >> isCurrent [
+
+	^ self == self class currentVault 
 ]
 
 { #category : 'testing' }

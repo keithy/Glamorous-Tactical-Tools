@@ -18,6 +18,12 @@ TTWorldClockClient class >> vaultAppKey [
 ]
 
 { #category : 'accessing' }
+TTWorldClockClient >> handlers [
+
+	^ Array with: TTCloudflareStatusHandler
+]
+
+{ #category : 'accessing' }
 TTWorldClockClient >> initialize [
 
 	  maxDelay := (self 	getVault at: #max_delay) ifNil: 0.

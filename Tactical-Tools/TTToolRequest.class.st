@@ -174,7 +174,7 @@ TTToolRequest >> getOutputProvider [
 { #category : 'as yet unclassified' }
 TTToolRequest >> getPayload [
 
-	thePayload ifNil: [ thePayload := self verifiedContents ].
+	thePayload ifNil: [ thePayload := self responseContentsVerified ].
 	
 	^ thePayload 
 ]
@@ -198,7 +198,7 @@ TTToolRequest >> getVerifiedContents [
 { #category : 'as yet unclassified' }
 TTToolRequest >> payload: actionBlockSymbolArrayOrNil [
 	readPayloadUsing := Array
-			with: (readPayloadUsing ifNil: #verifiedContents)
+			with: (readPayloadUsing ifNil: #responseContentsVerified)
 			with: actionBlockSymbolArrayOrNil
 ]
 

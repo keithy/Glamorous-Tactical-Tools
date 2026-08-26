@@ -30,33 +30,17 @@ TTApiResult >> setRequest: aRequest [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiResult >> status [
-
-	 ^  [ inputProvider status ] ifError: [ nil ]
-]
-
-{ #category : 'as yet unclassified' }
-TTApiResult >> statusMessage [
-
-	 ^  [ inputProvider statusLine asErrorMessage ] ifError: [ '' ]
-]
-
-{ #category : 'as yet unclassified' }
-TTApiResult >> statusVerify [
+TTApiResult >> statusVerify: status [
 		
 	"returning true/false allows for subclasses to override and add to the behaviour"
-
-	| status |
-	
-	super statusVerify ifTrue: [ ^ true ].
-	
-	status := self status.
+ 
+	(super statusVerify: status) ifTrue: [ ^ true ].
 	
   status == 204 ifTrue: [ stdout := ''. stderr := '204 success, but no content' ].
 
 	(#(200 201 202 204) includes: status) ifTrue: [ ^ true ].
 	
-	self error: self statusMessage.
+	self error: self responseStatusMessage.
 	"
 	status == 400 ifTrue: [ self error: '400 Bad Request' ].
   status == 401 ifTrue: [ self error: '401 Bad Credentials' ].

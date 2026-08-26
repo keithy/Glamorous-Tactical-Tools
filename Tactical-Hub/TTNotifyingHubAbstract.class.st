@@ -175,7 +175,6 @@ TTNotifyingHubAbstract class >> namedFileLocations [
 
 { #category : 'instance creation' }
 TTNotifyingHubAbstract class >> namespacedSearchPath [
-
 	^ #()
 ]
 

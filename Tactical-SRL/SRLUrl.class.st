@@ -31,7 +31,7 @@ SRLUrl class >> example [
 	"SRLUrl is its own output object"
 	self assert: [ output == resolved ].
 	
-	contents := resolved verifiedContents.
+	contents := resolved responseContentsVerified.
 	
 	self assert: [ contents first == ${ ].
 	parsed := resolved asDictionary.
@@ -43,12 +43,12 @@ SRLUrl class >> example [
 SRLUrl class >> exampleWithResult [
 	<gtExample>
 		
-	| srl request result |
+	| srl result |
 	srl :=  #url: //  'https://httpbin.org/json'. 
 	
 	result := 	srl getResult.
 	
-	self assert: [ (srl rawContents) = (result rawContents) ].
+	self assert: [ (srl responseContents) = (result responseContents) ].
  
 ]
 

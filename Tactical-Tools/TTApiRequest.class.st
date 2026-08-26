@@ -53,7 +53,7 @@ TTApiRequest >> // uri [
 { #category : 'as yet unclassified' }
 TTApiRequest >> asDictionary [
   "convenience - replace with better"
-	^ STONJSON fromString: self verifiedContents
+	^ STONJSON fromString: self responseContentsVerified
 ]
 
 { #category : 'as yet unclassified' }
@@ -89,7 +89,9 @@ TTApiRequest >> isGET [
 { #category : 'as yet unclassified' }
 TTApiRequest >> outputProvider [
 
-	^ self response ifNil: [ self notify send response ].
+	self response ifNil: [ self notify send response ].
+	
+	^ self
 ]
 
 { #category : 'accessing' }
@@ -109,12 +111,8 @@ TTApiRequest >> prepare [
 	].
 ]
 
-{ #category : 'as yet unclassified' }
-TTApiRequest >> rawContents [
-
-	"likely coming from a ZnResponse"
-	"thin client only"
-	^ self outputProvider contents
+{ #category : 'accessing' }
+TTApiRequest >> prepareQuery [
 ]
 
 { #category : 'accessing' }
@@ -123,6 +121,18 @@ TTApiRequest >> response [
 	^ guzzler response
 	
 
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> responseContents [
+
+	^ self response contents
+]
+
+{ #category : 'as yet unclassified' }
+TTApiRequest >> responseContentsVerified [
+  "thin client only, we are our own result"
+	^ self responseContents
 ]
 
 { #category : 'accessing' }
@@ -153,14 +163,14 @@ TTApiRequest >> setUri: aUri [
 { #category : 'accessing' }
 TTApiRequest >> stderr [
 
-	^ self outputProvider status
+	^ self outputProvider responseStatus
 
 ]
 
 { #category : 'accessing' }
 TTApiRequest >> stdout [
 
-	^ self outputProvider contents
+	^ self outputProvider responseContentsVerified
 
 ]
 
@@ -217,7 +227,7 @@ TTApiRequest >> usePUT [
 TTApiRequest >> verifiedContents [
 	"likely coming from a ZnResponse"
 	"thin client only"
-	^ self rawContents
+	^ self responseContents
 ]
 
 { #category : 'accessing' }

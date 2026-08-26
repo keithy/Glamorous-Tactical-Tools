@@ -90,21 +90,15 @@ TTResultAbstract >> client [
 ]
 
 { #category : 'accessing' }
+TTResultAbstract >> handler: aHandler [
+
+	handlers := self handlers copyWith: aHandler
+]
+
+{ #category : 'accessing' }
 TTResultAbstract >> handlers [
 
-	^ handlers ifNil: [ handlers := IdentityDictionary new ]
-]
-
-{ #category : 'accessing' }
-TTResultAbstract >> handlersGoodStatus: status [
-
-	self handlersOnStatus: status do: [ true ]
-]
-
-{ #category : 'accessing' }
-TTResultAbstract >> handlersOnStatus: sStatus do: aBlockReturningBool [
-
-	self handlers at: sStatus put: aBlockReturningBool
+	^ handlers ifNil: [ handlers := #() ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -131,7 +125,7 @@ TTResultAbstract >> inputProvider [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> output [
 
-	^ self verifiedContents
+	^ self responseContentsVerified
 ]
 
 { #category : 'accessing' }
@@ -140,12 +134,6 @@ TTResultAbstract >> parent [
 	 assuming that we always have a request, 
 	 this may not be the case"
 	^ request client
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> rawContents [
-	"likely coming from a executables 'output'"
-	^ self inputProvider stdout
 ]
 
 { #category : 'accessing' }
@@ -202,6 +190,36 @@ stderr := nil.
 
 ]
 
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> responseContents [
+	"likely coming from a executables 'output'"
+	^ self inputProvider responseContents
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> responseContentsVerified [
+	stdout ifNotNil: [ ^ stdout ].
+
+	stdout := [ [ self responseContents ]
+			onErrorDo: [ :ex | 
+				self stderrAppend: ex messageText.
+				ex pass ] ] onErrorDo: self request requestErrorHandler.
+
+	^ stdout
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> responseStatusCode [
+
+	^ inputProvider ifNotNil: [ inputProvider responseStatusCode ]
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> responseStatusMessage [
+
+	 ^  inputProvider ifNotNil: [ inputProvider responseStatusMessage ]  
+]
+
 { #category : 'accessing' }
 TTResultAbstract >> setRequest: aRequest [
 
@@ -210,24 +228,16 @@ TTResultAbstract >> setRequest: aRequest [
 ]
 
 { #category : 'as yet unclassified' }
-TTResultAbstract >> status [ 
-
-	^ inputProvider ifNotNil: [ :out | [ out status code ] ifError: [ nil ] ]
+TTResultAbstract >> statusVerify [
+	^ self statusVerify: self responseStatusCode
 ]
 
 { #category : 'accessing' }
-TTResultAbstract >> statusVerify [
-	
-	handlers ifNotNil: [  
-		handlers at: self status ifPresent: [ :handlerBlock |
-	
-		   (handlerBlock cull: self) ifTrue: [ ^ true ] "handled"
-		]	
-	].
-	
-	^ self status == 0
+TTResultAbstract >> statusVerify: status [
+	(self handlers anySatisfy: [ :handler | handler value: self value: status ])
+		ifTrue: [ ^ true ].	"handled"
 
-
+	^ status == 0
 ]
 
 { #category : 'as yet unclassified' }
@@ -250,16 +260,4 @@ TTResultAbstract >> stderrAppend: aMessage [
 TTResultAbstract >> stdout [
 	"likely coming from a executables 'output'"
 	^ self outputProvider stdout
-]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> verifiedContents [
-	stdout ifNotNil: [ ^ stdout ].
-
-	stdout := [ [ self rawContents ]
-			onErrorDo: [ :ex | 
-				self stderrAppend: ex messageText.
-				ex pass ] ] onErrorDo: self request errorHandler.
-
-	^ stdout
 ]

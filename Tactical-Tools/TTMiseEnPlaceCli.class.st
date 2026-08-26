@@ -63,7 +63,7 @@ TTMiseEnPlaceCli >> version [
 	"Mise environment"
 	
 	^ self versionRequest 
-					verifiedContents;
+					responseContentsVerified;
 					yourself
 ]
 

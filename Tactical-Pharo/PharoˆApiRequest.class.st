@@ -48,6 +48,50 @@ PharoˆApiRequest >> prepareQuery [
 ]
 
 { #category : 'accessing' }
+PharoˆApiRequest >> responseContentType [
+
+	^ self outputProvider contentType  
+]
+
+{ #category : 'accessing' }
+PharoˆApiRequest >> responseIsHtml [
+
+	^ self outputProvider contentType sub = 'html'
+]
+
+{ #category : 'accessing' }
+PharoˆApiRequest >> responseIsJson [
+
+	^ self outputProvider contentType sub = 'json'
+]
+
+{ #category : 'accessing' }
+PharoˆApiRequest >> responseIsText [
+
+	^ self outputProvider contentType sub = 'plain'
+]
+
+{ #category : 'accessing' }
+PharoˆApiRequest >> responseIsXml [
+
+	^ self outputProvider contentType sub = 'xml'
+]
+
+{ #category : 'as yet unclassified' }
+PharoˆApiRequest >> responseStatusCode [
+
+	^ [ self response status code ] ifError: [ nil ]
+]
+
+{ #category : 'as yet unclassified' }
+PharoˆApiRequest >> responseStatusMessage [
+
+	"likely coming from a ZnResponse"
+ 
+	^ (String streamContents: [ :out | self response statusLine writeOn: out ]) 
+]
+
+{ #category : 'accessing' }
 PharoˆApiRequest >> stderr [
 	^ String streamContents: [ :out | self response statusLine writeOn: out ] 
 	 

@@ -20,7 +20,7 @@ TTVaultValueWriter >> dict: theDict at: aKeyWithSuffix write: aValue [
 	| selector newKey map |
 	map := self class suffixMap
 			detect: [ :ea | aKeyWithSuffix endsWith: ea value ]
-			ifNone: [ #valueAsSame: -> '' ].
+			ifNone: [ #valueAsSame: -> 'x' ].
 
 	selector := map key.
 	newKey := map value last = $_

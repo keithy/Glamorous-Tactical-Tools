@@ -63,7 +63,9 @@ TTVault class >> newReading: readers [
 	^ self
 		newUsing: [ :newVault | 
 			readers
-				do: [ :aClassName | newVault config tierAppend: (#class: // aClassName) makeAsTier ] ]
+				do: [ :aClassName | newVault config tierAppend: (#class: // aClassName) makeWithAllSubclassesAsTiers ].
+
+			newVault ]
 ]
 
 { #category : 'instance creation' }
@@ -105,6 +107,14 @@ TTVault class >> newWithRWConfigOSEnv [
 TTVault class >> readerClasses [
 
 	^ #(TTDictionaryConfigEnv TTDictionaryOSEnv)
+]
+
+{ #category : 'instance creation' }
+TTVault class >> traceCurrentSearchPath [
+	
+	<gtExample>
+	
+	^ FileNotification collectDuring: [ self reset currentVault ]
 ]
 
 { #category : 'accessing' }

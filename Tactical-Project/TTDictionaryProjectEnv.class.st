@@ -19,13 +19,13 @@ TTDictionaryProjectEnv class >> searchPathFor: whoami [
 	
 	^ {
 
-		#'project-env-override' -> (File // #project / '.env') resolve. "gitignored"
+		#'project-env-override' -> (#file: // #project / '.env') resolve. "gitignored"
 		#'project-local-override' -> (#file: // #project / 'local.env') resolve. "gitignored"
 		
-		#'project' -> (#file: // #project / (projectId, '.env')) resolve.
-		#'project-config' -> (#file: // #project / 'config'/ (projectId, '.env')) resolve.
+		"#'project' -> (#file: // #project / (projectId, '.env')) resolve."
+		#'project-config' -> (#file: // #project / 'config'/ 'config.env') resolve.
 		
-		#'project-platform' -> (#file: // #project / (hubId, '.env')) resolve.
+		"#'project-platform' -> (#file: // #project / (hubId, '.env')) resolve."
  	 #'project-config-platform-' -> (#file: // #project / 'config' / (hubId , '.env')) resolve.
 
 		#'user-project' -> (#file: // #config / projectId /  'config.env') resolve.

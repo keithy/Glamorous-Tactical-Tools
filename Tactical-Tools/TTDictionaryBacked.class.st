@@ -30,6 +30,17 @@ TTDictionaryBacked class >> makeAsTierWithKey: aKey source: aSource [
 		 
 ]
 
+{ #category : 'instance creation' }
+TTDictionaryBacked class >> makeWithAllSubclassesAsTiers [
+
+ <gtExample>
+	^ self allSubclasses
+		inject: self makeAsTier
+		into: [ :topTier :eaClass | 
+			topTier tierAppend: eaClass makeAsTier.
+			topTier ]
+]
+
 { #category : 'accessing' }
 TTDictionaryBacked class >> newSource: aSource [
 

@@ -108,6 +108,40 @@
 					"uidString" : "r6SjqrgDR2STCLmPpAenpA=="
 				},
 				"code" : "#url://'https://api.timezonedb.com'"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-26T12:55:51.970036+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-26T20:54:56.310288+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "0kh1+BgBQx2+L2kuC9pwqA=="
+				},
+				"code" : "TTTimeZoneDB new listTimeZones"
 			}
 		]
 	},
