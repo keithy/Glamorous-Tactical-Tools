@@ -31,11 +31,20 @@ TTResult >> format: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> formatInput [
+ 
+   "do not be tempted to refactor this method away, 
+    it may be customized by subclasses"
+
+   ^ self mapped
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> formatted [
 
   formatted ifNotNil: [ ^ formatted ].
   
-	formatted := self inject: nil into: (formatters ifNil: #formatStart).
+	formatted := self inject: (self formatInput) into: formatters .
 	
 	^ formatted 
 ]
@@ -44,7 +53,7 @@ TTResult >> formatted [
 TTResult >> formatting: actionBlockSymbolArrayOrNil [
  
  		 actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      formatters ifNil: [ formatters := Array with: #formatStart ].
+      formatters ifNil: [ formatters := Array new ].
       formatters := formatters copyWith: actionBlockSymbolArrayOrNil
 ]
 
@@ -112,7 +121,7 @@ TTResult >> mapped [
 
   mapped ifNotNil: [ ^ mapped ]. 
   
-	mapped := self inject: nil into: (mappers ifNil: #getMappingInput).
+	mapped := self inject: self mappingInput into: mappers.
 	
 	^ mapped
 ]
@@ -121,7 +130,7 @@ TTResult >> mapped [
 TTResult >> mapping: actionBlockSymbolArrayOrNil [
 
 			actionBlockSymbolArrayOrNil ifNil: [ ^ self ].
-      mappers ifNil: [ mappers := Array with: #getMappingInput ].
+      mappers ifNil: [ mappers := Array new ].
       mappers := mappers copyWith: actionBlockSymbolArrayOrNil
 ]
 
@@ -180,7 +189,7 @@ TTResult >> payload [
 	payload ifNotNil: [ ^ payload ].
   
 	self payload: payloadTailReducers.
-	payload := self inject: (self payloadStart) into: payloadReducers.
+	payload := self inject: (self payloadInput) into: payloadReducers.
 	
  ^ payload
 ]
@@ -231,12 +240,12 @@ TTResult >> payloadFinalize: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> payloadStart [
+TTResult >> payloadInput [
  
    "do not be tempted to refactor this method away, 
     it may be customized by subclasses"
 
-   ^ self getParsed
+   ^ self parsed
 ]
 
 { #category : 'accessing' }

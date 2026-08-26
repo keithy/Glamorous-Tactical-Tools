@@ -104,7 +104,7 @@ TTNotifyingHubAbstract class >> hubId [
 
 	"The Hub"
 	 
-	^ (self namespaced: self current) key
+	^ #namespace: // self
 ]
 
 { #category : 'environment' }
@@ -127,6 +127,13 @@ TTNotifyingHubAbstract class >> isHub [
   
 	"The Hub"
 	
+	^ true
+]
+
+{ #category : 'usl-schemes' }
+TTNotifyingHubAbstract class >> isNamespaced [
+	<namespaced>
+	<namespaced:#splitAutomatically:>
 	^ true
 ]
 
@@ -164,12 +171,6 @@ TTNotifyingHubAbstract class >> mustBeClassSide: pragma [
 TTNotifyingHubAbstract class >> namedFileLocations [
 	
 	^ self current signalAuto
-]
-
-{ #category : 'usl-schemes' }
-TTNotifyingHubAbstract class >> namespaced: aClassOrName [
- 
-  ^ TTNamespaces namespaced: (self class: aClassOrName)
 ]
 
 { #category : 'instance creation' }

@@ -13,14 +13,6 @@ Class {
 	#tag : 'Request-Result'
 }
 
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> asHub [
-	
-	"Any Client class can be a hub on its own resources"
-	
-  ^ Hub current newBrowsing: self
-]
-
 { #category : 'accessing' }
 TTClientAbstract class >> basicNew [
    self isAbstract ifTrue: [ self error:(self name, ' is abstract') ].
@@ -83,29 +75,6 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 TTClientAbstract class >> configureResult: aResult [
 
 	^ aResult apply: TTToolOutputParser passAsString.
-
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> doubleDispatchFromAFileReference: aFileReference andCH: hub [
-
-	^ (self basicNewFor: hub) 
-	        "doubleDispatchFrom: hub andAFileReference: aFileReference (possible0"
-					setFileReference: aFileReference;
-					initialize
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> doubleDispatchFromFileClass: fileClass [
-	
-	^ self workingDirectory
-]
-
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> doubleSlashFromFactoryClass: aFactory andCH: hub [
-
-	^ aFactory new askAll: self
-
 
 ]
 
@@ -203,12 +172,24 @@ TTClientAbstract class >> makeVaultEmpty [
 ^ TTVault newEmpty
 ]
 
+{ #category : 'accessing' }
+TTClientAbstract class >> new [
+
+	^ self newFor: Hub current
+]
+
 { #category : 'factory' }
 TTClientAbstract class >> newFor: aVaultable [
 	
  	^ (self basicNewFor:aVaultable ) initialize
 					 
 
+]
+
+{ #category : 'accessing' }
+TTClientAbstract class >> newNoConfig [
+
+	^ self newFor: (self makeVaultEmpty)
 ]
 
 { #category : 'accessing' }
@@ -265,12 +246,6 @@ TTClientAbstract >> @ option [
 	self getVault @ option
 ]
 
-{ #category : 'factory' }
-TTClientAbstract >> beginRequest: aRequest [
-
-	aRequest isAuthRequired: self isAuthRequired  
-]
-
 { #category : 'as yet unclassified' }
 TTClientAbstract >> getUser [
 
@@ -310,12 +285,20 @@ TTClientAbstract >> isAuthRequired [
 
 { #category : 'instance creation' }
 TTClientAbstract >> makeRequest [
-	"initially the request doubles as the result"
-	"The client keeps the last result context as convenience for the user.
-	Not thread safe."
+	"initially the request doubles as the result 
+	 this is the thin client configuration"
+	 
+	"The client keeps the last result context as convenience for the user."
+	 
 	^ result := classTool classApiRequest basicNew
 			setClient: self;
 			initialize
+]
+
+{ #category : 'factory' }
+TTClientAbstract >> prepareRequest: aRequest [
+
+	aRequest isAuthRequired: self isAuthRequired  
 ]
 
 { #category : 'accessing' }

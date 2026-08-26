@@ -24,12 +24,6 @@ TTApiClient class >> // aUrl [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClient class >> > selector [ 
-
-^ self perform: selector
-]
-
-{ #category : 'as yet unclassified' }
 TTApiClient class >> basicNewFor: aVaultable [  
 
 	| basicNewClient |
@@ -41,6 +35,18 @@ TTApiClient class >> basicNewFor: aVaultable [
 			setRequestErrorHandler: Hub makeNetworkErrorHandler;
 			yourself
 
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClient class >> classResult [
+
+	^ TTApiResult
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClient class >> configUrl [
+
+	^ nil
 ]
 
 { #category : 'as yet unclassified' }
@@ -117,15 +123,6 @@ TTApiClient >> beHttp [
 
 ]
 
-{ #category : 'accessing' }
-TTApiClient >> beginRequest: aRequest [
-	
-	super beginRequest: aRequest.
-	
-	self applyHeadersTo: aRequest
-	
-]
-
 { #category : 'instance creation' }
 TTApiClient >> classTool [
 	classTool ifNil: [ self class ]
@@ -187,7 +184,11 @@ TTApiClient >> hostScheme [
 { #category : 'accessing' }
 TTApiClient >> hostUrl [
 
-	^ hostUrl ifNil: [ hostUrl := vault url ]
+	hostUrl ifNotNil: [ ^ hostUrl ].
+	
+	hostUrl := vault at: #url.
+	
+	^ hostUrl
 ]
 
 { #category : 'openapi' }
@@ -210,6 +211,15 @@ TTApiClient >> openApiJson [
   url ifNotNil: [ ^ classTool new get: url ].
   
   ^ ''
+]
+
+{ #category : 'accessing' }
+TTApiClient >> prapareRequest: aRequest [
+	
+	super prepareRequest: aRequest.
+	
+	self applyHeadersTo: aRequest
+	
 ]
 
 { #category : 'accessing' }

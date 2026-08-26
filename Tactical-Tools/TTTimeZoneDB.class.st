@@ -32,7 +32,7 @@ TTTimeZoneDB class >> urlDownloadDbSql [
 ]
 
 { #category : 'as yet unclassified' }
-TTTimeZoneDB class >> urlHostApi [
+TTTimeZoneDB class >> urlHost [
 
 	<ttSpoke>
 
@@ -43,7 +43,21 @@ TTTimeZoneDB class >> urlHostApi [
 { #category : 'as yet unclassified' }
 TTTimeZoneDB >> apiListTimeZones [
 
-	^ (self vLatest / 'list-time-zone') useGet
+	^ (self vLatest / 'list-time-zone') useGET
+						
+]
+
+{ #category : 'as yet unclassified' }
+TTTimeZoneDB >> initialize [
+
+	super initialize.
+	hostUrl := self class urlHost 
+]
+
+{ #category : 'as yet unclassified' }
+TTTimeZoneDB >> listTimeZones [
+
+	^ self apiListTimeZones output
 						
 ]
 
@@ -55,5 +69,11 @@ TTTimeZoneDB >> minDelay [
 { #category : 'as yet unclassified' }
 TTTimeZoneDB >> urlHostApi [
 
-   ^ 'https://api.timezonedb.com/v2.1/'
+   ^ 'https://api.timezonedb.com'
+]
+
+{ #category : 'as yet unclassified' }
+TTTimeZoneDB >> vLatest [
+
+	^ self // self hostUrl / 'v2.1'
 ]

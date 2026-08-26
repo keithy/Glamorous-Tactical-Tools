@@ -45,20 +45,9 @@ TTRequestAbstract >> errorHandler [
 	^ self client requestErrorHandler
 ]
 
-{ #category : 'as yet unclassified' }
-TTRequestAbstract >> getRawContents [
-	^ self verifiedContents
-]
-
 { #category : 'accessing' }
 TTRequestAbstract >> getResult [
 	^ result ifNil: [ result := self client class makeResultForRequest: self ]
-]
-
-{ #category : 'as yet unclassified' }
-TTRequestAbstract >> getVerifiedContents [
-
-	self subclassResponsibility
 ]
 
 { #category : 'initialization' }
@@ -91,12 +80,6 @@ TTRequestAbstract >> notify [
 ]
 
 { #category : 'accessing' }
-TTRequestAbstract >> output [
-
-	^ self subclassResponsibility
-]
-
-{ #category : 'accessing' }
 TTRequestAbstract >> outputProvider [
 
 	^ self subclassResponsibility
@@ -112,6 +95,11 @@ TTRequestAbstract >> parameterAt: key put: value [
 TTRequestAbstract >> parameters [
 
 	^ parameters ifNil: [  parameters := Dictionary new ]
+]
+
+{ #category : 'as yet unclassified' }
+TTRequestAbstract >> rawContents [
+	^ self stdout
 ]
 
 { #category : 'accessing' }
@@ -140,6 +128,11 @@ TTRequestAbstract >> setClient: anObject [
 TTRequestAbstract >> setResult: anObject [
 	result := anObject.
  
+]
+
+{ #category : 'as yet unclassified' }
+TTRequestAbstract >> verifiedContents [
+	^ self rawContents
 ]
 
 { #category : 'accessing' }

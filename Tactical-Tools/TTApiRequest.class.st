@@ -46,6 +46,8 @@ TTApiRequest >> / aPath [
 TTApiRequest >> // uri [
 	
 	(self setUri: uri) begin
+	
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -67,10 +69,6 @@ TTApiRequest >> begin [
   
   guzzler url: self fullUrl.
   
-  guzzler isHttpClient ifTrue: [
-		client beginRequest: self.
-	].
-	
 	super begin
 ]
 
@@ -100,7 +98,9 @@ TTApiRequest >> prepare [
 	guzzler url: self fullUrl.
 	
 	guzzler isHttpClient ifTrue: [
-	
+		
+		client prepareRequest: self.
+		
 		guzzler method: self type.
 		
 		self isGET	
@@ -192,7 +192,7 @@ TTApiRequest >> useDELETE [
 { #category : 'accessing' }
 TTApiRequest >> useGET [
 
-		^ (self use: #GET) getResult
+		^ self use: #GET
 ]
 
 { #category : 'accessing' }

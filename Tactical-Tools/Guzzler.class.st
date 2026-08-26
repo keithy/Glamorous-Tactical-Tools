@@ -5,7 +5,8 @@ Class {
 		'executeSelector',
 		'httpClient',
 		'contents',
-		'data'
+		'data',
+		'requestErrorHandler'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -235,6 +236,12 @@ Guzzler >> executeMock [
 	
 	contents :=  aMocker perform: methodFromUrl with: theRest
 	
+]
+
+{ #category : 'accessing' }
+Guzzler >> requestErrorHandler [
+
+	^ requestErrorHandler ifNil: [ [ :err | err pass ] ]
 ]
 
 { #category : 'accessing' }

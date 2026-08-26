@@ -36,6 +36,12 @@ TTApiResult >> status [
 ]
 
 { #category : 'as yet unclassified' }
+TTApiResult >> statusMessage [
+
+	 ^  [ inputProvider statusLine asErrorMessage ] ifError: [ '' ]
+]
+
+{ #category : 'as yet unclassified' }
 TTApiResult >> statusVerify [
 		
 	"returning true/false allows for subclasses to override and add to the behaviour"
@@ -50,6 +56,9 @@ TTApiResult >> statusVerify [
 
 	(#(200 201 202 204) includes: status) ifTrue: [ ^ true ].
 	
+	self error: self statusMessage.
+	"
+	status == 400 ifTrue: [ self error: '400 Bad Request' ].
   status == 401 ifTrue: [ self error: '401 Bad Credentials' ].
 	status == 403 ifTrue: [ self error: '403 Authorization Failed' ].
 	status == 404 ifTrue: [ self error: '404 Not Found' ].
@@ -60,8 +69,8 @@ TTApiResult >> statusVerify [
 	status == 502 ifTrue: [ self error: '502 Bad Gateway'  ].
 	status == 503 ifTrue: [ self error: '503 Service Unavailable'  ].
 	status == 504 ifTrue: [ self error: '504 Gateway Timeout'  ].
-	
-	^ false
+	"
+	^false
 	
 
 ]

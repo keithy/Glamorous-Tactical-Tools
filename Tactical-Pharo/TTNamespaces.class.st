@@ -26,7 +26,7 @@ TTNamespaces class >> automaticNamespaces [
 
 	"Sorted by size"
 	
-	^ #(GtCSS GtCS Gt4 GtL Gt GT Br Bl)
+	^ #(GtCSS GtCS Gt4 GtL Gt GT Br Bl TT)
 ]
 
 { #category : 'as yet unclassified' }

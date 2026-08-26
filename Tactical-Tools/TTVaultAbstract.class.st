@@ -59,6 +59,12 @@ TTVaultAbstract class >> newDefaultVault [
 	self subclassResponsibility
 ]
 
+{ #category : 'instance creation' }
+TTVaultAbstract class >> readerClasses [
+
+	^ #()
+]
+
 { #category : 'accessing' }
 TTVaultAbstract class >> reset [
 
@@ -497,6 +503,18 @@ TTVaultAbstract >> gtOptionsFor: aView [
 			self removeKey: anAssoc key ifAbsent: [ "ignore" ].
 			anElement phlow contextMenuUpdateViewContent ];
 		send: [ :assoc | assoc value ].
+]
+
+{ #category : 'gt-views' }
+TTVaultAbstract >> gtReadersFor: aView [
+	<gtView>
+	
+	^ aView forward
+	 
+		title: 'Readers';
+		priority: 30;
+		object: [ self class readerClasses collect: [:ea | #class // ea ] ];
+		view: #gtLinksFor:
 ]
 
 { #category : 'accessing' }

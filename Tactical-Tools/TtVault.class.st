@@ -47,49 +47,64 @@ TTVault class >> makeValueWriter [
 { #category : 'instance creation' }
 TTVault class >> new [ 
 
-	^ self newWithTierRW
+	^ self newWithRW
 		
 ]
 
 { #category : 'instance creation' }
 TTVault class >> newDefaultVault [
-	^ self newWithRWConfigOSEnv
+	"^ self newWithRWConfigOSEnv"
+	^ self newWithAllReaderClasses
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newEmpty [
+TTVault class >> newReading: readers [
+	<gtExample>
+	^ self
+		newUsing: [ :newVault | 
+			readers
+				do: [ :aClassName | newVault config tierAppend: (#class: // aClassName) makeAsTier ] ]
+]
 
- <gtExample>
+{ #category : 'instance creation' }
+TTVault class >> newUsing: aBlock [
+	"creation pattern ensuring initialization is last"
 
- ^ self basicNew
-		initialize
-		
+	| newVault |
+	newVault := self basicNew.
+	newVault setConfig: self makeTierRW.
+
+	^ (aBlock value: newVault) initialize
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newWithAllReaderClasses [
+
+^ self newReading: self readerClasses
+]
+
+{ #category : 'instance creation' }
+TTVault class >> newWithRW [
+	<gtExample>
+	^ self newUsing: [ :newVault | newVault ]
+		 
+
 ]
 
 { #category : 'instance creation' }
 TTVault class >> newWithRWConfigOSEnv [
-
- <gtExample>
-
- | firstTier |
- 
- firstTier := (self makeTierRW)
- 									tierAppend: TTDictionaryConfigEnv makeAsTier;
-									 tierAppend: TTDictionaryOSEnv makeAsTier ;
-									 yourself.
-  					 
- ^ (self basicNew)
-		setConfig: firstTier;
-		initialize
-		
+	<gtExample>
+	^ self
+		newUsing: [ :newVault | 
+			newVault config
+				tierAppend: TTDictionaryConfigEnv makeAsTier;
+				tierAppend: TTDictionaryOSEnv makeAsTier ]
 ]
 
 { #category : 'instance creation' }
-TTVault class >> newWithTierRW [
-	<gtExample>
-	^ self basicNew
-		setConfig: self makeTierRW;
-		yourself
+TTVault class >> readerClasses [
+
+	^ #(TTDictionaryConfigEnv TTDictionaryOSEnv)
 ]
 
 { #category : 'accessing' }

@@ -9,24 +9,6 @@ Class {
 	#tag : 'Request-Result'
 }
 
-{ #category : 'as yet unclassified' }
-TTWorldClockClient class >> doubleDispatchfrom: hub andAClientClass: aClientClass [ 
-
-	^ (self basicNewFor: hub) 
-	        
-					initialize
-	
-]
-
-{ #category : 'as yet unclassified' }
-TTWorldClockClient class >> doubleDispatchfrom: hub andAClientClass: aClientClass with: aSymbolUrlStringOrClass [
-
-	^ (self basicNewFor: hub) initialize // aSymbolUrlStringOrClass
-	        
-					
-	
-]
-
 { #category : 'accessing' }
 TTWorldClockClient class >> vaultAppKey [
 
