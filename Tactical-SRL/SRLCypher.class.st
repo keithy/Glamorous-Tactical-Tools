@@ -1,6 +1,9 @@
 Class {
 	#name : 'SRLCypher',
 	#superclass : 'SRLRouter',
+	#instVars : [
+		'type'
+	],
 	#category : 'Tactical-SRL-Schemes',
 	#package : 'Tactical-SRL',
 	#tag : 'Schemes'
@@ -13,12 +16,32 @@ SRLCypher class >> canRoute: aSymbol [
 ]
 
 { #category : 'as yet unclassified' }
+SRLCypher class >> ed25519 [
+
+^ (#file://'{home}/.ssh/id_ed25519') contents
+]
+
+{ #category : 'as yet unclassified' }
+SRLCypher class >> rsa [
+
+^ (#file://'{home}/.ssh/id_rsa') contents
+]
+
+{ #category : 'as yet unclassified' }
+SRLCypher class >> secret [
+
+^ ((#file://'{home}/.ssh/secrets') / ((Hub current hubId) asUppercase, '_SECRET')) contents
+]
+
+{ #category : 'as yet unclassified' }
 SRLCypher class >> testCypher [
 
-<gtExample>
+	"Cypher is only safe to use on short randomly generated keys"
+	
+	<gtExample>
 
 	| message cyphered decyphered |
-	message := 'hello world'.
+	message := 'The quick brown fox jumps! over the lazy dog.'.
 	cyphered := #encypher://message.
 	decyphered := #decypher://cyphered.
 
@@ -27,15 +50,21 @@ SRLCypher class >> testCypher [
 ]
 
 { #category : 'as yet unclassified' }
+SRLCypher class >> uuid [
+
+^ GlobalIdentifier uniqueInstance secretUUID
+]
+
+{ #category : 'as yet unclassified' }
 SRLCypher >> cypher [
 | safeChars n shuffled forward reverse |
-      safeChars := 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_~*&^%$£#@!()=+}{][\|/?`~.,<>;:'.
+      safeChars := 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_~*&^%$£#@!()=+}{][\|/?`.,<>;:'.
       n := safeChars size.
 
       forward := ByteArray new: 256.
       reverse := ByteArray new: 256.
 
-      shuffled := safeChars asArray shuffledBy: (Random seed: self secretUUID hash).
+      shuffled := safeChars asArray shuffledBy: self randomizer.
 
       1 to: n do: [ :i |
           | in out |
@@ -50,23 +79,39 @@ SRLCypher >> cypher [
 { #category : 'as yet unclassified' }
 SRLCypher >> decypher: aString [
 
-	^ aString copy translateWith: self cypher value
+	^ (aString copyAfter: $_) translateWith: self cypher value
 ]
 
 { #category : 'as yet unclassified' }
 SRLCypher >> encypher: aString [
 
-	^ aString copy translateWith: self cypher key
+	| cypher encyphered decyphered original |
+	
+	cypher:= self cypher.
+	original := aString copyAfter: $_.
+	encyphered := original copy translateWith: cypher key.
+	decyphered := encyphered copy translateWith: cypher value.
+	
+	self assert: decyphered equals: original.
+	
+	^ type, '_', encyphered
+	
+]
+
+{ #category : 'as yet unclassified' }
+SRLCypher >> initialize [
+
+	type := (thing copyUpTo: $_) asSymbol
+]
+
+{ #category : 'as yet unclassified' }
+SRLCypher >> randomizer [
+
+	^ Random seed: (self class askFor: type ifAbsent: [ self error: 'Seed type not provided, see SRLCypher class comment']) hash.
 ]
 
 { #category : 'as yet unclassified' }
 SRLCypher >> resolve: aString [
-
-	^ self perform: scheme with: aString
-]
-
-{ #category : 'as yet unclassified' }
-SRLCypher >> secretUUID [
-
-^ GlobalIdentifier uniqueInstance secretUUID
+ 
+	^ self perform: scheme with:  aString
 ]

@@ -71,6 +71,12 @@ TTApiClient >> // aUrl [
 ]
 
 { #category : 'accessing' }
+TTApiClient >> apiKey [
+
+	^ vault at: #apikey
+]
+
+{ #category : 'accessing' }
 TTApiClient >> applyAcceptTo: anApiRequest [
 
 	accept ifNotNil: [ anApiRequest accept:  accept ]
@@ -93,7 +99,7 @@ TTApiClient >> applyAuthBasicTo: anApiRequest [
 { #category : 'accessing' }
 TTApiClient >> applyAuthTo: anApiRequest [
 
-	(self vaultApiKey)	
+	(self apiKey)	
 			ifNotNil: [ :apiKey | self applyAuth: apiKey to: anApiRequest ]
 			ifNil: [ self applyAuthBasicTo: anApiRequest ]
 ]
@@ -255,12 +261,6 @@ TTApiClient >> usePUT: endpoint [
 TTApiClient >> vLatest [
 
 	^ self // self hostUrl / 'api'
-]
-
-{ #category : 'accessing' }
-TTApiClient >> vaultApiKey [
-
-	^ vault at: #apikey
 ]
 
 { #category : 'accessing' }

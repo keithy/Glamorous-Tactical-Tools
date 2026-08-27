@@ -544,7 +544,7 @@ TTVaultAbstract >> gtReadersFor: aView [
 	
 	^ aView forward
 	 
-		title: 'Readers';
+		title: 'Examples';
 		priority: 30;
 		object: [ (self class readerClasses flatCollect: [:ea | (#class: // ea) gtExamples]) ];
 		view: #gtItemsFor:
