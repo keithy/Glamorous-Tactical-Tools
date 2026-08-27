@@ -13,9 +13,17 @@ SRLCypher class >> canRoute: aSymbol [
 ]
 
 { #category : 'as yet unclassified' }
-SRLCypher >> // aString [
+SRLCypher class >> testCypher [
 
-	^ self perform: scheme with: aString
+<gtExample>
+
+	| message cyphered decyphered |
+	message := 'hello world'.
+	cyphered := #encypher://message.
+	decyphered := #decypher://cyphered.
+
+	self assert: message equals: decyphered.
+	 
 ]
 
 { #category : 'as yet unclassified' }
@@ -49,6 +57,12 @@ SRLCypher >> decypher: aString [
 SRLCypher >> encypher: aString [
 
 	^ aString copy translateWith: self cypher key
+]
+
+{ #category : 'as yet unclassified' }
+SRLCypher >> resolve: aString [
+
+	^ self perform: scheme with: aString
 ]
 
 { #category : 'as yet unclassified' }

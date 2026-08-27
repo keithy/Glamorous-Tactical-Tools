@@ -44,10 +44,8 @@ TTVaultValueWriter >> valueAsBase64: aString [
 
 { #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAsCyphered: aString [
-
-	self notYetImplemented.
 	
-	^ (TTStringEncoded newFrom: aString) beBase64
+	^ (TTStringEncoded newFrom: aString) beCyphered
  
 ]
 

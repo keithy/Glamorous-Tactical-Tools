@@ -11,46 +11,11 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTStringEncoded class >> cypher [
-| safeChars n shuffled forward reverse |
-      safeChars := 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_~*&^%$£#@!()=+}{][\|/?`~.,<>;:'.
-      n := safeChars size.
-
-      forward := ByteArray new: 256.
-      reverse := ByteArray new: 256.
-
-      shuffled := safeChars asArray shuffledBy: (Random seed: self secretUUID hash).
-
-      1 to: n do: [ :i |
-          | in out |
-          in := (safeChars at: i) asciiValue.
-          out := (shuffled at: i) asciiValue.
-          forward at: in + 1 put: out.
-          reverse at: out + 1 put: in ].
-
-      ^ forward -> reverse
-]
-
-{ #category : 'as yet unclassified' }
 TTStringEncoded class >> newFrom: aString [
 
 	^ (self new)
 	     setEncoded: aString
 	     yourself 
-]
-
-{ #category : 'as yet unclassified' }
-TTStringEncoded class >> testCypher [
-
-<gtExample>
-
-	| message cyphered decyphered |
-	message := 'hello world'.
-	cyphered := (message copy translateWith: self cypher key).
-	decyphered := cyphered translateWith: (self cypher value).
-
-	self assert: message equals: decyphered.
-	 
 ]
 
 { #category : 'accessing' }
@@ -120,7 +85,7 @@ TTStringEncoded >> decodeBase64 [
 { #category : 'accessing' }
 TTStringEncoded >> decodeCyphered [
 
-	^ encoded translateWith: self class cypher value.
+	^ #decypher://encoded
 ]
 
 { #category : 'accessing' }

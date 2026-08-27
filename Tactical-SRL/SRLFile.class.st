@@ -134,7 +134,7 @@ SRLFile >> contents [
 { #category : 'accessing' }
 SRLFile >> fileReferenceFromString: aString [
 
-	^ self class fileReferenceFromString: (aString envSubstUsing: self vault)
+	^ self class fileReferenceFromString: (self vault envSubstituteIntoString:aString)
 ]
 
 { #category : 'accessing' }

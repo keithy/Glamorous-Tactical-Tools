@@ -273,6 +273,20 @@ TTVaultAbstract >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> envSubstituteIntoString: aString [
+	| in |
+	in := aString readStream.
+
+	^ String
+		streamContents: [ :out | 
+			[ out nextPutAll: (in upToAll: '${').
+			in atEnd ]
+				whileFalse: [ | var |
+					var := in upTo: $}.
+					out nextPutAll: (self at: var ifAbsent: [ var ]) ] ]
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> errorKeyNotFound: aKey [
 
 	KeyNotFound signalFor: aKey
@@ -581,7 +595,7 @@ TTVaultAbstract >> lookup: aKey [
 
 { #category : 'accessing' }
 TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
-  ^ self lookup: aKey ifPresentBasic: [ :v | ^ pBlock value: (v envSubstUsing: self) ] 
+  ^ self lookup: aKey ifPresentBasic: [ :v | ^ pBlock value: (self envSubstituteIntoString: v) ] 
 ]
 
 { #category : 'accessing' }
