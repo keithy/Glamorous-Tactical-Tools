@@ -41,22 +41,22 @@ TTFactoryAbstract class >> makeNetworkErrorHandler [
 ]
 
 { #category : 'as yet unclassified' }
-TTFactoryAbstract class >> makeVaultEmpty [
+TTFactoryAbstract class >> makeVaultCurrent [
 
-	^ TTVault newEmpty
+	^ Hub currentVault 
 ]
 
 { #category : 'as yet unclassified' }
-TTFactoryAbstract class >> makeVaultFromCurrent [
+TTFactoryAbstract class >> makeVaultEmpty [
 
-	^ (Hub currentVault) copy
+	^ TTVault newEmpty
 ]
 
 { #category : 'instance creation' }
 TTFactoryAbstract class >> new [
 
 	^ (self basicNew)
-			setVault: self makeVaultFromCurrent;
+			setVault: self makeVaultCurrent;
 			initialize
 ]
 
@@ -229,7 +229,7 @@ TTFactoryAbstract >> setVault: anObject [
 	
 	"set implies that it is essential prior to #initialize"
 	
-	vault := anObject
+	vault := anObject copy
 ]
 
 { #category : 'accessing' }

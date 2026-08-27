@@ -18,7 +18,7 @@ TTTimeZoneDB class >> urlDownloadDbCsv [
 	"Timezone database (csv)"
 	<ttSpoke>
 	
-^ 'https://timezonedb.com/files/TimeZoneDB.csv.zip'
+^ #url://'https://timezonedb.com/files/TimeZoneDB.csv.zip'
 
 ]
 
@@ -27,7 +27,7 @@ TTTimeZoneDB class >> urlDownloadDbSql [
 
 	<ttSpoke>
 
- ^ 'https://timezonedb.com/files/TimeZoneDB.sql.zip'
+ ^ #url://'https://timezonedb.com/files/TimeZoneDB.sql.zip'
  
 ]
 
@@ -36,7 +36,7 @@ TTTimeZoneDB class >> urlHost [
 
 	<ttSpoke>
 
- ^ 'https://api.timezonedb.com'
+ ^ #url://'https://api.timezonedb.com'
  
 ]
 

@@ -265,6 +265,15 @@ TTVaultAbstract >> copyForAll [
 ]
 
 { #category : 'accessing' }
+TTVaultAbstract >> copyForAppKey: aKey optionKey: optionKey [
+	^ self copy
+		appKey: aKey;
+		optionsSelect: optionKey;
+		refresh;
+		yourself
+]
+
+{ #category : 'accessing' }
 TTVaultAbstract >> doesNotUnderstand: aMessage [
 	aMessage hasArguments
 		ifFalse: [ self lookup: aMessage selector ifPresent: [ :v | ^ v ] ].

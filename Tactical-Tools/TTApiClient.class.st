@@ -44,12 +44,6 @@ TTApiClient class >> classResult [
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClient class >> configUrl [
-
-	^ nil
-]
-
-{ #category : 'as yet unclassified' }
 TTApiClient class >> makeOpenApiBrowser: aStreamable [
 
 	^ (#GtOpenApiParser asClassIfAbsent: [ ^ nil ])  

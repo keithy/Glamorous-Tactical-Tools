@@ -202,14 +202,82 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-27T10:49:22.832647+01:00"
+						"dateAndTimeString" : "2026-08-27T19:52:51.368832+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "A029GJvsQy2AILpHYDo4ow=="
 				},
-				"code" : "TTTimeZone"
+				"code" : "TTTimeZoneDB new @ #default"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-27T19:54:06.357684+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-27T19:55:50.190873+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "ZWhd3C9LS2m8nXYs16Aafw=="
+				},
+				"code" : "TTVault reset currentVault"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-27T21:19:38.795251+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-27T21:21:07.17073+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "SxKvPPMIT5u3+PbnaLXyNA=="
+				},
+				"code" : "((TTTimeZoneDB new getVault)\rappKey: 'worldclock'; \ryourself)\roptions"
 			}
 		]
 	},

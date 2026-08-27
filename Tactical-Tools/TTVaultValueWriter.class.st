@@ -2,7 +2,7 @@ Class {
 	#name : 'TTVaultValueWriter',
 	#superclass : 'Object',
 	#classInstVars : [
-		'suffixReaderMap'
+		'suffixMap'
 	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
@@ -10,9 +10,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTVaultValueWriter class >> suffixMap [
+TTVaultValueWriter class >> reset [ 
 
-	^ self selectors select: [ :ea | ea beginsWith: 'valueAs_' ] thenCollect: [ :ea | ea -> (ea copyFrom: 8 to: ea size - 1) ] 
+	suffixMap := nil.
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter class >> shutDownAtSystemPriority: quitting [
+
+  <ttShutDown>
+
+  self reset
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter class >> suffixMap [
+	^ suffixMap
+		ifNil: [ suffixMap := self selectors
+					select: [ :ea | ea beginsWith: 'valueAs_' ]
+					thenCollect: [ :ea | ea -> (ea copyFrom: 8 to: ea size - 1) ] ]
 ]
 
 { #category : 'accessing' }
@@ -59,6 +75,8 @@ TTVaultValueWriter >> valueAsObfuscated: aString [
 { #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAsSame: aString [
 
+	('*${*}*' matches: aString) ifTrue: [ ^ self valueAsTemplate: aString ].
+	
 	^ aString
  
 ]
@@ -67,6 +85,12 @@ TTVaultValueWriter >> valueAsSame: aString [
 TTVaultValueWriter >> valueAsString: aString [
 
 	^ aString
+]
+
+{ #category : 'as yet unclassified' }
+TTVaultValueWriter >> valueAsTemplate: aString [
+	
+	^ TTStringTemplate newFrom: aString 
 ]
 
 { #category : 'as yet unclassified' }

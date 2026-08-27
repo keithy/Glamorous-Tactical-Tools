@@ -22,8 +22,9 @@ TTClientAbstract class >> basicNew [
 { #category : 'factory' }
 TTClientAbstract class >> basicNewFor: aVaultable [
 	
+ 	"Will create instance  even if configuration is incomplete"
  	^ (self basicNew)
-					setVault:  aVaultable getVault
+					setVault:  aVaultable getVault;
 					yourself
 
 
@@ -32,7 +33,9 @@ TTClientAbstract class >> basicNewFor: aVaultable [
 { #category : 'factory' }
 TTClientAbstract class >> basicNewForPotential: aVaultable [
 	
- 	^ self basicNewFor:  ((self makeNewVaultFor: aVaultable) ifNil: [ ^ nil ])
+		"Will create instance requiring complete confiuration or return nil"
+
+ 	^ self basicNewFor:  ((self configureAndValidateVault: aVaultable option: #default) ifNil: [ ^ nil ])
 					yourself
 
 
@@ -71,11 +74,32 @@ TTClientAbstract class >> collectAllTheOptionKeysAsASetFor: aVaultable [
 
 ]
 
+{ #category : 'factory' }
+TTClientAbstract class >> configureAndValidateVault: aVaultable option: anOptionKey [
+	| myVault |
+	(self checkPotentialVault: aVaultable) ifFalse: [ ^ nil ].
+
+	myVault := self configureVault: aVaultable option: anOptionKey.
+			
+	(self checkNewVault: anOptionKey) ifFalse: [ ^ nil ].
+
+	^ myVault
+]
+
 { #category : 'instance creation' }
 TTClientAbstract class >> configureResult: aResult [
 
 	^ aResult apply: TTToolOutputParser passAsString.
 
+]
+
+{ #category : 'factory' }
+TTClientAbstract class >> configureVault: aVaultable option: anOptionKey [
+	
+	^ aVaultable getVault
+			copyForAppKey: self vaultAppKey
+			optionKey: #default.
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -105,49 +129,18 @@ TTClientAbstract class >> isNamespaced [
 ]
 
 { #category : 'factory' }
-TTClientAbstract class >> makeNewVaultFor: aVaultable [  
-	
-	| myVault |
-	
-	 (self checkPotentialVault: aVaultable ) ifFalse: [ ^ nil ].
-	
-	 myVault := (aVaultable getVault copy) 
-									appKey: self vaultAppKey;
-									optionsSelect: #default;
-									refresh;
-									yourself.
-								
-   (self checkNewVault: myVault ) ifFalse: [  ^ nil ].
-				
- 	^ myVault
-
-
-]
-
-{ #category : 'factory' }
-TTClientAbstract class >> makeNewVaultsForAllOptionsOf: aVaultable [  
-	
+TTClientAbstract class >> makeNewVaultsForAllOptionsOf: aVaultable [
 	| theOptions |
-	
-	 (self checkPotentialVault: aVaultable ) ifFalse: [ ^ nil ].
-	
-	 theOptions := self collectAllTheOptionKeysAsASetFor:aVaultable.
-	
-	 ^ theOptions collect: [ :optionKey |
-	
-	 		| newVault |
-	 		
-	 		newVault := (aVaultable getVault copy) 
-									appKey: self vaultAppKey;
-									optionsSelect: optionKey;
-									refresh;
-									yourself.
-								
-   		(self checkNewVault: newVault ) ifFalse: [ nil ].
-				
- 	]
+	(self checkPotentialVault: aVaultable) ifFalse: [ ^ nil ].
 
+	theOptions := self collectAllTheOptionKeysAsASetFor: aVaultable.
 
+	^ theOptions
+		collect: [ :optionKey | 
+			| newVault |
+			newVault := aVaultable copyForAppKey: self vaultAppKey optionKey: optionKey.
+
+			(self checkNewVault: newVault) ifFalse: [ nil ] ]
 ]
 
 { #category : 'instance creation' }
@@ -175,15 +168,13 @@ TTClientAbstract class >> makeVaultEmpty [
 { #category : 'accessing' }
 TTClientAbstract class >> new [
 
-	^ self newFor: Hub current
+	^ self newFor: Hub current 
 ]
 
 { #category : 'factory' }
 TTClientAbstract class >> newFor: aVaultable [
-	
- 	^ (self basicNewFor:aVaultable ) initialize
-					 
-
+	^ (self basicNewFor: (self configureVault: aVaultable option: #default))
+		initialize
 ]
 
 { #category : 'accessing' }
@@ -203,7 +194,7 @@ TTClientAbstract class >> withAllSubclassesCollectSuccessfulVaultsFor: aVaultabl
 	"return all items that succeeds making a vault"
 
 	^ self withAllSubclasses
-							collect: [ :ea | (ea makeNewVaultFor: aVaultable) -> ea ]
+							collect: [ :ea | (ea configureAndValidateVault: aVaultable option: #default) -> ea ]
 							thenSelect: #notNil
 ]
 
@@ -344,7 +335,7 @@ TTClientAbstract >> setRequestErrorHandler: errorHandler [
 
 { #category : 'initialization' }
 TTClientAbstract >> setVault: aVault [
-	vault := aVault  
+	vault := aVault copy
 ]
 
 { #category : 'as yet unclassified' }
