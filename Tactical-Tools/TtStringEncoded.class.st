@@ -5,19 +5,30 @@ Class {
 		'encoded',
 		'decodeSelector'
 	],
-	#classInstVars : [
-		'table',
-		'reverse'
-	],
 	#category : 'Tactical-Tools-Vault',
 	#package : 'Tactical-Tools',
 	#tag : 'Vault'
 }
 
 { #category : 'as yet unclassified' }
-TTStringEncoded class >> initializeCypher [
+TTStringEncoded class >> cypher [
+| safeChars n shuffled forward reverse |
+      safeChars := 'abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_~*&^%$£#@!()=+}{][\|/?`~.,<>;:'.
+      n := safeChars size.
 
-	self table: (String withAll: (1 asCharacter to: 127 asCharacter))  
+      forward := ByteArray new: 256.
+      reverse := ByteArray new: 256.
+
+      shuffled := safeChars asArray shuffledBy: (Random seed: self secretUUID hash).
+
+      1 to: n do: [ :i |
+          | in out |
+          in := (safeChars at: i) asciiValue.
+          out := (shuffled at: i) asciiValue.
+          forward at: in + 1 put: out.
+          reverse at: out + 1 put: in ].
+
+      ^ forward -> reverse
 ]
 
 { #category : 'as yet unclassified' }
@@ -29,32 +40,17 @@ TTStringEncoded class >> newFrom: aString [
 ]
 
 { #category : 'as yet unclassified' }
-TTStringEncoded class >> randomCypher [
- 
-	|newTable newReverse |
+TTStringEncoded class >> testCypher [
+
+<gtExample>
+
+	| message cyphered decyphered |
+	message := 'hello world'.
+	cyphered := (message copy translateWith: self cypher key).
+	decyphered := cyphered translateWith: (self cypher value).
+
+	self assert: message equals: decyphered.
 	 
-	newTable := table shuffleBy: Random new.
-	newReverse := reverse collect: [ :val | 
-	
-		val <= table size 
-		ifTrue: [
-			 (newTable indexOf: (table at: (val + 1))) - 1
-		] 
-		ifFalse: [ 255 ].
-		
-	].
-	
-	newTable -> newReverse.
-
-]
-
-{ #category : 'as yet unclassified' }
-TTStringEncoded class >> table: chars [
-	
-	table := chars.
-	reverse := ByteArray new: 128 withAll: 255.
-	table withIndexDo: [ :ch  :n | reverse at: (ch asciiValue + 1) put: n - 1 ].
-	
 ]
 
 { #category : 'accessing' }
@@ -124,7 +120,7 @@ TTStringEncoded >> decodeBase64 [
 { #category : 'accessing' }
 TTStringEncoded >> decodeCyphered [
 
-	^ self base64Decoded asString trimRight
+	^ encoded translateWith: self class cypher value.
 ]
 
 { #category : 'accessing' }

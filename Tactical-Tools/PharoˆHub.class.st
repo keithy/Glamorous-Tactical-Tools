@@ -103,6 +103,12 @@ PharoˆHub class >> platform [
 	
 ]
 
+{ #category : 'wall' }
+PharoˆHub class >> secretUUID [
+
+^ GlobalIdentifier uniqueInstance secretUUID
+]
+
 { #category : 'as yet unclassified' }
 PharoˆHub >> httpClientMaximumEntitySize [
 	
