@@ -14,9 +14,29 @@ TTStringTemplate >> asRopedText [
 ]
 
 { #category : 'printing' }
+TTStringTemplate >> asString [
+
+	^ self envSubst: Hub current currentVault
+]
+
+{ #category : 'printing' }
 TTStringTemplate >> displayStringOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value
+]
+
+{ #category : 'printing' }
+TTStringTemplate >> envSubst: aDict [
+	| in |
+	in := self readStream.
+
+	^ String
+		streamContents: [ :out | 
+			[ out nextPutAll: (in upToAll: '${').
+			in atEnd ]
+				whileFalse: [ | var |
+					var := in upTo: $}.
+					out nextPutAll: (aDict at: var ifAbsent: [ var ]) ] ]
 ]
 
 { #category : 'printing' }

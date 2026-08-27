@@ -282,17 +282,11 @@ TTVaultAbstract >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'accessing' }
-TTVaultAbstract >> envSubstituteIntoString: aString [
-	| in |
-	in := aString readStream.
+TTVaultAbstract >> envSubst: v [ 
 
-	^ String
-		streamContents: [ :out | 
-			[ out nextPutAll: (in upToAll: '${').
-			in atEnd ]
-				whileFalse: [ | var |
-					var := in upTo: $}.
-					out nextPutAll: (self at: var ifAbsent: [ var ]) ] ]
+	(v respondsTo: #envSubst:) ifTrue: [ ^ v envSubst: self ].
+	
+	^v
 ]
 
 { #category : 'accessing' }
@@ -604,7 +598,9 @@ TTVaultAbstract >> lookup: aKey [
 
 { #category : 'accessing' }
 TTVaultAbstract >> lookup: aKey ifPresent: pBlock [
-  ^ self lookup: aKey ifPresentBasic: [ :v | ^ pBlock value: (self envSubstituteIntoString: v) ] 
+	^ self
+		lookup: aKey
+		ifPresentBasic: [ :v | ^ pBlock value: (self envSubst: v) ]
 ]
 
 { #category : 'accessing' }
