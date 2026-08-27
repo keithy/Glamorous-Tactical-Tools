@@ -74,13 +74,13 @@ PharoˆApiRequest >> responseIsText [
 { #category : 'accessing' }
 PharoˆApiRequest >> responseIsXml [
 
-	^ self outputProvider contentType sub = 'xml'
+	^ self response contentType sub = 'xml'
 ]
 
 { #category : 'as yet unclassified' }
 PharoˆApiRequest >> responseStatusCode [
 
-	^ [ self response status code ] ifError: [ nil ]
+	^ [ self response status ] ifError: [ nil ]
 ]
 
 { #category : 'as yet unclassified' }

@@ -9,12 +9,29 @@ Class {
 { #category : 'as yet unclassified' }
 TTCloudflareStatusHandler class >> value: aResult [
 
-	aResult inputProvider responseStatus < 400 ifTrue: [ ^false ].
+	aResult responseStatusCode < 400 ifTrue: [ ^false ].
 	
-	((aResult inputProvider responseSubType) = 'xml')
+	aResult inputProvider responseIsXML
 		ifTrue: [ 
-				XMLDOMParser parse: aResult inputProvider responseContents
+				XMLDOMParser parse: aResult responseContents
 				self halt.
+		].
+	
+	
+	
+	^ false 
+]
+
+{ #category : 'as yet unclassified' }
+TTCloudflareStatusHandler class >> value: aResult value: code [
+
+	code < 400 ifTrue: [ ^false ].
+	
+	aResult inputProvider responseIsXml
+		ifTrue: [ 
+			  
+			 ^ self error: ((XMLDOMParser parse: aResult responseContents )// 'message') stringValue
+			 
 		].
 	
 	
