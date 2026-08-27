@@ -72,10 +72,10 @@ TTVaultExamples >> vault_from_fixture [
   <gtExample>
   <return: #TTVault>
 
-  | vault tier dotenv normalized |
+  | tier dotenv normalized |
   dotenv := TTDictionaryConfigEnv new
     setValueWriter: TTVaultValueWriter new;
-    source: './pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' asFileReference;
+    source: (#file://'./pharo-local/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/dummy.env' );
     readSource;
     yourself.
 
@@ -95,20 +95,18 @@ TTVaultExamples >> vault_mixedFormAndExplicitOption_resolveUnderSameApp [
   <gtExample>
   <return: #TTVault>
 
-  | vault tier dotenv options jiraDefault |
+  | vault apps jiraDefault |
    
   vault := self vault_from_fixture.
-  options := vault options.
+  apps := vault apps.
 
   "jira merges from passthrough (no option) and explicit-form (no option) entries;
   both end up in the same default sub-dict under jira."
 
-  jiraDefault := nil.
-  (options at: 'jira') keysAndValuesDo: [ :option :optDict |
-    option = 'default' ifTrue: [ jiraDefault := optDict ] ].
+  jiraDefault := apps at: 'jira' at: 'default'.
 
   self assert: (jiraDefault keys asSortedCollection asArray)
-    equals: #('Preserve_My_Case_Please' 'SOME_LLM_API_KEY' '__MISE_EXE' '__Problem_Child' 'api_key' 'email' 'pass' 'url' 'user').
+    equals: #('api_key' 'email' 'pass' 'url' 'user').
 
   self assert: (jiraDefault at: 'url') asString equals: 'https://jira.example.com'.
   self assert: (jiraDefault at: 'user') asString equals: 'alice'.
