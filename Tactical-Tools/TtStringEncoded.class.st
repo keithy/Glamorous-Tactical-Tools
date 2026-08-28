@@ -35,7 +35,7 @@ TTStringEncoded >> asHint [
 	encoded size > 10 ifTrue: [  n := 3 ].
 	encoded size > 20 ifTrue: [  n := 6 ].
 	
-	^ (self decode first: n), '****'
+	^ (self decode first: n), '*******'
 	
 	
 ]

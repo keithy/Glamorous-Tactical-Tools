@@ -7,20 +7,47 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTMapToModel class >> mapEachIntoCollection: aCollection [
+	^ self newFromMessage: thisContext
+]
+
+{ #category : 'as yet unclassified' }
+TTMapToModel class >> mapEachToModel: aModelPrototype [
+		^ self newFromMessage: thisContext
+]
+
+{ #category : 'as yet unclassified' }
+TTMapToModel class >> mapTo: aCollection [
+	^ self newFromMessage: thisContext
+]
+
+{ #category : 'as yet unclassified' }
+TTMapToModel class >> mapTo: aModelCollectionPrototype as: aCollection of: aModelPrototype [
+
+	^ self newFromMessage: thisContext
+]
+
+{ #category : 'as yet unclassified' }
+TTMapToModel class >> mapTo: aModelCollectionPrototype of: aModelPrototype [
+
+	^ self newFromMessage: thisContext
+]
+
+{ #category : 'as yet unclassified' }
 TTMapToModel >> mapEachIntoCollection: aCollection [
 
-	"for paged data this can be called several times to fll up a results array"
 	aCollection ifNil: [ ^ self ].
 	"
 	self client adopt: aCollection.
 	"
+	
 	aCollection isArray ifTrue: [  
 
-		result mapping: [ :paylArray | aCollection copyWithAll: paylArray ]. 
+		result mapping: [ :payl | aCollection copyWithAll: payl ]	.
 			
 	] ifFalse: [  
 	
-		result mapping: [ :paylArray | aCollection copy addAll: paylArray; yourself ]. 
+		result mapping: [ :payl | aCollection copy addAll: payl; yourself ]
 	].
 ]
 

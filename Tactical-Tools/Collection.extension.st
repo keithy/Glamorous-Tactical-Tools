@@ -9,7 +9,7 @@ Collection >> gtViewsInContext: aContext [
 	Subclasses might want to override it for more special behavior.
 	aContext holds the context of the inspection session (i.e, the previous steps)"
 
-	^ (super gtViewsInContext: aContext) , (self ttViewsInCollectionContext: aContext)
+	^ (super gtViewsInContext: aContext), (self ttViewsInCollectionContext: aContext)
 ]
 
 { #category : '*Tactical-Tools' }

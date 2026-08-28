@@ -49,7 +49,8 @@ SRLEnv >> thing: envRef [
 		
 	| envKey |
 	
-	envKey := envRef withoutPrefix: '${'.
+	envKey := envRef withoutPrefix: '$'.
+	envKey := envKey withoutPrefix: '{'.
 	envKey := envKey withoutSuffix: '}'.
 	
 	thing := envKey asSymbol.

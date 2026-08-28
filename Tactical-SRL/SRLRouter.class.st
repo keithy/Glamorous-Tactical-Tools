@@ -26,9 +26,9 @@ SRLRouter class >> fromSymbol: aSymbol [
 	
 	].
 	
-	(aSymbol last == $:) ifFalse: [ self error: 'Scheme missing : (',   ('scheme:', self ,')' ) ].
+	(aSymbol last == $:) ifFalse: [ self error: 'Scheme missing : (',   ('scheme:', aSymbol ,')' ) ].
 	
-	self error: 'Unknown scheme', self.
+	self error: 'Unknown scheme ', aSymbol.
 	
 	
  	
@@ -112,7 +112,7 @@ SRLRouter >> reset [
 
 { #category : 'as yet unclassified' }
 SRLRouter >> resolve [
-
+	thing ifNil: [ ^ self ].
 	^ resolved := self resolve: thing
 ]
 

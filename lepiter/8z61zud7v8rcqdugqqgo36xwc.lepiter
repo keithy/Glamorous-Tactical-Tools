@@ -18,7 +18,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-24T08:48:36.177174+01:00"
+						"dateAndTimeString" : "2026-08-28T21:17:18.84026+01:00"
 					}
 				},
 				"editEmail" : {
@@ -29,7 +29,44 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-24T08:48:43.015911+01:00"
+						"dateAndTimeString" : "2026-08-28T21:17:18.84026+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "CLOat02jTn6ahkMqqJ1qFA=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : ""
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T21:17:27.776784+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T21:17:58.789442+01:00"
 					}
 				},
 				"uid" : {
@@ -39,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : ""
+				"string" : "{{gtPragma:ttViewInCollection}}"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -123,7 +160,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-28T16:40:51.509195+01:00"
+						"dateAndTimeString" : "2026-08-28T17:07:19.845183+01:00"
 					}
 				},
 				"editEmail" : {
@@ -134,14 +171,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-28T16:45:08.400485+01:00"
+						"dateAndTimeString" : "2026-08-28T19:44:43.069988+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
-					"uidString" : "+DU+kRDbTNSDRaX3CTFyPw=="
+					"uidString" : "QyW5UUVUQdSSFkCpDGYJcQ=="
 				},
-				"code" : "apiKey := #env:// 'worldclock__apikey'"
+				"code" : "user := #env:// '$USER'"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -168,14 +205,48 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-28T16:40:42.914064+01:00"
+						"dateAndTimeString" : "2026-08-28T23:36:49.940613+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "E2QreG/qRZ68C1957NIEMg=="
 				},
-				"code" : "(#url://'https://api.timezonedb.com' / 'v2.1' / 'list-time-zone')"
+				"code" : "requestAndResult := ((#url: // 'https://api.timezonedb.com' / 'v2.1' / 'list-time-zone')\r\t\tparameterAt: #key put: #vault: // #worldclock / #apikey;\r\t\tparameterAt: #format put: 'json';\r\t\tuseGET)\r\t\t\t\t\t\tpayload: [ :root | root at: 'zones' ];\r\t\t\t\t\t\tapply: (TTPayloadReader dateAndTimeFromUnixTimeFieldKeysMatching: #timestamp);\r\t\t\t\t\t\tapply: (TTMapToModel mapEachToModel: (TTModel new keyField: #zoneName))"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T19:44:03.351487+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T21:14:06.831882+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "+9e2zSf7Sg+9+YUeIEpbZQ=="
+				},
+				"code" : "requestAndResult output "
 			},
 			{
 				"__type" : "pharoSnippet",
