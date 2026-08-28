@@ -16,7 +16,7 @@ SRLEnv class >> canRoute: aSymbol [
 SRLEnv class >> env: aVarName [
 
 	"local shortcut"
-	 ^ self new resolve: aVarName
+	 ^ self new thing: aVarName; resolve
    
     
 ]
@@ -30,37 +30,28 @@ SRLEnv class >> example [
 { #category : 'as yet unclassified' }
 SRLEnv class >> exampleMatchesShortCut [
 	<gtExample>
-	^ #env: / #USER == (self env: #USER)
-]
-
-{ #category : 'accessing' }
-SRLEnv >> getEnv: varNameWithDollar [
-
-	"go via vault later"
-	
-	| varName |
-	
-	varName := varNameWithDollar withoutPrefix: '${'.
-	varName := varName withoutSuffix: '}'.
-	
-	^ self hub osEnvironment at: (varName asSymbol) ifAbsent: nil
+	^ (#env: // #USER) == (self env: #USER)
 ]
 
 { #category : 'accessing' }
 SRLEnv >> resolve [
-
-	| varName |
-	
-	varName := thing withoutPrefix: '${'.
-	varName := varName withoutSuffix: '}'.
-	
-	^ resolved := self resolve: varName
-	 
-	 
+	^ resolved := self resolve: thing
 ]
 
 { #category : 'accessing' }
-SRLEnv >> resolve: varName [ 
+SRLEnv >> resolve: envKey [ 
 	
-	^ self hub osEnvironment at: (varName asSymbol) ifAbsent: nil
+	^ self hub osEnvironment at: envKey ifAbsent: nil
+]
+
+{ #category : 'accessing' }
+SRLEnv >> thing: envRef [
+		
+	| envKey |
+	
+	envKey := envRef withoutPrefix: '${'.
+	envKey := envKey withoutSuffix: '}'.
+	
+	thing := envKey asSymbol.
+			
 ]

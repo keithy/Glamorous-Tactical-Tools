@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-28T11:29:04.107156+01:00"
+						"dateAndTimeString" : "2026-08-28T16:38:32.650114+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "01CBTyKlR9OjDy3ABdbZ9g=="
 				},
-				"code" : "TTTimeZoneDB urlOpenApiSpec contents"
+				"code" : "(#url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json') asDictionary"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -100,7 +100,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-24T08:54:04.757832+01:00"
+						"dateAndTimeString" : "2026-08-28T16:10:01.309413+01:00"
 					}
 				},
 				"uid" : {
@@ -108,6 +108,74 @@
 					"uidString" : "r6SjqrgDR2STCLmPpAenpA=="
 				},
 				"code" : "#url://'https://api.timezonedb.com'"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T16:40:51.509195+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T16:45:00.046744+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "+DU+kRDbTNSDRaX3CTFyPw=="
+				},
+				"code" : "apiKey := #env:// 'worldcl"
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T11:30:46.212802+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T16:40:42.914064+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "E2QreG/qRZ68C1957NIEMg=="
+				},
+				"code" : "(#url://'https://api.timezonedb.com' / 'v2.1' / 'list-time-zone')"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -278,6 +346,40 @@
 					"uidString" : "ZWhd3C9LS2m8nXYs16Aafw=="
 				},
 				"code" : "TTTimeZoneDB new "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T16:14:04.61005+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T16:37:24.618042+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "lb7P6k7NRdO5bClcBC7yRg=="
+				},
+				"code" : "a parameterAt: #key put: "
 			}
 		]
 	},
@@ -300,12 +402,12 @@
 		"__type" : "time",
 		"time" : {
 			"__type" : "dateAndTime",
-			"dateAndTimeString" : "2026-08-24T08:48:34.085696+01:00"
+			"dateAndTimeString" : "2026-08-28T16:39:22.958512+01:00"
 		}
 	},
 	"pageType" : {
 		"__type" : "namedPage",
-		"title" : "World Clock Tryout"
+		"title" : "World Clock Tryout  (raw)"
 	},
 	"uid" : {
 		"__type" : "uuid",
