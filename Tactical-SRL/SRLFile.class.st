@@ -132,9 +132,9 @@ SRLFile >> contents [
 ]
 
 { #category : 'accessing' }
-SRLFile >> fileReferenceFromString: aString [
+SRLFile >> fileReferenceFromTemplate: aTemplate [
 
-	^ self class fileReferenceFromString: (self vault envSubstituteIntoString:aString)
+	^ aTemplate envSubst: self vault
 ]
 
 { #category : 'accessing' }
@@ -161,7 +161,15 @@ SRLFile >> gtPrintFor: aView [
 
 { #category : 'accessing' }
 SRLFile >> output [
+ self error: thisContext.
+	^ self  
+]
 
+{ #category : 'accessing' }
+SRLFile >> outputProvider [
+
+	self resolve.
+	
 	^ self  
 ]
 
@@ -169,9 +177,25 @@ SRLFile >> output [
 SRLFile >> resolve: aThing [
 	"early bound resolution"
 
-	^ aThing isSymbol
-		ifTrue: [ self class fileReferenceFromSymbol: aThing ]
-		ifFalse: [ self fileReferenceFromString: aThing ].
+	aThing isSymbol ifTrue: [ ^ self class fileReferenceFromSymbol: aThing ].
+	
+	aThing isTemplate ifTrue: [ ^ self fileReferenceFromTemplate: aThing ].
+	
+	^ self class fileReferenceFromString: aThing
+
+]
+
+{ #category : 'accessing' }
+SRLFile >> responseContents [
+
+	^ resolved contents
+	
+]
+
+{ #category : 'accessing' }
+SRLFile >> responseStatusCode [
+  
+ ^ resolved exists ifTrue: 0 ifFalse: 1
 
 ]
 
@@ -179,6 +203,13 @@ SRLFile >> resolve: aThing [
 SRLFile >> stdout [
 
 	^ self resolve contents
+]
+
+{ #category : 'accessing' }
+SRLFile >> thing: aString [
+	thing := ('*${*}*' matches: aString)
+			ifTrue: [ StringTemplate newFrom: aString ]
+			ifFalse: [ aString ]
 ]
 
 { #category : 'accessing' }

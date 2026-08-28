@@ -7,12 +7,6 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTApiResult class >> configureDefault: aResult [
-		aResult apply: TTToolOutputParser parseAsSTON.
-^ aResult 
-]
-
-{ #category : 'as yet unclassified' }
 TTApiResult >> error: aMessage [
 	
 	self stderrAppend: aMessage.
@@ -24,7 +18,7 @@ TTApiResult >> error: aMessage [
 TTApiResult >> setRequest: aRequest [
 
 	super setRequest: aRequest.
-	handlers := aRequest client handlers.
+	handlers := aRequest askFor: #responseHandlers ifAbsent: nil.
 
 	 
 ]

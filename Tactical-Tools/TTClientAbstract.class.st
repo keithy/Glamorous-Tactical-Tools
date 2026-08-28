@@ -289,8 +289,7 @@ TTClientAbstract >> prepareRequest: aRequest [
 
 { #category : 'accessing' }
 TTClientAbstract >> requestErrorHandler [
-
-	^ requestErrorHandler ifNil: [ [ :err | err pass ] ]
+	^ nil
 ]
 
 { #category : 'as yet unclassified' }

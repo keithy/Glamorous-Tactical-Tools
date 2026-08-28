@@ -41,6 +41,12 @@ TTTimeZoneDB class >> urlHost [
 ]
 
 { #category : 'as yet unclassified' }
+TTTimeZoneDB class >> urlOpenApiSpec [
+  "TimeZoneDB - OpenApi Spec"
+	^ #url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/TimeZoneDB.openapi.json'
+]
+
+{ #category : 'as yet unclassified' }
 TTTimeZoneDB >> apiListTimeZones [
 
 	^ ((self // self hostUrl / 'v2.1' / 'list-time-zone') 

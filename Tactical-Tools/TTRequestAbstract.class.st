@@ -118,7 +118,6 @@ TTRequestAbstract >> request [
 
 { #category : 'as yet unclassified' }
 TTRequestAbstract >> requestErrorHandler [
-
 	^ self client requestErrorHandler
 ]
 
@@ -130,6 +129,11 @@ TTRequestAbstract >> responseContents [
 { #category : 'as yet unclassified' }
 TTRequestAbstract >> responseContentsVerified [
 	^ self responseContents
+]
+
+{ #category : 'as yet unclassified' }
+TTRequestAbstract >> responseHandlers [
+	^ self client handlers
 ]
 
 { #category : 'accessing' }

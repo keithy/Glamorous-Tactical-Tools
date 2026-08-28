@@ -1,5 +1,5 @@
 Class {
-	#name : 'Guzzler',
+	#name : 'TTSchemeRouter',
 	#superclass : 'Object',
 	#instVars : [
 		'executeSelector',
@@ -14,20 +14,20 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Guzzler class >> // aUrl [
+TTSchemeRouter class >> // aUrl [
 	 
 	^ self newForUrl: aUrl
 
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> classApiRequest [
+TTSchemeRouter class >> classApiRequest [
 
 	^ #class://#'ˆApiRequest'
 ]
 
 { #category : 'as yet unclassified' }
-Guzzler class >> http: aUrl [
+TTSchemeRouter class >> http: aUrl [
 	| url |
 
 		url := (aUrl includesSubstring: 'http://')
@@ -38,7 +38,7 @@ Guzzler class >> http: aUrl [
 ]
 
 { #category : 'as yet unclassified' }
-Guzzler class >> https: aUrl [
+TTSchemeRouter class >> https: aUrl [
 	| url |
 	url := (aUrl includesSubstring: 'https://')
 			ifFalse: [ 'https://' , aUrl ]
@@ -47,19 +47,19 @@ Guzzler class >> https: aUrl [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> makeFileClient [ 
+TTSchemeRouter class >> makeFileClient [ 
 
   ^ (#class://'ˆFileClient') new
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> makeHttpClient [ 
+TTSchemeRouter class >> makeHttpClient [ 
 
   ^ (#class://#'ˆHttpClient') new
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new [ 
+TTSchemeRouter class >> new [ 
 
   "Normally we are a stand in for Zinc"
   
@@ -67,7 +67,7 @@ Guzzler class >> new [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> newForScheme: aScheme [ 
+TTSchemeRouter class >> newForScheme: aScheme [ 
 
   "In this case we have a chance to work OUR magic"
    
@@ -76,7 +76,7 @@ Guzzler class >> newForScheme: aScheme [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> newForUrl: aUrl [ 
+TTSchemeRouter class >> newForUrl: aUrl [ 
 
   "In this case we have a chance to work OUR magic"
   
@@ -84,43 +84,43 @@ Guzzler class >> newForUrl: aUrl [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_L1http [
+TTSchemeRouter class >> new_L1http [
 
 	^ self makeHttpClient logLevel: 1
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_L2http [
+TTSchemeRouter class >> new_L2http [
 
 	^ self makeHttpClient logLevel: 2
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_L3http [
+TTSchemeRouter class >> new_L3http [
 
 	^ self makeHttpClient logLevel: 3
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_T1http [
+TTSchemeRouter class >> new_T1http [
 
 	^ self makeHttpClient logToTranscript; logLevel: 1
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_T2http [
+TTSchemeRouter class >> new_T2http [
 
 	^ self makeHttpClient logToTranscript; logLevel: 2
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_T3http [
+TTSchemeRouter class >> new_T3http [
 
 	^ self makeHttpClient logToTranscript; logLevel: 3
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_echo [
+TTSchemeRouter class >> new_echo [
 
 	^ (self basicNew)
 	    setHttpClient: (self makeHttpClient);
@@ -129,7 +129,7 @@ Guzzler class >> new_echo [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_headers [
+TTSchemeRouter class >> new_headers [
 
 	^ (self basicNew)
 	    setHttpClient: (self makeHttpClient);
@@ -138,19 +138,19 @@ Guzzler class >> new_headers [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_http [
+TTSchemeRouter class >> new_http [
 
 	^ self makeHttpClient loggingOff
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_https [
+TTSchemeRouter class >> new_https [
 
 	^ self makeHttpClient loggingOff
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_mock [
+TTSchemeRouter class >> new_mock [
 
 	^ (self basicNew)
 	    setHttpClient: (self makeHttpClient);
@@ -159,7 +159,7 @@ Guzzler class >> new_mock [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> new_unhttps [
+TTSchemeRouter class >> new_unhttps [
  
 "todo:
 	Unified Http(s)
@@ -176,7 +176,7 @@ Guzzler class >> new_unhttps [
 ]
 
 { #category : 'instance creation' }
-Guzzler class >> srlForScheme: aScheme [ 
+TTSchemeRouter class >> srlForScheme: aScheme [ 
 
    ^ SRLRouter fromSymbol: (aScheme,':') asSymbol 
 
@@ -184,13 +184,13 @@ Guzzler class >> srlForScheme: aScheme [
 ]
 
 { #category : 'accessing' }
-Guzzler >> contents [ 
+TTSchemeRouter >> contents [ 
 
 	^ contents ifNil: [ httpClient contents ]
 ]
 
 { #category : 'accessing' }
-Guzzler >> doesNotUnderstand: aMessage [
+TTSchemeRouter >> doesNotUnderstand: aMessage [
 
 	"delegation"
 	
@@ -198,19 +198,19 @@ Guzzler >> doesNotUnderstand: aMessage [
 ]
 
 { #category : 'accessing' }
-Guzzler >> execute [
+TTSchemeRouter >> execute [
 
 	self perform: executeSelector
 ]
 
 { #category : 'accessing' }
-Guzzler >> executeEcho [
+TTSchemeRouter >> executeEcho [
 
 	contents := httpClient url readStream skipTo: $:; upToEnd. 
 ]
 
 { #category : 'accessing' }
-Guzzler >> executeHeaders [
+TTSchemeRouter >> executeHeaders [
 
 	data := httpClient request headers headers.
 	
@@ -218,7 +218,7 @@ Guzzler >> executeHeaders [
 ]
 
 { #category : 'accessing' }
-Guzzler >> executeMock [
+TTSchemeRouter >> executeMock [
 
 	| classNameFromUrl aMocker urlStr methodFromUrl theRest |
 	
@@ -239,23 +239,17 @@ Guzzler >> executeMock [
 ]
 
 { #category : 'accessing' }
-Guzzler >> requestErrorHandler [
-
-	^ requestErrorHandler ifNil: [ [ :err | err pass ] ]
-]
-
-{ #category : 'accessing' }
-Guzzler >> response [ 
+TTSchemeRouter >> response [ 
 
 	^  httpClient response  
 ]
 
 { #category : 'accessing' }
-Guzzler >> setExecuteSelector: anObject [
+TTSchemeRouter >> setExecuteSelector: anObject [
 	executeSelector := anObject
 ]
 
 { #category : 'accessing' }
-Guzzler >> setHttpClient: anObject [
+TTSchemeRouter >> setHttpClient: anObject [
 	httpClient := anObject
 ]

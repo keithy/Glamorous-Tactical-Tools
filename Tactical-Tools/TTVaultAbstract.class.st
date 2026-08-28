@@ -284,9 +284,8 @@ TTVaultAbstract >> doesNotUnderstand: aMessage [
 { #category : 'accessing' }
 TTVaultAbstract >> envSubst: v [ 
 
-	(v respondsTo: #envSubst:) ifTrue: [ ^ v envSubst: self ].
-	
-	^v
+	^ v isTemplate ifTrue: [ ^ v envSubst: self ] ifFalse: [ v ]
+
 ]
 
 { #category : 'accessing' }

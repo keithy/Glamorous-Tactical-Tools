@@ -13,14 +13,21 @@ Class {
 
 { #category : 'as yet unclassified' }
 TTApiClient class >> / endPoint [
+	
+	| vault |
+	vault := self configureVault: Hub current currentVault option: #default.
 
-	^ (self basicNewFor: Hub current) /  endPoint
+	^ (self basicNewFor: vault) / endPoint
 ]
 
 { #category : 'as yet unclassified' }
 TTApiClient class >> // aUrl [
 
-	^ (self basicNewFor: Hub current) //  aUrl
+	| vault |
+	
+		vault := self configureVault: (Hub current currentVault) option: #default.
+
+	^ (self basicNewFor: vault) //  aUrl
 ]
 
 { #category : 'as yet unclassified' }
@@ -39,7 +46,7 @@ TTApiClient class >> basicNewFor: aVaultable [
 { #category : 'as yet unclassified' }
 TTApiClient class >> classTool [
 
-	^ Guzzler
+	^ TTSchemeRouter
 ]
 
 { #category : 'as yet unclassified' }
@@ -199,15 +206,13 @@ TTApiClient >> openApiBrowser [
 { #category : 'openapi' }
 TTApiClient >> openApiJson [
 
-  | jsonFile url |
+  | url |
+  url := vault at: #url_openapi.
   
-  jsonFile := self class askFor: #fileOpenApiSpec ifAbsent: nil. 
-  jsonFile ifNotNil: [ ^ jsonFile asFileReference ].
+  url ifNil: [ url := self class askFor: #urlOpenApiSpec ifAbsent: nil ].
+  url ifNil: [ self error: (self class vaultAppKey, '__url_openapi not configured')  ].
   
-  url := (vault at: #url_openapi) ifNil: [ self class askFor: #urlOpenApiSpec ifAbsent: nil ].
-  url ifNotNil: [ ^ classTool new get: url ].
-  
-  ^ ''
+  ^ #url:// url
 ]
 
 { #category : 'accessing' }

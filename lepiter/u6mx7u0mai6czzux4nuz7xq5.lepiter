@@ -247,7 +247,7 @@
 								"__type" : "time",
 								"time" : {
 									"__type" : "dateAndTime",
-									"dateAndTimeString" : "2026-08-23T17:31:26.173338+01:00"
+									"dateAndTimeString" : "2026-08-28T09:31:22.813367+01:00"
 								}
 							},
 							"uid" : {
@@ -256,7 +256,7 @@
 							},
 							"url" : "attachments/66o4pnmg757q5tuvofli5fa9w/fileref_to_ramdisk.png",
 							"caption" : "",
-							"previewHeight" : 97.62286376953125,
+							"previewHeight" : 157.1097412109375,
 							"reference" : "ramdisk_file"
 						}
 					]
@@ -385,7 +385,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T17:56:11.404904+01:00"
+						"dateAndTimeString" : "2026-08-28T09:36:23.724714+01:00"
 					}
 				},
 				"uid" : {
@@ -395,7 +395,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "**URLs - even better:**\nThe {{gtClass:SRLUrl}} Symbolic Resource Locator `#url://`, is handled by {{gtClass:Guzzler}} an HttpClient that is a thin wrapper around the native HttpClient ({{gtClass:ZnClient}}); `Guzzler` handles custom schemes.\n\nSchemes that `Guzzler` does not handle are then put out to tender to {{gtClass:SRLRouter}} to find a handler, and we end up with an {{gtClass:SRLUrl}} whose virtual httpClient is {{gtClass:SRLFile}}.\n\nSRLFile normally handles substitution of both named file origins, and environment variables."
+				"string" : "**URLs - even better:**\nThe {{gtClass:SRLUrl}} Symbolic Resource Locator `#url://`, is handled by {{gtClass:TTSchemeRouter}} which  handles custom schemes. The native HttpClient ({{gtClass:ZnClient}}) is used in Pharo.\n\nSchemes that `TTSchemeRouter` does not handle are then put out to tender to {{gtClass:SRLRouter}} to find a handler.\n\nIn this example we end up with an {{gtClass:SRLUrl}} whose virtual httpClient is {{gtClass:SRLFile}}.\n\nSRLFile normally handles substitution of both named file origins, and environment variables."
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -422,14 +422,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T17:57:23.720112+01:00"
+						"dateAndTimeString" : "2026-08-28T09:36:45.914399+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "wuRjxZPiRZqb/kWSq4h6FA=="
 				},
-				"code" : " (#url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json' ) contents"
+				"code" : "(#url://'file:///{localDirectory}/iceberg/keithy/Glamorous-Tactical-Tools/fixtures/httpbin.org.json' ) contents"
 			},
 			{
 				"__type" : "textSnippet",
@@ -456,7 +456,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T18:02:06.338707+01:00"
+						"dateAndTimeString" : "2026-08-28T09:37:14.325226+01:00"
 					}
 				},
 				"uid" : {
@@ -466,7 +466,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "**Adding more SRLs**\nAdding more \"http\" schemes to Guzzler, is as simple as adding additional SRL classes eg. {{gtClass:SRLJira}} {{gtClass:SRLSnow}} , {{gtClass:Wikipedia}} {{gtClass:ISBN}} {{gtClass:"
+				"string" : "**Adding more SRLs**\nAdding more \"http\" schemes to {{gtClass:TTSchemeRouter}}, is as simple s adding additional SRL classes eg. {{gtClass:SRLJira}} {{gtClass:SRLSnow}} , {{gtClass:Wikipedia}} {{gtClass:ISBN}} "
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -527,14 +527,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T09:57:32.278541+01:00"
+						"dateAndTimeString" : "2026-08-28T10:12:51.944697+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "7NdQyBMbScOyf3OUfBDhtg=="
 				},
-				"code" : "b contents"
+				"code" : "a contents"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -595,14 +595,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T15:57:56.856444+01:00"
+						"dateAndTimeString" : "2026-08-28T10:32:20.33663+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "scbwMfy6SHe5BxAjXswwFg=="
 				},
-				"code" : "result := TTResult // b."
+				"code" : "result := TTApiResult // b."
 			},
 			{
 				"__type" : "pharoSnippet",

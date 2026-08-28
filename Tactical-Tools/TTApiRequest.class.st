@@ -2,9 +2,9 @@ Class {
 	#name : 'TTApiRequest',
 	#superclass : 'TTRequestAbstract',
 	#instVars : [
-		'guzzler',
 		'scheme',
-		'url'
+		'url',
+		'httpClient'
 	],
 	#category : 'Tactical-Tools-Request-Result',
 	#package : 'Tactical-Tools',
@@ -16,7 +16,7 @@ TTApiRequest class >> makeHttpClientForScheme: aScheme [
 
 	"used in #initialize"
 	
-	^ (#class://#ˆGuzzler) newForScheme: (aScheme ifNil: 'none').
+	^ TTSchemeRouter newForScheme: (aScheme ifNil: 'none').
  
 ]
 
@@ -65,9 +65,9 @@ TTApiRequest >> asString [
 { #category : 'as yet unclassified' }
 TTApiRequest >> begin [
 
-  guzzler := self class makeHttpClientForScheme: scheme.
+  httpClient := self class makeHttpClientForScheme: scheme.
   
-  guzzler url: self fullUrl.
+  httpClient url: self fullUrl.
   
 	super begin
 ]
@@ -97,16 +97,16 @@ TTApiRequest >> outputProvider [
 { #category : 'accessing' }
 TTApiRequest >> prepare [
 
-	guzzler url: self fullUrl.
+	httpClient url: self fullUrl.
 	
-	guzzler isHttpClient ifTrue: [
+	httpClient isHttpClient ifTrue: [
 		
 		client prepareRequest: self.
 		
-		guzzler method: self type.
+		httpClient method: self type.
 		
 		self isGET	
-			ifTrue: [ guzzler queryAddAll: self parameters ]
+			ifTrue: [ httpClient queryAddAll: self parameters ]
 	  	ifFalse: [ self prepareQuery ].
 	].
 ]
@@ -118,7 +118,7 @@ TTApiRequest >> prepareQuery [
 { #category : 'accessing' }
 TTApiRequest >> response [
 
-	^ guzzler response
+	^ httpClient response
 	
 
 ]
@@ -140,7 +140,7 @@ TTApiRequest >> send [
 
 	self prepare.
  
-	guzzler execute.
+	httpClient execute.
 	
 	^ self
 ]
@@ -176,7 +176,7 @@ TTApiRequest >> stdout [
 
 { #category : 'as yet unclassified' }
 TTApiRequest >> timeout: n [
-	guzzler timeout: n
+	httpClient timeout: n
 ]
 
 { #category : 'accessing' }
@@ -234,7 +234,7 @@ TTApiRequest >> verifiedContents [
 TTApiRequest >> withText: aText [
 	
   super withText: aText.
-	guzzler contents: text. 
+	httpClient contents: text. 
 	
 	^ text
 ]

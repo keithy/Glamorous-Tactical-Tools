@@ -59,7 +59,7 @@ SRLRouter >> / aThing [
 	resolved ifNotNil: [ :r | r +/ aThing ].
 	
 	"initilize unresolved"
-	thing := aThing.
+	self thing:aThing.
 
 	^ self initialize
 ]

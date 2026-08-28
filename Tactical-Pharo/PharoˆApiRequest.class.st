@@ -9,13 +9,13 @@ Class {
 { #category : 'as yet unclassified' }
 PharoˆApiRequest >> accept: mimeType [
   self error.
-	guzzler request setAccept: mimeType
+	httpClient request setAccept: mimeType
 ]
 
 { #category : 'accessing' }
 PharoˆApiRequest >> contentType: aZnMimeType [
 	"although dnu would handle this the code parsers prefer it to be real"
-	guzzler contentType: aZnMimeType
+	httpClient contentType: aZnMimeType
 ]
 
 { #category : 'as yet unclassified' }
@@ -26,13 +26,13 @@ PharoˆApiRequest >> doesNotUnderstand: aMessage [
    
 	"delegation"
 	
-	^ aMessage sendTo: guzzler
+	^ aMessage sendTo: httpClient
 ]
 
 { #category : 'accessing' }
 PharoˆApiRequest >> entity: anEntity [
 	"although dnu would handle this the code parsers prefer it to be real"
-	guzzler entity: anEntity
+	httpClient entity: anEntity
 ]
 
 { #category : 'accessing' }
@@ -40,7 +40,7 @@ PharoˆApiRequest >> prepareQuery [
 
 	self parameters ifEmpty: [ ^ self ].
 	
-	guzzler entity: (ZnEntity text: (STON toJsonString: self parameters));
+	httpClient entity: (ZnEntity text: (STON toJsonString: self parameters));
 											contentType: ZnMimeType applicationJson
 											
 											

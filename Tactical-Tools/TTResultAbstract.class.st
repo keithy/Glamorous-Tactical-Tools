@@ -149,6 +149,12 @@ TTResultAbstract >> requestDict: aDict [
 ]
 
 { #category : 'as yet unclassified' }
+TTResultAbstract >> requestErrorHandler [
+
+	 ^ request askFor: #requestErrorHandler ifAbsent: nil
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract >> requestSTON: jsonable [
 
 	request withSTON: jsonable.
@@ -204,7 +210,7 @@ TTResultAbstract >> responseContentsVerified [
 	stdout := [ [ self responseContents ]
 			onErrorDo: [ :ex | 
 				self stderrAppend: ex messageText.
-				ex pass ] ] onErrorDo: self request requestErrorHandler.
+				ex pass ] ] onErrorDo:[ :ex | self request requestErrorHandler ifNil: [ ex pass ] ].
 
 	^ stdout
 ]

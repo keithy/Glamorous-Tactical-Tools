@@ -90,7 +90,7 @@ TTVaultValueWriter >> valueAsString: aString [
 { #category : 'as yet unclassified' }
 TTVaultValueWriter >> valueAsTemplate: aString [
 	
-	^ TTStringTemplate newFrom: aString 
+	^ StringTemplate newFrom: aString 
 ]
 
 { #category : 'as yet unclassified' }
