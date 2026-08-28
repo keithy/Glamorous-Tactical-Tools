@@ -31,16 +31,15 @@ TTApiClient class >> basicNewFor: aVaultable [
 	basicNewClient := (super basicNewFor: aVaultable) ifNil: [ ^nil ].  
 	 
 	^ basicNewClient
-			setClassTool: #class://#Guzzler;
 			setRequestErrorHandler: Hub makeNetworkErrorHandler;
 			yourself
 
 ]
 
 { #category : 'as yet unclassified' }
-TTApiClient class >> classResult [
+TTApiClient class >> classTool [
 
-	^ TTApiResult
+	^ Guzzler
 ]
 
 { #category : 'as yet unclassified' }
@@ -50,6 +49,24 @@ TTApiClient class >> makeOpenApiBrowser: aStreamable [
 			readString: aStreamable
 			yourself
 	
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClient class >> makeRequestForClient: aClient [
+
+	^ (#class://#'ˆApiRequest') newForClient: aClient
+
+]
+
+{ #category : 'as yet unclassified' }
+TTApiClient class >> makeResultForRequest: request [
+	
+	"Each result-request pair represents a query round trip"
+	
+	"Each result-request pair keeps a reference to the client,
+	so that it can make further api calls of its own"
+
+	^ (TTApiResult newForRequest: request) apply: TTToolOutputParser parseAsSTON
 ]
 
 { #category : 'accessing' }
@@ -85,9 +102,9 @@ TTApiClient >> applyAuth: apiKey to: anApiRequest [
 
 { #category : 'accessing' }
 TTApiClient >> applyAuthBasicTo: anApiRequest [
-
-	anApiRequest username: (vault at: #user) password: (vault at: #pass)
-	
+	anApiRequest
+		username: (vault at: #user) asString
+		password: (vault at: #pass) asString
 ]
 
 { #category : 'accessing' }
@@ -115,20 +132,7 @@ TTApiClient >> applyHeadersTo: request [
 { #category : 'accessing' }
 TTApiClient >> beHttp [
 
-	"not sure if this will do the right thing"
 	hostUrl := hostUrl copyWithoutFirst: $s
-
-]
-
-{ #category : 'instance creation' }
-TTApiClient >> classTool [
-	classTool ifNil: [ self class ]
-]
-
-{ #category : 'accessing' }
-TTApiClient >> configureResult: aResult [
-
-	^ aResult apply: TTToolOutputParser parseAsSTON.
 
 ]
 

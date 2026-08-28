@@ -9,7 +9,7 @@ Class {
 { #category : 'accessing' }
 TTOneJobManySuppliers class >> checkNewVault: appConfig [
 
-	 ^ appConfig at: #url ifPresent: [ :url | url = self urlHostApi ] ifAbsent: [ false ].
+	 ^ appConfig at: #url ifPresent: [ :url | url = self class urlHost ] ifAbsent: [ false ].
 	  
 ]
 

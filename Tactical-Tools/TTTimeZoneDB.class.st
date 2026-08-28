@@ -36,14 +36,18 @@ TTTimeZoneDB class >> urlHost [
 
 	<ttSpoke>
 
- ^ #url://'https://api.timezonedb.com'
+ ^ 'http://api.timezonedb.com'
  
 ]
 
 { #category : 'as yet unclassified' }
 TTTimeZoneDB >> apiListTimeZones [
 
-	^ (self vLatest / 'list-time-zone') useGET
+	^ ((self // self hostUrl / 'v2.1' / 'list-time-zone') 
+			parameterAt: #key put: (self apiKey);
+			parameterAt: #format put: 'json';
+			useGET)
+			payload: [ :root | root at: 'zones' ]
 						
 ]
 
@@ -52,6 +56,12 @@ TTTimeZoneDB >> initialize [
 
 	super initialize.
 	hostUrl := self class urlHost 
+]
+
+{ #category : 'as yet unclassified' }
+TTTimeZoneDB >> isAuthRequired [
+
+	^ false
 ]
 
 { #category : 'as yet unclassified' }
@@ -64,12 +74,6 @@ TTTimeZoneDB >> listTimeZones [
 { #category : 'as yet unclassified' }
 TTTimeZoneDB >> minDelay [
 	^ 1
-]
-
-{ #category : 'as yet unclassified' }
-TTTimeZoneDB >> urlHostApi [
-
-   ^ 'https://api.timezonedb.com'
 ]
 
 { #category : 'as yet unclassified' }

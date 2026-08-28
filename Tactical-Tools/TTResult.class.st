@@ -262,6 +262,7 @@ TTResult >> request: anObject [
 TTResult >> resetOutputChain [
 
 	super resetOutputChain.
+	parsed := nil.
 	payload := nil.
 	formatted := nil.
 	mapped := nil.

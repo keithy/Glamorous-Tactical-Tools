@@ -27,6 +27,25 @@ TTRequestAbstract class >> isNamespaced [
 	^ true
 ]
 
+{ #category : 'testing' }
+TTRequestAbstract class >> newForClient: aClient [
+	^ self basicNew
+		setClient: aClient;
+		initialize
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> beAuthRequired [
+
+	isAuthRequired := true
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> beNoAuthRequired [
+
+	isAuthRequired := false
+]
+
 { #category : 'initialization' }
 TTRequestAbstract >> begin [
 
@@ -41,7 +60,7 @@ TTRequestAbstract >> client [
 
 { #category : 'accessing' }
 TTRequestAbstract >> getResult [
-	^ result ifNil: [ result := self client class makeResultForRequest: self ]
+	^ result ifNil: [ result := self client makeResultForRequest: self ]
 ]
 
 { #category : 'initialization' }
@@ -54,13 +73,13 @@ TTRequestAbstract >> initialize [
 { #category : 'accessing' }
 TTRequestAbstract >> isAuthRequired [
 
-	^ isAuthRequired
+	^ isAuthRequired ifNil: [ client isAuthRequired ]
 ]
 
 { #category : 'accessing' }
-TTRequestAbstract >> isAuthRequired: bool [
+TTRequestAbstract >> noAuthRequired [
 
-	isAuthRequired := bool
+	isAuthRequired := false
 ]
 
 { #category : 'accessing' }

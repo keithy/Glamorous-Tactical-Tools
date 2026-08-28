@@ -26,7 +26,7 @@ TTWorldClockClient >> handlers [
 { #category : 'accessing' }
 TTWorldClockClient >> initialize [
 
-	  maxDelay := (self 	getVault at: #max_delay) ifNil: 0.
+	  maxDelay := (self 	getVault at: #max_delay) ifNil: 60.
 ]
 
 { #category : 'accessing' }
@@ -42,12 +42,6 @@ TTWorldClockClient >> maxDelay: anObject [
 { #category : 'accessing' }
 TTWorldClockClient >> minDelay [
 	^ 0
-]
-
-{ #category : 'accessing' }
-TTWorldClockClient >> openapi [
-
-	^ vault openapi ifNil: [ self class openapi ]
 ]
 
 { #category : 'accessing' }

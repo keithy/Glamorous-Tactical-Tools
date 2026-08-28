@@ -4,7 +4,6 @@ Class {
 	#instVars : [
 		'vault',
 		'result',
-		'classTool',
 		'requestErrorHandler',
 		'workingDirectory'
 	],
@@ -54,9 +53,9 @@ TTClientAbstract class >> checkPotentialVault: aVault [
 ]
 
 { #category : 'accessing' }
-TTClientAbstract class >> classResult [
+TTClientAbstract class >> classTool [
 
-	^ TTResult 
+	^ self
 ]
 
 { #category : 'as yet unclassified' }
@@ -108,13 +107,6 @@ TTClientAbstract class >> fileReferenceFrom: aHub [
 	^ self workingDirectory
 ]
 
-{ #category : 'as yet unclassified' }
-TTClientAbstract class >> fromClassClass: theClass [
-
-	"double dispatch from //"
-	^ self new
-]
-
 { #category : 'accessing' }
 TTClientAbstract class >> isAbstract [
 
@@ -144,19 +136,21 @@ TTClientAbstract class >> makeNewVaultsForAllOptionsOf: aVaultable [
 ]
 
 { #category : 'instance creation' }
+TTClientAbstract class >> makeRequestForClient: aClient [
+
+	^ (#class://#'ˆToolRequest') newForClient: aClient
+
+]
+
+{ #category : 'instance creation' }
 TTClientAbstract class >> makeResultForRequest: request [
-	"The client keeps the last result context as convenience for the user.
-	This is multi-threaded unsafe etc.
 	
-	Each result-request pair represents an atomic query.
+	"Each result-request pair represents a query round trip"
 	
-	Each result-request pair keeps a reference to the client, so that it is
-	easy to make further api calls of its own"
-	
-	^ self configureResult: 
-						(self classResult new
-								setRequest: request;
-								initialize)
+	"Each result-request pair keeps a reference to the client,
+	so that it can make further api calls of its own"
+
+	^ (TTResult newForRequest: request) apply: TTToolOutputParser passAsString
 ]
 
 { #category : 'as yet unclassified' }
@@ -237,12 +231,6 @@ TTClientAbstract >> @ option [
 	self getVault @ option
 ]
 
-{ #category : 'as yet unclassified' }
-TTClientAbstract >> getUser [
-
-^ vault user
-]
-
 { #category : 'accessing' }
 TTClientAbstract >> getVault [
 	^ vault ifNil: [ vault := self class makeVaultEmpty ]
@@ -280,27 +268,29 @@ TTClientAbstract >> makeRequest [
 	 this is the thin client configuration"
 	 
 	"The client keeps the last result context as convenience for the user."
+	^ result := self class makeRequestForClient: self
+]
+
+{ #category : 'instance creation' }
+TTClientAbstract >> makeResultForRequest: request [
+	"initially the request doubles as the result 
+	 this is the thin client configuration"
 	 
-	^ result := classTool classApiRequest basicNew
-			setClient: self;
-			initialize
+	"The client keeps the last result context as convenience for the user."
+	 
+	^ result := self class makeResultForRequest: request
 ]
 
 { #category : 'factory' }
 TTClientAbstract >> prepareRequest: aRequest [
 
-	aRequest isAuthRequired: self isAuthRequired  
+	^ self 
 ]
 
 { #category : 'accessing' }
 TTClientAbstract >> requestErrorHandler [
 
 	^ requestErrorHandler ifNil: [ [ :err | err pass ] ]
-]
-
-{ #category : 'accessing' }
-TTClientAbstract >> setClassTool: aClass [
-	classTool := aClass
 ]
 
 { #category : 'as yet unclassified' }
@@ -335,7 +325,10 @@ TTClientAbstract >> setRequestErrorHandler: errorHandler [
 
 { #category : 'initialization' }
 TTClientAbstract >> setVault: aVault [
-	vault := aVault copy
+ 
+	aVault appKey ifNil: [ self error: 'Vault should be a configured copy' ].
+	
+	vault := aVault
 ]
 
 { #category : 'as yet unclassified' }

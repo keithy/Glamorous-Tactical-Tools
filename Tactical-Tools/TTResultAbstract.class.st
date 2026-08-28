@@ -40,15 +40,14 @@ TTResultAbstract class >> isAbstract [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract class >> newForRequest: request [
-	"Each result-request pair represents an atomic query.
+	"Each result-request pair represents a query round trip.
 	
-	Each result-request pair keeps a reference to the client, so that it is
-	easy to make further api calls of its own"
+	Each result-request pair keeps a reference to the client, 
+	so that it may make further api calls of its own"
 
-	^ self
-		configureDefault: (self basicNew
+	^ (self basicNew)
 				setRequest: request;
-				initialize)
+				initialize
 ]
 
 { #category : 'as yet unclassified' }
@@ -178,6 +177,7 @@ TTResultAbstract >> requestUsing: aBlock [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> reset [
 	"convenience abbreviation."
+	request begin.
 	self resetOutputChain
 
 ]
@@ -185,6 +185,7 @@ TTResultAbstract >> reset [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> resetOutputChain [
 
+inputProvider := nil.
 stdout := nil.
 stderr := nil.
 
