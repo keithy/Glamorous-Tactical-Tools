@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T14:28:56.163152+01:00"
+						"dateAndTimeString" : "2026-08-28T11:29:04.107156+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "01CBTyKlR9OjDy3ABdbZ9g=="
 				},
-				"code" : "TTTimeZoneDB fileOpenApiSpec contents"
+				"code" : "TTTimeZoneDB urlOpenApiSpec contents"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -278,6 +278,40 @@
 					"uidString" : "ZWhd3C9LS2m8nXYs16Aafw=="
 				},
 				"code" : "TTTimeZoneDB new "
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T11:30:46.212802+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T11:30:53.202609+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "E2QreG/qRZ68C1957NIEMg=="
+				},
+				"code" : "Hub getVault"
 			}
 		]
 	},

@@ -150,7 +150,7 @@ TTClientAbstract class >> makeResultForRequest: request [
 	"Each result-request pair keeps a reference to the client,
 	so that it can make further api calls of its own"
 
-	^ (TTResult newForRequest: request) apply: TTToolOutputParser passAsString
+	^ TTResult newForRequest: request
 ]
 
 { #category : 'as yet unclassified' }

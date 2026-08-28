@@ -24,6 +24,18 @@ TTResult class >> configureDefault: aResult [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult class >> newForRequest: request [
+	"Each result-request pair represents a query round trip.
+	
+	Each result-request pair keeps a reference to the client, 
+	so that it may make further api calls of its own"
+
+	^ (self basicNew
+				setRequest: request;
+				initialize) apply: TTToolOutputParser passAsString
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> format: actionBlockSymbolArrayOrNil [
 
 	"synonym"
@@ -68,8 +80,8 @@ TTResult >> initialize [
   mapped := nil.
 	formatters := nil.
 	formatted := nil.
-	self initializeParsers.
-   
+	parsed := nil.
+	
 	
 ]
 

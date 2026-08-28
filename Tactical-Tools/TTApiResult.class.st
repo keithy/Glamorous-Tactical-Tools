@@ -7,6 +7,13 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTApiResult class >> newForRequest: request [
+	^ (self basicNew
+		setRequest: request;
+		initialize) apply: TTToolOutputParser parseAsSTON
+]
+
+{ #category : 'as yet unclassified' }
 TTApiResult >> error: aMessage [
 	
 	self stderrAppend: aMessage.

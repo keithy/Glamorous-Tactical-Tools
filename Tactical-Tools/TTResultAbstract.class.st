@@ -22,7 +22,7 @@ TTResultAbstract class >> // anSRL [
 { #category : 'as yet unclassified' }
 TTResultAbstract class >> configureDefault: aResult [
 
-^ aResult 
+	^ aResult apply: TTToolOutputParser parseAsSTON
 ]
 
 { #category : 'as yet unclassified' }
@@ -40,14 +40,8 @@ TTResultAbstract class >> isAbstract [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract class >> newForRequest: request [
-	"Each result-request pair represents a query round trip.
-	
-	Each result-request pair keeps a reference to the client, 
-	so that it may make further api calls of its own"
 
-	^ (self basicNew)
-				setRequest: request;
-				initialize
+	^ self subclassResponsibility
 ]
 
 { #category : 'as yet unclassified' }
@@ -183,7 +177,7 @@ TTResultAbstract >> requestUsing: aBlock [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> reset [
 	"convenience abbreviation."
-	request begin.
+	request reset.
 	self resetOutputChain
 
 ]
@@ -210,7 +204,7 @@ TTResultAbstract >> responseContentsVerified [
 	stdout := [ [ self responseContents ]
 			onErrorDo: [ :ex | 
 				self stderrAppend: ex messageText.
-				ex pass ] ] onErrorDo:[ :ex | self request requestErrorHandler ifNil: [ ex pass ] ].
+				ex pass ] ] onErrorDo:[ :ex | self requestErrorHandler ifNil: [ ex pass ] ].
 
 	^ stdout
 ]

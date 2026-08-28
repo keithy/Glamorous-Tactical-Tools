@@ -66,14 +66,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T14:28:56.163152+01:00"
+						"dateAndTimeString" : "2026-08-28T11:29:04.107156+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "01CBTyKlR9OjDy3ABdbZ9g=="
 				},
-				"code" : "TTTimeZoneDB fileOpenApiSpec contents"
+				"code" : "TTTimeZoneDB urlOpenApiSpec contents"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -134,14 +134,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-28T02:17:45.039456+01:00"
+						"dateAndTimeString" : "2026-08-28T02:18:36.590192+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "0kh1+BgBQx2+L2kuC9pwqA=="
 				},
-				"code" : "TTTimeZoneDB new apiListTimeZones"
+				"code" : "TTTimeZoneDB new listTimeZones"
 			},
 			{
 				"__type" : "pharoSnippet",

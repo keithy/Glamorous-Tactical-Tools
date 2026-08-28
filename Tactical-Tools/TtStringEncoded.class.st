@@ -157,6 +157,12 @@ TTStringEncoded >> gtViewHintFor: aView [
 ]
 
 { #category : 'accessing' }
+TTStringEncoded >> isTemplate [
+
+	^ false
+]
+
+{ #category : 'accessing' }
 TTStringEncoded >> printOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self value

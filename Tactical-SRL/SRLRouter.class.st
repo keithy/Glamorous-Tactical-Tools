@@ -100,6 +100,12 @@ SRLRouter >> isHttpClient [
 	^ false
 ]
 
+{ #category : 'accessing' }
+SRLRouter >> reset [
+
+	resolved := nil.
+]
+
 { #category : 'as yet unclassified' }
 SRLRouter >> resolve [
 

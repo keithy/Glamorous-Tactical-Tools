@@ -17,6 +17,11 @@ TTToolOutputParser class >> parseAsXML [
 ]
 
 { #category : 'accessing' }
+TTToolOutputParser class >> parseFromJson [
+	^ self newFromMessage: thisContext
+]
+
+{ #category : 'accessing' }
 TTToolOutputParser class >> passAsData [
 	^ self newFromMessage: thisContext
 ]
@@ -50,6 +55,16 @@ TTToolOutputParser >> parseAsXML [
 	
 	
 	
+]
+
+{ #category : 'as yet unclassified' }
+TTToolOutputParser >> parseFromJson [
+	
+	result initializeParsers.
+	result parsing: [ :streamable | STON fromString: (streamable ifNil: [ ^ #() ])]
+	
+	
+
 ]
 
 { #category : 'as yet unclassified' }

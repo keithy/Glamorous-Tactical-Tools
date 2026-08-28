@@ -73,7 +73,7 @@ TTApiClient class >> makeResultForRequest: request [
 	"Each result-request pair keeps a reference to the client,
 	so that it can make further api calls of its own"
 
-	^ (TTApiResult newForRequest: request) apply: TTToolOutputParser parseAsSTON
+	^ TTApiResult newForRequest: request 
 ]
 
 { #category : 'accessing' }

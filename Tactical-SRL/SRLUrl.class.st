@@ -2,7 +2,7 @@ Class {
 	#name : 'SRLUrl',
 	#superclass : 'SRLRouter',
 	#instVars : [
-		'output'
+		'outputProvider'
 	],
 	#category : 'Tactical-SRL-Schemes',
 	#package : 'Tactical-SRL',
@@ -114,11 +114,11 @@ SRLUrl >> getResult [
 ]
 
 { #category : 'accessing' }
-SRLUrl >> output [
+SRLUrl >> outputProvider [
 	"the object responsible for providing output"
 	 resolved ifNil: [ self resolve ].
 	 
-	^ output ifNil: [ output := (self clientClass) // (self clientArgString) ]
+	^ outputProvider ifNil: [ outputProvider := (self clientClass) // (self clientArgString) ]
 	
 ]
 
@@ -148,7 +148,7 @@ SRLUrl >> resolve: aThing [
 { #category : 'accessing' }
 SRLUrl >> stdout [
 
-	^ self output  stdout
+	^ self outputProvider  stdout
 	
 ]
 

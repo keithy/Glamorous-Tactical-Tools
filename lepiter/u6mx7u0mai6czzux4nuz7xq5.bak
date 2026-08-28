@@ -584,6 +584,40 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T11:28:34.555465+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-28T11:28:34.555465+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "cYw6MDA8RH2e1NJiDbgV4g=="
+				},
+				"code" : ""
+			},
+			{
+				"__type" : "pharoSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
 						"dateAndTimeString" : "2026-08-23T05:00:17.516154+01:00"
 					}
 				},
@@ -595,14 +629,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T15:57:56.856444+01:00"
+						"dateAndTimeString" : "2026-08-28T11:13:20.45607+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "scbwMfy6SHe5BxAjXswwFg=="
 				},
-				"code" : "result := TTResult // b."
+				"code" : "result := TTResult // b.\rresult payload"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -629,14 +663,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T16:10:03.573064+01:00"
+						"dateAndTimeString" : "2026-08-28T11:15:33.246527+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "uOZYtlotRs2CvRVI3N2W3w=="
 				},
-				"code" : "result payload"
+				"code" : "result := TTApiResult // a.\rresult payload"
 			},
 			{
 				"__type" : "pharoSnippet",
@@ -663,48 +697,14 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T16:10:07.921245+01:00"
+						"dateAndTimeString" : "2026-08-28T11:11:19.910805+01:00"
 					}
 				},
 				"uid" : {
 					"__type" : "uid",
 					"uidString" : "cfDI7Z4fRjutomhEbsz3mQ=="
 				},
-				"code" : "result initialize.\rresult apply: (TTToolOutputParser parseAsSTON).\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult parsed"
-			},
-			{
-				"__type" : "pharoSnippet",
-				"children" : {
-					"__type" : "snippets",
-					"items" : [ ]
-				},
-				"createEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"createTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-23T13:16:00.830479+01:00"
-					}
-				},
-				"editEmail" : {
-					"__type" : "email",
-					"emailString" : "<unknown>"
-				},
-				"editTime" : {
-					"__type" : "time",
-					"time" : {
-						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-25T16:10:11.297834+01:00"
-					}
-				},
-				"uid" : {
-					"__type" : "uid",
-					"uidString" : "UaVpjnqEQ2+kf1HwxItsRQ=="
-				},
-				"code" : "result payload"
+				"code" : "result reset.\rresult apply: (TTToolOutputParser parseFromJson).\rresult payload: [ :pl | pl at: 'slideshow' ].\rresult payload"
 			},
 			{
 				"__type" : "pharoSnippet",

@@ -121,6 +121,13 @@ TTRequestAbstract >> requestErrorHandler [
 	^ self client requestErrorHandler
 ]
 
+{ #category : 'initialization' }
+TTRequestAbstract >> reset [
+
+	^ self begin
+	
+]
+
 { #category : 'as yet unclassified' }
 TTRequestAbstract >> responseContents [
 	^ self stdout
