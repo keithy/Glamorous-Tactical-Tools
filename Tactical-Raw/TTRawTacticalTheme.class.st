@@ -6,6 +6,12 @@ Class {
 	#tag : 'Theme'
 }
 
+{ #category : 'accessing' }
+TTRawTacticalTheme class >> limitExpansion [
+
+^ #(#string #symbol #block)
+]
+
 { #category : 'as yet unclassified' }
 TTRawTacticalTheme >> icon [
 
@@ -58,6 +64,12 @@ TTRawTacticalTheme >> icon_block [
 TTRawTacticalTheme >> icon_collection [
 
 	^ #collection -> (self iconNamed: #collection)
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_compiled [
+
+	^ #compiled -> self text: '[:]'
 ]
 
 { #category : 'accessing' }

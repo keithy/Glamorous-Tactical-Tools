@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'object',
 		'debug',
-		'type'
+		'type',
+		'node'
 	],
 	#category : 'Tactical-Raw-Theme',
 	#package : 'Tactical-Raw',
@@ -12,23 +13,38 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-TTRawOriginalTheme class >> iconForInspector: anInspectorNode [ 
+TTRawOriginalTheme class >> forInspector: anInspectorNode [ 
 
 	^(self basicNew)
-			object: anInspectorNode rawValue;
+			node: anInspectorNode;
 			initialize
 ]
 
 { #category : 'as yet unclassified' }
-TTRawOriginalTheme >> asElementInTreeRow [
+TTRawOriginalTheme class >> limitExpansion [
 
-^ (self protect: [ self icon ]) value asElement margin: (BlInsets right: 5)
+^ #()
+]
+
+{ #category : 'as yet unclassified' }
+TTRawOriginalTheme >> asElementInTreeRow [
+	
+	| assoc |
+	assoc := self protect: [ self icon ].
+	
+	^ assoc value: (assoc value asElement margin: (BlInsets right: 5))
 ]
 
 { #category : 'accessing' }
 TTRawOriginalTheme >> beDebug [
 
 	debug := true
+]
+
+{ #category : 'as yet unclassified' }
+TTRawOriginalTheme >> childrenNodes [
+	^ type -> ((self class limitExpansion includes: type) ifTrue: [ ^#()] ifFalse: [ node childrenNodes ] )
+	
 ]
 
 { #category : 'as yet unclassified' }
@@ -41,7 +57,18 @@ TTRawOriginalTheme >> icon [
 { #category : 'accessing' }
 TTRawOriginalTheme >> initialize [
 	debug := false.
+	object := node rawValue.
 	self resolveType.
+]
+
+{ #category : 'accessing' }
+TTRawOriginalTheme >> node [
+	^ node
+]
+
+{ #category : 'accessing' }
+TTRawOriginalTheme >> node: anObject [
+	node := anObject
 ]
 
 { #category : 'accessing' }
