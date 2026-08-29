@@ -70,6 +70,20 @@ TTResult >> formatting: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
+TTResult >> gtViewData [
+
+	^ super gtViewData copyWithAll: {
+		#request -> request.
+		#response -> (request response ifNil:[[ self reset gotResponse ]]).
+		#contents -> (nil ifNil:[[ self reset gotResponse ]]).
+		#parsed -> (parsed ifNil:[[ self reset gotResponse ]]).
+		#payload -> (payload ifNil: [[ self reset gotPayload ]]). 
+		#mapped -> (mapped ifNil: [[ self reset gotMapped ]]).  	  
+		#formatted -> (formatted ifNil: [[ self reset gotOutput ]]).  	  
+ 	}
+]
+
+{ #category : 'as yet unclassified' }
 TTResult >> initialize [
 	
 	super initialize.

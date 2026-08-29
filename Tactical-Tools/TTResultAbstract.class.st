@@ -82,6 +82,210 @@ TTResultAbstract >> client [
 	^ request client
 ]
 
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtRawFor: aView [
+	<gtView>
+	^ aView columnedTree
+		title: 'Raw™';
+		importantFutureExecutionConfiguration;
+		priority: 100;
+		items: [ | variableNodes |
+			variableNodes := OrderedCollection new: self class allSlots size.
+			variableNodes add: (GtInspectorSelfNode hostObject: self).
+			self gtInspectorVariableNodesIn: variableNodes.
+			variableNodes ];
+		children: [ :anInspectorNode | anInspectorNode childrenNodes ];
+		column: 'Variable'
+			do: [ :aColumn | 
+				aColumn
+					dataBinder: [ :itemElement :anInspectorNode | 
+						| nodeIcon variableLabel classNameLabel extraInfoLabel |
+						nodeIcon := [ anInspectorNode rawValue gtInspectorIcon
+								ifNil: [ anInspectorNode rawValue class
+										iconNamed: anInspectorNode rawValue class systemIconName ] ]
+								on: Error
+								do: [ :error | Smalltalk ui icons iconNamed: #smallWarning ].
+
+						itemElement
+							removeChildren;
+							addChild: (nodeIcon asElement margin: (BlInsets right: 5)).
+
+						variableLabel := BrLabel new
+								aptitude: BrGlamorousListLabelAptitude;
+								text: anInspectorNode label;
+								alignCenterLeft;
+								fitContent.
+
+						anInspectorNode isSlotNode
+							ifTrue: [ classNameLabel := BrLabel new
+										aptitude: (BrGlamorousListLabelAptitude new
+												foreground: itemElement theme button disabledTextColor);
+										beSmallSize;
+										text: anInspectorNode value class name;
+										alignCenterLeft;
+										hMatchParent;
+										vFitContent ].
+
+						anInspectorNode isWeakClassNode
+							ifTrue: [ extraInfoLabel := BrLabel new
+										aptitude: (BrGlamorousListLabelAptitude new
+												foreground: itemElement theme button disabledTextColor);
+										beMiniSize;
+										text: 'weak class';
+										alignCenterLeft;
+										hMatchParent;
+										vFitContent ].
+
+						anInspectorNode isEphemeronClassNode
+							ifTrue: [ extraInfoLabel := BrLabel new
+										aptitude: (BrGlamorousListLabelAptitude new
+												foreground: itemElement theme button disabledTextColor);
+										beMiniSize;
+										text: 'ephemeron class';
+										alignCenterLeft;
+										hMatchParent;
+										vFitContent ].
+
+						anInspectorNode isWeakReferenceNode
+							ifTrue: [ extraInfoLabel := BrLabel new
+										aptitude: (BrGlamorousListLabelAptitude new
+												foreground: itemElement theme button disabledTextColor);
+										beMiniSize;
+										text: 'weak reference';
+										alignCenterLeft;
+										hMatchParent;
+										vFitContent ].
+
+						anInspectorNode isEphemeronReferenceNode
+							ifTrue: [ extraInfoLabel := BrLabel new
+										aptitude: (BrGlamorousListLabelAptitude new
+												foreground: itemElement theme button disabledTextColor);
+										beMiniSize;
+										text: 'ephemeron reference';
+										alignCenterLeft;
+										hMatchParent;
+										vFitContent ].
+
+						(classNameLabel isNotNil or: [ extraInfoLabel isNotNil ])
+							ifTrue: [ | labelsContainer |
+								labelsContainer := BlElement new
+										layout: BrEditorTextFlowLayout new;
+										constraintsDo: [ :c | 
+											c horizontal fitContent.
+											c vertical fitContent ].
+
+								labelsContainer addChild: variableLabel.
+								classNameLabel
+									ifNotNil: [ itemElement
+											addAptitude: (BrLazyStyleCommonAptitude new
+													@ classNameLabel;
+													default: [ :style | style gone ];
+													hovered: [ :style | style visible ]).
+										labelsContainer addChild: classNameLabel ].
+								extraInfoLabel ifNotNil: [ labelsContainer addChild: extraInfoLabel ].
+
+								itemElement addChild: labelsContainer ]
+							ifFalse: [ itemElement addChild: variableLabel ].	"extraInfo ifFalse: [ itemElement children last hMatchParent ]."
+
+						itemElement ];
+					cellStencil: [ BrHorizontalPane new
+							hMatchParent;
+							vFitContent;
+							alignCenterLeft ] ];
+		column: 'Value'
+			text: [ :anInspectorNode | 
+				[ anInspectorNode rawValue gtDisplayText ]
+					on: Error , Halt
+					do: [ anInspectorNode errorMessage asRopedText foreground: Color red ] ]
+			weight: 2;
+		send: #value;
+		dynamicContextItems: [ :anElement :anInspectorNode | 
+			anInspectorNode isSlotNode
+				ifTrue: [ (GtViewCreator
+						viewCreatorsForObject: anInspectorNode rawValue
+						andSource: anInspectorNode key
+						in: anInspectorNode hostObject class)
+						collect: [ :creator | 
+							creator selfObject: self.
+							creator asMenuItem ] ]
+				ifFalse: [ #() ] ];
+		dynamicContextItems: [ :anElement :anInspectorNode | 
+			Array
+				streamContents: [ :aStream | 
+					anInspectorNode isSlotNode
+						ifTrue: [ | aPhlowContext |
+							aPhlowContext := GtPhlowContext new.
+							aPhlowContext selfObject: anInspectorNode hostObject.
+							aPhlowContext behavior: anInspectorNode hostObject class.
+
+							GtCoderVariableTarget
+								menuItemsForObject: anInspectorNode slot
+								inContext: aPhlowContext
+								hostElement: nil
+								do: [ :aMenuItem | aStream nextPut: aMenuItem ] ] ] ];
+		actionUpdateButton
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtTreeFor: aView [
+
+ <gtView>
+ 
+	^ aView forward
+		  title: 'Chain';
+		  priority: 51;
+		  object: [ self gtViewData asOrderedDictionary];
+		  view: #gtTreeFor:context:
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtViewData [
+
+	^ { #class -> self className. } 
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtViewFor: aView [
+	<gtView>
+	
+	^ (self gtViewItems:[ self gtViewData ] for: aView)
+		title: 'View';
+		priority: 60;
+		yourself
+		
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtViewItems: itemsBlock for: aView [
+	^ aView columnedTree
+		items: itemsBlock;
+		in: [ :view | 
+			view
+				children: [ :each | 
+					each value isDictionary
+						ifTrue: [ each value associations ]
+						ifFalse: [ each value collectWithIndex: [ :x :i | i -> x ] ] ] ];
+		column: 'Property'
+			text: #key
+			width: 180;
+		column: 'Value' text: [ :assoc | [ assoc value ] ifError: [ '-na-' ] ];
+		send: [ :each | self gtViewOnClickAt: each key value: each value ];
+		column: 'Actions' translated
+			stencil: [ :each | 
+				each value isBlock
+					ifFalse: [ BlElement new size: 0 @ 0 ]
+					ifTrue: [ BrButton new
+							aptitude: BrGlamorousButtonWithLabelTooltipAptitude + BrGlamorousButtonWithIconAptitude;
+							icon: BrGlamorousVectorIcons play;
+							label: 'Do It';
+							beTinySize;
+							action: [ :b | 
+								each value value.
+								b phlow fireToolUpdateWish ] ] ]
+			width: 50;
+		yourself
+]
+
 { #category : 'accessing' }
 TTResultAbstract >> handler: aHandler [
 

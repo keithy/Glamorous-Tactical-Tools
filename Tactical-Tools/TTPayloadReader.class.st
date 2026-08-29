@@ -26,13 +26,13 @@ TTPayloadReader class >> dateAndTimeFromISOFieldsMatching: aMatcher [
 ]
 
 { #category : 'as yet unclassified' }
-TTPayloadReader class >> dateAndTimeFromUnixMillisFieldMatching: aMatcher [
+TTPayloadReader class >> dateAndTimeFromUnixMillisFieldsMatching: aMatcher [
 	
 	^ self fieldsMatching: aMatcher transform:[ :v | DateAndTime fromUnixTime: v asInteger // 1000 ]
 ]
 
 { #category : 'as yet unclassified' }
-TTPayloadReader class >> dateAndTimeFromUnixTimeFieldMatching: aMatcher [
+TTPayloadReader class >> dateAndTimeFromUnixTimeFieldsMatching: aMatcher [
 	
 	^ self fieldsMatching: aMatcher transform:[ :v | DateAndTime fromUnixTime:  v]
 ]
