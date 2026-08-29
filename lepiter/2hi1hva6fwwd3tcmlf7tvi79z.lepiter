@@ -1,0 +1,113 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-29T10:16:03.149054+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-29T14:58:36.796799+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "mNx7xZIxRzeyOBH0qBb2sA=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "Strategy: Aiming to be low impact on the existing code base, while demonstating mild improvements, an alternative (drop-in) Raw™ view (The TM in this context stands for Themed)."
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-29T10:14:26.838113+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2026-08-29T15:11:56.51137+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "Y+95BjRFT9yEecNosqT/Cw=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "### Themable\n{{gtMethod:TTApiResult>>ttTheme}} provides configuration to select the class responsible for theming the raw view. {{gtClass:TTRawOriginalTheme}} maps the original behaviour, but it also gathers and returns \ninformation about the types of items being displayed.\n\nReturning items such as icons together with type information (type -> icon) enables themes to be combined, nested, or overriden in order to negotiate as to how to render a given type.\n### Icons\nIcons in the original \"Raw\" view could be refined. Instances typically display a class icon, even nil, lacks any special treatment.  {{gtClass:TTRawTacticalTheme}} which uses  #ttType as its main discriminator, maps each type to a suitable icon. \n\n#### #gtIcon\nIs introduced as part of FAMIX but seems under-utilised elsewhere. \nProposal to fixing   {{gtMethod:Object>>#gtIcon}} (and callers) to allow for fallthrough via nil."
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-29T10:14:14.308473+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2026-08-29T10:14:14.308473+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "Raw™ View Improvements"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "57385899-43c2-4403-b675-c33c2f73fe29"
+	}
+}

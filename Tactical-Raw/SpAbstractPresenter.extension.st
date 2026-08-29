@@ -1,7 +1,7 @@
 Extension { #name : 'SpAbstractPresenter' }
 
 { #category : '*Tactical-Raw' }
-SpAbstractPresenter class >> systemIconNameTM [
+SpAbstractPresenter class >> rawInstanceIconName [
 
 	^ #iconSmallWindow
 ]

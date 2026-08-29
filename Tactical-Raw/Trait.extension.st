@@ -1,7 +1,7 @@
 Extension { #name : 'Trait' }
 
 { #category : '*Tactical-Raw' }
-Trait >> systemIconNameTM [
+Trait >> rawInstanceIconName [
 
 	^ #iconTrait
 ]

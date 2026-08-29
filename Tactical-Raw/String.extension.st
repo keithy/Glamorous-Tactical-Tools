@@ -1,7 +1,13 @@
 Extension { #name : 'String' }
 
 { #category : '*Tactical-Raw' }
-String class >> systemIconNameTM [
+String class >> rawInstanceIconName [
 
 	^ #iconString
+]
+
+{ #category : '*Tactical-Raw' }
+String >> ttType [
+
+	^ #string
 ]

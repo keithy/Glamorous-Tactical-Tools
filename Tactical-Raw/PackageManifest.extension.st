@@ -1,7 +1,7 @@
 Extension { #name : 'PackageManifest' }
 
 { #category : '*Tactical-Raw' }
-PackageManifest class >> systemIconNameTM [
+PackageManifest class >> rawInstanceIconName [
 
 	^ #iconPackageColored
 ]

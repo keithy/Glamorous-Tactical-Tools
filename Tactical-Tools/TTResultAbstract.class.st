@@ -99,20 +99,14 @@ TTResultAbstract >> gtRawFor: aView [
 			do: [ :aColumn | 
 				aColumn
 					dataBinder: [ :itemElement :anInspectorNode | 
-						| nodeIcon variableLabel classNameLabel extraInfoLabel |
-						nodeIcon := [ anInspectorNode rawValue gtInspectorIcon
-								ifNil: [ anInspectorNode rawValue class
-										iconNamed: anInspectorNode rawValue class systemIconName ] ]
-								on: Error
-								do: [ :error | Smalltalk ui icons iconNamed: #smallWarning ].
-
+						| variableLabel classNameLabel extraInfoLabel |
 						itemElement
 							removeChildren;
-							addChild: (nodeIcon asElement margin: (BlInsets right: 5)).
+							addChild: (self ttTheme iconForInspector: anInspectorNode) beDebug asElementInTreeRow.
 
 						variableLabel := BrLabel new
 								aptitude: BrGlamorousListLabelAptitude;
-								text: anInspectorNode label;
+								text: (anInspectorNode label);
 								alignCenterLeft;
 								fitContent.
 
@@ -465,4 +459,12 @@ TTResultAbstract >> stderrAppend: aMessage [
 TTResultAbstract >> stdout [
 	"likely coming from a executables 'output'"
 	^ self outputProvider stdout
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> ttTheme [
+	  
+	  <ttTheme>
+	  
+	  ^ "TTRawOriginalTheme " TTRawTacticalTheme
 ]

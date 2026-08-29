@@ -1,7 +1,7 @@
 Extension { #name : 'Morph' }
 
 { #category : '*Tactical-Raw' }
-Morph class >> systemIconNameTM [
+Morph class >> rawInstanceIconName [
 
 	^ #iconMmorph
 ]

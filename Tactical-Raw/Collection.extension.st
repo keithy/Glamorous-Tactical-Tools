@@ -1,7 +1,13 @@
 Extension { #name : 'Collection' }
 
 { #category : '*Tactical-Raw' }
-Collection class >> systemIconNameTM [
+Collection class >> rawInstanceIconName [
 
 	^ #iconCollection
+]
+
+{ #category : '*Tactical-Raw' }
+Collection >> ttType [
+
+	^ #collection
 ]
