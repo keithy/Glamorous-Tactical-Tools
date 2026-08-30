@@ -125,6 +125,12 @@ TTTacticalTheme >> icon_false [
 ]
 
 { #category : 'accessing' }
+TTTacticalTheme >> icon_hubClass [
+
+	^ #hubClass -> (self text: '⎈')
+]
+
+{ #category : 'accessing' }
 TTTacticalTheme >> icon_instance [
 
 	^ #instance ->  (self iconNamed: #glamorousGrayCircle)

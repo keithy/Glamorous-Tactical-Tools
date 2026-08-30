@@ -54,7 +54,7 @@ TTOriginalTheme class >> viewRawOn: object for: aView [
 		items: [ | variableNodes |
 			variableNodes := OrderedCollection new: object class allSlots size.
 			variableNodes add: (GtInspectorSelfNode hostObject: object).
-			self gtInspectorVariableNodesIn: variableNodes.
+			object gtInspectorVariableNodesIn: variableNodes.
 			variableNodes ];
 		children: [ :anInspectorNode | (self forInspector: anInspectorNode) childrenNodes value ];
 		column: 'Variable'
