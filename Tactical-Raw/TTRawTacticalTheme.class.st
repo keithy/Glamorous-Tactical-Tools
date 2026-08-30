@@ -30,24 +30,18 @@ TTRawTacticalTheme class >> specialExpansion [
 ^ #(#set #dictionary)
 ]
 
-{ #category : 'as yet unclassified' }
-TTRawTacticalTheme >> icon [
+{ #category : 'accessing' }
+TTRawTacticalTheme class >> toolTitle [
 
-	^ (self askFor: (self iconSelector) ifAbsent: [ ^ self iconNotFound ])
+	^ 'Raw™'
 ]
 
-{ #category : 'accessing' }
-TTRawTacticalTheme >> iconFrom: text [
+{ #category : 'as yet unclassified' }
+TTRawTacticalTheme >> icon [
+	
+		object gtInspectorIcon ifNotNil: [ :icon | ^ (object className) -> icon ].
 
- ^ [ BlElement new
-          size: 16 @ 16;
-          addChild: (BlTextElement new
-              text: (text asRopedText
-   fontSize: 12;   
-                  foreground: Color darkGray);
-              position: 4 @ 0);
-          yourself ] asStencil
-          
+	^ (self askFor: (self iconSelector) ifAbsent: [ ^ self iconNotFound ])
 ]
 
 { #category : 'accessing' }
@@ -70,17 +64,17 @@ TTRawTacticalTheme >> iconSelector [
 
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_array [
-	^ #symbol -> (self text:'[  ]')
+	^ #array -> (self text:'[  ]')
 ]
 
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_bag [
-	^ #symbol -> (self text:'{_}')
+	^ #bag -> (self text:'{_}')
 ]
 
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_block [
-	^ #symbol -> (self text:'[:a]')
+	^ #block -> (self text:'[:a]')
 ]
 
 { #category : 'accessing' }
@@ -92,7 +86,7 @@ TTRawTacticalTheme >> icon_class [
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_classAbstract [
 
-	^ #instance -> (self iconNamed: #classAbstract)
+	^ #classAbstract -> (self iconNamed: #classAbstract)
 ]
 
 { #category : 'accessing' }
@@ -109,7 +103,7 @@ TTRawTacticalTheme >> icon_compiled [
 
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_context [
-	^ #symbol -> (self text:'[ . ]')
+	^ #context -> (self text:'[ . ]')
 ]
 
 { #category : 'accessing' }
@@ -133,7 +127,7 @@ TTRawTacticalTheme >> icon_false [
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_instance [
 
-	^ #instance -> (self iconNamed: #glamorousGrayCircle)
+	^ #instance ->  (self iconNamed: #glamorousGrayCircle)
 ]
 
 { #category : 'accessing' }

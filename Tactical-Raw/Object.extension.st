@@ -4,7 +4,7 @@ Extension { #name : 'Object' }
 Object >> ttRawThemedFor: aView [
  
 	^ aView columnedTree
-		title: 'Raw™';
+		title: (self ttTheme toolTitle);
 		importantFutureExecutionConfiguration;
 		priority: 100;
 		items: [ | variableNodes |

@@ -85,7 +85,7 @@ TTResultAbstract >> client [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> gtRawFor: aView [
 	<gtView>
-	^ self ttRawThemedFor: aView
+	^ self ttTheme viewRawOn: self for: aView
 ]
 
 { #category : 'as yet unclassified' }
@@ -157,7 +157,7 @@ TTResultAbstract >> handler: aHandler [
 { #category : 'accessing' }
 TTResultAbstract >> handlers [
 
-	^ handlers ifNil: [ handlers := #() ]
+	^ handlers ifNil: #()
 ]
 
 { #category : 'as yet unclassified' }

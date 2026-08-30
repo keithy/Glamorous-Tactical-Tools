@@ -242,19 +242,11 @@ TTResult >> payloadAssociationsSelect: selectBlock andModify: modifyBlock [
 
 { #category : 'as yet unclassified' }
 TTResult >> payloadDo: aBlock [
-		
 	"scan through record, or array of dicionaries of associations"
-	
-	self payload: [ :payl | 
-			
-		(payl isDictionary 
-				ifTrue: [ Array with: payl ] 
-				ifFalse: [ payl ]) do: aBlock.
-		
-		payl
-	]
-		
-		
+
+	self
+		payload: [ :payl | (payl isDictionary ifTrue: [ Array with: payl ] ifFalse: [ payl ]) do: aBlock.
+payl ]
 ]
 
 { #category : 'as yet unclassified' }

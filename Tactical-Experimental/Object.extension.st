@@ -3,13 +3,11 @@ Extension { #name : 'Object' }
 { #category : '*Tactical-Experimental' }
 Object >> gtRawFor: aView [
 	<gtView>
-	^ self ttRawThemedFor: aView
+	^ self ttTheme viewRawOn: self for: aView
 ]
 
 { #category : '*Tactical-Experimental' }
 Object >> ttTheme [
-	  
 	  <ttTheme>
-	  
-	  ^ "TTRawOriginalTheme " TTRawTacticalTheme
+	  ^ (#env://'USER' = 'tudor') ifTrue: [ TTRawOriginalTheme ] ifFalse: [ TTRawTacticalTheme ]
 ]

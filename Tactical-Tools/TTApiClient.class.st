@@ -45,7 +45,7 @@ TTApiClient class >> basicNewFor: aVaultable [
 
 { #category : 'as yet unclassified' }
 TTApiClient class >> classTool [
-
+ "used"
 	^ TTSchemeRouter
 ]
 
