@@ -328,11 +328,3 @@ TTResultAbstract >> stdout [
 	"likely coming from a executables 'output'"
 	^ self outputProvider stdout
 ]
-
-{ #category : 'as yet unclassified' }
-TTResultAbstract >> ttTheme [
-	  
-	  <ttTheme>
-	  
-	  ^ "TTRawOriginalTheme " TTRawTacticalTheme
-]

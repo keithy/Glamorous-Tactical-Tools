@@ -7,9 +7,27 @@ Class {
 }
 
 { #category : 'accessing' }
+TTRawTacticalTheme class >> arrayExpansion [
+
+^ #(#set)
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme class >> dictionaryExpansion [
+
+^ #(#dictionary)
+]
+
+{ #category : 'accessing' }
 TTRawTacticalTheme class >> limitExpansion [
 
 ^ #(#string #symbol #block)
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme class >> specialExpansion [
+
+^ #(#set #dictionary)
 ]
 
 { #category : 'as yet unclassified' }
@@ -56,8 +74,25 @@ TTRawTacticalTheme >> icon_array [
 ]
 
 { #category : 'accessing' }
+TTRawTacticalTheme >> icon_bag [
+	^ #symbol -> (self text:'{_}')
+]
+
+{ #category : 'accessing' }
 TTRawTacticalTheme >> icon_block [
 	^ #symbol -> (self text:'[:a]')
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_class [
+
+	^ #instance -> (self iconNamed: #class)
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_classAbstract [
+
+	^ #instance -> (self iconNamed: #classAbstract)
 ]
 
 { #category : 'accessing' }
@@ -69,7 +104,18 @@ TTRawTacticalTheme >> icon_collection [
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_compiled [
 
-	^ #compiled -> self text: '[:]'
+	^ #compiled -> (self text: '[:::]')
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_context [
+	^ #symbol -> (self text:'[ . ]')
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_dictionary [
+
+	^ #dictionary -> (self text: '{»}')
 ]
 
 { #category : 'accessing' }
@@ -81,7 +127,7 @@ TTRawTacticalTheme >> icon_empty [
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_false [
 
-	^ #false -> (self iconNamed: #glamorousCancel)
+	^ #false -> (self iconNamed: #mooseCancel "#glamorousCancel")
 ]
 
 { #category : 'accessing' }
@@ -97,9 +143,27 @@ TTRawTacticalTheme >> icon_magnitude [
 ]
 
 { #category : 'accessing' }
+TTRawTacticalTheme >> icon_method [
+
+	^ #method -> (self text: '[>>]')
+]
+
+{ #category : 'accessing' }
 TTRawTacticalTheme >> icon_nil [
 
 	^ #nil -> (self iconNamed: #glamorousGrayCircleEmpty)
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_pragma [
+
+	^ #pragma -> (self text: '< >')
+]
+
+{ #category : 'accessing' }
+TTRawTacticalTheme >> icon_set [
+
+	^ #set -> (self text: '{#}')
 ]
 
 { #category : 'accessing' }
@@ -116,7 +180,7 @@ TTRawTacticalTheme >> icon_symbol [
 { #category : 'accessing' }
 TTRawTacticalTheme >> icon_true [
 
-	^ #true -> (self iconNamed: #glamorousAccept)
+	^ #true -> (self iconNamed: #mooseAccept "#glamorousAccept")
 ]
 
 { #category : 'accessing' }
@@ -126,15 +190,13 @@ TTRawTacticalTheme >> text: text [
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> text: text color: color [ 
-
- ^ [ BlElement new
-          size: 16 @ 16;
-          addChild: (BlTextElement new
-              text: (text asRopedText
-   fontSize: 12;   
-                  foreground: color);
-              position: ((text size > 1) ifTrue: 0 ifFalse: 4) @ 0);
-          yourself ] asStencil
-          
+TTRawTacticalTheme >> text: text color: color [
+	^ [ BlElement new
+		size: 16 @ 16;
+		addChild: (BlTextElement new
+				text: (text asRopedText
+						fontSize: 12;
+						foreground: color);
+				position: (text size > 1 ifTrue: 0 ifFalse: 4) @ 2);
+		yourself ] asStencil
 ]

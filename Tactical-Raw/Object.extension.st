@@ -1,12 +1,6 @@
 Extension { #name : 'Object' }
 
 { #category : '*Tactical-Raw' }
-Object >> rawInstanceIconName [
-
-	^ #iconInstance 
-]
-
-{ #category : '*Tactical-Raw' }
 Object >> ttRawThemedFor: aView [
  
 	^ aView columnedTree

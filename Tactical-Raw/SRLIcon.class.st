@@ -1,8 +1,9 @@
 Class {
 	#name : 'SRLIcon',
 	#superclass : 'SRLRouter',
-	#category : 'Tactical-Raw',
-	#package : 'Tactical-Raw'
+	#category : 'Tactical-Raw-Theme',
+	#package : 'Tactical-Raw',
+	#tag : 'Theme'
 }
 
 { #category : 'as yet unclassified' }

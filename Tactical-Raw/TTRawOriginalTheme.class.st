@@ -13,6 +13,18 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+TTRawOriginalTheme class >> arrayExpansion [
+
+^ #()
+]
+
+{ #category : 'as yet unclassified' }
+TTRawOriginalTheme class >> dictionaryExpansion [
+
+^ #()
+]
+
+{ #category : 'as yet unclassified' }
 TTRawOriginalTheme class >> forInspector: anInspectorNode [ 
 
 	^(self basicNew)
@@ -27,12 +39,18 @@ TTRawOriginalTheme class >> limitExpansion [
 ]
 
 { #category : 'as yet unclassified' }
+TTRawOriginalTheme class >> specialExpansion [
+
+^ #()
+]
+
+{ #category : 'as yet unclassified' }
 TTRawOriginalTheme >> asElementInTreeRow [
 	
 	| assoc |
 	assoc := self protect: [ self icon ].
 	
-	^ assoc value: (assoc value asElement margin: (BlInsets right: 5))
+	^ assoc value: (assoc value asElement margin: (BlInsets right: 3))
 ]
 
 { #category : 'accessing' }
@@ -43,8 +61,44 @@ TTRawOriginalTheme >> beDebug [
 
 { #category : 'as yet unclassified' }
 TTRawOriginalTheme >> childrenNodes [
-	^ type -> ((self class limitExpansion includes: type) ifTrue: [ ^#()] ifFalse: [ node childrenNodes ] )
+ 
+	(self class dictionaryExpansion includes: type) ifTrue: [ ^ type -> self childrenNodesAsKeysAndValues ].
+		
+	(self class arrayExpansion includes: type) ifTrue: [ ^ type -> self childrenNodesAsArray  ].
+
+	(self class limitExpansion includes: type) ifTrue: [ ^ type ->#() ].
 	
+	^ type ->  node childrenNodes
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTRawOriginalTheme >> childrenNodesAsArray [
+	| variableNodes |
+	variableNodes := OrderedCollection new: object size.
+
+	object asArray gtInspectorVariableNodesIn: variableNodes.
+
+	^ variableNodes
+]
+
+{ #category : 'as yet unclassified' }
+TTRawOriginalTheme >> childrenNodesAsAssociations [
+	| variableNodes |
+	variableNodes := OrderedCollection new: object size.
+
+	object associations gtInspectorVariableNodesIn: variableNodes.
+
+	^ variableNodes
+]
+
+{ #category : 'as yet unclassified' }
+TTRawOriginalTheme >> childrenNodesAsKeysAndValues [
+		
+	^  (object associations collect: [ :assoc |
+			GtInspectorDynamicNode hostObject: object label: assoc key value: assoc value
+	])
+
 ]
 
 { #category : 'as yet unclassified' }
