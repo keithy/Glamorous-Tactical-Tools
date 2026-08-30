@@ -1,6 +1,6 @@
 Extension { #name : 'BlockClosure' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 BlockClosure >> ttType [
 
 	^ #block

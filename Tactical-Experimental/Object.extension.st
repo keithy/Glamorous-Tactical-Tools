@@ -9,5 +9,5 @@ Object >> gtRawFor: aView [
 { #category : '*Tactical-Experimental' }
 Object >> ttTheme [
 	  <ttTheme>
-	  ^ (#env://'USER' = 'tudor') ifTrue: [ TTRawOriginalTheme ] ifFalse: [ TTRawTacticalTheme ]
+	  ^ (#env://'USER' = 'tudor') ifTrue: [ TTOriginalTheme ] ifFalse: [ TTTacticalTheme ]
 ]

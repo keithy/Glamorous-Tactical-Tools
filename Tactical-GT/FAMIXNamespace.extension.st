@@ -1,6 +1,6 @@
 Extension { #name : 'FAMIXNamespace' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 FAMIXNamespace >> gtChildrenFor: aView [
 	<gtView>
 	^ aView tree

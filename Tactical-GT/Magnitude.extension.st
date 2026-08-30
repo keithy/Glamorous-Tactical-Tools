@@ -1,12 +1,12 @@
 Extension { #name : 'Magnitude' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Magnitude class >> ttType [ 
 
 	^ #magnitude
 ]
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Magnitude >> ttType [
 
 	^ #magnitude

@@ -4,8 +4,8 @@ Class {
 	#classInstVars : [
 		'imageStoreFS'
 	],
-	#category : 'Tactical-Tools-Image-Store',
-	#package : 'Tactical-Tools',
+	#category : 'Tactical-Pharo-Image-Store',
+	#package : 'Tactical-Pharo',
 	#tag : 'Image-Store'
 }
 

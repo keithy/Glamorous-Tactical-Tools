@@ -1,6 +1,6 @@
 Extension { #name : 'UndefinedObject' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 UndefinedObject >> ttType [
 
 	^ #nil

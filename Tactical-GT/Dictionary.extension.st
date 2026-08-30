@@ -1,6 +1,6 @@
 Extension { #name : 'Dictionary' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Dictionary >> addAll: aKeyedCollection [
 
 	"Add all of the keys and values from aKeyedCollection to the dictionary.
@@ -19,7 +19,7 @@ Dictionary >> addAll: aKeyedCollection [
 	^ aKeyedCollection
 ]
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Dictionary >> ttType [
 
 ^ #dictionary

@@ -1,8 +1,8 @@
 Class {
 	#name : 'ImageStoreResolver',
 	#superclass : 'FileSystemResolver',
-	#category : 'Tactical-Tools-Image-Store',
-	#package : 'Tactical-Tools',
+	#category : 'Tactical-Pharo-Image-Store',
+	#package : 'Tactical-Pharo',
 	#tag : 'Image-Store'
 }
 

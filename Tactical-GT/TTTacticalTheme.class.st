@@ -1,43 +1,43 @@
 Class {
-	#name : 'TTRawTacticalTheme',
-	#superclass : 'TTRawOriginalTheme',
-	#category : 'Tactical-Raw-Theme',
-	#package : 'Tactical-Raw',
-	#tag : 'Theme'
+	#name : 'TTTacticalTheme',
+	#superclass : 'TTOriginalTheme',
+	#category : 'Tactical-GT-Views',
+	#package : 'Tactical-GT',
+	#tag : 'Views'
 }
 
 { #category : 'accessing' }
-TTRawTacticalTheme class >> arrayExpansion [
+TTTacticalTheme class >> arrayExpansion [
 
 ^ #(#set)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme class >> dictionaryExpansion [
+TTTacticalTheme class >> dictionaryExpansion [
 
 ^ #(#dictionary)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme class >> limitExpansion [
+TTTacticalTheme class >> limitExpansion [
 
 ^ #(#string #symbol #block)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme class >> specialExpansion [
+TTTacticalTheme class >> specialExpansion [
 
 ^ #(#set #dictionary)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme class >> toolTitle [
+TTTacticalTheme class >> toolTitle [
 
 	^ 'Raw™'
 ]
 
 { #category : 'as yet unclassified' }
-TTRawTacticalTheme >> icon [
+TTTacticalTheme >> icon [
 	
 		object gtInspectorIcon ifNotNil: [ :icon | ^ (object className) -> icon ].
 
@@ -45,146 +45,146 @@ TTRawTacticalTheme >> icon [
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> iconNamed: aSymbol [
+TTTacticalTheme >> iconNamed: aSymbol [
 
 	^ Smalltalk ui icons iconNamed: aSymbol
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> iconNotFound [
+TTTacticalTheme >> iconNotFound [
 
 	^ #notFound -> (self iconNamed: #glamorousBug)
 ]
 
 { #category : 'as yet unclassified' }
-TTRawTacticalTheme >> iconSelector [
+TTTacticalTheme >> iconSelector [
 
 	^ ('icon_', type) asSymbol
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_array [
+TTTacticalTheme >> icon_array [
 	^ #array -> (self text:'[  ]')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_bag [
+TTTacticalTheme >> icon_bag [
 	^ #bag -> (self text:'{_}')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_block [
+TTTacticalTheme >> icon_block [
 	^ #block -> (self text:'[:a]')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_class [
+TTTacticalTheme >> icon_class [
 
 	^ #instance -> (self iconNamed: #class)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_classAbstract [
+TTTacticalTheme >> icon_classAbstract [
 
 	^ #classAbstract -> (self iconNamed: #classAbstract)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_collection [
+TTTacticalTheme >> icon_collection [
 
 	^ #collection -> (self iconNamed: #collection)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_compiled [
+TTTacticalTheme >> icon_compiled [
 
 	^ #compiled -> (self text: '[:::]')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_context [
+TTTacticalTheme >> icon_context [
 	^ #context -> (self text:'[ . ]')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_dictionary [
+TTTacticalTheme >> icon_dictionary [
 
 	^ #dictionary -> (self text: '{»}')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_empty [
+TTTacticalTheme >> icon_empty [
 
 	^ #empty -> (self iconNamed: #glamorousHelp)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_false [
+TTTacticalTheme >> icon_false [
 
 	^ #false -> (self iconNamed: #mooseCancel "#glamorousCancel")
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_instance [
+TTTacticalTheme >> icon_instance [
 
 	^ #instance ->  (self iconNamed: #glamorousGrayCircle)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_magnitude [
+TTTacticalTheme >> icon_magnitude [
 
 	^ #magnitude -> (self iconNamed: #magnitude)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_method [
+TTTacticalTheme >> icon_method [
 
 	^ #method -> (self text: '[>>]')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_nil [
+TTTacticalTheme >> icon_nil [
 
 	^ #nil -> (self iconNamed: #glamorousGrayCircleEmpty)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_pragma [
+TTTacticalTheme >> icon_pragma [
 
 	^ #pragma -> (self text: '< >')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_set [
+TTTacticalTheme >> icon_set [
 
 	^ #set -> (self text: '{#}')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_string [
+TTTacticalTheme >> icon_string [
 
 	^ #string -> (self iconNamed: #string)
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_symbol [
+TTTacticalTheme >> icon_symbol [
 	^ #symbol -> (self text:'#')
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> icon_true [
+TTTacticalTheme >> icon_true [
 
 	^ #true -> (self iconNamed: #mooseAccept "#glamorousAccept")
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> text: text [  
+TTTacticalTheme >> text: text [  
 
 	^ self text: text  color: Color gray
 ]
 
 { #category : 'accessing' }
-TTRawTacticalTheme >> text: text color: color [
+TTTacticalTheme >> text: text color: color [
 	^ [ BlElement new
 		size: 16 @ 16;
 		addChild: (BlTextElement new

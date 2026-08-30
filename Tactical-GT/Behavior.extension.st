@@ -1,6 +1,6 @@
 Extension { #name : 'Behavior' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Behavior >> ttType [
 
 	^self isAbstract

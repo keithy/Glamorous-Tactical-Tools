@@ -1,9 +1,9 @@
 Class {
 	#name : 'PharoˆApiRequest',
 	#superclass : 'TTApiRequest',
-	#category : 'Tactical-Pharo-Guzzler',
+	#category : 'Tactical-Pharo-HttpClient',
 	#package : 'Tactical-Pharo',
-	#tag : 'Guzzler'
+	#tag : 'HttpClient'
 }
 
 { #category : 'as yet unclassified' }

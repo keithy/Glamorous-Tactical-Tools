@@ -1,12 +1,12 @@
 Extension { #name : 'String' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 String class >> rawInstanceIconName [
 
 	^ #iconString
 ]
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 String >> ttType [
 
 	^ #string

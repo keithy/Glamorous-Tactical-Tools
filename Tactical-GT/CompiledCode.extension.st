@@ -1,6 +1,6 @@
 Extension { #name : 'CompiledCode' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 CompiledCode >> ttType [
 	^ #compiled
 ]

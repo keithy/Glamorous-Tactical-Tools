@@ -1,6 +1,6 @@
 Extension { #name : 'Symbol' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Symbol >> ttType [
 
 ^ #symbol

@@ -1,8 +1,9 @@
 Class {
 	#name : 'GtGitAddRepositoryStencilExamples',
 	#superclass : 'Object',
-	#category : 'Tactical-GT',
-	#package : 'Tactical-GT'
+	#category : 'Tactical-WIP-wip',
+	#package : 'Tactical-WIP',
+	#tag : 'wip'
 }
 
 { #category : 'examples' }

@@ -1,6 +1,6 @@
 Extension { #name : 'GtGitAddRepositoryStencil' }
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> collectGitRepositoriesUnder: rootPath asJob: job [
 	"Walk `rootPath` recursively (skipping hidden directories) and answer an
 	OrderedCollection of directories that contain a git repository. We defer
@@ -44,7 +44,7 @@ GtGitAddRepositoryStencil >> collectGitRepositoriesUnder: rootPath asJob: job [
 	^ found
 ]
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> initialPage [
 	^ BrVerticalPane new fitContent
 		addChild: (BrSimpleList new
@@ -75,7 +75,7 @@ GtGitAddRepositoryStencil >> initialPage [
 							[ self openInitialize ]}})
 ]
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> loadAllLocalPage [
 	"Answer a BrFileSelector configured to recursively walk the chosen directory,
 	registering every existing git repository it finds (skipping locations already
@@ -102,7 +102,7 @@ GtGitAddRepositoryStencil >> loadAllLocalPage [
 	^ fileBrowser
 ]
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> loadAllRepositoriesFromDirectory: rootPath into: repositoryClass [
 	"Walk `rootPath` recursively and register any subdirectory containing a
 	`.git/config` file as an Iceberg repository. Already-registered locations are
@@ -130,7 +130,7 @@ GtGitAddRepositoryStencil >> loadAllRepositoriesFromDirectory: rootPath into: re
 	^ [ gtJob run ] asAsyncPromise
 ]
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> loadRepositories: candidateDirectories ofClass: repositoryClass asJob: job [
 	"For each candidate directory, instantiate an Iceberg repository (using
 	`repositoryClass` — IceLibgitRepository or IceGitCliRepository — based on
@@ -169,14 +169,14 @@ GtGitAddRepositoryStencil >> loadRepositories: candidateDirectories ofClass: rep
 		, ' (of ' , total asString , ')'
 ]
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> openLoadAllLocalPage [
 
 	container removeChildren.
 	container addChild: self loadAllLocalPage as: #'git-load-all-local-page'
 ]
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-WIP' }
 GtGitAddRepositoryStencil >> tidyUpStaleRegistryEntries [
 	"Drop registry entries whose underlying repository directory is no
 	longer available. We don't try to delete the on-disk directory here

@@ -1,6 +1,6 @@
 Extension { #name : 'Context' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Context >> ttType [
 ^ #context
 ]

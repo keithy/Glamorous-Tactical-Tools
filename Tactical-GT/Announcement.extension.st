@@ -1,12 +1,12 @@
 Extension { #name : 'Announcement' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Announcement class >> rawInstanceIconName [
 
 	^ #iconAnnouncement
 ]
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Announcement >> ttType [
 
 	^ #announcement

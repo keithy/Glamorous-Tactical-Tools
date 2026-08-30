@@ -1,6 +1,6 @@
 Extension { #name : 'Set' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Set >> add: newObject [
 	"Include newObject as one of the receiver's elements, but only if
 	not already present. Answer newObject."
@@ -11,7 +11,7 @@ Set >> add: newObject [
 	^ newObject
 ]
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Set >> ttType [
 
 	^ #set

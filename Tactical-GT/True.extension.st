@@ -1,6 +1,6 @@
 Extension { #name : 'True' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 True >> ttType [
 
 	^ #true

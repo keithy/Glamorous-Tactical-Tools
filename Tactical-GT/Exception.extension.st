@@ -1,6 +1,6 @@
 Extension { #name : 'Exception' }
 
-{ #category : '*Tactical-Raw' }
+{ #category : '*Tactical-GT' }
 Exception >> ttType [
 
 	^ #exception
