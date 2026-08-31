@@ -3,11 +3,15 @@ Extension { #name : 'Object' }
 { #category : '*Tactical-Experimental' }
 Object >> gtRawFor: aView [
 	<gtView>
-	^ self ttTheme viewRawOn: self for: aView
+	^ (#class:// #TTRawTreeView)  new
+				root: self;
+				theme: self ttTheme;
+				setView: aView;
+				asRawView
 ]
 
 { #category : '*Tactical-Experimental' }
 Object >> ttTheme [
 	  <ttTheme>
-	  ^ (#env://'USER' = 'tudor') ifTrue: [ TTOriginalTheme ] ifFalse: [ TTTacticalTheme ]
+	  ^ (#env://'USER' = 'tudor') ifTrue: [ TTInspectorOriginalTheme ] ifFalse: [ TTInspectorTacticalTheme ]
 ]

@@ -72,11 +72,15 @@ TTRequestAbstract >> gtThunkEntries [
 { #category : 'accessing' }
 TTRequestAbstract >> gtThunkFor: aView [
 	<gtView>
-	^ self ttTheme
-		viewCustom: 'Thunk'
-		callback: #gtThunkEntries
-		on: self
-		for: aView
+	^ (TTTreeView new
+		root: self;
+		theme: self ttTheme;
+		callback: #gtThunkEntries;
+		setView: aView;
+		context: nil) asView
+		title: 'Thunk';
+		priority: 10;
+		yourself
 ]
 
 { #category : 'initialization' }

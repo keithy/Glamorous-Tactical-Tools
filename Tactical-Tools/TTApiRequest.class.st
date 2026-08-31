@@ -83,7 +83,7 @@ TTApiRequest >> fullUrl [
 { #category : 'as yet unclassified' }
 TTApiRequest >> gtThunkEntries [
 
-^ super gtThunkEntries copyWithAll: #(#(url fullUrl) #httpClient)
+^ #(#client #httpClient type #(url fullUrl) parameters text  )
 ]
 
 { #category : 'accessing' }

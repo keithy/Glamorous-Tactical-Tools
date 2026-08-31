@@ -85,17 +85,20 @@ TTResultAbstract >> client [
 { #category : 'as yet unclassified' }
 TTResultAbstract >> gtRawFor: aView [
 	<gtView>
-	^ self ttTheme viewRawOn: self for: aView
+	^ (#class:// #TTRawTreeView) new
+				root: self;
+				theme: self ttTheme;
+				setView: aView;
+				asRawView
 ]
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> gtThunkFor: aView [
 	<gtView>
-	^ self ttTheme
-		viewCustom: 'Thunk'
-		callback: #(request inputProvider)
+	^ (self ttTheme
+		viewCallback: #(request inputProvider)
 		on: self
-		for: aView
+		for: aView) title: 'Thunk'
 ]
 
 { #category : 'as yet unclassified' }

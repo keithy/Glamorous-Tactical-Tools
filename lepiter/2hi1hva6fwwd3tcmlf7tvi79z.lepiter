@@ -66,7 +66,7 @@
 					"__type" : "time",
 					"time" : {
 						"__type" : "dateAndTime",
-						"dateAndTimeString" : "2026-08-30T23:19:22.154835+01:00"
+						"dateAndTimeString" : "2026-08-31T20:35:26.377863+01:00"
 					}
 				},
 				"uid" : {
@@ -76,7 +76,7 @@
 				"paragraphStyle" : {
 					"__type" : "textStyle"
 				},
-				"string" : "### Themable\n{{gtMethod:TTApiResult>>ttTheme}} provides configuration to select the class responsible for theming the raw view. {{gtClass:TTOriginalTheme}} maps the original behaviour, but it also gathers and returns \ninformation about the types of items being displayed.\n\nReturning items such as icons together with type information (type -> icon) [HitchHiker pattern] enables themes to be combined, nested, or overriden in order to negotiate as to how to render a given type.\n### Icons\nIcons in the original \"Raw\" view could be refined. Instances typically display a class icon, even nil, lacks any special treatment.  {{gtClass:TTTacticalTheme}} which uses  #ttType as its main discriminator, maps each type to a suitable icon.  \n  \n `#gtInspectorIcon` is also honoured for custom icons.\n\n#### #gtIcon\nIs introduced as part of FAMIX but seems under-utilised elsewhere. \nProposal to fixing   {{gtMethod:Object>>#gtIcon}} (and callers) to allow for fallthrough via nil."
+				"string" : "### Themable\n{{gtMethod:TTApiResult>>ttTheme}} provides configuration to select the class responsible for theming the raw view. {{gtClass:TTInspectorOriginalTheme}} maps the original behaviour, but it also gathers and returns \ninformation about the types of items being displayed.\n\nThe themes are effectively using the Method-Object pattern, this enables themes to be combined, nested, or overriden in order to negotiate as to how to render a given type.\n### Icons\nIcons in the original \"Raw\" view could be refined. Instances typically display a class icon, even nil, lacks any special treatment.  {{gtClass:TTInspectorTacticalTheme}} which uses  #ttType as its main discriminator, maps each type to a suitable icon.  \n  \n `#gtInspectorIcon` and `#gtIcon` are also honoured for custom icons.\n\n#### #gtIcon\nIs introduced as part of FAMIX but seems under-utilised elsewhere. \nPropose fixing   {{gtMethod:Object>>#gtIcon}} (and callers) to allow for fallthrough via nil. ({{gtPackage:Tactical-Fixes}} )"
 			}
 		]
 	},

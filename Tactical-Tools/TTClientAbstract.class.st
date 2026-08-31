@@ -249,7 +249,11 @@ TTClientAbstract >> gtOptionsFor: aView [
 { #category : 'as yet unclassified' }
 TTClientAbstract >> gtRawFor: aView [
 	<gtView>
-	^ self ttTheme viewRawOn: self for: aView
+	^ (#class:// #TTRawTreeView) 
+				root: self;
+				theme: self ttTheme;
+				setView: aView;
+				asRawView
 ]
 
 { #category : 'accessing' }
