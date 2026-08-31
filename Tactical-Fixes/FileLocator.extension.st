@@ -1,10 +1,13 @@
 Extension { #name : 'FileLocator' }
 
 { #category : '*Tactical-Fixes' }
-FileLocator >> gtDisplayText [
-
+FileLocator >> gtDisplayOn: stream [
 	<ttFix:'display with path in namedFileLocations'>
-	^ (super gtDisplayText) , (' » ' , (self fullName)) asRopedText
+
+	"This offers a means to customize how the object is shown in the GlamorousToolkit UI"
+	self printOn: stream.
+	stream << ' » ' << (self fullName)
+	
 ]
 
 { #category : '*Tactical-Fixes' }

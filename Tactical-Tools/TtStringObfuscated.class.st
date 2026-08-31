@@ -29,12 +29,6 @@ TTStringObfuscated >> asRopedText [
 ]
 
 { #category : 'printing' }
-TTStringObfuscated >> displayStringOn: aStream [
-	"Make sure that this is not printOn: because we do not want to have multiple quotes."
-	aStream nextPutAll: self value
-]
-
-{ #category : 'printing' }
 TTStringObfuscated >> explain [
 
 	'Obfuscated'
@@ -49,22 +43,6 @@ TTStringObfuscated >> gtActionCopy: anAction [
 		label: 'Copy to Clipboard';
 		action: [ :button |  Clipboard clipboardText: self ]
 		
-]
-
-{ #category : 'printing' }
-TTStringObfuscated >> gtDisplayOn: aStream [
-	"Make sure that this is not printOn: because we do not want to have multiple quotes."
-	aStream nextPutAll: self value
-	
-	
-]
-
-{ #category : 'printing' }
-TTStringObfuscated >> gtDisplayString [
-	
-	^ self value
-	
-	
 ]
 
 { #category : 'printing' }

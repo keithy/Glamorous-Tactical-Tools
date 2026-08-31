@@ -70,16 +70,39 @@ TTResult >> formatting: actionBlockSymbolArrayOrNil [
 ]
 
 { #category : 'as yet unclassified' }
-TTResult >> gtViewData [
+TTResult >> gtThunkEntries [
 
-	^ super gtViewData copyWithAll: {
-		#request -> request.
-		#response -> (request response ifNil:[[ self reset gotResponse ]]).
-		#contents -> (nil ifNil:[[ self reset gotResponse ]]).
-		#parsed -> (parsed ifNil:[[ self reset gotResponse ]]).
-		#payload -> (payload ifNil: [[ self reset gotPayload ]]). 
-		#mapped -> (mapped ifNil: [[ self reset gotMapped ]]).  	  
-		#formatted -> (formatted ifNil: [[ self reset gotOutput ]]).  	  
+	^ #(request inputProvider parsers #(payloaders payloaders) mappers formatters)
+	
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> gtThunkFor: aView [
+	<gtView>
+	^ self ttTheme
+		viewCustom: 'Thunk'
+		callback: #gtThunkEntries
+		on: self
+		for: aView
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> gtViewDataTail [
+
+	^ { 
+		  #output -> (formatted  ifNil:[[ self reset output  ]]).
+ 	 }
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> gtViewDataTop [
+
+	^ super gtViewDataTop copyWithAll: {
+		#parsingInput -> (stdout  ifNil:[[ self reset stdout ]]).
+		#parsed -> (parsed ifNil:[[ self reset parsed ]]).
+		#payload -> (payload ifNil: [[ self reset payload ]]). 
+		#mapped -> (mapped ifNil: [[ self reset mapped ]]).  	  
+		#formatted -> (formatted ifNil: [[ self reset formatted ]]).  	  
  	}
 ]
 
@@ -264,6 +287,12 @@ TTResult >> payloadInput [
     it may be customized by subclasses"
 
    ^ self parsed
+]
+
+{ #category : 'as yet unclassified' }
+TTResult >> payloaders [
+
+	^ payloadReducers copyWithAll: (payloadTailReducers ifNil: #()) 
 ]
 
 { #category : 'accessing' }

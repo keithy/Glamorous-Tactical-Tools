@@ -63,6 +63,22 @@ TTRequestAbstract >> getResult [
 	^ result ifNil: [ result := self client makeResultForRequest: self ]
 ]
 
+{ #category : 'accessing' }
+TTRequestAbstract >> gtThunkEntries [
+
+^ #(#client isAuthRequired type parameters text)
+]
+
+{ #category : 'accessing' }
+TTRequestAbstract >> gtThunkFor: aView [
+	<gtView>
+	^ self ttTheme
+		viewCustom: 'Thunk'
+		callback: #gtThunkEntries
+		on: self
+		for: aView
+]
+
 { #category : 'initialization' }
 TTRequestAbstract >> initialize [
 	"Initialise as a pair, this may not do anything now as

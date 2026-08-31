@@ -80,6 +80,12 @@ TTApiRequest >> fullUrl [
 		 	
 ]
 
+{ #category : 'as yet unclassified' }
+TTApiRequest >> gtThunkEntries [
+
+^ super gtThunkEntries copyWithAll: #(#(url fullUrl) #httpClient)
+]
+
 { #category : 'accessing' }
 TTApiRequest >> isGET [
 

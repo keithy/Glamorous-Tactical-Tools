@@ -31,7 +31,7 @@ TTTacticalTheme class >> specialExpansion [
 ]
 
 { #category : 'accessing' }
-TTTacticalTheme class >> toolTitle [
+TTTacticalTheme class >> titleRawView [
 
 	^ 'Raw™'
 ]
@@ -42,6 +42,24 @@ TTTacticalTheme >> icon [
 		object gtInspectorIcon ifNotNil: [ :icon | ^ (object className) -> icon ].
 
 	^ (self askFor: (self iconSelector) ifAbsent: [ ^ self iconNotFound ])
+]
+
+{ #category : 'accessing' }
+TTTacticalTheme >> iconFromText: text [  
+
+	^ self iconFromText: text  color: Color gray
+]
+
+{ #category : 'accessing' }
+TTTacticalTheme >> iconFromText: text color: color [
+	^ [ BlElement new
+		size: 16 @ 16;
+		addChild: (BlTextElement new
+				text: (text asRopedText
+						fontSize: 12;
+						foreground: color);
+				position: (text size > 1 ifTrue: 0 ifFalse: 4) @ 2);
+		yourself ] asStencil
 ]
 
 { #category : 'accessing' }
@@ -64,17 +82,17 @@ TTTacticalTheme >> iconSelector [
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_array [
-	^ #array -> (self text:'[  ]')
+	^ #array -> (self iconFromText:'[  ]')
 ]
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_bag [
-	^ #bag -> (self text:'{_}')
+	^ #bag -> (self iconFromText:'{_}')
 ]
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_block [
-	^ #block -> (self text:'[:a]')
+	^ #block -> (self iconFromText:'[:a]')
 ]
 
 { #category : 'accessing' }
@@ -98,18 +116,18 @@ TTTacticalTheme >> icon_collection [
 { #category : 'accessing' }
 TTTacticalTheme >> icon_compiled [
 
-	^ #compiled -> (self text: '[:::]')
+	^ #compiled -> (self iconFromText: '[:::]')
 ]
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_context [
-	^ #context -> (self text:'[ . ]')
+	^ #context -> (self iconFromText:'[ . ]')
 ]
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_dictionary [
 
-	^ #dictionary -> (self text: '{»}')
+	^ #dictionary -> (self iconFromText: '{»}')
 ]
 
 { #category : 'accessing' }
@@ -127,7 +145,7 @@ TTTacticalTheme >> icon_false [
 { #category : 'accessing' }
 TTTacticalTheme >> icon_hubClass [
 
-	^ #hubClass -> (self text: '⎈')
+	^ #hubClass -> (self iconFromText: '⎈')
 ]
 
 { #category : 'accessing' }
@@ -145,7 +163,7 @@ TTTacticalTheme >> icon_magnitude [
 { #category : 'accessing' }
 TTTacticalTheme >> icon_method [
 
-	^ #method -> (self text: '[>>]')
+	^ #method -> (self iconFromText: '[>>]')
 ]
 
 { #category : 'accessing' }
@@ -157,13 +175,13 @@ TTTacticalTheme >> icon_nil [
 { #category : 'accessing' }
 TTTacticalTheme >> icon_pragma [
 
-	^ #pragma -> (self text: '< >')
+	^ #pragma -> (self iconFromText: '< >')
 ]
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_set [
 
-	^ #set -> (self text: '{#}')
+	^ #set -> (self iconFromText: '{#}')
 ]
 
 { #category : 'accessing' }
@@ -174,29 +192,11 @@ TTTacticalTheme >> icon_string [
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_symbol [
-	^ #symbol -> (self text:'#')
+	^ #symbol -> (self iconFromText:'#')
 ]
 
 { #category : 'accessing' }
 TTTacticalTheme >> icon_true [
 
 	^ #true -> (self iconNamed: #mooseAccept "#glamorousAccept")
-]
-
-{ #category : 'accessing' }
-TTTacticalTheme >> text: text [  
-
-	^ self text: text  color: Color gray
-]
-
-{ #category : 'accessing' }
-TTTacticalTheme >> text: text color: color [
-	^ [ BlElement new
-		size: 16 @ 16;
-		addChild: (BlTextElement new
-				text: (text asRopedText
-						fontSize: 12;
-						foreground: color);
-				position: (text size > 1 ifTrue: 0 ifFalse: 4) @ 2);
-		yourself ] asStencil
 ]

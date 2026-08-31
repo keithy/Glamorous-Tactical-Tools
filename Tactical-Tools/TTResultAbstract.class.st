@@ -89,6 +89,16 @@ TTResultAbstract >> gtRawFor: aView [
 ]
 
 { #category : 'as yet unclassified' }
+TTResultAbstract >> gtThunkFor: aView [
+	<gtView>
+	^ self ttTheme
+		viewCustom: 'Thunk'
+		callback: #(request inputProvider)
+		on: self
+		for: aView
+]
+
+{ #category : 'as yet unclassified' }
 TTResultAbstract >> gtTreeFor: aView [
 
  <gtView>
@@ -102,8 +112,27 @@ TTResultAbstract >> gtTreeFor: aView [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> gtViewData [
+	^ (self gtViewDataTop) , (self gtViewDataTail)
+]
 
-	^ { #class -> self className. } 
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtViewDataTail [
+
+	^ { 
+		  #output -> (stdout  ifNil:[[ self reset output  ]]).
+ 	 }
+]
+
+{ #category : 'as yet unclassified' }
+TTResultAbstract >> gtViewDataTop [
+
+	^ { #class -> self className. 
+		  #request -> request.
+		  #response -> (request response ifNil:[[ self reset response ]]).
+		  #inputProvider -> inputProvider ifNil: [[ self reset inputProvider]].
+		  #stdout -> (stdout  ifNil:[ '' ]).
+		  #stderr -> (stderr  ifNil:[ '' ]).
+ 	}
 ]
 
 { #category : 'as yet unclassified' }
@@ -265,14 +294,8 @@ TTResultAbstract >> responseContents [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> responseContentsVerified [
-	stdout ifNotNil: [ ^ stdout ].
-
-	stdout := [ [ self responseContents ]
-			onErrorDo: [ :ex | 
-				self stderrAppend: ex messageText.
-				ex pass ] ] onErrorDo:[ :ex | self requestErrorHandler ifNil: [ ex pass ] ].
-
-	^ stdout
+	
+	^ self stdout
 ]
 
 { #category : 'as yet unclassified' }
@@ -325,6 +348,12 @@ TTResultAbstract >> stderrAppend: aMessage [
 
 { #category : 'as yet unclassified' }
 TTResultAbstract >> stdout [
-	"likely coming from a executables 'output'"
-	^ self outputProvider stdout
+	stdout ifNotNil: [ ^ stdout ].
+
+	stdout := [ [ self responseContents ]
+			onErrorDo: [ :ex | 
+				self stderrAppend: ex messageText.
+				ex pass ] ] onErrorDo:[ :ex | self requestErrorHandler ifNil: [ ex pass ] ].
+
+	^ stdout
 ]

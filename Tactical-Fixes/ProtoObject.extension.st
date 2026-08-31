@@ -1,6 +1,6 @@
 Extension { #name : 'ProtoObject' }
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-Fixes' }
 ProtoObject >> gtIcon [
 	^ nil
 ]

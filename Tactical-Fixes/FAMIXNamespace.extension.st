@@ -1,6 +1,6 @@
 Extension { #name : 'FAMIXNamespace' }
 
-{ #category : '*Tactical-GT' }
+{ #category : '*Tactical-Fixes' }
 FAMIXNamespace >> gtChildrenFor: aView [
 	<gtView>
 	^ aView tree
@@ -13,7 +13,7 @@ FAMIXNamespace >> gtChildrenFor: aView [
 					c horizontal fitContent. 
 					c vertical fitContent ];
 				layout: BlLinearLayout horizontal;
-				addChild: (each gtIcon ifNil: [ BrGlamorousVectorIcons empty]) asElement;
+				addChild: (each gtIcon ifNil: [ BrGlamorousVectorIcons empty ]) asElement;
 				addChild: (BrLabel new
 					aptitude: BrGlamorousListLabelAptitude;
 					text: each name asRopedText) ];
