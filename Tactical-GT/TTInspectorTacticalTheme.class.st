@@ -46,6 +46,12 @@ TTInspectorTacticalTheme >> displaySelector [
 ]
 
 { #category : 'accessing' }
+TTInspectorTacticalTheme >> display_array [
+
+	^ self display_collection
+]
+
+{ #category : 'accessing' }
 TTInspectorTacticalTheme >> display_collection [
 
 	object printNameOn: stream.
@@ -58,6 +64,18 @@ TTInspectorTacticalTheme >> display_collection [
 "		space.
 	object size <= object gtCollectionSizeThreshold 
 		ifTrue: [ object printElementsOn: stream ]"
+]
+
+{ #category : 'accessing' }
+TTInspectorTacticalTheme >> display_dictionary [
+
+	^ self display_collection
+]
+
+{ #category : 'accessing' }
+TTInspectorTacticalTheme >> display_set [
+
+	^ self display_collection
 ]
 
 { #category : 'as yet unclassified' }

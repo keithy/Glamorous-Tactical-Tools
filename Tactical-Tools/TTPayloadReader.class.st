@@ -46,6 +46,12 @@ TTPayloadReader class >> fieldsMatching: aMatcher transform: monadicBlock [
 { #category : 'as yet unclassified' }
 TTPayloadReader >> fieldsMatching: aMatcherOrBlock transform: monadicBlock [
 
+	result payload: (TTPayloadModifier new select: aMatcherOrBlock; modify:monadicBlock; yourself)
+]
+
+{ #category : 'as yet unclassified' }
+TTPayloadReader >> xfieldsMatching: aMatcherOrBlock transform: monadicBlock [
+
 	| matchBlock |
 	
 	matchBlock := [ :assoc | aMatcherOrBlock matches: assoc key ].
