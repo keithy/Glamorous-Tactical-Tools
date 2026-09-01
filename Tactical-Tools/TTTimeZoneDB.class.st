@@ -48,13 +48,17 @@ TTTimeZoneDB class >> urlOpenApiSpec [
 
 { #category : 'as yet unclassified' }
 TTTimeZoneDB >> apiListTimeZones [
-
-	^ ((self // self hostUrl / 'v2.1' / 'list-time-zone') 
-			parameterAt: #key put: (self apiKey);
-			parameterAt: #format put: 'json';
-			useGET)
-			payload: [ :root | root at: 'zones' ]
-						
+	^ ((self // self hostUrl / 'v2.1' / 'list-time-zone')
+				parameterAt: #key put: self apiKey;
+				parameterAt: #format put: 'json';
+				useGET)
+						payload: [ :root | root at: 'zones' ];
+						payload: (TTPayloadModifier new
+								key: #timestamp;
+								modify: [ :seconds | DateAndTime fromUnixTime: seconds ]);
+						mapping: (TTMap new
+								prototype: (TTModel new keyField: #zoneName));
+						yourself
 ]
 
 { #category : 'as yet unclassified' }

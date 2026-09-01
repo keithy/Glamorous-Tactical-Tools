@@ -91,6 +91,16 @@ TTDictionaryConfigEnv >> gtFileReferencePathFor: aView [
 ]
 
 { #category : 'as yet unclassified' }
+TTDictionaryConfigEnv >> gtSearchPathFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Search Path';
+		priority: 1;
+		object: [ self class searchPath ];
+		view: #gtItemsFor:
+]
+
+{ #category : 'as yet unclassified' }
 TTDictionaryConfigEnv >> readFromStream: aStream [
 
 	"A little rudimentary"

@@ -47,10 +47,11 @@ TTMap >> isBlock [
 TTMap >> mapEachToPrototype [
 	models := input collect: [ :each | self modelFrom: each ].
 
-	collection
+	output := collection
+	  ifNil: [ models ]
 		ifNotNil: [ collection isArray
-				ifTrue: [ output := collection copyWithAll: models ]
-				ifFalse: [ output := collection copy
+				ifTrue: [ collection copyWithAll: models ]
+				ifFalse: [ collection copy
 							addAll: models;
 							yourself ] ]
 ]
